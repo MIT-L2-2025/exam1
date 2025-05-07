@@ -26,4 +26,6 @@ Voici les champs que vous pouvez y voir
 ## Informations
 ![Image de mon projet](./webPageImages/information.png)
 ## Itinéraire
-
+![Image de mon projet](./webPageImages/itineraire.png)
+# Vue 3D
+![Image de mon projet](./webPageImages/visual3D.png)
