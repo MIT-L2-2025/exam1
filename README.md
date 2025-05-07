@@ -15,8 +15,7 @@ Le workflow produit une page HTML contenant :
 
 1. Ouvrir n8n (en local ou via n8n.cloud)  
 2. Importer le fichier JSON du workflow disponible dans ce dépôt  
-3. Renseigner les credentials nécessaires (si API utilisée)  
-4. Lancer le workflow pour générer la page HTML
+3. Lancer le workflow pour générer la page HTML
 
 ## 📁 Fichiers
 
