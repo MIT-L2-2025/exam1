@@ -1,0 +1,346 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -120,
+        20
+      ],
+      "id": "62e2ec02-ce30-4a15-a69b-d0c513ab4e82",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://serpapi.com/search",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "engine",
+              "value": "google_maps"
+            },
+            {
+              "name": "type",
+              "value": "search"
+            },
+            {
+              "name": "q",
+              "value": "restaurant chinois Antananarivo"
+            },
+            {
+              "name": "api_key",
+              "value": "0fbe1d9d7ba8d789d2b0f44a460a5bdbee4849a9d522136a7d9bbea6707632fd"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        100,
+        20
+      ],
+      "id": "e8df1ec4-177d-46c4-9a97-543981b46ac5",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1220,
+        340
+      ],
+      "id": "6ade7658-cee5-446c-82d4-7cb110c07621",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/files/data.json",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        880,
+        320
+      ],
+      "id": "ad3b3735-ea4b-4402-9f25-ae2b8029cb91",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7148b07e-9013-4a8c-843a-7244072ed659",
+              "leftValue": "={{ $json.search_metadata.status }}",
+              "rightValue": "Success",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        580,
+        20
+      ],
+      "id": "911e1692-0f40-47fe-910b-5672c15402cb",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        320,
+        20
+      ],
+      "id": "2daa47bc-88be-46e7-a8b1-96bc581945d0",
+      "name": "Wait",
+      "webhookId": "1f9d7ebb-5cf4-4528-9a59-b9edee199055",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "42810d5b-8103-46cd-96af-f183472f61dd",
+              "name": "nom",
+              "value": "={{ $json.nom }}",
+              "type": "string"
+            },
+            {
+              "id": "ee2ca6b7-7eb9-4a15-8e1c-04e2ec0753e2",
+              "name": "numero",
+              "value": "={{ $json.numero }}",
+              "type": "string"
+            },
+            {
+              "id": "34644be6-f758-40fd-a162-8c6a8346ed38",
+              "name": "adresse",
+              "value": "={{ $json.adresse }}",
+              "type": "string"
+            },
+            {
+              "id": "14e9cf93-c0a8-4162-9b6e-694d893d2a32",
+              "name": "specialite",
+              "value": "={{ $json.specialite }}",
+              "type": "string"
+            },
+            {
+              "id": "93ee9806-390f-4ec2-9204-34cf689dbf5d",
+              "name": "contact",
+              "value": "={{ $json.contact }}",
+              "type": "string"
+            },
+            {
+              "id": "36233bfb-f7c2-40e2-8335-ad92c6481aaf",
+              "name": "image",
+              "value": "={{ $json.image }}",
+              "type": "string"
+            },
+            {
+              "id": "79620b23-4cf4-4fba-a78a-82515a686a73",
+              "name": "lat",
+              "value": "={{ $json.lat }}",
+              "type": "number"
+            },
+            {
+              "id": "663128b9-044a-4750-bb67-883093e1d66d",
+              "name": "lng",
+              "value": "={{ $json.lng }}",
+              "type": "number"
+            },
+            {
+              "id": "6ec094ca-7033-4d7e-8d74-de2a5786e587",
+              "name": "description",
+              "value": "={{ $json.description }}",
+              "type": "string"
+            },
+            {
+              "id": "bac92d1f-a302-4459-9743-7a1bedb97cde",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1060,
+        160
+      ],
+      "id": "6222e872-c18e-48cb-8e23-b7036522ace8",
+      "name": "elements"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = $json.local_results;\n\nreturn results.map(r => {\n  return {\n    json: {\n      id:r.position,\n      nom: r.title,\n      numero: r.phone,\n      adresse: r.address,\n      contact: r.website,\n      specialite: r.category || r.type || r.description,\n      image: r.thumbnail || r.photo || null,\n      lat:r.gps_coordinates.latitude,\n      lng:r.gps_coordinates.longitude,\n      description:r.description|| null\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        0
+      ],
+      "id": "aa12057f-a8b2-42c7-818d-b4a6a3398747",
+      "name": "transform"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "daysInterval": 2
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -120,
+        220
+      ],
+      "id": "e0010162-0e16-4589-84d7-08a73317a951",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "transform",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "elements": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "transform": {
+      "main": [
+        [
+          {
+            "node": "elements",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "bf30b018-9ac3-4e65-bcff-7308c5afc0c6",
+  "meta": {
+    "instanceId": "1689fe8120f1dab03e72712730ee398d4641889926103594f79a6cfa5caa2c41"
+  },
+  "id": "qW6ndqoVbUSZHsap",
+  "tags": []
+}

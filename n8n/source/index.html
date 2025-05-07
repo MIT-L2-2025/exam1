@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurants Chinois à Antananarivo</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Toastify pour les popups -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <!-- Google Maps API -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM&libraries=places"></script>
+  <style>
+    /* Palette Tailwind personnalisée */
+    .bg-primary { background-color: #b91c1c; }
+    .text-primary { color: #b91c1c; }
+    .bg-secondary { background-color: #facc15; }
+    .text-secondary { color: #facc15; }
+    .bg-neutral { background-color: #1f2937; }
+    .text-neutral { color: #1f2937; }
+    .bg-background { background-color: #f8fafc; }
+    .bg-accent { background-color: #dc2626; }
+    .text-accent { color: #dc2626; }
+
+    /* Style pour la modale */
+    #mapModal {
+      transition: opacity 0.3s ease-in-out;
+    }
+    #mapModal.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #map, #streetView {
+      transition: height 0.3s ease-in-out;
+    }
+    /* Style pour le bouton de fermeture */
+    #closeModalButton {
+      font-size: 1.5rem;
+      z-index: 50;
+    }
+    /* Style pour le spinner */
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #b91c1c;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    /* Style pour Toastify */
+    .toastify {
+      background: #b91c1c !important;
+      color: #fff !important;
+      border-radius: 0.5rem !important;
+      padding: 1rem !important;
+    }
+  </style>
+</head>
+<body class="bg-background min-h-screen">
+  <!-- Page principale : Liste des restaurants -->
+  <div id="mainPage" class="max-w-7xl mx-auto p-6">
+    <header class="bg-primary text-white text-center py-8 rounded-xl">
+      <h1 class="text-4xl font-bold">Restaurants Chinois à Antananarivo</h1>
+    </header>
+    <div class="mt-8">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Rechercher un restaurant..."
+        class="w-full max-w-md mx-auto block p-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+      />
+    </div>
+    <div id="restaurantList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 hidden">
+      <!-- Les cartes seront insérées ici par JavaScript -->
+    </div>
+    <div id="loadingSpinner" class="mt-8">
+      <div class="loader"></div>
+      <p class="text-center text-gray-600 mt-4">Chargement des restaurants, veuillez actualiser plusieurs fois si cela persiste, ou vérifiez que l'execution de server.js</p>
+    </div>
+  </div>
+
+  <!-- Page de menu -->
+  <div id="menuPage" class="hidden max-w-4xl mx-auto p-6">
+    <button id="backButton" class="mb-4 text-primary hover:text-accent">
+      <i class="fas fa-arrow-left mr-2"></i> Retour
+    </button>
+    <h1 id="menuName" class="text-3xl font-bold text-neutral"></h1>
+    <p id="menuSpecialite" class="text-gray-600 mt-2"></p>
+    <div class="mt-6">
+      <h2 class="text-xl font-semibold text-neutral">À propos</h2>
+      <p id="menuDescription" class="text-gray-700 mt-2"></p>
+    </div>
+    <div class="mt-6">
+      <h2 class="text-xl font-semibold text-neutral">Contact</h2>
+      <p id="menuNumero" class="text-gray-700 mt-2">
+        <i class="fas fa-phone mr-2 text-primary"></i>
+        <span id="menuNumeroText"></span>
+      </p>
+      <p id="menuContact" class="text-gray-700 mt-2">
+        <i class="fas fa-link mr-2 text-primary"></i>
+        <a id="menuContactLink" href="#" target="_blank" class="text-primary hover:text-accent"></a>
+      </p>
+    </div>
+    <div class="mt-6 flex gap-4">
+      <button id="showMapButton" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition-colors">
+        Afficher sur la carte
+      </button>
+      <button id="showStreetViewButton" class="bg-secondary text-neutral px-6 py-2 rounded-full hover:bg-accent transition-colors">
+        Vue 3D
+      </button>
+    </div>
+  </div>
+
+  <!-- Modale pour la carte/Street View -->
+  <div id="mapModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl w-full max-w-4xl h-[80vh] overflow-hidden relative">
+      <button id="closeModalButton" class="absolute top-4 right-4 bg-primary text-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-accent transition-colors">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="relative w-full h-full flex flex-col">
+        <div id="map" class="w-full" style="height: 100%;"></div>
+        <div id="streetView" class="w-full" style="height: 0;"></div>
+        <div id="mapControls" class="absolute top-4 right-16 flex flex-col gap-2">
+          <button id="drivingButton" class="w-10 h-10 rounded-full flex items-center justify-center bg-white text-neutral hover:bg-accent transition-colors">
+            <i class="fas fa-car"></i>
+          </button>
+          <button id="walkingButton" class="w-10 h-10 rounded-full flex items-center justify-center bg-white text-neutral hover:bg-accent transition-colors">
+            <i class="fas fa-walking"></i>
+          </button>
+          <button id="bicyclingButton" class="w-10 h-10 rounded-full flex items-center justify-center bg-white text-neutral hover:bg-accent transition-colors">
+            <i class="fas fa-bicycle"></i>
+          </button>
+          <button id="satelliteButton" class="w-10 h-10 rounded-full flex items-center justify-center bg-white text-neutral hover:bg-accent transition-colors">
+            <i class="fas fa-globe"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Éléments DOM
+    const mainPage = document.getElementById('mainPage');
+    const menuPage = document.getElementById('menuPage');
+    const restaurantList = document.getElementById('restaurantList');
+    const searchInput = document.getElementById('searchInput');
+    const backButton = document.getElementById('backButton');
+    const menuName = document.getElementById('menuName');
+    const menuSpecialite = document.getElementById('menuSpecialite');
+    const menuDescription = document.getElementById('menuDescription');
+    const menuNumero = document.getElementById('menuNumero');
+    const menuNumeroText = document.getElementById('menuNumeroText');
+    const menuContact = document.getElementById('menuContact');
+    const menuContactLink = document.getElementById('menuContactLink');
+    const showMapButton = document.getElementById('showMapButton');
+    const showStreetViewButton = document.getElementById('showStreetViewButton');
+    const mapModal = document.getElementById('mapModal');
+    const closeModalButton = document.getElementById('closeModalButton');
+    const mapElement = document.getElementById('map');
+    const streetViewElement = document.getElementById('streetView');
+    const drivingButton = document.getElementById('drivingButton');
+    const walkingButton = document.getElementById('walkingButton');
+    const bicyclingButton = document.getElementById('bicyclingButton');
+    const satelliteButton = document.getElementById('satelliteButton');
+    const mapControls = document.getElementById('mapControls');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+
+    // Variables globales
+    let restaurants = [];
+    let map = null;
+    let streetViewPanorama = null;
+    let directionsService = new google.maps.DirectionsService();
+    let directionsRenderer = null;
+    let userLocation = null;
+    let currentRestaurant = null;
+    let isStreetView = false;
+    let isSatellite = false;
+    let transportMode = google.maps.TravelMode.DRIVING;
+
+    // Charger les restaurants depuis l'API
+    async function loadRestaurants() {
+      let retryCount = 0;
+      const maxRetries = 5;
+      const baseDelay = 2000; // Délai initial de 2 secondes
+
+      while (retryCount < maxRetries) {
+        try {
+          const response = await fetch('http://localhost:3000/restaurants');
+          if (!response.ok) {
+            throw new Error('Erreur réseau : ' + response.status);
+          }
+          restaurants = await response.json();
+          renderRestaurants();
+          loadingSpinner.classList.add('hidden');
+          restaurantList.classList.remove('hidden');
+          return; // Sortir si succès
+        } catch (error) {
+          retryCount++;
+          const delay = baseDelay * Math.pow(2, retryCount - 1); // Backoff exponentiel
+          if (retryCount < maxRetries) {
+            Toastify({
+              text: `Tentative ${retryCount}/${maxRetries} : Serveur non prêt. Nouvel essai dans ${delay / 1000} secondes...`,
+              duration: 3000,
+              position: 'center',
+              style: { background: '#b91c1c' },
+            }).showToast();
+            await new Promise(resolve => setTimeout(resolve, delay));
+          } else {
+            Toastify({
+              text: 'Impossible de charger les restaurants après 5 tentatives. Vérifiez le serveur.',
+              duration: 5000,
+              position: 'center',
+              style: { background: '#b91c1c' },
+            }).showToast();
+            loadingSpinner.classList.add('hidden');
+            console.error('Erreur finale:', error);
+          }
+        }
+      }
+    }
+
+    // Afficher la liste des restaurants
+    function renderRestaurants(filter = '') {
+      restaurantList.innerHTML = '';
+      const filteredRestaurants = restaurants.filter(r =>
+        r.nom.toLowerCase().includes(filter.toLowerCase()) ||
+        (r.specialite && r.specialite.toLowerCase().includes(filter.toLowerCase()))
+      );
+      if (filteredRestaurants.length === 0) {
+        restaurantList.innerHTML = '<p class="text-center text-gray-600">Aucun restaurant trouvé.</p>';
+        return;
+      }
+      filteredRestaurants.forEach(restaurant => {
+        const card = document.createElement('div');
+        card.className = 'group block bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300';
+        card.innerHTML = `
+          <div class="relative h-48">
+            <img 
+              src="${restaurant.image || 'https://picsum.photos/300/200?random'}" 
+              alt="Photo de ${restaurant.nom}" 
+              class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+              onerror="this.src='https://picsum.photos/300/200?random'; this.onerror=null;"
+            >
+          </div>
+          <div class="p-4">
+            <h3 class="text-xl font-semibold text-neutral">${restaurant.nom}</h3>
+            <p class="text-sm text-gray-600 mt-1">
+              <i class="fas fa-utensils mr-2 text-primary"></i>
+              ${restaurant.specialite || 'Non spécifié'}
+            </p>
+            <p class="text-sm text-gray-600 mt-1">
+              <i class="fas fa-map-marker-alt mr-2 text-primary"></i>
+              ${restaurant.adresse}
+            </p>
+          </div>
+        `;
+        card.addEventListener('click', () => showMenuPage(restaurant));
+        restaurantList.appendChild(card);
+      });
+    }
+
+    // Afficher la page de menu
+    function showMenuPage(restaurant) {
+      currentRestaurant = restaurant;
+      mainPage.classList.add('hidden');
+      menuPage.classList.remove('hidden');
+      menuName.textContent = restaurant.nom;
+      menuSpecialite.textContent = restaurant.specialite || 'Cuisine chinoise';
+      menuDescription.textContent = restaurant.description ||
+        `Découvrez ${restaurant.nom}, un restaurant authentique offrant une expérience culinaire chinoise unique à Antananarivo. Situé à ${restaurant.adresse}, ce lieu est parfait pour savourer des plats traditionnels dans une ambiance chaleureuse.`;
+      menuNumeroText.textContent = restaurant.numero || 'Non disponible';
+      if (restaurant.contact) {
+        menuContactLink.href = restaurant.contact;
+        menuContactLink.textContent = restaurant.contact;
+      } else {
+        menuContactLink.href = '#';
+        menuContactLink.textContent = 'Non disponible';
+      }
+    }
+
+    // Retour à la page principale
+    backButton.addEventListener('click', () => {
+      menuPage.classList.add('hidden');
+      mainPage.classList.remove('hidden');
+      currentRestaurant = null;
+    });
+
+    // Recherche dynamique
+    searchInput.addEventListener('input', (e) => {
+      renderRestaurants(e.target.value);
+    });
+
+    // Initialiser la carte
+    function initMap() {
+      map = new google.maps.Map(mapElement, {
+        center: { lat: -18.9067, lng: 47.5257 }, // Centre d'Antananarivo
+        zoom: 14,
+        mapTypeControl: false,
+        streetViewControl: false,
+        styles: [
+          { elementType: 'geometry', stylers: [{ color: '#f8fafc' }] },
+          { elementType: 'labels.text.fill', stylers: [{ color: '#1f2937' }] },
+          { elementType: 'labels.text.stroke', stylers: [{ color: '#ffffff' }] },
+          { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#e5e7eb' }] },
+          { featureType: 'road', elementType: 'labels.text.fill', stylers: [{ color: '#b91c1c' }] },
+          { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#bfdbfe' }] },
+          { featureType: 'poi', elementType: 'geometry', stylers: [{ color: '#facc15' }] },
+          { featureType: 'landscape', stylers: [{ color: '#f1f5f9' }] },
+        ],
+      });
+      directionsRenderer = new google.maps.DirectionsRenderer({ map });
+    }
+
+    // Afficher la modale
+    function showModal(streetViewMode) {
+      if (!currentRestaurant) return;
+      isStreetView = streetViewMode;
+      mapModal.classList.remove('hidden');
+      if (!map) initMap();
+
+      if (isStreetView) {
+        streetViewElement.style.height = '100%';
+        mapElement.style.height = '0';
+        mapControls.style.display = 'none';
+        const streetViewService = new google.maps.StreetViewService();
+        streetViewPanorama = new google.maps.StreetViewPanorama(streetViewElement, {
+          position: { lat: currentRestaurant.lat, lng: currentRestaurant.lng },
+          pov: { heading: 0, pitch: 0 },
+          visible: false,
+        });
+        streetViewService.getPanorama(
+          { location: { lat: currentRestaurant.lat, lng: currentRestaurant.lng }, radius: 50 },
+          (data, status) => {
+            if (status === google.maps.StreetViewStatus.OK) {
+              streetViewPanorama.setPosition({ lat: currentRestaurant.lat, lng: currentRestaurant.lng });
+              streetViewPanorama.setPov({ heading: 0, pitch: 0 });
+              streetViewPanorama.setVisible(true);
+              new google.maps.Marker({
+                position: { lat: currentRestaurant.lat, lng: currentRestaurant.lng },
+                map: streetViewPanorama,
+                icon: {
+                  url: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
+                  scaledSize: new google.maps.Size(32, 32),
+                },
+                title: currentRestaurant.nom,
+              });
+            } else {
+              Toastify({
+                text: "Street View n'est pas disponible pour cet emplacement.",
+                duration: 3000,
+                position: 'center',
+                style: { background: '#b91c1c' },
+              }).showToast();
+              closeModal();
+            }
+          }
+        );
+      } else {
+        streetViewElement.style.height = '0';
+        mapElement.style.height = '100%';
+        mapControls.style.display = 'flex';
+        map.setCenter({ lat: currentRestaurant.lat, lng: currentRestaurant.lng });
+        map.setZoom(17);
+        map.setMapTypeId(isSatellite ? 'satellite' : 'roadmap');
+        new google.maps.Marker({
+          position: { lat: currentRestaurant.lat, lng: currentRestaurant.lng },
+          map,
+          title: currentRestaurant.nom,
+        });
+        calculateRoute();
+      }
+    }
+
+    // Fermer la modale
+    function closeModal() {
+      mapModal.classList.add('hidden');
+      if (streetViewPanorama) {
+        streetViewPanorama.setVisible(false);
+        streetViewPanorama = null;
+      }
+      directionsRenderer.setDirections(null);
+      streetViewElement.style.height = '0';
+      mapElement.style.height = '100%';
+      mapControls.style.display = 'flex';
+    }
+
+    // Calculer l'itinéraire
+    function calculateRoute() {
+      if (!userLocation || !currentRestaurant) {
+        Toastify({
+          text: 'Position de l’utilisateur non détectée.',
+          duration: 3000,
+          position: 'center',
+          style: { background: '#b91c1c' },
+        }).showToast();
+        return;
+      }
+      directionsService.route(
+        {
+          origin: userLocation,
+          destination: { lat: currentRestaurant.lat, lng: currentRestaurant.lng },
+          travelMode: transportMode,
+        },
+        (result, status) => {
+          if (status === google.maps.DirectionsStatus.OK && result) {
+            directionsRenderer.setDirections(result);
+          } else {
+            Toastify({
+              text: 'Impossible de calculer l’itinéraire.',
+              duration: 3000,
+              position: 'center',
+              style: { background: '#b91c1c' },
+            }).showToast();
+          }
+        }
+      );
+    }
+
+    // Obtenir la position de l'utilisateur
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          userLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+        },
+        () => {
+          Toastify({
+            text: 'Géolocalisation non disponible.',
+            duration: 3000,
+            position: 'center',
+            style: { background: '#b91c1c' },
+          }).showToast();
+        }
+      );
+    }
+
+    // Événements pour la modale
+    showMapButton.addEventListener('click', () => showModal(false));
+    showStreetViewButton.addEventListener('click', () => showModal(true));
+    closeModalButton.addEventListener('click', closeModal);
+
+    // Fermer la modale en cliquant sur le fond
+    mapModal.addEventListener('click', (e) => {
+      if (e.target === mapModal) {
+        closeModal();
+      }
+    });
+
+    // Fermer la modale avec la touche Échap
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !mapModal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+
+    // Événements pour les contrôles de la carte
+    drivingButton.addEventListener('click', () => {
+      transportMode = google.maps.TravelMode.DRIVING;
+      drivingButton.classList.add('bg-primary', 'text-white');
+      walkingButton.classList.remove('bg-primary', 'text-white');
+      bicyclingButton.classList.remove('bg-primary', 'text-white');
+      calculateRoute();
+    });
+    walkingButton.addEventListener('click', () => {
+      transportMode = google.maps.TravelMode.WALKING;
+      walkingButton.classList.add('bg-primary', 'text-white');
+      drivingButton.classList.remove('bg-primary', 'text-white');
+      bicyclingButton.classList.remove('bg-primary', 'text-white');
+      calculateRoute();
+    });
+    bicyclingButton.addEventListener('click', () => {
+      transportMode = google.maps.TravelMode.BICYCLING;
+      bicyclingButton.classList.add('bg-primary', 'text-white');
+      drivingButton.classList.remove('bg-primary', 'text-white');
+      walkingButton.classList.remove('bg-primary', 'text-white');
+      calculateRoute();
+    });
+    satelliteButton.addEventListener('click', () => {
+      isSatellite = !isSatellite;
+      map.setMapTypeId(isSatellite ? 'satellite' : 'roadmap');
+      satelliteButton.innerHTML = `<i class="fas ${isSatellite ? 'fa-map' : 'fa-globe'}"></i>`;
+      satelliteButton.classList.toggle('bg-primary');
+      satelliteButton.classList.toggle('text-white');
+    });
+
+    // Exécuter après que le DOM est chargé
+    document.addEventListener('DOMContentLoaded', () => {
+      loadRestaurants();
+    });
+  </script>
+</body>
+</html>
+
+chargement des resultat
