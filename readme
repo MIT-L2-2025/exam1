@@ -1,3 +1,4 @@
-ouvrir n8n sur votre serveur et vous devez télécharger un clé api via  https://serpapi.com/ en se logant parce que sans ça la requete http du workflow ne va
+1- ouvrir n8n sur votre serveur et vous devez télécharger un clé api via  https://serpapi.com/ en se logant parce que sans ça la requete http du workflow ne va
 pas marcher
 Après l'éxecution du workflow  enregistrer le fichier .json générer et à partir du fichier .json on doit executer le script python pour obtenir le fichier html contenant les listes des restaurants 
+2-En ouvrant le fichier output.html vous aurez tout les listes des restaurants chinois au alentours de Antananarivo avec un itinéraire pour chaque restaurant
