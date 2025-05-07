@@ -19,8 +19,8 @@ Le workflow produit une page HTML contenant :
 
 ## 📁 Fichiers
 
-- `resto_chinois_Tana.json` – le fichier du workflow n8n  
-- `resultats.html` – exemple de page générée
+- `Restaurant_chinois.json` – le fichier du workflow n8n  
+- `restaurants.html` – exemple de page générée
 
 ## Auteur
 

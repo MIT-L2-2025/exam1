@@ -1,0 +1,510 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chinese Restaurants in Antananarivo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #e53e3e;
+      --primary-light: #feb2b2;
+      --secondary: #38a169;
+      --dark: #1a202c;
+      --light: #f7fafc;
+      --gray: #a0aec0;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --border-radius: 8px;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+      color: var(--dark);
+      line-height: 1.7;
+    }
+    
+    .header {
+      background-color: var(--primary);
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin: 0;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+    
+    .restaurants-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .restaurant-card {
+      background-color: white;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .restaurant-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .restaurant-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    .restaurant-content {
+      padding: 1.5rem;
+    }
+    
+    .restaurant-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    
+    .restaurant-info {
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .restaurant-info i {
+      color: var(--primary);
+      width: 1.5rem;
+      margin-right: 0.75rem;
+    }
+    
+    .restaurant-actions {
+      display: flex;
+      margin-top: 1.5rem;
+      gap: 0.75rem;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      border: none;
+      color: white;
+    }
+    
+    .btn i {
+      margin-right: 0.5rem;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary);
+    }
+    
+    .btn-primary:hover {
+      background-color: #c53030;
+    }
+    
+    .btn-secondary {
+      background-color: var(--secondary);
+    }
+    
+    .btn-secondary:hover {
+      background-color: #2f855a;
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--gray);
+      color: var(--dark);
+    }
+    
+    .btn-outline:hover {
+      background-color: #edf2f7;
+    }
+    
+    .rating {
+      display: inline-flex;
+      align-items: center;
+      background-color: rgba(246, 173, 85, 0.1);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    
+    .rating i {
+      color: #f6ad55;
+      margin-right: 0.25rem;
+    }
+    
+    .map-container {
+      height: 0;
+      overflow: hidden;
+      width: 100%;
+      border-radius: var(--border-radius);
+      margin-top: 1rem;
+      transition: height 0.3s ease;
+    }
+    
+    .map-container.active {
+      height: 300px;
+    }
+    
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background-color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+    }
+    
+    .filter-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.75rem 1rem;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--border-radius);
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      background-color: var(--primary-light);
+      color: var(--primary);
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-left: 0.5rem;
+    }
+    
+    footer {
+      background-color: var(--dark);
+      color: white;
+      text-align: center;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+    
+    @media (max-width: 768px) {
+      .restaurants-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .header h1 {
+        font-size: 1.5rem;
+      }
+      
+      .restaurant-title {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM&callback=initMaps" defer></script>
+</head>
+<body>
+  <header class="header">
+    <h1>Chinese Restaurants in Antananarivo</h1>
+  </header>
+  
+  <div class="container">
+    <div class="filters">
+      <input type="text" class="filter-input" id="search-input" placeholder="Search restaurants...">
+      <select id="sort-select" class="filter-input">
+        <option value="rating">Sort by Rating</option>
+        <option value="reviews">Sort by Reviews</option>
+        <option value="name">Sort by Name</option>
+      </select>
+      <button class="btn btn-primary" id="filter-button">
+        <i class="fas fa-filter"></i> Apply Filters
+      </button>
+    </div>
+    
+    <div class="restaurants-grid" id="restaurants-container">
+      <!-- Restaurant cards will be dynamically inserted here -->
+    </div>
+  </div>
+  
+  <footer>
+    <p>© 2025 Chinese Restaurants in Antananarivo</p>
+  </footer>
+
+  <script>
+    const restaurantData = [{"name":"Grand Resto de Chine","address":"Lalana Rasamuol Maurice, Antananarivo, Madagascar","latitude":-18.9141849,"longitude":47.5384142,"phone":"+261 33 83 594 63","rating":3.7,"reviews":29,"type":"Asian restaurant","hours":"Open ⋅ Closes 9:30 pm","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq4TOJmNd5jTfVxjbtS5xXyz_Z4hfZLCsFKgo_MFJedhpOy3rWySlTaNMZYye8Z09metGs9h1Xmzbdv5qhkAGIdLZz7lRIjNzJupBH7Q3Yn6bFQKX38V4fo6tN2ES5SBVGO-zUg=w163-h92-k-no"},{"name":"La Fleur De Sel","address":"Antananarivo, Madagascar","latitude":-18.8715948,"longitude":47.5426065,"phone":"+261 34 12 582 22","rating":3.8,"reviews":31,"type":"Mandarin restaurant","hours":"Open ⋅ Closes 10 pm","photo":"https://lh3.googleusercontent.com/p/AF1QipOQOGgQ0ObZ5MrCEVpNp5mKBTcQCh0GEM77h5YL=w158-h92-k-no"},{"name":"l'Orient Asian Fusion Restaurant","address":"Madagascar, Antananarivo, Lalana Rainandriamampandry, 邮政编码: 101","latitude":-18.907249399999998,"longitude":47.5280373,"phone":"+261 34 36 788 88","rating":5,"reviews":60,"type":"Pan-Asian restaurant","hours":"Open ⋅ Closes 9 pm","photo":"https://lh3.googleusercontent.com/p/AF1QipMEtu4ta7YgG-CL3VT7miGqijPe1Too2f9jrSaP=w122-h92-k-no"},{"name":"Restaurant L'EURASIE - Ankorondrano","address":"Face à l'hôtel Ibis - Ankorondrano, Antananarivo 101, Madagascar","latitude":-18.878854999999998,"longitude":47.521268299999996,"phone":"+261 38 51 944 37","rating":4.4,"reviews":14,"type":"Chinese restaurant","hours":"Closes soon ⋅ 8 pm ⋅ Opens 10 am Thu","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4npxE33sfLOrA0hgKA5ahgIxNqFsnTOlEyDp-8IBXQZqnYjTWqWkELHkX7Gg_4lpPhCFTfTv7pt1BWgta2eukaumownSUhn9sT0NjsGGj1CyZ1NRyx4r3DPqGYk3Gvwbo4rXfUjMnw=w163-h92-k-no"},{"name":"Restaurant Fong Mei","address":"4GHM+JMX, Rue Andriantsihoarana Ratsimbazafy, Antananarivo, Madagascar","latitude":-18.870893799999997,"longitude":47.5342498,"phone":"+261 33 25 571 99","rating":3.7,"reviews":12,"type":"Chinese restaurant","hours":"Open ⋅ Closes 9 pm","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrnlfVBZyc1OZwvBmIKhKIWrHletzUxv3NSb4Mu4EHtlMaCZZn1Zj85pLXxL0s2fWbgiXwBZzL9ky_2ioaTEDumBp7TmyK6WrKKMU5JkWex41HZBzZHFkI1CxBPxRT3ENFWLWIa=w189-h92-k-no"},{"name":"凤城 Soleil","address":"Lot IVK 89 bis Anosivavaka Ambohimanarina, Antananarivo 101, Madagascar","latitude":-18.8729457,"longitude":47.507969499999994,"phone":"+261 33 11 336 28","rating":3.4,"reviews":31,"type":"Chinese restaurant","hours":"Open ⋅ Closes 9:30 pm","photo":"https://lh3.googleusercontent.com/p/AF1QipNV5IfdfmLcw6xZl_UC9xIgmSXKSFaCReLf3JDq=w415-h92-k-no"},{"name":"O Loft Chinois","address":"4G39+2J7, Antananarivo, Madagascar","latitude":-18.8974503,"longitude":47.5190589,"phone":"Téléphone non disponible","rating":4.2,"reviews":26,"type":"Restaurant","hours":"Closed ⋅ Opens 9 am Thu","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrNSFXLHuXK0HmuKT_O2vavSJCMbohK2CcfIAHhrORa51KLw19rXK8SWD8pHLRRiZ8HCy5VvWaaIldcaFjbjcjUr6LhEaPT_MoOXwxw0wOOrB0ZTtr1i48iT5dpkX78JYTceXRC=w122-h92-k-no"},{"name":"Hirondelle \"燕子\" Chinese FOOD","address":"Lalana Dama-Ntsoha Razatintsalama Jean-Baptiste, Antananarivo 101, Madagascar","latitude":-18.9174137,"longitude":47.5366284,"phone":"+261 34 11 166 78","rating":4.6,"reviews":28,"type":"Hot pot restaurant","hours":"Open ⋅ Closes 9 pm","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4no6LH6riu3rgub-E51EYmukoJU8UMTkPRlFgcIV2aIlA87muugaCqc-5GjreGbfhMFQOJVwVbeaSYYTkOsI7Mo4CaC1Wlr-KJVJJr8KaHQYU9YncvlXwKCyYxe02kOjwZ_3kpbr=w122-h92-k-no"},{"name":"Dun Huang","address":"42 Arabe Andrinampoinimerina, Antananarivo 101, Madagascar","latitude":-18.905614,"longitude":47.524070699999996,"phone":"Téléphone non disponible","rating":4.6,"reviews":20,"type":"Chinese restaurant","hours":"Open ⋅ Closes 9 pm","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4npRiQGr49aguqhfHel7hPY-YRe2tbHxsxZwRb41jeZ_y9g3fcSKtihma_jgHj9003bIm2az7yI3A9bCGwc820LxDEBZnE_p5DoxzxFvy8k-HCzWpd90-XKSL302u4oic5tmXUAR=w163-h92-k-no"},{"name":"Restaurant La Belle Ville","address":"3GQP+WJP, Rue Razafindralombo Pierre, Antananarivo, Madagascar","latitude":-18.9101641,"longitude":47.5365779,"phone":"+261 34 03 244 36","rating":4.1,"reviews":13,"type":"Chinese restaurant","hours":"Open ⋅ Closes 10 pm","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4noTnzgFzw0EeI3YUnuyNQ6VXO92iZYKP0IHlHWCKMvmQkLu6o5H5WzV4A40Fv2Yd6IL-dZ2IttRdXIW6Y0L2VQrxulYsfEtLKIz4Ys3J5_q-2Agui2uYoTZjEA5PNBE4thHIafc=w189-h92-k-no"},{"name":"Le Grand Orient","address":"Rue Andriantsihoarana Ratsimbazafy, Antananarivo 101, Madagascar","latitude":-18.8698272,"longitude":47.5317034,"phone":"+261 20 22 202 88","rating":3.6,"reviews":32,"type":"Restaurant","hours":"Horaires non disponibles","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4np_MNlwLidRF4LFb8m5vnhpRtqNvFvXsxoc3FM1Zp_ykD2IqHr4zCzaq72mPSsIXo0d9mSn2davxkWv1-r-6p0feczdTLmByDJLKoFReXl4A0zwWf2G-nDnOaNZbkJgXA5UAYCg=w163-h92-k-no"},{"name":"Zen Garden","address":"II M 38 F Androhibe Antananarivo Antananarivo, 101, Madagascar","latitude":-18.865723499999998,"longitude":47.5428709,"phone":"+261 32 05 135 03","rating":4.5,"reviews":11,"type":"Chinese restaurant","hours":"Horaires non disponibles","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4npdI-yqx33nTkhBoAI68tds6cSOQXEz1RxIZ1PcxcwXUXEskeNKzGteczPRSktXZ8-oNFzdaBli7HVnstoXM_vf84wycELrve-oOrBO9Y8BEzJO4zTtd0tUsLidY8GcgYMftl82=w122-h92-k-no"},{"name":"Kaizen Restaurant","address":"3GPR+F3J, Lalana Vvs, Antananarivo, Madagascar","latitude":-18.9137837,"longitude":47.5401532,"phone":"Téléphone non disponible","rating":4.6,"reviews":7,"type":"Chinese restaurant","hours":"Open ⋅ Closes 9 pm","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr263HPwxgJQR1gw-R0NHmI1PZQiD-sxUXsR_XW88ZHkLt-UWqa7-MsbDeLDRigaAxO58dxS8MSTnz59munpZ5xKuotj1xRj24ZmzrpfDznOk7eDRHt2CadLIxkhkUIWATeszVJ=w80-h106-k-no"},{"name":"Restaurant 19° C","address":"4G9C+8Q2, Galana service station, Rue Ravoninahitriniarivo Ankorondrano, Antananarivo, Madagascar, across the street from, Rue Ravoninahitriniarivo, Antananarivo, Madagascar","latitude":-18.8817394,"longitude":47.5219035,"phone":"+261 34 02 818 66","rating":4,"reviews":1,"type":"Chinese restaurant","hours":"Open ⋅ Closes 12 am","photo":"https://via.placeholder.com/400"},{"name":"HONG KONG Restaurant - salon de The","address":"Toyota, Lalana Doktera. Joseph Raseta, Maibahoaka Ivato Antananarivo IVATO, Antananarivo 105, Madagascar","latitude":-18.830986199999998,"longitude":47.465352599999996,"phone":"+261 38 68 509 77","rating":4.5,"reviews":2,"type":"Mandarin restaurant","hours":"Open ⋅ Closes 10 pm","photo":"https://lh3.googleusercontent.com/p/AF1QipMR8kLY4EHqmvIlOoaEvnzfUf8qY6f944ORYOF9=w147-h92-k-no"},{"name":"Dragon Royal Restaurant IVATO","address":"5FQF+WHH, Antananarivo, Madagascar","latitude":-18.8101926,"longitude":47.4739989,"phone":"+261 38 12 579 79","rating":4.5,"reviews":31,"type":"Asian restaurant","hours":"Open now","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrt2TCU-908qg6vW8K-dio0cRCy-UE5AtRngcMTDFKvsZ9tuoCsakV3iKyU_7-Wxzt2d-CY14q5fL_71rvrTD8pnXOKCSkC5FlmqNQjK0QyMb9HJSc5FCmbKbO_XNjPvSaXX0xqGg=w80-h106-k-no"},{"name":"吕府私房菜（KTV）","address":"Madagascar, Antananarivo, AUTOREX, Amitie Fandian","latitude":-18.910683199999998,"longitude":47.503318,"phone":"+261 38 82 066 66","rating":5,"reviews":1,"type":"Chinese restaurant","hours":"Open ⋅ Closes 10 pm","photo":"https://lh3.googleusercontent.com/p/AF1QipM07B6izo0ribTcOx106yL2JfPX64vAli2EbcDU=w84-h92-k-no"},{"name":"Laï tsock","address":"3GQP+4JW, Rue Razafindralombo Pierre, Antananarivo, Madagascar","latitude":-18.912186,"longitude":47.5365843,"phone":"+261 34 30 357 57","rating":5,"reviews":8,"type":"Asian restaurant","hours":"Open ⋅ Closes 9 pm","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4nowIaBQ5xXfgGaBY1H4Z13qWB2I4jgTG_eB7-7h7p0yM_K9FCSXPsVlvXPgQNbLaGoXxLzhYzbSF7ujW9GYL1l-6HvsWBerCLSWlbG8kmme6LGSyeo7a_DI7AK4Uvqdk2RaC4e-_w=w163-h92-k-no"},{"name":"La Jonquille","address":"Antananarivo 101, Madagascar","latitude":-18.909325799999998,"longitude":47.536889599999995,"phone":"+261 20 22 206 37","rating":4,"reviews":22,"type":"Restaurant","hours":"Closed ⋅ Opens 9 am Thu","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqItKanRlT1sNaBuRMJKArrGt7Gp_iHFrXyxjOdV6wLOo7jRkN09unBbLMZRKnxZ56iqpeItRt-1JWTeZEu2T4GkZXg51ua4TJyArKa1rvQ9_n5vEA6JD5z7qt7fnyJXSB0r3qkdw=w189-h92-k-no"},{"name":"Restaurant Le Cantilène","address":"3GQ4+RWM, Antananarivo, Madagascar","latitude":-18.9104223,"longitude":47.507293499999996,"phone":"+261 34 86 576 67","rating":5,"reviews":2,"type":"Chinese restaurant","hours":"Open ⋅ Closes 9 pm","photo":"https://via.placeholder.com/400"}];
+    const mapsData = [];
+    const directionsRenderers = [];
+    let filteredRestaurants = [...restaurantData];
+    
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', () => {
+      renderRestaurants(restaurantData);
+      
+      // Set up event listeners
+      document.getElementById('filter-button').addEventListener('click', applyFilters);
+      document.getElementById('search-input').addEventListener('keyup', event => {
+        if (event.key === 'Enter') {
+          applyFilters();
+        }
+      });
+      
+      document.getElementById('sort-select').addEventListener('change', applyFilters);
+    });
+    
+    function renderRestaurants(restaurants) {
+      const container = document.getElementById('restaurants-container');
+      container.innerHTML = '';
+      
+      if (restaurants.length === 0) {
+        container.innerHTML = '<div class="no-results">No restaurants found matching your criteria.</div>';
+        return;
+      }
+      
+      restaurants.forEach((restaurant, index) => {
+        const card = document.createElement('div');
+        card.className = 'restaurant-card';
+        
+        const validCoordinates = restaurant.latitude !== 0 && restaurant.longitude !== 0;
+        
+        card.innerHTML = `
+          <img class="restaurant-image" src="${restaurant.photo}" alt="${restaurant.name}">
+          <div class="restaurant-content">
+            <h2 class="restaurant-title">${restaurant.name}</h2>
+            
+            <div class="restaurant-info">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>${restaurant.address}</span>
+            </div>
+            
+            <div class="restaurant-info">
+              <i class="fas fa-phone"></i>
+              <span>${restaurant.phone}</span>
+            </div>
+            
+            <div class="restaurant-info">
+              <i class="fas fa-utensils"></i>
+              <span>${restaurant.type}</span>
+            </div>
+            
+            <div class="restaurant-info">
+              <i class="fas fa-clock"></i>
+              <span>${restaurant.hours}</span>
+            </div>
+            
+            <div class="restaurant-info">
+              <i class="fas fa-star"></i>
+              <span class="rating">
+                ${restaurant.rating} <span class="badge">${restaurant.reviews} reviews</span>
+              </span>
+            </div>
+            
+            <div class="restaurant-actions">
+              ${validCoordinates ? `
+                <button class="btn btn-secondary" onclick="showRoute(${index})">
+                  <i class="fas fa-route"></i> View Route
+                </button>
+                <button class="btn btn-outline" onclick="toggleMap(${index})">
+                  <i class="fas fa-map"></i> Toggle Map
+                </button>
+              ` : `
+                <button class="btn btn-outline" disabled>
+                  <i class="fas fa-map-marker-slash"></i> No Map Available
+                </button>
+              `}
+            </div>
+            
+            ${validCoordinates ? `<div id="map-${index}" class="map-container"></div>` : ''}
+          </div>
+        `;
+        
+        container.appendChild(card);
+      });
+    }
+    
+    function applyFilters() {
+      const searchTerm = document.getElementById('search-input').value.toLowerCase();
+      const sortBy = document.getElementById('sort-select').value;
+      
+      // Filter restaurants
+      filteredRestaurants = restaurantData.filter(restaurant => {
+        return restaurant.name.toLowerCase().includes(searchTerm) || 
+               restaurant.address.toLowerCase().includes(searchTerm) ||
+               restaurant.type.toLowerCase().includes(searchTerm);
+      });
+      
+      // Sort restaurants
+      filteredRestaurants.sort((a, b) => {
+        if (sortBy === 'rating') {
+          return parseFloat(b.rating) - parseFloat(a.rating);
+        } else if (sortBy === 'reviews') {
+          return parseInt(b.reviews) - parseInt(a.reviews);
+        } else if (sortBy === 'name') {
+          return a.name.localeCompare(b.name);
+        }
+        return 0;
+      });
+      
+      renderRestaurants(filteredRestaurants);
+    }
+    
+    // Initialize Google Maps
+    function initMaps() {
+      restaurantData.forEach((restaurant, index) => {
+        mapsData[index] = {
+          lat: parseFloat(restaurant.latitude) || 0,
+          lng: parseFloat(restaurant.longitude) || 0,
+          name: restaurant.name
+        };
+      });
+    }
+    
+    function showRoute(index) {
+      const restaurant = filteredRestaurants[index];
+      const restaurantIndex = restaurantData.findIndex(r => r.name === restaurant.name);
+      
+      if (mapsData[restaurantIndex].lat === 0 || mapsData[restaurantIndex].lng === 0) return;
+      
+      const mapElement = document.getElementById(`map-${index}`);
+      if (!mapElement) return;
+      
+      // Make map visible
+      mapElement.classList.add('active');
+      
+      // Initialize map if not already done
+      if (!window.google || !window.google.maps) {
+        alert('Google Maps is still loading. Please try again in a moment.');
+        return;
+      }
+      
+      const map = new google.maps.Map(mapElement, {
+        center: { 
+          lat: mapsData[restaurantIndex].lat, 
+          lng: mapsData[restaurantIndex].lng 
+        },
+        zoom: 15
+      });
+      
+      const marker = new google.maps.Marker({
+        position: { 
+          lat: mapsData[restaurantIndex].lat, 
+          lng: mapsData[restaurantIndex].lng 
+        },
+        map: map,
+        title: restaurant.name
+      });
+      
+      // Set up directions renderer
+      const directionsRenderer = new google.maps.DirectionsRenderer({
+        map: map,
+        suppressMarkers: false
+      });
+      directionsRenderers[index] = directionsRenderer;
+      
+      // Get user location and show route
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const userLocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            
+            const directionsService = new google.maps.DirectionsService();
+            directionsService.route({
+              origin: userLocation,
+              destination: { 
+                lat: mapsData[restaurantIndex].lat, 
+                lng: mapsData[restaurantIndex].lng 
+              },
+              travelMode: google.maps.TravelMode.DRIVING
+            }, (result, status) => {
+              if (status === google.maps.DirectionsStatus.OK) {
+                directionsRenderer.setDirections(result);
+              } else {
+                alert('Unable to calculate route: ' + status);
+              }
+            });
+          },
+          (error) => {
+            alert('Geolocation error: ' + error.message);
+          }
+        );
+      } else {
+        alert('Geolocation is not supported by your browser.');
+      }
+    }
+    
+    function toggleMap(index) {
+      const restaurant = filteredRestaurants[index];
+      const restaurantIndex = restaurantData.findIndex(r => r.name === restaurant.name);
+      
+      if (mapsData[restaurantIndex].lat === 0 || mapsData[restaurantIndex].lng === 0) return;
+      
+      const mapElement = document.getElementById(`map-${index}`);
+      if (!mapElement) return;
+      
+      if (mapElement.classList.contains('active')) {
+        mapElement.classList.remove('active');
+      } else {
+        mapElement.classList.add('active');
+        
+        // Initialize map if not already done
+        if (!window.google || !window.google.maps) {
+          alert('Google Maps is still loading. Please try again in a moment.');
+          return;
+        }
+        
+        const map = new google.maps.Map(mapElement, {
+          center: { 
+            lat: mapsData[restaurantIndex].lat, 
+            lng: mapsData[restaurantIndex].lng 
+          },
+          zoom: 15
+        });
+        
+        new google.maps.Marker({
+          position: { 
+            lat: mapsData[restaurantIndex].lat, 
+            lng: mapsData[restaurantIndex].lng 
+          },
+          map: map,
+          title: restaurant.name
+        });
+      }
+    }
+  </script>
+</body>
+</html>

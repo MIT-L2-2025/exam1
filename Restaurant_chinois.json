@@ -1,0 +1,130 @@
+{
+  "name": "2",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "887f9f5a-6178-4334-bca3-535dc78257d9",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://serpapi.com/search?engine=google_maps&q=restaurant+chinois+Antananarivo&api_key=aa03cb21acee0bf05197d2bc6c90932360a8bf05dac441c63fce3504ba3246cf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        260,
+        20
+      ],
+      "id": "c63d15cb-8dd7-4793-8442-90c63d9a1305",
+      "name": "Fetch Restaurants SerpAPI"
+    },
+    {
+      "parameters": {
+        "jsCode": "const localResults = items[0].json.local_results || [];\n\nreturn localResults.map(restaurant => {\n  // Safely extract coordinates\n  const latitude = restaurant.gps_coordinates?.latitude && !isNaN(restaurant.gps_coordinates.latitude) \n    ? parseFloat(restaurant.gps_coordinates.latitude) \n    : 0;\n  const longitude = restaurant.gps_coordinates?.longitude && !isNaN(restaurant.gps_coordinates.longitude) \n    ? parseFloat(restaurant.gps_coordinates.longitude) \n    : 0;\n\n  // Extract hours from possible fields\n  let hours = restaurant.hours || restaurant.open_state || 'Horaires non disponibles';\n  if (typeof hours === 'object') {\n    hours = JSON.stringify(hours); // Fallback for unexpected object format\n  }\n\n  return {\n    json: {\n      name: restaurant.title || 'Inconnu',\n      address: restaurant.address || 'Adresse non disponible',\n      latitude,\n      longitude,\n      phone: restaurant.phone || 'Téléphone non disponible',\n      rating: restaurant.rating || 'Aucune note',\n      reviews: restaurant.reviews || 0,\n      type: restaurant.type || 'Type non spécifié',\n      hours,\n      photo: restaurant.thumbnail || 'https://via.placeholder.com/400'\n    }\n  };\n}).filter(item => item.json.latitude !== 0 && item.json.longitude !== 0); // Skip invalid coordinates"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        280
+      ],
+      "id": "51c4a70a-a49b-4383-a769-1f16f4ed5c34",
+      "name": "Transform Data"
+    },
+    {
+      "parameters": {
+        "jsCode": "const restaurants = $input.all().map(item => item.json);\n\nlet htmlContent = `\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Chinese Restaurants in Antananarivo</title>\n  <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap\" rel=\"stylesheet\">\n  <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\n  <style>\n    :root {\n      --primary: #e53e3e;\n      --primary-light: #feb2b2;\n      --secondary: #38a169;\n      --dark: #1a202c;\n      --light: #f7fafc;\n      --gray: #a0aec0;\n      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\n      --border-radius: 8px;\n    }\n    \n    * {\n      box-sizing: border-box;\n      margin: 0;\n      padding: 0;\n    }\n    \n    body {\n      font-family: 'Poppins', sans-serif;\n      background-color: #f8f9fa;\n      color: var(--dark);\n      line-height: 1.7;\n    }\n    \n    .header {\n      background-color: var(--primary);\n      color: white;\n      padding: 2rem 0;\n      text-align: center;\n      box-shadow: var(--shadow);\n      position: sticky;\n      top: 0;\n      z-index: 100;\n    }\n    \n    .header h1 {\n      font-size: 2rem;\n      font-weight: 600;\n      margin: 0;\n    }\n    \n    .container {\n      max-width: 1200px;\n      margin: 2rem auto;\n      padding: 0 1.5rem;\n    }\n    \n    .restaurants-grid {\n      display: grid;\n      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));\n      gap: 1.5rem;\n      margin-top: 2rem;\n    }\n    \n    .restaurant-card {\n      background-color: white;\n      border-radius: var(--border-radius);\n      overflow: hidden;\n      box-shadow: var(--shadow);\n      transition: transform 0.3s ease, box-shadow 0.3s ease;\n    }\n    \n    .restaurant-card:hover {\n      transform: translateY(-5px);\n      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);\n    }\n    \n    .restaurant-image {\n      width: 100%;\n      height: 200px;\n      object-fit: cover;\n    }\n    \n    .restaurant-content {\n      padding: 1.5rem;\n    }\n    \n    .restaurant-title {\n      font-size: 1.5rem;\n      font-weight: 600;\n      color: var(--primary);\n      margin-bottom: 1rem;\n    }\n    \n    .restaurant-info {\n      margin-bottom: 0.5rem;\n      display: flex;\n      align-items: center;\n    }\n    \n    .restaurant-info i {\n      color: var(--primary);\n      width: 1.5rem;\n      margin-right: 0.75rem;\n    }\n    \n    .restaurant-actions {\n      display: flex;\n      margin-top: 1.5rem;\n      gap: 0.75rem;\n    }\n    \n    .btn {\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n      padding: 0.5rem 1rem;\n      border-radius: var(--border-radius);\n      font-weight: 500;\n      text-decoration: none;\n      cursor: pointer;\n      transition: background-color 0.2s ease;\n      border: none;\n      color: white;\n    }\n    \n    .btn i {\n      margin-right: 0.5rem;\n    }\n    \n    .btn-primary {\n      background-color: var(--primary);\n    }\n    \n    .btn-primary:hover {\n      background-color: #c53030;\n    }\n    \n    .btn-secondary {\n      background-color: var(--secondary);\n    }\n    \n    .btn-secondary:hover {\n      background-color: #2f855a;\n    }\n    \n    .btn-outline {\n      background-color: transparent;\n      border: 1px solid var(--gray);\n      color: var(--dark);\n    }\n    \n    .btn-outline:hover {\n      background-color: #edf2f7;\n    }\n    \n    .rating {\n      display: inline-flex;\n      align-items: center;\n      background-color: rgba(246, 173, 85, 0.1);\n      padding: 0.25rem 0.5rem;\n      border-radius: 4px;\n      font-weight: 500;\n    }\n    \n    .rating i {\n      color: #f6ad55;\n      margin-right: 0.25rem;\n    }\n    \n    .map-container {\n      height: 0;\n      overflow: hidden;\n      width: 100%;\n      border-radius: var(--border-radius);\n      margin-top: 1rem;\n      transition: height 0.3s ease;\n    }\n    \n    .map-container.active {\n      height: 300px;\n    }\n    \n    .filters {\n      display: flex;\n      flex-wrap: wrap;\n      gap: 1rem;\n      margin-bottom: 1.5rem;\n      padding: 1rem;\n      background-color: white;\n      border-radius: var(--border-radius);\n      box-shadow: var(--shadow);\n    }\n    \n    .filter-input {\n      flex: 1;\n      min-width: 200px;\n      padding: 0.75rem 1rem;\n      border: 1px solid #e2e8f0;\n      border-radius: var(--border-radius);\n      font-family: 'Poppins', sans-serif;\n    }\n    \n    .badge {\n      display: inline-block;\n      padding: 0.25rem 0.5rem;\n      background-color: var(--primary-light);\n      color: var(--primary);\n      border-radius: 9999px;\n      font-size: 0.75rem;\n      font-weight: 500;\n      margin-left: 0.5rem;\n    }\n    \n    footer {\n      background-color: var(--dark);\n      color: white;\n      text-align: center;\n      padding: 2rem 0;\n      margin-top: 3rem;\n    }\n    \n    @media (max-width: 768px) {\n      .restaurants-grid {\n        grid-template-columns: 1fr;\n      }\n      \n      .header h1 {\n        font-size: 1.5rem;\n      }\n      \n      .restaurant-title {\n        font-size: 1.25rem;\n      }\n    }\n  </style>\n  <script src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM&callback=initMaps\" defer></script>\n</head>\n<body>\n  <header class=\"header\">\n    <h1>Chinese Restaurants in Antananarivo</h1>\n  </header>\n  \n  <div class=\"container\">\n    <div class=\"filters\">\n      <input type=\"text\" class=\"filter-input\" id=\"search-input\" placeholder=\"Search restaurants...\">\n      <select id=\"sort-select\" class=\"filter-input\">\n        <option value=\"rating\">Sort by Rating</option>\n        <option value=\"reviews\">Sort by Reviews</option>\n        <option value=\"name\">Sort by Name</option>\n      </select>\n      <button class=\"btn btn-primary\" id=\"filter-button\">\n        <i class=\"fas fa-filter\"></i> Apply Filters\n      </button>\n    </div>\n    \n    <div class=\"restaurants-grid\" id=\"restaurants-container\">\n      <!-- Restaurant cards will be dynamically inserted here -->\n    </div>\n  </div>\n  \n  <footer>\n    <p>© ${new Date().getFullYear()} Chinese Restaurants in Antananarivo</p>\n  </footer>\n\n  <script>\n    const restaurantData = ${JSON.stringify(restaurants)};\n    const mapsData = [];\n    const directionsRenderers = [];\n    let filteredRestaurants = [...restaurantData];\n    \n    // Initialize the page\n    document.addEventListener('DOMContentLoaded', () => {\n      renderRestaurants(restaurantData);\n      \n      // Set up event listeners\n      document.getElementById('filter-button').addEventListener('click', applyFilters);\n      document.getElementById('search-input').addEventListener('keyup', event => {\n        if (event.key === 'Enter') {\n          applyFilters();\n        }\n      });\n      \n      document.getElementById('sort-select').addEventListener('change', applyFilters);\n    });\n    \n    function renderRestaurants(restaurants) {\n      const container = document.getElementById('restaurants-container');\n      container.innerHTML = '';\n      \n      if (restaurants.length === 0) {\n        container.innerHTML = '<div class=\"no-results\">No restaurants found matching your criteria.</div>';\n        return;\n      }\n      \n      restaurants.forEach((restaurant, index) => {\n        const card = document.createElement('div');\n        card.className = 'restaurant-card';\n        \n        const validCoordinates = restaurant.latitude !== 0 && restaurant.longitude !== 0;\n        \n        card.innerHTML = \\`\n          <img class=\"restaurant-image\" src=\"\\${restaurant.photo}\" alt=\"\\${restaurant.name}\">\n          <div class=\"restaurant-content\">\n            <h2 class=\"restaurant-title\">\\${restaurant.name}</h2>\n            \n            <div class=\"restaurant-info\">\n              <i class=\"fas fa-map-marker-alt\"></i>\n              <span>\\${restaurant.address}</span>\n            </div>\n            \n            <div class=\"restaurant-info\">\n              <i class=\"fas fa-phone\"></i>\n              <span>\\${restaurant.phone}</span>\n            </div>\n            \n            <div class=\"restaurant-info\">\n              <i class=\"fas fa-utensils\"></i>\n              <span>\\${restaurant.type}</span>\n            </div>\n            \n            <div class=\"restaurant-info\">\n              <i class=\"fas fa-clock\"></i>\n              <span>\\${restaurant.hours}</span>\n            </div>\n            \n            <div class=\"restaurant-info\">\n              <i class=\"fas fa-star\"></i>\n              <span class=\"rating\">\n                \\${restaurant.rating} <span class=\"badge\">\\${restaurant.reviews} reviews</span>\n              </span>\n            </div>\n            \n            <div class=\"restaurant-actions\">\n              \\${validCoordinates ? \\`\n                <button class=\"btn btn-secondary\" onclick=\"showRoute(\\${index})\">\n                  <i class=\"fas fa-route\"></i> View Route\n                </button>\n                <button class=\"btn btn-outline\" onclick=\"toggleMap(\\${index})\">\n                  <i class=\"fas fa-map\"></i> Toggle Map\n                </button>\n              \\` : \\`\n                <button class=\"btn btn-outline\" disabled>\n                  <i class=\"fas fa-map-marker-slash\"></i> No Map Available\n                </button>\n              \\`}\n            </div>\n            \n            \\${validCoordinates ? \\`<div id=\"map-\\${index}\" class=\"map-container\"></div>\\` : ''}\n          </div>\n        \\`;\n        \n        container.appendChild(card);\n      });\n    }\n    \n    function applyFilters() {\n      const searchTerm = document.getElementById('search-input').value.toLowerCase();\n      const sortBy = document.getElementById('sort-select').value;\n      \n      // Filter restaurants\n      filteredRestaurants = restaurantData.filter(restaurant => {\n        return restaurant.name.toLowerCase().includes(searchTerm) || \n               restaurant.address.toLowerCase().includes(searchTerm) ||\n               restaurant.type.toLowerCase().includes(searchTerm);\n      });\n      \n      // Sort restaurants\n      filteredRestaurants.sort((a, b) => {\n        if (sortBy === 'rating') {\n          return parseFloat(b.rating) - parseFloat(a.rating);\n        } else if (sortBy === 'reviews') {\n          return parseInt(b.reviews) - parseInt(a.reviews);\n        } else if (sortBy === 'name') {\n          return a.name.localeCompare(b.name);\n        }\n        return 0;\n      });\n      \n      renderRestaurants(filteredRestaurants);\n    }\n    \n    // Initialize Google Maps\n    function initMaps() {\n      restaurantData.forEach((restaurant, index) => {\n        mapsData[index] = {\n          lat: parseFloat(restaurant.latitude) || 0,\n          lng: parseFloat(restaurant.longitude) || 0,\n          name: restaurant.name\n        };\n      });\n    }\n    \n    function showRoute(index) {\n      const restaurant = filteredRestaurants[index];\n      const restaurantIndex = restaurantData.findIndex(r => r.name === restaurant.name);\n      \n      if (mapsData[restaurantIndex].lat === 0 || mapsData[restaurantIndex].lng === 0) return;\n      \n      const mapElement = document.getElementById(\\`map-\\${index}\\`);\n      if (!mapElement) return;\n      \n      // Make map visible\n      mapElement.classList.add('active');\n      \n      // Initialize map if not already done\n      if (!window.google || !window.google.maps) {\n        alert('Google Maps is still loading. Please try again in a moment.');\n        return;\n      }\n      \n      const map = new google.maps.Map(mapElement, {\n        center: { \n          lat: mapsData[restaurantIndex].lat, \n          lng: mapsData[restaurantIndex].lng \n        },\n        zoom: 15\n      });\n      \n      const marker = new google.maps.Marker({\n        position: { \n          lat: mapsData[restaurantIndex].lat, \n          lng: mapsData[restaurantIndex].lng \n        },\n        map: map,\n        title: restaurant.name\n      });\n      \n      // Set up directions renderer\n      const directionsRenderer = new google.maps.DirectionsRenderer({\n        map: map,\n        suppressMarkers: false\n      });\n      directionsRenderers[index] = directionsRenderer;\n      \n      // Get user location and show route\n      if (navigator.geolocation) {\n        navigator.geolocation.getCurrentPosition(\n          (position) => {\n            const userLocation = {\n              lat: position.coords.latitude,\n              lng: position.coords.longitude\n            };\n            \n            const directionsService = new google.maps.DirectionsService();\n            directionsService.route({\n              origin: userLocation,\n              destination: { \n                lat: mapsData[restaurantIndex].lat, \n                lng: mapsData[restaurantIndex].lng \n              },\n              travelMode: google.maps.TravelMode.DRIVING\n            }, (result, status) => {\n              if (status === google.maps.DirectionsStatus.OK) {\n                directionsRenderer.setDirections(result);\n              } else {\n                alert('Unable to calculate route: ' + status);\n              }\n            });\n          },\n          (error) => {\n            alert('Geolocation error: ' + error.message);\n          }\n        );\n      } else {\n        alert('Geolocation is not supported by your browser.');\n      }\n    }\n    \n    function toggleMap(index) {\n      const restaurant = filteredRestaurants[index];\n      const restaurantIndex = restaurantData.findIndex(r => r.name === restaurant.name);\n      \n      if (mapsData[restaurantIndex].lat === 0 || mapsData[restaurantIndex].lng === 0) return;\n      \n      const mapElement = document.getElementById(\\`map-\\${index}\\`);\n      if (!mapElement) return;\n      \n      if (mapElement.classList.contains('active')) {\n        mapElement.classList.remove('active');\n      } else {\n        mapElement.classList.add('active');\n        \n        // Initialize map if not already done\n        if (!window.google || !window.google.maps) {\n          alert('Google Maps is still loading. Please try again in a moment.');\n          return;\n        }\n        \n        const map = new google.maps.Map(mapElement, {\n          center: { \n            lat: mapsData[restaurantIndex].lat, \n            lng: mapsData[restaurantIndex].lng \n          },\n          zoom: 15\n        });\n        \n        new google.maps.Marker({\n          position: { \n            lat: mapsData[restaurantIndex].lat, \n            lng: mapsData[restaurantIndex].lng \n          },\n          map: map,\n          title: restaurant.name\n        });\n      }\n    }\n  </script>\n</body>\n</html>\n`;\n\nreturn [{\n  json: { fileName: 'restaurants.html' },\n  binary: {\n    data: {\n      data: Buffer.from(htmlContent).toString('base64'),\n      mimeType: 'text/html',\n      fileName: 'restaurants.html'\n    }\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        280
+      ],
+      "id": "7f1f3bda-df5a-4dad-96bb-62e8a08998ea",
+      "name": "Generate HTML"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "={{ $json.fileName }}",
+        "options": {
+          "append": false
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        680,
+        100
+      ],
+      "id": "93757397-697a-4ef8-bd98-e06b95e0cdde",
+      "name": "Write to Disk"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Fetch Restaurants SerpAPI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Restaurants SerpAPI": {
+      "main": [
+        [
+          {
+            "node": "Transform Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transform Data": {
+      "main": [
+        [
+          {
+            "node": "Generate HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate HTML": {
+      "main": [
+        [
+          {
+            "node": "Write to Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6b10ae15-cc33-4d73-b5ce-94861392c01d",
+  "meta": {
+    "instanceId": "4e243a4dc5220408af387db26552de14b4d7aeacff69d6d35779c8c2a71303b7"
+  },
+  "id": "gykgeqaaZyoizCcY",
+  "tags": []
+}
