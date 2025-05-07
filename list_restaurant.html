@@ -1,0 +1,140 @@
+
+  <!DOCTYPE html>
+  <html lang="fr">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Liste des Restaurants</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+      <style>
+          body {
+              background: #000000;
+              min-height: 100vh;
+              color: #ffffff;
+              font-family: 'Segoe UI', Arial, sans-serif;
+          }
+          .card {
+              background: linear-gradient(145deg, #1f2937, #374151);
+              border-radius: 12px;
+              transition: transform 0.3s ease, box-shadow 0.3s ease;
+          }
+          .card:hover {
+              transform: translateY(-8px);
+              box-shadow: 0 12px 24px rgba(255, 255, 255, 0.1);
+          }
+          .search-bar {
+              background: #1f2937;
+              border: 1px solid #4b5563;
+              border-radius: 50px;
+              padding: 12px 20px;
+              color: #ffffff;
+              transition: all 0.3s ease;
+          }
+          .search-bar:focus {
+              border-color: #6366f1;
+              box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+          }
+          .search-container {
+              position: relative;
+              max-width: 600px;
+              margin: 0 auto;
+          }
+          .search-icon {
+              position: absolute;
+              top: 50%;
+              left: 15px;
+              transform: translateY(-50%);
+              color: #9ca3af;
+          }
+          .map {
+              height: 200px;
+              width: 100%;
+              border-radius: 8px;
+              margin-top: 16px;
+          }
+          img {
+              border-radius: 8px;
+              max-width: 100%;
+              height: auto;
+          }
+      </style>
+  </head>
+  <body class="flex flex-col items-center p-8">
+      <div class="w-full max-w-5xl">
+          <h1 class="text-5xl font-extrabold text-center mb-10 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-500">
+              Liste des Restaurants
+          </h1>
+          <div class="search-container mb-10">
+              <svg class="search-icon" width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+              </svg>
+              <input
+                  type="text"
+                  id="searchInput"
+                  placeholder="Rechercher par nom, spécialité ou adresse..."
+                  class="search-bar w-full pl-12 pr-4 py-3 text-lg focus:outline-none"
+              />
+          </div>
+          <div id="restaurantList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+      </div>
+
+      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+      <script>
+          // Injecter les données dans le script côté client
+          const restaurants = [{"name":"Grand Resto de Chine","contact":"+261 33 83 594 63","address":"Lalana Rasamuol Maurice, Antananarivo, Madagascar","specialite":"Asian restaurant","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq4TOJmNd5jTfVxjbtS5xXyz_Z4hfZLCsFKgo_MFJedhpOy3rWySlTaNMZYye8Z09metGs9h1Xmzbdv5qhkAGIdLZz7lRIjNzJupBH7Q3Yn6bFQKX38V4fo6tN2ES5SBVGO-zUg=w163-h92-k-no","latitude":null,"longitude":null},{"name":"O Loft Chinois","contact":"Aucun","address":"4G39+2J7, Antananarivo, Madagascar","specialite":"Restaurant","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrNSFXLHuXK0HmuKT_O2vavSJCMbohK2CcfIAHhrORa51KLw19rXK8SWD8pHLRRiZ8HCy5VvWaaIldcaFjbjcjUr6LhEaPT_MoOXwxw0wOOrB0ZTtr1i48iT5dpkX78JYTceXRC=w122-h92-k-no","latitude":null,"longitude":null},{"name":"La Fleur De Sel","contact":"+261 34 12 582 22","address":"Antananarivo, Madagascar","specialite":"Mandarin restaurant","photo":"https://lh3.googleusercontent.com/p/AF1QipOQOGgQ0ObZ5MrCEVpNp5mKBTcQCh0GEM77h5YL=w158-h92-k-no","latitude":null,"longitude":null},{"name":"Restaurant L&#39;EURASIE - Ankorondrano","contact":"+261 38 51 944 37","address":"Face à l&#39;hôtel Ibis - Ankorondrano, Antananarivo 101, Madagascar","specialite":"Chinese restaurant","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4npxE33sfLOrA0hgKA5ahgIxNqFsnTOlEyDp-8IBXQZqnYjTWqWkELHkX7Gg_4lpPhCFTfTv7pt1BWgta2eukaumownSUhn9sT0NjsGGj1CyZ1NRyx4r3DPqGYk3Gvwbo4rXfUjMnw=w163-h92-k-no","latitude":null,"longitude":null},{"name":"Restaurant Fong Mei","contact":"+261 33 25 571 99","address":"4GHM+JMX, Rue Andriantsihoarana Ratsimbazafy, Antananarivo, Madagascar","specialite":"Chinese restaurant","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrnlfVBZyc1OZwvBmIKhKIWrHletzUxv3NSb4Mu4EHtlMaCZZn1Zj85pLXxL0s2fWbgiXwBZzL9ky_2ioaTEDumBp7TmyK6WrKKMU5JkWex41HZBzZHFkI1CxBPxRT3ENFWLWIa=w189-h92-k-no","latitude":null,"longitude":null},{"name":"l&#39;Orient Asian Fusion Restaurant","contact":"+261 34 36 788 88","address":"Madagascar, Antananarivo, Lalana Rainandriamampandry, 邮政编码: 101","specialite":"Pan-Asian restaurant","photo":"https://lh3.googleusercontent.com/p/AF1QipMEtu4ta7YgG-CL3VT7miGqijPe1Too2f9jrSaP=w122-h92-k-no","latitude":null,"longitude":null},{"name":"凤城 Soleil","contact":"+261 33 11 336 28","address":"Lot IVK 89 bis Anosivavaka Ambohimanarina, Antananarivo 101, Madagascar","specialite":"Chinese restaurant","photo":"https://lh3.googleusercontent.com/p/AF1QipNV5IfdfmLcw6xZl_UC9xIgmSXKSFaCReLf3JDq=w415-h92-k-no","latitude":null,"longitude":null},{"name":"Dun Huang","contact":"Aucun","address":"42 Arabe Andrinampoinimerina, Antananarivo 101, Madagascar","specialite":"Chinese restaurant","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4npRiQGr49aguqhfHel7hPY-YRe2tbHxsxZwRb41jeZ_y9g3fcSKtihma_jgHj9003bIm2az7yI3A9bCGwc820LxDEBZnE_p5DoxzxFvy8k-HCzWpd90-XKSL302u4oic5tmXUAR=w163-h92-k-no","latitude":null,"longitude":null},{"name":"Le Grand Orient","contact":"+261 20 22 202 88","address":"Rue Andriantsihoarana Ratsimbazafy, Antananarivo 101, Madagascar","specialite":"Restaurant","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4np_MNlwLidRF4LFb8m5vnhpRtqNvFvXsxoc3FM1Zp_ykD2IqHr4zCzaq72mPSsIXo0d9mSn2davxkWv1-r-6p0feczdTLmByDJLKoFReXl4A0zwWf2G-nDnOaNZbkJgXA5UAYCg=w163-h92-k-no","latitude":null,"longitude":null},{"name":"Hirondelle &quot;燕子&quot; Chinese FOOD","contact":"+261 34 11 166 78","address":"Lalana Dama-Ntsoha Razatintsalama Jean-Baptiste, Antananarivo 101, Madagascar","specialite":"Hot pot restaurant","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4no6LH6riu3rgub-E51EYmukoJU8UMTkPRlFgcIV2aIlA87muugaCqc-5GjreGbfhMFQOJVwVbeaSYYTkOsI7Mo4CaC1Wlr-KJVJJr8KaHQYU9YncvlXwKCyYxe02kOjwZ_3kpbr=w122-h92-k-no","latitude":null,"longitude":null},{"name":"La Jonquille","contact":"+261 20 22 206 37","address":"Antananarivo 101, Madagascar","specialite":"Restaurant","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqItKanRlT1sNaBuRMJKArrGt7Gp_iHFrXyxjOdV6wLOo7jRkN09unBbLMZRKnxZ56iqpeItRt-1JWTeZEu2T4GkZXg51ua4TJyArKa1rvQ9_n5vEA6JD5z7qt7fnyJXSB0r3qkdw=w189-h92-k-no","latitude":null,"longitude":null},{"name":"Zen Garden","contact":"+261 32 05 135 03","address":"II M 38 F Androhibe Antananarivo Antananarivo, 101, Madagascar","specialite":"Chinese restaurant","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4npdI-yqx33nTkhBoAI68tds6cSOQXEz1RxIZ1PcxcwXUXEskeNKzGteczPRSktXZ8-oNFzdaBli7HVnstoXM_vf84wycELrve-oOrBO9Y8BEzJO4zTtd0tUsLidY8GcgYMftl82=w122-h92-k-no","latitude":null,"longitude":null},{"name":"Kaizen Restaurant","contact":"Aucun","address":"3GPR+F3J, Lalana Vvs, Antananarivo, Madagascar","specialite":"Chinese restaurant","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr263HPwxgJQR1gw-R0NHmI1PZQiD-sxUXsR_XW88ZHkLt-UWqa7-MsbDeLDRigaAxO58dxS8MSTnz59munpZ5xKuotj1xRj24ZmzrpfDznOk7eDRHt2CadLIxkhkUIWATeszVJ=w80-h106-k-no","latitude":null,"longitude":null},{"name":"HONG KONG Restaurant - salon de The","contact":"+261 38 68 509 77","address":"Toyota, Lalana Doktera. Joseph Raseta, Maibahoaka Ivato Antananarivo IVATO, Antananarivo 105, Madagascar","specialite":"Mandarin restaurant","photo":"https://lh3.googleusercontent.com/p/AF1QipMR8kLY4EHqmvIlOoaEvnzfUf8qY6f944ORYOF9=w147-h92-k-no","latitude":null,"longitude":null},{"name":"Restaurant 19° C","contact":"+261 34 02 818 66","address":"4G9C+8Q2, Galana service station, Rue Ravoninahitriniarivo Ankorondrano, Antananarivo, Madagascar, across the street from, Rue Ravoninahitriniarivo, Antananarivo, Madagascar","specialite":"Chinese restaurant","photo":"https://via.placeholder.com/400","latitude":null,"longitude":null},{"name":"吕府私房菜（KTV）","contact":"+261 38 82 066 66","address":"Madagascar, Antananarivo, AUTOREX, Amitie Fandian","specialite":"Chinese restaurant","photo":"https://lh3.googleusercontent.com/p/AF1QipM07B6izo0ribTcOx106yL2JfPX64vAli2EbcDU=w84-h92-k-no","latitude":null,"longitude":null},{"name":"Restaurant La Belle Ville","contact":"+261 34 03 244 36","address":"3GQP+WJP, Rue Razafindralombo Pierre, Antananarivo, Madagascar","specialite":"Chinese restaurant","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4noTnzgFzw0EeI3YUnuyNQ6VXO92iZYKP0IHlHWCKMvmQkLu6o5H5WzV4A40Fv2Yd6IL-dZ2IttRdXIW6Y0L2VQrxulYsfEtLKIz4Ys3J5_q-2Agui2uYoTZjEA5PNBE4thHIafc=w189-h92-k-no","latitude":null,"longitude":null},{"name":"Restaurant Lai","contact":"+261 32 79 660 89","address":"3GQ4+RWG, Antananarivo, Madagascar","specialite":"Chinese restaurant","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqJJ-Op0_n5yGAgYjcEYtKjXtoGC31fRnFDm1ndkWiH_-tJUz6ftdkzMYuGN6Hc0piLYOyCutgFQlhYcm5-xHYZ5TVlntxDWPasYxI937fdXk6UvwAkwOaSSxPeQ9SGkW6EaquL=w163-h92-k-no","latitude":null,"longitude":null},{"name":"Dragon Royal Restaurant IVATO","contact":"+261 38 12 579 79","address":"5FQF+WHH, Antananarivo, Madagascar","specialite":"Asian restaurant","photo":"https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrt2TCU-908qg6vW8K-dio0cRCy-UE5AtRngcMTDFKvsZ9tuoCsakV3iKyU_7-Wxzt2d-CY14q5fL_71rvrTD8pnXOKCSkC5FlmqNQjK0QyMb9HJSc5FCmbKbO_XNjPvSaXX0xqGg=w80-h106-k-no","latitude":null,"longitude":null},{"name":"Restaurant Le Cantilène","contact":"+261 34 86 576 67","address":"3GQ4+RWM, Antananarivo, Madagascar","specialite":"Chinese restaurant","photo":"https://via.placeholder.com/400","latitude":null,"longitude":null}];
+
+          function displayRestaurants(data) {
+              const restaurantList = document.getElementById('restaurantList');
+              restaurantList.innerHTML = '';
+              data.forEach((restaurant, index) => {
+                  const card = document.createElement('div');
+                  card.className = 'card p-6';
+                  card.innerHTML = `
+                      <h2 class="text-2xl font-bold text-indigo-300 mb-4">${restaurant.name}</h2>
+                      <p class="text-gray-300 mb-2"><strong>Spécialité:</strong> ${restaurant.specialite}</p>
+                      <p class="text-gray-300 mb-2"><strong>Adresse:</strong> ${restaurant.address}</p>
+                      <p class="text-gray-300 mb-2"><strong>Contact:</strong> ${restaurant.contact}</p>
+                      <p class="text-gray-300 mb-4"><strong>Coordonnées:</strong>
+                          ${restaurant.latitude && restaurant.longitude 
+                            ? `Latitude ${restaurant.latitude}, Longitude ${restaurant.longitude}` 
+                            : 'Non disponible'}
+                      </p>
+                      <img src="${restaurant.photo}" alt="Photo de ${restaurant.name}">
+                      ${restaurant.latitude && restaurant.longitude ? 
+                        `<div id="map-${index}" class="map"></div>` : ''}
+                  `;
+                  restaurantList.appendChild(card);
+
+                  if (restaurant.latitude && restaurant.longitude) {
+                      setTimeout(() => {
+                          const map = L.map('map-' + index).setView([restaurant.latitude, restaurant.longitude], 13);
+                          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                              attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                          }).addTo(map);
+                          L.marker([restaurant.latitude, restaurant.longitude]).addTo(map)
+                              .bindPopup(restaurant.name);
+                      }, 0);
+                  }
+              });
+          }
+
+          function filterRestaurants() {
+              const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+              const filtered = restaurants.filter(restaurant => {
+                  return (
+                      (restaurant.name || '').toLowerCase().includes(searchTerm) ||
+                      (restaurant.specialite || '').toLowerCase().includes(searchTerm) ||
+                      (restaurant.address || '').toLowerCase().includes(searchTerm)
+                  );
+              });
+              displayRestaurants(filtered);
+          }
+
+          document.addEventListener('DOMContentLoaded', () => {
+              displayRestaurants(restaurants);
+              document.getElementById('searchInput').addEventListener('input', filterRestaurants);
+          });
+      </script>
+  </body>
+  </html>
