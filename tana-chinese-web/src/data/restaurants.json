@@ -1,0 +1,1398 @@
+[
+    {
+        "id": 1,
+        "name": "O Loft Chinois",
+        "address": "4G39+2J7, Antananarivo",
+        "phone": null,
+        "hours": "Wednesday9 am\u20137 pmThursday9 am\u20137 pmFriday9 am\u20137 pmSaturday9 am\u20137 pmSundayClosedMonday9 am\u20137 pmTuesday9 am\u20137 pm",
+        "weekly_schedule": {},
+        "rating": "4.2",
+        "reviews": "26 reviews",
+        "service_options": [
+            "Takeaway",
+            "Dine-in"
+        ],
+        "highlights": [
+            "Great coffee",
+            "Great dessert"
+        ],
+        "popular_for": [
+            "Solo dining"
+        ],
+        "offerings": [
+            "Alcohol",
+            "Beer",
+            "Coffee",
+            "Small plates",
+            "Spirits",
+            "Wine"
+        ],
+        "dining_options": [
+            "Lunch",
+            "Dinner",
+            "Catering",
+            "Dessert"
+        ],
+        "amenities": [
+            "Bar on site",
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Cosy"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.8974503,
+        "longitude": 47.5190589
+    },
+    {
+        "id": 2,
+        "name": "Dun Huang",
+        "address": "42 Arabe Andrinampoinimerina, Antananarivo 101",
+        "phone": null,
+        "hours": "Wednesday8:45 am\u20139 pmThursday8:45 am\u20139 pmFriday8:45 am\u20139 pmSaturday8:45 am\u20139 pmSunday8:45 am\u20139 pmMonday8:45 am\u20139 pmTuesday8:45 am\u20139 pm",
+        "weekly_schedule": {},
+        "rating": "4.6",
+        "reviews": "20 reviews",
+        "service_options": [
+            "Takeaway",
+            "Dine-in"
+        ],
+        "highlights": [],
+        "popular_for": [
+            "Lunch",
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Small plates"
+        ],
+        "dining_options": [
+            "Lunch",
+            "Dinner",
+            "Catering"
+        ],
+        "amenities": [
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Casual"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.905614,
+        "longitude": 47.5240707
+    },
+    {
+        "id": 3,
+        "name": "Restaurant L'EURASIE - Ankorondrano",
+        "address": "Face \u00e0 l'h\u00f4tel Ibis - Ankorondrano, Antananarivo 101",
+        "phone": "038 51 944 37",
+        "hours": "Wednesday10 am\u20138 pmThursday10 am\u20138 pmFriday10 am\u20138 pmSaturday10 am\u20138 pmSundayClosedMonday10 am\u20138 pmTuesday10 am\u20138 pm",
+        "weekly_schedule": {},
+        "rating": "4.4",
+        "reviews": "14 reviews",
+        "service_options": [
+            "Takeaway",
+            "Dine-in",
+            "Delivery"
+        ],
+        "highlights": [
+            "Great coffee",
+            "Great dessert"
+        ],
+        "popular_for": [
+            "Lunch",
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Alcohol",
+            "Beer",
+            "Coffee",
+            "Small plates"
+        ],
+        "dining_options": [
+            "Lunch",
+            "Dinner",
+            "Catering",
+            "Dessert",
+            "Seating"
+        ],
+        "amenities": [
+            "Gender-neutral toilets",
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy"
+        ],
+        "crowd": [
+            "Family friendly",
+            "Groups",
+            "LGBTQ+ friendly",
+            "Tourists",
+            "Transgender safe space"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.878855,
+        "longitude": 47.5212683
+    },
+    {
+        "id": 4,
+        "name": "l'Orient Asian Fusion Restaurant",
+        "address": "Antananarivo, Lalana Rainandriamampandry, \u90ae\u653f\u7f16\u7801: 101",
+        "phone": "034 36 788 88",
+        "hours": "Wednesday12\u20132:30 pm6\u20139 pmThursday12\u20132:30 pm6\u20139 pmFriday12\u20132:30 pm6\u20139 pmSaturday12\u20132:30 pm6\u20139 pmSundayClosedMonday12\u20132:30 pm6\u20139 pmTuesday12\u20132:30 pm6\u20139 pm",
+        "weekly_schedule": {},
+        "rating": "5.0",
+        "reviews": "60 reviews",
+        "service_options": [
+            "Dine-in"
+        ],
+        "highlights": [
+            "Great coffee",
+            "Great dessert",
+            "Live music",
+            "Sport"
+        ],
+        "popular_for": [
+            "Lunch",
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Coffee",
+            "Organic dishes",
+            "Salad bar",
+            "Small plates"
+        ],
+        "dining_options": [
+            "Lunch",
+            "Dinner",
+            "Catering",
+            "Counter service",
+            "Dessert",
+            "Seating"
+        ],
+        "amenities": [
+            "Gender-neutral toilets",
+            "Toilet",
+            "Wi-Fi",
+            "Free Wi-Fi"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy"
+        ],
+        "crowd": [
+            "Family friendly",
+            "Groups",
+            "LGBTQ+ friendly",
+            "Tourists"
+        ],
+        "children": [
+            "Good for kids",
+            "High chairs"
+        ],
+        "latitude": -18.9072494,
+        "longitude": 47.5280373
+    },
+    {
+        "id": 5,
+        "name": "La Fleur De Sel",
+        "address": "Antananarivo",
+        "phone": "034 12 582 22",
+        "hours": "Wednesday10 am\u201310 pmThursday10 am\u201310 pmFriday10 am\u201310 pmSaturday10 am\u201310 pmSunday10 am\u201310 pmMonday10 am\u201310 pmTuesday10 am\u201310 pm",
+        "weekly_schedule": {},
+        "rating": "3.8",
+        "reviews": "31 reviews",
+        "service_options": [
+            "Kerbside pickup",
+            "Delivery",
+            "Takeaway",
+            "Dine-in"
+        ],
+        "highlights": [
+            "Great cocktails",
+            "Great coffee",
+            "Great dessert"
+        ],
+        "popular_for": [
+            "Lunch",
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Alcohol",
+            "Beer",
+            "Cocktails",
+            "Coffee",
+            "Small plates",
+            "Spirits",
+            "Wine"
+        ],
+        "dining_options": [
+            "Lunch",
+            "Dinner",
+            "Catering",
+            "Dessert",
+            "Seating"
+        ],
+        "amenities": [
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy",
+            "Trendy"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists",
+            "University students"
+        ],
+        "children": [
+            "Good for kids",
+            "High chairs"
+        ],
+        "latitude": -18.8715948,
+        "longitude": 47.5426065
+    },
+    {
+        "id": 6,
+        "name": "Grand Resto de Chine",
+        "address": "Lalana Rasamuol Maurice, Antananarivo",
+        "phone": "033 83 594 63",
+        "hours": "Wednesday9:30 am\u20132:30 pm5\u20139:30 pmThursday10 am\u20132:30 pm5\u20139:30 pmFriday10 am\u20132:30 pm5\u20139:30 pmSaturday10 am\u20132:30 pm5\u20139:30 pmSunday10 am\u20132:30 pm5\u20139:30 pmMondayClosedTuesday10 am\u20132:30 pm5\u20139:30 pm",
+        "weekly_schedule": {},
+        "rating": "3.7",
+        "reviews": "29 reviews",
+        "service_options": [
+            "Takeaway",
+            "Dine-in"
+        ],
+        "highlights": [
+            "Great coffee",
+            "Great dessert"
+        ],
+        "popular_for": [
+            "Lunch",
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Alcohol",
+            "Beer",
+            "Cocktails",
+            "Coffee",
+            "Small plates",
+            "Spirits",
+            "Wine"
+        ],
+        "dining_options": [
+            "Breakfast",
+            "Lunch",
+            "Dinner",
+            "Catering",
+            "Dessert"
+        ],
+        "amenities": [
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy",
+            "Quiet"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.9141849,
+        "longitude": 47.5384142
+    },
+    {
+        "id": 7,
+        "name": "Fortuna Tana",
+        "address": "3GJ9+JC3, IMM, Antananarivo",
+        "phone": "038 63 366 66",
+        "hours": "Wednesday9:30 am\u20139:30 pmThursday9:30 am\u20139:30 pmFriday9:30 am\u20139:30 pmSaturday10:30 am\u201310 pmSunday11 am\u201310 pmMonday9:30 am\u20139:30 pmTuesday9:30 am\u20139:30 pm",
+        "weekly_schedule": {},
+        "rating": "3.7",
+        "reviews": "6 reviews",
+        "service_options": [
+            "Takeaway",
+            "Dine-in"
+        ],
+        "highlights": [
+            "Great coffee",
+            "Great dessert"
+        ],
+        "popular_for": [
+            "Lunch",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Coffee",
+            "Small plates"
+        ],
+        "dining_options": [
+            "Lunch",
+            "Dessert"
+        ],
+        "amenities": [
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.8987591,
+        "longitude": 47.5210699
+    },
+    {
+        "id": 8,
+        "name": "Lakoziako",
+        "address": "3GWF+4FP, Antananarivo",
+        "phone": "034 79 061 61",
+        "hours": "Wednesday8 am\u20134:30 pmThursday8 am\u20134:30 pmFriday8 am\u20134:30 pmSaturday8 am\u20139:30 pmSunday8 am\u20139:30 pmMonday8 am\u20134:30 pmTuesdayClosed",
+        "weekly_schedule": {},
+        "rating": "4.3",
+        "reviews": "4 reviews",
+        "service_options": [
+            "Dine-in"
+        ],
+        "highlights": [],
+        "popular_for": [
+            "Solo dining"
+        ],
+        "offerings": [
+            "Small plates"
+        ],
+        "dining_options": [],
+        "amenities": [
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.9046583,
+        "longitude": 47.5236933
+    },
+    {
+        "id": 9,
+        "name": "Restaurant Fong Mei",
+        "address": "4GHM+JMX, Rue Andriantsihoarana Ratsimbazafy, Antananarivo",
+        "phone": "033 25 571 99",
+        "hours": "Wednesday10 am\u20139 pmThursday10 am\u20139 pmFriday10 am\u20139 pmSaturday10 am\u20139 pmSunday11:30 am\u20132 pm5:30\u20139 pmMonday10 am\u20139 pmTuesday10 am\u20139 pm",
+        "weekly_schedule": {},
+        "rating": "3.7",
+        "reviews": "12 reviews",
+        "service_options": [
+            "Takeaway",
+            "Dine-in"
+        ],
+        "highlights": [],
+        "popular_for": [
+            "Lunch",
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Small plates"
+        ],
+        "dining_options": [
+            "Breakfast",
+            "Lunch",
+            "Dinner"
+        ],
+        "amenities": [
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.8708938,
+        "longitude": 47.5342498
+    },
+    {
+        "id": 10,
+        "name": "Hirondelle \"\u71d5\u5b50\" Chinese FOOD",
+        "address": "Lalana Dama-Ntsoha Razatintsalama Jean-Baptiste, Antananarivo 101",
+        "phone": "034 11 166 78",
+        "hours": "Wednesday11 am\u20139 pmThursday11 am\u20139 pmFriday11 am\u20139 pmSaturday11 am\u20139 pmSundayClosedMonday11 am\u20139 pmTuesday11 am\u20139 pm",
+        "weekly_schedule": {},
+        "rating": "4.6",
+        "reviews": "28 reviews",
+        "service_options": [
+            "No-contact delivery",
+            "Delivery",
+            "On-site services",
+            "Takeaway",
+            "Dine-in"
+        ],
+        "highlights": [
+            "Great coffee",
+            "Great dessert"
+        ],
+        "popular_for": [
+            "Lunch",
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Alcohol",
+            "Beer",
+            "Cocktails",
+            "Coffee",
+            "Organic dishes",
+            "Small plates",
+            "Spirits",
+            "Vegan options",
+            "Vegetarian options",
+            "Wine"
+        ],
+        "dining_options": [
+            "Lunch",
+            "Dinner",
+            "Catering",
+            "Counter service",
+            "Dessert",
+            "Seating"
+        ],
+        "amenities": [
+            "Bar on site",
+            "Gender-neutral toilets",
+            "Toilet",
+            "Wi-Fi",
+            "Free Wi-Fi"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy",
+            "Quiet"
+        ],
+        "crowd": [
+            "Family friendly",
+            "Groups",
+            "LGBTQ+ friendly",
+            "Tourists",
+            "Transgender safe space"
+        ],
+        "children": [
+            "Good for kids",
+            "High chairs"
+        ],
+        "latitude": -18.9174137,
+        "longitude": 47.5366284
+    },
+    {
+        "id": 11,
+        "name": "Restaurant Shanghai",
+        "address": "4 Lalana Rainitovo, Antananarivo",
+        "phone": null,
+        "hours": "Wednesday10 am\u20139 pmThursday10 am\u20139 pmFriday10 am\u20139 pmSaturday10 am\u20139 pmSunday10 am\u20139 pmMonday10 am\u20139 pmTuesday10 am\u20139 pm",
+        "weekly_schedule": {},
+        "rating": "4.0",
+        "reviews": "3 reviews",
+        "service_options": [
+            "Takeaway",
+            "Dine-in"
+        ],
+        "highlights": [],
+        "popular_for": [
+            "Lunch",
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Alcohol",
+            "Beer",
+            "Coffee",
+            "Small plates",
+            "Wine"
+        ],
+        "dining_options": [
+            "Lunch",
+            "Dinner",
+            "Catering",
+            "Dessert"
+        ],
+        "amenities": [
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy",
+            "Quiet"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.9088825,
+        "longitude": 47.5238114
+    },
+    {
+        "id": 12,
+        "name": "\u9038\u9999\u9152\u6a13 Yixiang Restaurant",
+        "address": "IVT 10, 4G48+V2P, Rue Docteur Joseph Raseta, Antananarivo",
+        "phone": "034 57 088 88",
+        "hours": "Wednesday9 am\u20139 pmThursday9 am\u20139 pmFriday9 am\u20139 pmSaturday9 am\u20139 pmSunday9 am\u20139 pmMonday9 am\u20139 pmTuesday9 am\u20139 pm",
+        "weekly_schedule": {},
+        "rating": "3.2",
+        "reviews": "5 reviews",
+        "service_options": [
+            "Delivery",
+            "Takeaway",
+            "Dine-in"
+        ],
+        "highlights": [],
+        "popular_for": [
+            "Lunch",
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Alcohol",
+            "Beer",
+            "Organic dishes",
+            "Private dining room",
+            "Quick bite",
+            "Small plates",
+            "Vegan options",
+            "Vegetarian options",
+            "Wine"
+        ],
+        "dining_options": [
+            "Lunch",
+            "Dinner",
+            "Dessert",
+            "Seating"
+        ],
+        "amenities": [
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists"
+        ],
+        "children": [
+            "Good for kids",
+            "High chairs"
+        ],
+        "latitude": -18.8928125,
+        "longitude": 47.5150625
+    },
+    {
+        "id": 13,
+        "name": "La Jonquille",
+        "address": "Antananarivo 101",
+        "phone": "020 22 206 37",
+        "hours": "Wednesday9 am\u20134:30 pmThursday9 am\u20134:30 pmFriday9 am\u20134:30 pmSaturday9 am\u20134:30 pmSunday9 am\u20134:30 pmMonday9 am\u20134:30 pmTuesday9 am\u20134:30 pm",
+        "weekly_schedule": {},
+        "rating": "4.0",
+        "reviews": "22 reviews",
+        "service_options": [
+            "Takeaway",
+            "Dine-in"
+        ],
+        "highlights": [
+            "Great coffee",
+            "Great dessert"
+        ],
+        "popular_for": [
+            "Lunch",
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Alcohol",
+            "Coffee",
+            "Small plates"
+        ],
+        "dining_options": [
+            "Lunch",
+            "Dinner",
+            "Dessert"
+        ],
+        "amenities": [
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.9093258,
+        "longitude": 47.5368896
+    },
+    {
+        "id": 14,
+        "name": "Hotel New Century",
+        "address": "3GWF+J7P, Antananarivo 101",
+        "phone": "033 29 661 68",
+        "hours": "Wednesday7 am\u20139 pmThursday7 am\u20139 pmFriday7 am\u20139 pmSaturday7 am\u20139 pmSunday7 am\u20139 pmMonday7 am\u20139 pmTuesday7 am\u20139 pm",
+        "weekly_schedule": {},
+        "rating": "3.5",
+        "reviews": "11 reviews",
+        "service_options": [
+            "Takeaway",
+            "Dine-in"
+        ],
+        "highlights": [
+            "Great coffee"
+        ],
+        "popular_for": [
+            "Lunch",
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Alcohol",
+            "Beer",
+            "Coffee",
+            "Small plates"
+        ],
+        "dining_options": [
+            "Lunch",
+            "Dinner",
+            "Dessert"
+        ],
+        "amenities": [
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.9034125,
+        "longitude": 47.5232031
+    },
+    {
+        "id": 15,
+        "name": "Restaurant Le Cantil\u00e8ne",
+        "address": "3GQ4+RWM, Antananarivo",
+        "phone": "034 86 576 67",
+        "hours": "Wednesday10 am\u20139 pmThursday10 am\u20139 pmFriday10 am\u20139 pmSaturday10 am\u20139 pmSunday10 am\u20139 pmMonday10 am\u20139 pmTuesday10 am\u20139 pm",
+        "weekly_schedule": {},
+        "rating": "5.0",
+        "reviews": "2 reviews",
+        "service_options": [
+            "Takeaway",
+            "Dine-in"
+        ],
+        "highlights": [
+            "Great coffee",
+            "Great dessert"
+        ],
+        "popular_for": [
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Alcohol",
+            "Beer",
+            "Coffee",
+            "Small plates"
+        ],
+        "dining_options": [
+            "Lunch",
+            "Dinner",
+            "Dessert"
+        ],
+        "amenities": [
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Cosy"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.9104223,
+        "longitude": 47.5072935
+    },
+    {
+        "id": 16,
+        "name": "\u5415\u5e9c\u79c1\u623f\u83dc\uff08KTV\uff09",
+        "address": "Antananarivo, AUTOREXAmitie Fandian",
+        "phone": "038 82 066 66",
+        "hours": "Wednesday11 am\u201310 pmThursday11 am\u201310 pmFriday11 am\u201310 pmSaturday11 am\u201310 pmSunday11 am\u201310 pmMonday11 am\u201310 pmTuesday11 am\u201310 pm",
+        "weekly_schedule": {},
+        "rating": "5.0",
+        "reviews": "1 review",
+        "service_options": [
+            "Dine-in"
+        ],
+        "highlights": [],
+        "popular_for": [
+            "Solo dining"
+        ],
+        "offerings": [
+            "Alcohol",
+            "Beer",
+            "Coffee",
+            "Small plates"
+        ],
+        "dining_options": [
+            "Catering"
+        ],
+        "amenities": [
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy",
+            "Trendy"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists",
+            "University students"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.9106832,
+        "longitude": 47.503318
+    },
+    {
+        "id": 17,
+        "name": "\u51e4\u57ce Soleil",
+        "address": "Lot IVK 89 bis Anosivavaka Ambohimanarina, Antananarivo 101",
+        "phone": "033 11 336 28",
+        "hours": null,
+        "weekly_schedule": {},
+        "rating": "3.4",
+        "reviews": "31 reviews",
+        "service_options": [
+            "Outdoor seating",
+            "Takeaway",
+            "Dine-in",
+            "Delivery"
+        ],
+        "highlights": [
+            "Great coffee",
+            "Great dessert"
+        ],
+        "popular_for": [
+            "Lunch",
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Alcohol",
+            "Beer",
+            "Coffee",
+            "Spirits",
+            "Wine"
+        ],
+        "dining_options": [
+            "Lunch",
+            "Dinner",
+            "Catering",
+            "Dessert",
+            "Seating"
+        ],
+        "amenities": [
+            "Toilet",
+            "Wi-Fi",
+            "Free Wi-Fi"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy",
+            "Quiet"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.8729457,
+        "longitude": 47.5079695
+    },
+    {
+        "id": 18,
+        "name": "La\u00ef tsock",
+        "address": "3GQP+4JW, Rue Razafindralombo Pierre, Antananarivo",
+        "phone": "034 30 357 57",
+        "hours": "Wednesday11 am\u20133 pm5\u20139 pmThursday11 am\u20133 pm5\u20139 pmFriday11 am\u20133 pm5\u20139 pmSaturday11 am\u20133 pm5\u20139 pmSunday5\u20139 pmMondayClosedTuesday11 am\u20133 pm5\u20139 pm",
+        "weekly_schedule": {},
+        "rating": "5.0",
+        "reviews": "8 reviews",
+        "service_options": [
+            "Takeaway",
+            "Dine-in"
+        ],
+        "highlights": [
+            "Great coffee",
+            "Great dessert"
+        ],
+        "popular_for": [
+            "Lunch",
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Coffee",
+            "Small plates"
+        ],
+        "dining_options": [
+            "Lunch",
+            "Dinner",
+            "Dessert"
+        ],
+        "amenities": [
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy",
+            "Trendy"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.912186,
+        "longitude": 47.5365843
+    },
+    {
+        "id": 19,
+        "name": "Dragon rouge",
+        "address": "3GXC+VQ8, Antananarivo",
+        "phone": "034 13 058 26",
+        "hours": null,
+        "weekly_schedule": {},
+        "rating": "3.0",
+        "reviews": "2 reviews",
+        "service_options": [
+            "Dine-in"
+        ],
+        "highlights": [],
+        "popular_for": [],
+        "offerings": [],
+        "dining_options": [],
+        "amenities": [
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Cosy"
+        ],
+        "crowd": [
+            "Groups"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.9003469,
+        "longitude": 47.5219587
+    },
+    {
+        "id": 20,
+        "name": "Le Pont Rouge",
+        "address": "3GQ8+9RC, Lalana Razafy Abraham, Antananarivo",
+        "phone": "033 11 484 89",
+        "hours": "Wednesday11 am\u201310 pmThursday11 am\u201310 pmFriday11 am\u201310 pmSaturday11 am\u201310 pmSundayClosedMonday11 am\u201310 pmTuesday11 am\u201310 pm",
+        "weekly_schedule": {},
+        "rating": "3.7",
+        "reviews": "3 reviews",
+        "service_options": [],
+        "highlights": [],
+        "popular_for": [
+            "Solo dining"
+        ],
+        "offerings": [],
+        "dining_options": [],
+        "amenities": [
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Cosy"
+        ],
+        "crowd": [
+            "Groups"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.9115644,
+        "longitude": 47.5170171
+    },
+    {
+        "id": 21,
+        "name": "Restaurant La Belle Ville",
+        "address": "3GQP+WJP, Rue Razafindralombo Pierre, Antananarivo",
+        "phone": "034 03 244 36",
+        "hours": "Wednesday10 am\u20132 pm5\u201310 pmThursday10 am\u20132 pm5\u201310 pmFriday10 am\u20132 pm5\u201310 pmSaturday10 am\u20132 pm5\u201310 pmSunday10 am\u20132 pm5\u201310 pmMonday10 am\u20132 pm5\u201310 pmTuesday10 am\u20132 pm5\u201310 pm",
+        "weekly_schedule": {},
+        "rating": "4.1",
+        "reviews": "13 reviews",
+        "service_options": [
+            "Takeaway",
+            "Dine-in"
+        ],
+        "highlights": [
+            "Great coffee",
+            "Great dessert"
+        ],
+        "popular_for": [
+            "Lunch",
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Alcohol",
+            "Beer",
+            "Cocktails",
+            "Coffee",
+            "Small plates",
+            "Spirits",
+            "Wine"
+        ],
+        "dining_options": [
+            "Lunch",
+            "Dinner",
+            "Catering",
+            "Dessert"
+        ],
+        "amenities": [
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.9101641,
+        "longitude": 47.5365779
+    },
+    {
+        "id": 22,
+        "name": "Kaizen Restaurant",
+        "address": "3GPR+F3J, Lalana Vvs, Antananarivo",
+        "phone": null,
+        "hours": "Wednesday11 am\u20139 pmThursday11 am\u20139 pmFriday11 am\u20139 pmSaturday11 am\u20139 pmSunday11 am\u20139 pmMondayClosedTuesday11 am\u20139 pm",
+        "weekly_schedule": {},
+        "rating": "4.6",
+        "reviews": "7 reviews",
+        "service_options": [
+            "Takeaway",
+            "Dine-in"
+        ],
+        "highlights": [
+            "Great coffee",
+            "Great dessert"
+        ],
+        "popular_for": [
+            "Lunch",
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Coffee",
+            "Small plates"
+        ],
+        "dining_options": [
+            "Lunch",
+            "Dinner",
+            "Dessert"
+        ],
+        "amenities": [
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.9137837,
+        "longitude": 47.5401532
+    },
+    {
+        "id": 23,
+        "name": "Le Grand Orient",
+        "address": "Rue Andriantsihoarana Ratsimbazafy, Antananarivo 101",
+        "phone": "020 22 202 88",
+        "hours": null,
+        "weekly_schedule": {},
+        "rating": "3.6",
+        "reviews": "32 reviews",
+        "service_options": [
+            "Outdoor seating",
+            "Takeaway",
+            "Dine-in",
+            "Delivery"
+        ],
+        "highlights": [
+            "Great cocktails",
+            "Great coffee",
+            "Great dessert",
+            "Great wine list"
+        ],
+        "popular_for": [
+            "Lunch",
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Alcohol",
+            "Beer",
+            "Cocktails",
+            "Coffee",
+            "Small plates",
+            "Spirits",
+            "Wine"
+        ],
+        "dining_options": [
+            "Lunch",
+            "Dinner",
+            "Catering",
+            "Dessert",
+            "Seating"
+        ],
+        "amenities": [
+            "Bar on site",
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy",
+            "Quiet",
+            "Romantic",
+            "Upmarket"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists"
+        ],
+        "children": [
+            "Good for kids",
+            "High chairs"
+        ],
+        "latitude": -18.8698272,
+        "longitude": 47.5317034
+    },
+    {
+        "id": 24,
+        "name": "National Center",
+        "address": "3GWF+WWR, Antananarivo",
+        "phone": null,
+        "hours": "Wednesday8:30 am\u20135 pmThursday8:30 am\u20135 pmFriday8:30 am\u20135 pmSaturday8:30 am\u20135 pmSundayClosedMonday8:30 am\u20135 pmTuesday8:30 am\u20135 pm",
+        "weekly_schedule": {},
+        "rating": "4.0",
+        "reviews": "5 reviews",
+        "service_options": [],
+        "highlights": [],
+        "popular_for": [],
+        "offerings": [],
+        "dining_options": [
+            "Lunch",
+            "Dinner"
+        ],
+        "amenities": [],
+        "atmosphere": [],
+        "crowd": [
+            "Groups"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.902637,
+        "longitude": 47.5247546
+    },
+    {
+        "id": 25,
+        "name": "Restaurant Le JASMIN",
+        "address": "8 Rue Paul Dussac analamakelydohan Analakley",
+        "phone": "034 62 413 75",
+        "hours": "Wednesday11 am\u20139 pmThursday11 am\u20139 pmFriday11 am\u20139 pmSaturday11 am\u20139 pmSunday11 am\u20132 pmMondayClosedTuesday11 am\u20139 pm",
+        "weekly_schedule": {},
+        "rating": "4.0",
+        "reviews": "21 reviews",
+        "service_options": [
+            "Takeaway",
+            "Dine-in"
+        ],
+        "highlights": [
+            "Great cocktails",
+            "Great coffee",
+            "Great dessert"
+        ],
+        "popular_for": [
+            "Lunch",
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Alcohol",
+            "All you can eat",
+            "Beer",
+            "Cocktails",
+            "Coffee",
+            "Small plates",
+            "Spirits",
+            "Vegetarian options",
+            "Wine"
+        ],
+        "dining_options": [
+            "Breakfast",
+            "Brunch",
+            "Lunch",
+            "Dinner",
+            "Catering",
+            "Dessert",
+            "Seating"
+        ],
+        "amenities": [
+            "Bar on site",
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy",
+            "Quiet"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.9103791,
+        "longitude": 47.5267009
+    },
+    {
+        "id": 26,
+        "name": "Fleuve Rouge (Red River)",
+        "address": "Rue Lietna Andriamaromanana Albert, Antananarivo 101",
+        "phone": "033 15 158 58",
+        "hours": "Wednesday12\u20132 pm6\u201310 pmThursday12\u20132 pm6\u201310 pmFriday12\u20132 pm6\u201310 pmSaturday12\u20132 pm6\u201310 pmSunday12\u20132 pm6\u201310 pmMonday12\u20132 pm6\u201310 pmTuesday12\u20132 pm6\u201310 pm",
+        "weekly_schedule": {},
+        "rating": "4.4",
+        "reviews": "54 reviews",
+        "service_options": [
+            "Takeaway",
+            "Dine-in",
+            "Delivery"
+        ],
+        "highlights": [
+            "Great coffee",
+            "Great dessert"
+        ],
+        "popular_for": [
+            "Lunch",
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Alcohol",
+            "Beer",
+            "Cocktails",
+            "Coffee",
+            "Small plates",
+            "Spirits",
+            "Wine"
+        ],
+        "dining_options": [
+            "Lunch",
+            "Dinner",
+            "Catering",
+            "Dessert"
+        ],
+        "amenities": [
+            "Bar on site",
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy",
+            "Quiet",
+            "Trendy"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists",
+            "University students"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.9036898,
+        "longitude": 47.5289256
+    },
+    {
+        "id": 27,
+        "name": "Restaurant 19\u00b0 C",
+        "address": "4G9C+8Q2 Galana service station, Rue Ravoninahitriniarivo Ankorondrano, Antananarivo, Madagascar, across the street from, Rue Ravoninahitriniarivo, Antananarivo",
+        "phone": "034 02 818 66",
+        "hours": "Wednesday11:30 am\u20132:30 pm5:30 pm\u201312 amThursday11:30 am\u20132:30 pm5:30 pm\u201312 amFriday11:30 am\u20132:30 pm5:30 pm\u201312 amSaturday11:30 am\u20132:30 pm5:30 pm\u201312 amSunday11:30 am\u20132:30 pm5:30 pm\u201312 amMonday11:30 am\u20132:30 pm5:30 pm\u201312 amTuesday11:30 am\u20132:30 pm5:30 pm\u201312 am",
+        "weekly_schedule": {},
+        "rating": "4.0",
+        "reviews": "1 review",
+        "service_options": [
+            "Takeaway",
+            "Dine-in"
+        ],
+        "highlights": [],
+        "popular_for": [
+            "Lunch",
+            "Dinner",
+            "Solo dining"
+        ],
+        "offerings": [
+            "Alcohol",
+            "Beer",
+            "Small plates"
+        ],
+        "dining_options": [
+            "Lunch",
+            "Dinner"
+        ],
+        "amenities": [
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Casual",
+            "Cosy",
+            "Quiet"
+        ],
+        "crowd": [
+            "Groups",
+            "Tourists"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.8817394,
+        "longitude": 47.5219035
+    },
+    {
+        "id": 28,
+        "name": "Wai Man",
+        "address": "3GW6+VMX Nord-Est-Cot\u00e9 parking, Antananarivo",
+        "phone": null,
+        "hours": null,
+        "weekly_schedule": {},
+        "rating": "5.0",
+        "reviews": "2 reviews",
+        "service_options": [
+            "Takeaway",
+            "Dine-in"
+        ],
+        "highlights": [],
+        "popular_for": [
+            "Solo dining"
+        ],
+        "offerings": [
+            "Alcohol",
+            "Beer",
+            "Small plates",
+            "Wine"
+        ],
+        "dining_options": [
+            "Breakfast",
+            "Lunch",
+            "Dinner",
+            "Catering",
+            "Dessert"
+        ],
+        "amenities": [
+            "Toilet"
+        ],
+        "atmosphere": [
+            "Cosy"
+        ],
+        "crowd": [
+            "Groups"
+        ],
+        "children": [
+            "Good for kids"
+        ],
+        "latitude": -18.9027731,
+        "longitude": 47.5117251
+    }
+]
