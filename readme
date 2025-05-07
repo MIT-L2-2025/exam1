@@ -1,1 +1,3 @@
-Après l'éxecution du workflow à partir du fichier .json on doit executer le script python pour obtenir le fichier html contenant les listes des restaurants 
+ouvrir n8n sur votre serveur et vous devez télécharger un clé api via  https://serpapi.com/ en se logant parce que sans ça la requete http du workflow ne va
+pas marcher
+Après l'éxecution du workflow  enregistrer le fichier .json générer et à partir du fichier .json on doit executer le script python pour obtenir le fichier html contenant les listes des restaurants 
