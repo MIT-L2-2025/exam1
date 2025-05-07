@@ -1,0 +1,176 @@
+{
+  "name": "Chinese Resto Antananarivo",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -860,
+        -200
+      ],
+      "id": "40e1f523-3476-4662-8550-cd25a2d0b65a",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://www.searchapi.io/api/v1/search?engine=google_maps&q=Restaurants+chinois&location=Antananarivo+Madagascar&ll=@-18.8792,47.5079,12z&api_key=YXPefuz1DcvGrUzpZxfCdApP",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -620,
+        -340
+      ],
+      "id": "a8875400-1d2b-400b-9d37-f4d2d5732570",
+      "name": "Request with searchapi"
+    },
+    {
+      "parameters": {
+        "url": "https://api.apify.com/v2/datasets/esIkPtrAWDLBxr5JP/items?format=json&clean=true",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -620,
+        -20
+      ],
+      "id": "fd233919-ad61-41f2-aab5-2d8184df5dc1",
+      "name": "Request with api.apify.com"
+    },
+    {
+      "parameters": {
+        "jsCode": "const json = items[0].json;\nconst places = json.local_results || json.places || json.results || [];\nreturn places.map(place => ({ json: {\n  nom: place.title || place.name,\n  adresse: place.address || place.vicinity,\n  specialites: place.categories || place.types,\n  coordonnees: {\n    lat: place.gps_coordinates?.latitude,\n    lng: place.gps_coordinates?.longitude\n  },\n  photo_ref: place.photos?.[0]?.photo_reference || null,\n  contact: place.phone || place.formatted_phone_number || null\n}}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -380,
+        -340
+      ],
+      "id": "e7630e15-ad47-4ab4-ba2e-5a48b78343d0",
+      "name": "Extract result 1"
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => {\n  const data = item.json;\n\n  return {\n    json: {\n      nom: data.title || \"Nom non disponible\",\n      lat: data.location?.lat || null,\n      lon: data.location?.lng || null,\n      source: \"aptify\",\n      address: data.address || null,\n      contact: data.phone || null,\n      lien_image3D: data.imageUrl || null,\n      specialité: data.categoryName || \"Spécialité non précisée\",\n      }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -380,
+        -20
+      ],
+      "id": "d16d6c8c-2138-410b-9a19-85eb82cd68df",
+      "name": "Extract result 2",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Récupère tous les items en JSON\nconst restaurants = $input.all().map(item => item.json);\n\nlet htmlContent = `\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Liste des Restaurants Chinois à Antananarivo</title>\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap\" rel=\"stylesheet\">\n    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\n    <style>\n        body { font-family: 'Poppins', sans-serif; margin: 0; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #333; }\n        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }\n        h1 { text-align: center; color: #2c3e50; font-size: 2.5em; margin-bottom: 40px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }\n        .restaurant { background: #fff; border-radius: 15px; padding: 20px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: transform .3s, box-shadow .3s; animation: fadeIn .5s ease-in-out; }\n        .restaurant:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }\n        .restaurant h2 { color: #e74c3c; font-size: 1.8em; margin: 0 0 10px; }\n        .restaurant p { margin: 8px 0; font-size: 1em; color: #555; display: flex; align-items: center; }\n        .restaurant p i { margin-right: 10px; color: #3498db; font-size: 1.2em; }\n        .restaurant img { max-width: 100%; height: auto; border-radius: 10px; margin: 15px 0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }\n        .route-button { display: inline-block; margin-top: 10px; padding: 10px 20px; background: #2ecc71; color: #fff; border: none; border-radius: 5px; cursor: pointer; transition: background .3s; }\n        .route-button:hover { background: #27ae60; }\n        .map { height: 300px; width: 100%; margin-top: 20px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }\n        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }\n        @media (max-width: 600px) { .restaurant h2 { font-size: 1.5em; } .restaurant p { font-size: .9em; } }\n    </style>\n    <script src=\"https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMaps\" defer></script>\n</head>\n<body>\n  <div class=\"container\">\n    <h1>Liste des Restaurants Chinois à Antananarivo</h1>\n`;\n\nrestaurants.forEach((r, i) => {\n  htmlContent += `\n    <div class=\"restaurant\">\n      <h2>${r.nom}</h2>\n      <p><i class=\"fas fa-map-marker-alt\"></i><strong>Adresse:</strong> ${r.address || 'N/A'}</p>\n      <p><i class=\"fas fa-phone\"></i><strong>Contact:</strong> ${r.contact || 'N/A'}</p>\n      <p><i class=\"fas fa-utensils\"></i><strong>Spécialité:</strong> ${r.specialité}</p>\n      ${r.lien_image3D ? `<img src=\"${r.lien_image3D}\" alt=\"Façade de ${r.nom}\" />` : ''}\n      <button class=\"route-button\" onclick=\"showRoute(${i})\"><i class=\"fas fa-route\"></i> Voir l'itinéraire</button>\n    </div>\n  `;\n});\n\nhtmlContent += `\n  </div>\n  <script>\n    const mapData = ${JSON.stringify(restaurants.map(r => ({ lat: r.lat, lng: r.lon, name: r.nom })))};\n    const maps = [], directionsRenderers = [];\n    function initMaps() {\n      mapData.forEach((d,i) => {\n        if (d.lat && d.lng) {\n          const map = new google.maps.Map(document.getElementById('map-' + i), {\n            center: { lat: d.lat, lng: d.lng }, zoom: 15\n          });\n          new google.maps.Marker({ position: { lat: d.lat, lng: d.lng }, map, title: d.name });\n          maps[i] = map;\n          directionsRenderers[i] = new google.maps.DirectionsRenderer({ map, suppressMarkers: false });\n        } else {\n          document.getElementById('map-' + i).style.display = 'none';\n        }\n      });\n    }\n    function showRoute(i) {\n      if (!maps[i] || !navigator.geolocation) return alert('Géolocalisation indisponible');\n      navigator.geolocation.getCurrentPosition(pos => {\n        const origin = { lat: pos.coords.latitude, lng: pos.coords.longitude };\n        const dest = { lat: mapData[i].lat, lng: mapData[i].lng };\n        new google.maps.DirectionsService().route({\n          origin, destination: dest, travelMode: 'DRIVING'\n        }, (res, status) => {\n          if (status==='OK') directionsRenderers[i].setDirections(res);\n          else alert('Itinéraire impossible: ' + status);\n        });\n      }, err => alert('Erreur géoloc: ' + err.message));\n    }\n  </script>\n</body>\n</html>\n`;\n\n// Retourne le fichier HTML en binaire pour Write Binary File\nreturn [{\n  json: { fileName: 'restaurants.html' },\n  binary: {\n    data: {\n      data: Buffer.from(htmlContent).toString('base64'),\n      mimeType: 'text/html',\n      fileName: 'restaurants.html'\n    }\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -160,
+        -20
+      ],
+      "id": "7cbdd4d7-6a13-4be0-911c-14008668614d",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Récupère tous les items en JSON\nconst restaurants = $input.all().map(item => item.json);\n\nlet htmlContent = `\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Liste des Restaurants Chinois à Antananarivo</title>\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap\" rel=\"stylesheet\">\n    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\n    <style>\n        body { font-family: 'Poppins', sans-serif; margin: 0; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #333; }\n        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }\n        h1 { text-align: center; color: #2c3e50; font-size: 2.5em; margin-bottom: 40px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }\n        .restaurant { background: #fff; border-radius: 15px; padding: 20px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: transform .3s, box-shadow .3s; animation: fadeIn .5s ease-in-out; }\n        .restaurant:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }\n        .restaurant h2 { color: #e74c3c; font-size: 1.8em; margin: 0 0 10px; }\n        .restaurant p { margin: 8px 0; font-size: 1em; color: #555; display: flex; align-items: center; }\n        .restaurant p i { margin-right: 10px; color: #3498db; font-size: 1.2em; }\n        .restaurant img { max-width: 100%; height: auto; border-radius: 10px; margin: 15px 0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }\n        .route-button { display: inline-block; margin-top: 10px; padding: 10px 20px; background: #2ecc71; color: #fff; border: none; border-radius: 5px; cursor: pointer; transition: background .3s; }\n        .route-button:hover { background: #27ae60; }\n        .map { height: 300px; width: 100%; margin-top: 20px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }\n        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }\n        @media (max-width: 600px) { .restaurant h2 { font-size: 1.5em; } .restaurant p { font-size: .9em; } }\n    </style>\n    <script src=\"https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMaps\" defer></script>\n</head>\n<body>\n  <div class=\"container\">\n    <h1>Liste des Restaurants Chinois à Antananarivo</h1>\n`;\n\nrestaurants.forEach((r, i) => {\n  htmlContent += `\n    <div class=\"restaurant\">\n      <h2>${r.nom}</h2>\n      <p><i class=\"fas fa-map-marker-alt\"></i><strong>Adresse:</strong> ${r.address || 'N/A'}</p>\n      <p><i class=\"fas fa-phone\"></i><strong>Contact:</strong> ${r.contact || 'N/A'}</p>\n      <p><i class=\"fas fa-utensils\"></i><strong>Spécialité:</strong> ${r.specialité}</p>\n      ${r.lien_image3D ? `<img src=\"${r.lien_image3D}\" alt=\"Façade de ${r.nom}\" />` : ''}\n      <button class=\"route-button\" onclick=\"showRoute(${i})\"><i class=\"fas fa-route\"></i> Voir l'itinéraire</button>\n      <div id=\"map-${i}\" class=\"map\"></div>\n    </div>\n  `;\n});\n\nhtmlContent += `\n  </div>\n  <script>\n    const mapData = ${JSON.stringify(restaurants.map(r => ({ lat: r.lat, lng: r.lon, name: r.nom })))};\n    const maps = [], directionsRenderers = [];\n    function initMaps() {\n      mapData.forEach((d,i) => {\n        if (d.lat && d.lng) {\n          const map = new google.maps.Map(document.getElementById('map-' + i), {\n            center: { lat: d.lat, lng: d.lng }, zoom: 15\n          });\n          new google.maps.Marker({ position: { lat: d.lat, lng: d.lng }, map, title: d.name });\n          maps[i] = map;\n          directionsRenderers[i] = new google.maps.DirectionsRenderer({ map, suppressMarkers: false });\n        } else {\n          document.getElementById('map-' + i).style.display = 'none';\n        }\n      });\n    }\n    function showRoute(i) {\n      if (!maps[i] || !navigator.geolocation) return alert('Géolocalisation indisponible');\n      navigator.geolocation.getCurrentPosition(pos => {\n        const origin = { lat: pos.coords.latitude, lng: pos.coords.longitude };\n        const dest = { lat: mapData[i].lat, lng: mapData[i].lng };\n        new google.maps.DirectionsService().route({\n          origin, destination: dest, travelMode: 'DRIVING'\n        }, (res, status) => {\n          if (status==='OK') directionsRenderers[i].setDirections(res);\n          else alert('Itinéraire impossible: ' + status);\n        });\n      }, err => alert('Erreur géoloc: ' + err.message));\n    }\n  </script>\n</body>\n</html>\n`;\n\n// Retourne le fichier HTML en binaire pour Write Binary File\nreturn [{\n  json: { fileName: 'restaurants.html' },\n  binary: {\n    data: {\n      data: Buffer.from(htmlContent).toString('base64'),\n      mimeType: 'text/html',\n      fileName: 'restaurants.html'\n    }\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -160,
+        -340
+      ],
+      "id": "b724ae47-5528-4980-a90f-7e397934688d",
+      "name": "Code1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Request with api.apify.com",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Request with searchapi",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request with searchapi": {
+      "main": [
+        [
+          {
+            "node": "Extract result 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request with api.apify.com": {
+      "main": [
+        [
+          {
+            "node": "Extract result 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract result 1": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract result 2": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4737790a-8efc-43af-9837-5312734ac19a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "886e075382a4d64b3e5d03276a342409b4d777f6e064798952dd57b3bd3dc1d8"
+  },
+  "id": "EeRjc4QjfjBGi6kp",
+  "tags": []
+}
