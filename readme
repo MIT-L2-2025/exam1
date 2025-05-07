@@ -1,1 +1,23 @@
-//instructions
+#FILE Myworkflow.json
+
+Description: Fichier de workflow 
+Ce fichier peut être ouvert dans un canevas de n8n local et peut être éxecuter si vous êtes connecté à internet (cela effectue des requètes html)
+Vous pouvez ainsi visiter chaque noeud et voir ces configurations
+Ce workflow fait une automatisation sur la générations des informations sur les restaurants chinois à Antananarivo puis génère automatiquement le fichier html restaurants.html dans votre dossier recent
+
+
+
+#FILE restaurants.html
+
+Description : Page html pour visualisation des restaurants chinois 
+Ce fichier peut être ouvert dans un navigateur. Vous devez vous connecter à internet pour pouvoir visualiser les images et le plan 2D ou 3D du restaurant
+
+Voici les champs que vous pouvez y voir
+        ##Les informations sur le restaurant
+        _Nom
+        _Adresse
+        _Contact
+        _Petit illustration
+        _Itinéraire 
+        _Visualisation du lieu
+        
