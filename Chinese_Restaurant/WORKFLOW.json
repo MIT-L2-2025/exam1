@@ -1,0 +1,335 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1260,
+        -140
+      ],
+      "id": "0ef957c3-6f36-443c-9a65-c895fe21449b",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/details/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "place_id",
+              "value": "={{ $json.place_id }}"
+            },
+            {
+              "name": "fields",
+              "value": "formatted_phone_number,international_phone_number,website"
+            },
+            {
+              "name": "key",
+              "value": "AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -840,
+        -300
+      ],
+      "id": "d88c265d-e2cd-4bc4-8cb4-1f7a995dda80",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/textsearch/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "chinese restaurant Antananarivo"
+            },
+            {
+              "name": "key",
+              "value": "AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1120,
+        -300
+      ],
+      "id": "32b569a2-02b4-4bc2-a984-f1a68da90033",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map((item, index) => {\n  const details = item.json.result || {};\n  return {\n    json: {\n      phone_number: details.formatted_phone_number || \"Non disponible\",\n      international_phone_number: details.international_phone_number || \"Non disponible\",\n      website: details.website || \"Non disponible\"\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -620,
+        -280
+      ],
+      "id": "ae800e4d-3854-4bd1-983b-44f614e06a87",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {
+          "clashHandling": {
+            "values": {
+              "resolveClash": "addSuffix"
+            }
+          },
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        -740,
+        0
+      ],
+      "id": "ffdc2a9e-0d25-4315-839a-4c9d1ac8ad0e",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "const restaurants = $input.all().map(item => item.json);\n\nlet htmlContent = `\n  <!DOCTYPE html>\n  <html lang=\"fr\">\n  <head>\n      <meta charset=\"UTF-8\">\n      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n      <title>Découvrez Nos Restaurants</title>\n      <link href=\"https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap\" rel=\"stylesheet\">\n      <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\n      <style>\n          :root {\n              --primary-color: #121212;\n              --secondary-color: #e94560;\n              --accent-color: #4d194d;\n              --dark-bg: #1e1e1e;\n              --darker-bg: #141414;\n              --card-bg: #242424;\n              --dark-text: #f1f1f1;\n              --light-text: #f8f9fa;\n              --muted-text: #a0a0a0;\n              --border-radius: 12px;\n              --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);\n              --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);\n          }\n          \n          * {\n              margin: 0;\n              padding: 0;\n              box-sizing: border-box;\n          }\n          \n          body {\n              font-family: 'Montserrat', sans-serif;\n              background-color: var(--dark-bg);\n              color: var(--light-text);\n              line-height: 1.6;\n              overflow-x: hidden;\n          }\n          \n          .header {\n              background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);\n              color: var(--light-text);\n              padding: 60px 20px;\n              text-align: center;\n              position: relative;\n              overflow: hidden;\n          }\n          \n          .header::before {\n              content: '';\n              position: absolute;\n              top: 0;\n              left: 0;\n              width: 100%;\n              height: 100%;\n              background: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') center/cover no-repeat;\n              opacity: 0.15;\n              z-index: 0;\n          }\n          \n          .header-content {\n              position: relative;\n              z-index: 1;\n          }\n          \n          h1 {\n              font-family: 'Playfair Display', serif;\n              font-size: 3.5rem;\n              margin-bottom: 20px;\n              font-weight: 700;\n              letter-spacing: 1px;\n              text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);\n              background: linear-gradient(to right, var(--secondary-color), #f9c2ff);\n              -webkit-background-clip: text;\n              -webkit-text-fill-color: transparent;\n              background-clip: text;\n          }\n          \n          .tagline {\n              font-size: 1.2rem;\n              max-width: 700px;\n              margin: 0 auto 30px;\n              font-weight: 300;\n              color: #d1d1d1;\n          }\n          \n          .container {\n              max-width: 1200px;\n              margin: -60px auto 60px;\n              padding: 0 20px;\n              position: relative;\n              z-index: 2;\n          }\n          \n          .restaurant {\n              background: var(--card-bg);\n              border-radius: var(--border-radius);\n              margin-bottom: 40px;\n              box-shadow: var(--box-shadow);\n              overflow: hidden;\n              transition: var(--transition);\n              position: relative;\n              border: 1px solid #333;\n          }\n          \n          .restaurant:hover {\n              transform: translateY(-8px);\n              box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);\n              border-color: #444;\n          }\n          \n          .restaurant-header {\n              display: flex;\n              align-items: flex-start;\n              justify-content: space-between;\n              padding: 25px 25px 15px;\n          }\n          \n          .restaurant-title {\n              flex: 1;\n          }\n          \n          .restaurant h2 {\n              font-family: 'Playfair Display', serif;\n              color: #fff;\n              font-size: 2rem;\n              margin-bottom: 8px;\n              position: relative;\n              display: inline-block;\n          }\n          \n          .restaurant h2::after {\n              content: '';\n              position: absolute;\n              bottom: -5px;\n              left: 0;\n              width: 60px;\n              height: 3px;\n              background-color: var(--secondary-color);\n              transition: width 0.3s ease;\n          }\n          \n          .restaurant:hover h2::after {\n              width: 100%;\n          }\n          \n          .image-container {\n              width: 100%;\n              height: 300px;\n              overflow: hidden;\n              position: relative;\n          }\n          \n          .restaurant img {\n              width: 100%;\n              height: 100%;\n              object-fit: cover;\n              transition: transform 0.6s ease;\n              filter: brightness(0.85);\n          }\n          \n          .restaurant:hover img {\n              transform: scale(1.05);\n              filter: brightness(1);\n          }\n          \n          .restaurant-info {\n              padding: 25px;\n              background: var(--card-bg);\n          }\n          \n          .info-grid {\n              display: grid;\n              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));\n              gap: 20px;\n              margin-bottom: 20px;\n          }\n          \n          .info-item {\n              margin-bottom: 15px;\n          }\n          \n          .info-label {\n              display: flex;\n              align-items: center;\n              color: var(--muted-text);\n              font-size: 0.85rem;\n              margin-bottom: 5px;\n              text-transform: uppercase;\n              letter-spacing: 1px;\n          }\n          \n          .info-label i {\n              margin-right: 8px;\n              color: var(--secondary-color);\n              font-size: 1rem;\n          }\n          \n          .info-value {\n              font-weight: 500;\n              color: var(--light-text);\n              font-size: 1rem;\n          }\n          \n          .restaurant-actions {\n              display: flex;\n              flex-wrap: wrap;\n              gap: 15px;\n              margin-top: 20px;\n          }\n          \n          .website-link, .route-button, .streetview-button {\n              display: inline-flex;\n              align-items: center;\n              justify-content: center;\n              padding: 12px 20px;\n              border-radius: 30px;\n              font-weight: 500;\n              text-decoration: none;\n              font-size: 0.9rem;\n              letter-spacing: 0.5px;\n              transition: var(--transition);\n              border: none;\n              cursor: pointer;\n          }\n          \n          .website-link {\n              background-color: var(--accent-color);\n              color: white;\n          }\n          \n          .website-link:hover {\n              background-color: #5f2a5f;\n              transform: translateY(-3px);\n              box-shadow: 0 5px 15px rgba(77, 25, 77, 0.5);\n          }\n          \n          .route-button {\n              background-color: var(--secondary-color);\n              color: white;\n          }\n          \n          .route-button:hover {\n              background-color: #c81c41;\n              transform: translateY(-3px);\n              box-shadow: 0 5px 15px rgba(233, 69, 96, 0.5);\n          }\n          \n          .streetview-button {\n              background-color: #4285f4;\n              color: white;\n          }\n          \n          .streetview-button:hover {\n              background-color: #3367d6;\n              transform: translateY(-3px);\n              box-shadow: 0 5px 15px rgba(66, 133, 244, 0.5);\n          }\n          \n          .route-button i, .website-link i, .streetview-button i {\n              margin-right: 8px;\n          }\n          \n          .map {\n              height: 350px;\n              width: 100%;\n              margin-top: 25px;\n              border-radius: var(--border-radius);\n              overflow: hidden;\n              box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);\n              position: relative;\n              border: 1px solid #333;\n          }\n          \n          .map::before {\n              content: '';\n              position: absolute;\n              top: 0;\n              left: 0;\n              right: 0;\n              height: 5px;\n              background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));\n              z-index: 1;\n          }\n          \n          footer {\n              background-color: var(--darker-bg);\n              color: var(--muted-text);\n              text-align: center;\n              padding: 30px 20px;\n              margin-top: 60px;\n              border-top: 1px solid #333;\n          }\n          \n          .footer-content {\n              max-width: 800px;\n              margin: 0 auto;\n          }\n          \n          .footer-text {\n              font-size: 0.9rem;\n              opacity: 0.8;\n          }\n          \n          @keyframes fadeIn {\n              from { opacity: 0; transform: translateY(30px); }\n              to { opacity: 1; transform: translateY(0); }\n          }\n          \n          .restaurant {\n              animation: fadeIn 0.6s ease-out forwards;\n              opacity: 0;\n          }\n          \n          .restaurant:nth-child(1) { animation-delay: 0.1s; }\n          .restaurant:nth-child(2) { animation-delay: 0.2s; }\n          .restaurant:nth-child(3) { animation-delay: 0.3s; }\n          .restaurant:nth-child(4) { animation-delay: 0.4s; }\n          .restaurant:nth-child(5) { animation-delay: 0.5s; }\n          \n          @media (max-width: 992px) {\n              h1 { font-size: 2.8rem; }\n              .container { margin-top: -40px; }\n          }\n          \n          @media (max-width: 768px) {\n              h1 { font-size: 2.3rem; }\n              .container { padding: 0 15px; }\n              .restaurant-header { flex-direction: column; }\n              .info-grid { grid-template-columns: 1fr; }\n          }\n          \n          @media (max-width: 576px) {\n              h1 { font-size: 2rem; }\n              .tagline { font-size: 1rem; }\n              .restaurant-actions { flex-direction: column; }\n              .website-link, .route-button, .streetview-button { width: 100%; }\n              .image-container { height: 200px; }\n          }\n      </style>\n      <!-- Inclure l'API Google Maps -->\n      <script src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM&callback=initMaps\" defer></script>\n  </head>\n  <body>\n      <header class=\"header\">\n          <div class=\"header-content\">\n              <h1>Découvrez Nos Restaurants</h1>\n              <p class=\"tagline\">Une sélection des meilleurs établissements pour ravir vos papilles</p>\n          </div>\n      </header>\n      \n      <div class=\"container\">\n`;\n\nrestaurants.forEach((restaurant, index) => {\n  // Set animation delay for staggered effect\n  const animationDelay = index * 0.1;\n  \n  htmlContent += `\n    <div class=\"restaurant\" style=\"animation-delay: ${animationDelay}s;\">\n        <div class=\"image-container\">\n            <img src=\"${restaurant.photo && restaurant.photo !== 'Pas de photo disponible' ? restaurant.photo : 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80'}\" alt=\"Photo de ${restaurant.name || 'restaurant'}\">\n        </div>\n        \n        <div class=\"restaurant-header\">\n            <div class=\"restaurant-title\">\n                <h2>${restaurant.name || 'Nom inconnu'}</h2>\n            </div>\n        </div>\n        \n        <div class=\"restaurant-info\">\n            <div class=\"info-grid\">\n                <div class=\"info-item\">\n                    <div class=\"info-label\">\n                        <i class=\"fas fa-map-marker-alt\"></i> Adresse\n                    </div>\n                    <div class=\"info-value\">${restaurant.adresse || 'Non disponible'}</div>\n                </div>\n                \n                <div class=\"info-item\">\n                    <div class=\"info-label\">\n                        <i class=\"fas fa-phone\"></i> Téléphone\n                    </div>\n                    <div class=\"info-value\">${restaurant.phone_number || 'Non disponible'}</div>\n                </div>\n                \n                <div class=\"info-item\">\n                    <div class=\"info-label\">\n                        <i class=\"fas fa-globe\"></i> Téléphone international\n                    </div>\n                    <div class=\"info-value\">${restaurant.international_phone_number || 'Non disponible'}</div>\n                </div>\n                \n                <div class=\"info-item\">\n                    <div class=\"info-label\">\n                        <i class=\"fas fa-map-pin\"></i> Coordonnées\n                    </div>\n                    <div class=\"info-value\">Latitude ${restaurant.latitude || 'N/A'}, Longitude ${restaurant.longitude || 'N/A'}</div>\n                </div>\n            </div>\n            \n            <div class=\"restaurant-actions\">\n                ${\n                  restaurant.website\n                    ? `<a href=\"${restaurant.website}\" class=\"website-link\" target=\"_blank\"><i class=\"fas fa-link\"></i> Visiter le site web</a>`\n                    : ''\n                }\n                <button class=\"route-button\" onclick=\"showRoute(${index})\"><i class=\"fas fa-route\"></i> Voir l'itinéraire</button>\n                <button class=\"streetview-button\" onclick=\"showStreetView(${index})\"><i class=\"fas fa-street-view\"></i> Street View</button>\n            </div>\n            \n            <!-- Conteneur pour la carte -->\n            <div id=\"map-${index}\" class=\"map\"></div>\n        </div>\n    </div>\n  `;\n});\n\nhtmlContent += `\n      </div>\n      \n      <footer>\n          <div class=\"footer-content\">\n              <p class=\"footer-text\">© ${new Date().getFullYear()} Découvrez Nos Restaurants. Tous droits réservés.</p>\n          </div>\n      </footer>\n      \n      <script>\n          // Tableau pour stocker les données des cartes\n          const mapData = ${JSON.stringify(\n            restaurants.map(restaurant => ({\n              lat: parseFloat(restaurant.latitude) || 0,\n              lng: parseFloat(restaurant.longitude) || 0,\n              name: restaurant.name || 'Restaurant'\n            }))\n          )};\n\n          // Tableau pour stocker les instances de carte et de rendu d'itinéraire\n          const maps = [];\n          const directionsRenderers = [];\n          const panoramas = [];\n\n          // Fonction pour initialiser les cartes\n          function initMaps() {\n              const mapStyles = [\n                {\n                  \"featureType\": \"all\",\n                  \"elementType\": \"geometry\",\n                  \"stylers\": [{\"color\": \"#212121\"}]\n                },\n                {\n                  \"featureType\": \"all\",\n                  \"elementType\": \"labels.text.fill\",\n                  \"stylers\": [{\"color\": \"#9e9e9e\"}]\n                },\n                {\n                  \"featureType\": \"all\",\n                  \"elementType\": \"labels.text.stroke\",\n                  \"stylers\": [{\"color\": \"#212121\"}]\n                },\n                {\n                  \"featureType\": \"all\",\n                  \"elementType\": \"labels.icon\",\n                  \"stylers\": [{\"visibility\": \"off\"}]\n                },\n                {\n                  \"featureType\": \"administrative\",\n                  \"elementType\": \"geometry.fill\",\n                  \"stylers\": [{\"color\": \"#757575\"}]\n                },\n                {\n                  \"featureType\": \"administrative\",\n                  \"elementType\": \"geometry.stroke\",\n                  \"stylers\": [{\"color\": \"#757575\"},{\"lightness\": 17},{\"weight\": 1.2}]\n                },\n                {\n                  \"featureType\": \"landscape\",\n                  \"elementType\": \"geometry\",\n                  \"stylers\": [{\"color\": \"#2c2c2c\"},{\"lightness\": 5}]\n                },\n                {\n                  \"featureType\": \"poi\",\n                  \"elementType\": \"geometry\",\n                  \"stylers\": [{\"color\": \"#373737\"},{\"lightness\": 1}]\n                },\n                {\n                  \"featureType\": \"road.highway\",\n                  \"elementType\": \"geometry.fill\",\n                  \"stylers\": [{\"color\": \"#3e3e3e\"},{\"lightness\": 5}]\n                },\n                {\n                  \"featureType\": \"road.arterial\",\n                  \"elementType\": \"geometry\",\n                  \"stylers\": [{\"color\": \"#373737\"},{\"lightness\": 18}]\n                },\n                {\n                  \"featureType\": \"road.local\",\n                  \"elementType\": \"geometry\",\n                  \"stylers\": [{\"color\": \"#2c2c2c\"},{\"lightness\": 16}]\n                },\n                {\n                  \"featureType\": \"transit\",\n                  \"elementType\": \"geometry\",\n                  \"stylers\": [{\"color\": \"#2f2f2f\"},{\"lightness\": 19}]\n                },\n                {\n                  \"featureType\": \"water\",\n                  \"elementType\": \"geometry\",\n                  \"stylers\": [{\"color\": \"#1a1a1a\"},{\"lightness\": 3}]\n                }\n              ];\n              \n              mapData.forEach((data, index) => {\n                  // Vérifier si les coordonnées sont valides\n                  if (data.lat !== 0 && data.lng !== 0) {\n                      const mapOptions = {\n                          center: { lat: data.lat, lng: data.lng },\n                          zoom: 15,\n                          mapTypeId: 'roadmap',\n                          styles: mapStyles,\n                          mapTypeControl: true,\n                          mapTypeControlOptions: {\n                              style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,\n                              position: google.maps.ControlPosition.TOP_RIGHT,\n                              mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain']\n                          },\n                          streetViewControl: true, // Activer le contrôle Street View (pegman)\n                          streetViewControlOptions: {\n                              position: google.maps.ControlPosition.RIGHT_CENTER\n                          },\n                          fullscreenControl: true,\n                          zoomControl: true,\n                          zoomControlOptions: {\n                              position: google.maps.ControlPosition.RIGHT_BOTTOM\n                          }\n                      };\n                      \n                      const map = new google.maps.Map(document.getElementById('map-' + index), mapOptions);\n                      \n                      // Créer une icône de marqueur personnalisée\n                      const markerIcon = {\n                          path: 'M12,2C8.13,2,5,5.13,5,9c0,5.25,7,13,7,13s7-7.75,7-13C19,5.13,15.87,2,12,2z M12,11.5c-1.38,0-2.5-1.12-2.5-2.5s1.12-2.5,2.5-2.5s2.5,1.12,2.5,2.5S13.38,11.5,12,11.5z',\n                          fillColor: '#e94560',\n                          fillOpacity: 1,\n                          strokeWeight: 1,\n                          strokeColor: '#ffffff',\n                          scale: 1.5,\n                          anchor: new google.maps.Point(12, 22)\n                      };\n                      \n                      // Ajouter un marqueur personnalisé\n                      const marker = new google.maps.Marker({\n                          position: { lat: data.lat, lng: data.lng },\n                          map: map,\n                          title: data.name,\n                          icon: markerIcon,\n                          animation: google.maps.Animation.DROP\n                      });\n                      \n                      // Ajouter une infowindow au marqueur\n                      const infowindow = new google.maps.InfoWindow({\n                          content: '<div style=\"padding: 10px; max-width: 200px; background-color: #242424; color: #f1f1f1; border-radius: 6px;\"><strong>' + data.name + '</strong></div>'\n                      });\n                      \n                      marker.addListener('click', function() {\n                          infowindow.open(map, marker);\n                      });\n                      \n                      // Initialiser Street View\n                      const panorama = new google.maps.StreetViewPanorama(\n                          document.getElementById('map-' + index),\n                          {\n                              position: { lat: data.lat, lng: data.lng },\n                              pov: { heading: 0, pitch: 0 },\n                              addressControlOptions: { position: google.maps.ControlPosition.BOTTOM_CENTER },\n                              fullscreenControl: true,\n                              visible: false // Caché par défaut\n                          }\n                      );\n                      \n                      panoramas[index] = panorama;\n                      \n                      // Connecter le panorama à la carte\n                      map.setStreetView(panorama);\n                      \n                      // Stocker la carte et un renderer pour les itinéraires\n                      maps[index] = map;\n                      \n                      const directionsRenderer = new google.maps.DirectionsRenderer({\n                          map: map,\n                          suppressMarkers: false,\n                          polylineOptions: {\n                              strokeColor: '#e94560',\n                              strokeWeight: 5,\n                              strokeOpacity: 0.8\n                          }\n                      });\n                      \n                      directionsRenderers[index] = directionsRenderer;\n                      \n                  } else {\n                      // Cacher le conteneur de la carte si les coordonnées ne sont pas valides\n                      document.getElementById('map-' + index).style.display = 'none';\n                      const routeButtons = document.querySelectorAll('.route-button');\n                      const streetViewButtons = document.querySelectorAll('.streetview-button');\n                      if (routeButtons[index]) {\n                          routeButtons[index].style.display = 'none';\n                      }\n                      if (streetViewButtons[index]) {\n                          streetViewButtons[index].style.display = 'none';\n                      }\n                  }\n              });\n          }\n\n          // Fonction pour afficher Street View\n          function showStreetView(index) {\n              if (!maps[index] || !panoramas[index]) return;\n              \n              // Vérifier si Street View est disponible à cette position\n              const streetViewService = new google.maps.StreetViewService();\n              const radius = 50; // rayon de recherche en mètres\n              \n              streetViewService.getPanorama({\n                  location: { lat: mapData[index].lat, lng: mapData[index].lng },\n                  radius: radius\n              }, (data, status) => {\n                  if (status === google.maps.StreetViewStatus.OK) {\n                      // Afficher Street View\n                      panoramas[index].setPosition(data.location.latLng);\n                      panoramas[index].setVisible(true);\n                      \n                      // Faire défiler jusqu'à la carte\n                      document.getElementById('map-' + index).scrollIntoView({\n                          behavior: 'smooth',\n                          block: 'center'\n                      });\n                      \n                      // Ajouter un bouton de retour à la carte normale\n                      const mapContainer = document.getElementById('map-' + index);\n                      \n                      let backButton = document.getElementById('back-to-map-' + index);\n                      if (!backButton) {\n                          backButton = document.createElement('button');\n                          backButton.id = 'back-to-map-' + index;\n                          backButton.textContent = 'Retour à la carte';\n                          backButton.style.position = 'absolute';\n                          backButton.style.zIndex = '1000';\n                          backButton.style.bottom = '20px';\n                          backButton.style.left = '50%';\n                          backButton.style.transform = 'translateX(-50%)';\n                          backButton.style.padding = '10px 20px';\n                          backButton.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';\n                          backButton.style.color = 'white';\n                          backButton.style.border = 'none';\n                          backButton.style.borderRadius = '30px';\n                          backButton.style.fontFamily = 'Montserrat, sans-serif';\n                          backButton.style.fontWeight = '500';\n                          backButton.style.cursor = 'pointer';\n                          backButton.style.transition = 'all 0.3s ease';\n                          \n                          backButton.addEventListener('mouseover', function() {\n                              this.style.backgroundColor = 'rgba(0, 0, 0, 0.85)';\n                          });\n                          \n                          backButton.addEventListener('mouseout', function() {\n                              this.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';\n                          });\n                          \n                          backButton.addEventListener('click', function() {\n                              panoramas[index].setVisible(false);\n                              this.style.display = 'none';\n                          });\n                          \n                          mapContainer.appendChild(backButton);\n                      } else {\n                          backButton.style.display = 'block';\n                      }\n                  } else {\n                      alert('Street View n\\\\'est pas disponible à cette position.');\n                  }\n              });\n          }\n\n          // Fonction pour afficher l'itinéraire\n          function showRoute(index) {\n              if (!maps[index]) return;\n              \n              // Masquer Street View s'il est actif\n              if (panoramas[index] && panoramas[index].getVisible()) {\n                  panoramas[index].setVisible(false);\n                  const backButton = document.getElementById('back-to-map-' + index);\n                  if (backButton) {\n                      backButton.style.display = 'none';\n                  }\n              }\n              \n              // Vérifier si la géolocalisation est disponible\n              if (navigator.geolocation) {\n                  navigator.geolocation.getCurrentPosition(\n                      (position) => {\n                          const userLocation = {\n                              lat: position.coords.latitude,\n                              lng: position.coords.longitude\n                          };\n                          const destination = {\n                              lat: mapData[index].lat,\n                              lng: mapData[index].lng\n                          };\n\n                          // Initialiser le service de calcul d'itinéraire\n                          const directionsService = new google.maps.DirectionsService();\n                          directionsService.route(\n                              {\n                                  origin: userLocation,\n                                  destination: destination,\n                                  travelMode: google.maps.TravelMode.DRIVING // Mode de transport (peut être modifié)\n                              },\n                              (result, status) => {\n                                  if (status === google.maps.DirectionsStatus.OK) {\n                                      // Afficher l'itinéraire sur la carte\n                                      directionsRenderers[index].setDirections(result);\n                                      \n                                      // Faire défiler jusqu'à la carte\n                                      document.getElementById('map-' + index).scrollIntoView({\n                                          behavior: 'smooth',\n                                          block: 'center'\n                                      });\n                                  } else {\n                                      alert('Impossible de calculer l\\\\'itinéraire : ' + status);\n                                  }\n                              }\n                          );\n                      },\n                      (error) => {\n                          alert('Erreur de géolocalisation : ' + error.message);\n                      }\n                  );\n              } else {\n                  alert('La géolocalisation n\\\\'est pas prise en charge par votre navigateur.');\n              }\n          }\n          \n          // Animation au défilement pour les éléments\n          document.addEventListener('DOMContentLoaded', function() {\n              const restaurants = document.querySelectorAll('.restaurant');\n              \n              function checkScroll() {\n                  restaurants.forEach(restaurant => {\n                      const position = restaurant.getBoundingClientRect().top;\n                      const windowHeight = window.innerHeight;\n                      \n                      if (position < windowHeight * 0.9) {\n                          restaurant.style.opacity = '1';\n                      }\n                  });\n              }\n              \n              // Vérifier au chargement initial\n              checkScroll();\n              \n              // Vérifier au défilement\n              window.addEventListener('scroll', checkScroll);\n          });\n      </script>\n  </body>\n  </html>\n`;\n\nreturn [{\n  json: { fileName: 'LIST.html' },\n  binary: {\n    data: {\n      data: Buffer.from(htmlContent).toString('base64'),\n      mimeType: 'text/html',\n      fileName: 'LIST.html'\n    }\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -320,
+        -200
+      ],
+      "id": "8ec58b4b-4562-4eef-9a7c-8f87a3cd2985",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "LIST.html",
+        "options": {
+          "append": false
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        -100
+      ],
+      "id": "c3f26889-f421-49ef-943b-82fd9faf128f",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Combiner tous les restaurants de tous les items\nconst allRestaurants = items\n  .flatMap(item => item.json.results || [])\n  .map(restaurant => ({\n    json: {\n      name: restaurant.name || \"Nom inconnu\",\n      latitude: restaurant.geometry?.location?.lat || 0,\n      longitude: restaurant.geometry?.location?.lng || 0,\n      vicinity: restaurant.formatted_address || \"Adresse inconnue\",\n      photo: restaurant.photos?.[0]?.photo_reference \n        ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${restaurant.photos[0].photo_reference}&key=VOTRE_CLE_API`\n        : \"Pas de photo disponible\",\n      place_id: restaurant.place_id || \"\", // Conserver le place_id\n      icon: restaurant.icon || \"Sans icone\"\n    }\n  }));\n\nreturn allRestaurants;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -980,
+        -160
+      ],
+      "id": "2513a245-2116-4804-bc93-581f93966f20",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dfa74518-8ef9-4931-806a-bab6badc7809",
+              "name": "phone_number",
+              "value": "={{ $json.phone_number_1 }}",
+              "type": "string"
+            },
+            {
+              "id": "e224e82b-255b-4829-9697-0ebed03b348f",
+              "name": "international_phone_number",
+              "value": "={{ $json.international_phone_number_1 }}",
+              "type": "string"
+            },
+            {
+              "id": "22d01969-249a-44ef-aaa3-59883aeb040f",
+              "name": "website",
+              "value": "={{ $json.website_1 }}",
+              "type": "string"
+            },
+            {
+              "id": "cefd174f-7e19-4c06-9323-273252ca05b7",
+              "name": "name",
+              "value": "={{ $json.name_2 }}",
+              "type": "string"
+            },
+            {
+              "id": "c31f3ca2-b0ff-49dd-8ac6-c203e7741e19",
+              "name": "latitude",
+              "value": "={{ $json.latitude_2 }}",
+              "type": "number"
+            },
+            {
+              "id": "19fa4183-619c-4289-b581-eb864e0c0c7a",
+              "name": "longitude",
+              "value": "={{ $json.longitude_2 }}",
+              "type": "number"
+            },
+            {
+              "id": "3ee7be9b-80df-45bc-b89e-e4bf086d7a44",
+              "name": "adresse",
+              "value": "={{ $json.vicinity_2 }}",
+              "type": "string"
+            },
+            {
+              "id": "58624679-a1ae-478b-ac6d-006cb8254ae6",
+              "name": "photo",
+              "value": "={{ $json.photo_2.replace('VOTRE_CLE_API', 'AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM') }}",
+              "type": "string"
+            },
+            {
+              "id": "9258abe2-f626-48ce-8197-da1bf1a14330",
+              "name": "place_id",
+              "value": "={{ $json.place_id_2 }}",
+              "type": "string"
+            },
+            {
+              "id": "7a55a350-3a3f-4943-ac21-12269121c559",
+              "name": "icon",
+              "value": "={{ $json.icon }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -500,
+        0
+      ],
+      "id": "32197e8e-e46e-4cba-8be0-826fb2491745",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "23a11f87-c3a9-4020-b12c-a86429362da4",
+  "meta": {
+    "instanceId": "b52d51fdebd9fcf06e5f4099e12f5e92d484e4df4513c008d6b9b6397a8255d0"
+  },
+  "id": "OoaQOSy5e0pF45Xl",
+  "tags": []
+}
