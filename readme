@@ -1,1 +1,44 @@
-//instructions
+RestoPro - Trouveur de Restaurants
+
+RestoPro est un workflow n8n qui permet de trouver des restaurants chinois à 
+Antananarivo, Madagascar,et d'afficher les résultats sur une page HTML 
+interactive avec cartes et itinéraires.
+_____________________________________________________________________________________
+Fonctionnalités
+
+Recherche de restaurants chinois à Antananarivo via l'API Google Maps (SerpAPI)
+Affichage des informations des restaurants :
+
+Nom
+Coordonnées de contact
+Adresse
+Spécialité
+Photos (si disponibles)
+Cartes interactives avec 
+    Vue Street View (si disponible)
+    Vue satellite avec itinéraire depuis la position de l'utilisateur
+
+_____________________________________________________________________________________
+Prérequis
+
+Instance n8n
+Compte SerpAPI (pour la recherche Google Maps)
+Clé API JavaScript de Google Maps
+
+_____________________________________________________________________________________
+Configuration
+
+Importer le workflow dans n8n.
+Configurer les clés API 
+  Clé SerpAPI dans le nœud de recherche "Nearby Search"
+  Clé Google Maps dans le modèle HTML (nœud "Code1")
+
+_____________________________________________________________________________________
+Utilisation
+
+Lancer le workflow manuellement depuis n8n.
+Le fichier HTML généré sera enregistré à l'emplacement spécifié.
+Ouvrir le fichier HTML dans un navigateur pour voir les restaurants listés.
+
+
+
