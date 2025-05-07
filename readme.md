@@ -13,7 +13,7 @@ Description : Page html pour visualisation des restaurants chinois
 Ce fichier peut être ouvert dans un navigateur. Vous devez vous connecter à internet pour pouvoir visualiser les images et le plan 2D ou 3D du restaurant
 
 Voici les champs que vous pouvez y voir
-        ## Les informations sur le restaurant
+## Les informations sur le restaurant
         - Nom
         - Adresse
         - Latitude
@@ -24,4 +24,6 @@ Voici les champs que vous pouvez y voir
         - Visualisation du lieu: 2D 3D (cliquer satelite) puis draguer le petit homme jaune pour avoir une vue 3D 
 
 ## Informations
-![Image de mon projet](./webPageImages/Capture d’écran\ du\ 2025-05-07\ 13-53-28.png)
+![Image de mon projet](./webPageImages/information.png)
+## Itinéraire
+
