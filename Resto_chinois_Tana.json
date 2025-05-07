@@ -1,0 +1,143 @@
+{
+  "name": "2",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -180,
+        60
+      ],
+      "id": "37b70709-87a9-457f-a190-49117cccecd0",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/textsearch/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "chinese restaurant Antananarivo"
+            },
+            {
+              "name": "key",
+              "value": "AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        80,
+        80
+      ],
+      "id": "a8e67ce5-3d48-4ed7-86b5-6061fcc62b4f",
+      "name": "Fetch Restaurants"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = items[0].json.results || [];\n\nreturn results.map(restaurant => ({\n  json: {\n    name: restaurant.name || 'Unknown',\n    address: restaurant.formatted_address || 'No address',\n    latitude: restaurant.geometry?.location?.lat || 0,\n    longitude: restaurant.geometry?.location?.lng || 0,\n    phone: restaurant.formatted_phone_number || 'No phone',\n    rating: restaurant.rating || 'No rating',\n    reviews: restaurant.user_ratings_total || 0,\n    type: restaurant.types?.[0] || 'No type',\n    photo: restaurant.photos?.[0]?.photo_reference \n      ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${restaurant.photos[0].photo_reference}&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM`\n      : 'https://via.placeholder.com/400',\n    visualization: `https://earth.google.com/web/search/${encodeURIComponent(restaurant.name)}+${encodeURIComponent(restaurant.formatted_address)}/@${restaurant.geometry?.location?.lat},${restaurant.geometry?.location?.lng},100m/data=!3m1!1e3`\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        80,
+        340
+      ],
+      "id": "f3f756a4-e37c-4b94-8570-65d133541a45",
+      "name": "Transform Data"
+    },
+    {
+      "parameters": {
+        "jsCode": "const restaurants = $input.all().map(item => item.json);\n\nlet htmlContent = `\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Chinese Restaurants in Antananarivo</title>\n  <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap\" rel=\"stylesheet\">\n  <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\n  <style>\n    body { font-family: 'Poppins', sans-serif; margin: 0; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #333; }\n    .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }\n    h1 { text-align: center; color: #2c3e50; font-size: 2.5em; margin-bottom: 40px; }\n    .restaurant { background: #fff; border-radius: 15px; padding: 20px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease; }\n    .restaurant:hover { transform: translateY(-5px); }\n    .restaurant h2 { color: #e74c3c; font-size: 1.8em; margin: 0 0 10px; }\n    .restaurant p { margin: 8px 0; font-size: 1em; color: #555; display: flex; align-items: center; }\n    .restaurant p i { margin-right: 10px; color: #3498db; font-size: 1.2em; }\n    .restaurant img { max-width: 100%; height: auto; border-radius: 10px; margin: 15px 0; }\n    .visualization-link, .route-button { display: inline-block; margin: 10px 10px 10px 0; padding: 10px 20px; color: #fff; text-decoration: none; border-radius: 5px; }\n    .visualization-link { background: #3498db; }\n    .visualization-link:hover { background: #2980b9; }\n    .route-button { background: #2ecc71; border: none; cursor: pointer; }\n    .route-button:hover { background: #27ae60; }\n    .map { height: 300px; width: 100%; margin-top: 20px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }\n    @media (max-width: 600px) { .restaurant h2 { font-size: 1.5em; } .restaurant p { font-size: 0.9em; } }\n  </style>\n  <script src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM&callback=initMaps\" defer></script>\n</head>\n<body>\n  <div class=\"container\">\n    <h1>Chinese Restaurants in Antananarivo</h1>\n`;\n\nrestaurants.forEach((restaurant, index) => {\n  htmlContent += `\n    <div class=\"restaurant\">\n      <h2>${restaurant.name}</h2>\n      <p><i class=\"fas fa-map-marker-alt\"></i><strong>Address:</strong> ${restaurant.address}</p>\n      <p><i class=\"fas fa-phone\"></i><strong>Phone:</strong> ${restaurant.phone}</p>\n      <p><i class=\"fas fa-star\"></i><strong>Rating:</strong> ${restaurant.rating}</p>\n      <p><i class=\"fas fa-comment\"></i><strong>Reviews:</strong> ${restaurant.reviews}</p>\n      <p><i class=\"fas fa-utensils\"></i><strong>Type:</strong> ${restaurant.type}</p>\n      <p><i class=\"fas fa-map-pin\"></i><strong>Coordinates:</strong> Lat ${restaurant.latitude}, Lng ${restaurant.longitude}</p>\n      <img src=\"${restaurant.photo}\" alt=\"Photo of ${restaurant.name}\">\n      <a href=\"${restaurant.visualization}\" class=\"visualization-link\" target=\"_blank\"><i class=\"fas fa-globe\"></i> View on Google Earth</a>\n      <button class=\"route-button\" onclick=\"showRoute(${index})\"><i class=\"fas fa-route\"></i> View Route</button>\n      <div id=\"map-${index}\" class=\"map\"></div>\n    </div>\n  `;\n});\n\nhtmlContent += `\n  </div>\n  <script>\n    const mapData = ${JSON.stringify(restaurants.map(restaurant => ({\n      lat: parseFloat(restaurant.latitude) || 0,\n      lng: parseFloat(restaurant.longitude) || 0,\n      name: restaurant.name || 'Restaurant'\n    })))};\n    const maps = [];\n    const directionsRenderers = [];\n\n    function initMaps() {\n      mapData.forEach((data, index) => {\n        if (data.lat !== 0 && data.lng !== 0) {\n          const map = new google.maps.Map(document.getElementById('map-' + index), {\n            center: { lat: data.lat, lng: data.lng },\n            zoom: 15,\n            mapTypeId: 'roadmap'\n          });\n          new google.maps.Marker({\n            position: { lat: data.lat, lng: data.lng },\n            map: map,\n            title: data.name\n          });\n          maps[index] = map;\n          directionsRenderers[index] = new google.maps.DirectionsRenderer({\n            map: map,\n            suppressMarkers: false\n          });\n        } else {\n          document.getElementById('map-' + index).style.display = 'none';\n          document.querySelector('#map-' + index + ' + .route-button').style.display = 'none';\n        }\n      });\n    }\n\n    function showRoute(index) {\n      if (!maps[index]) return;\n      if (navigator.geolocation) {\n        navigator.geolocation.getCurrentPosition(\n          (position) => {\n            const userLocation = {\n              lat: position.coords.latitude,\n              lng: position.coords.longitude\n            };\n            const destination = {\n              lat: mapData[index].lat,\n              lng: mapData[index].lng\n            };\n            const directionsService = new google.maps.DirectionsService();\n            directionsService.route(\n              {\n                origin: userLocation,\n                destination: destination,\n                travelMode: google.maps.TravelMode.DRIVING\n              },\n              (result, status) => {\n                if (status === google.maps.DirectionsStatus.OK) {\n                  directionsRenderers[index].setDirections(result);\n                } else {\n                  alert('Unable to calculate route: ' + status);\n                }\n              }\n            );\n          },\n          (error) => {\n            alert('Geolocation error: ' + error.message);\n          }\n        );\n      } else {\n        alert('Geolocation is not supported by your browser.');\n      }\n    }\n  </script>\n</body>\n</html>\n`;\n\nreturn [{\n  json: { fileName: 'restaurants.html' },\n  binary: {\n    data: {\n      data: Buffer.from(htmlContent).toString('base64'),\n      mimeType: 'text/html',\n      fileName: 'restaurants.html'\n    }\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        340
+      ],
+      "id": "7b31c856-67ff-4487-bace-5d1e7ae2481c",
+      "name": "Generate HTML"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "={{ $json.fileName }}",
+        "options": {
+          "append": false
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        500,
+        160
+      ],
+      "id": "4af6ea1e-db2a-4364-aece-5a866bd20356",
+      "name": "Write to Disk"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Fetch Restaurants",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Restaurants": {
+      "main": [
+        [
+          {
+            "node": "Transform Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transform Data": {
+      "main": [
+        [
+          {
+            "node": "Generate HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate HTML": {
+      "main": [
+        [
+          {
+            "node": "Write to Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "96de37be-b53b-48c8-a38c-f522c01c6439",
+  "meta": {
+    "instanceId": "4e243a4dc5220408af387db26552de14b4d7aeacff69d6d35779c8c2a71303b7"
+  },
+  "id": "gykgeqaaZyoizCcY",
+  "tags": []
+}
