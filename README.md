@@ -141,6 +141,3 @@ Veuillez créer une branche ou un fork pour proposer vos améliorations.
 Ce projet est sous licence MIT — voir le fichier `LICENSE` pour plus de détails.
 
 ```
-
-Souhaites-tu aussi que je t’ajoute un badge de build ou un `Makefile` pour automatiser les commandes ?
-```
