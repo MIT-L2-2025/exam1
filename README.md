@@ -7,6 +7,11 @@ Ce projet permet de scraper des données depuis Google Maps (restaurants, etc.) 
 
 ---
 
+Une version déployée est disponible sur :
+🔗 [https://chinese-resto.vercel.app/](https://chinese-resto.vercel.app/)
+
+---
+
 ## ⚙️ Prérequis
 
 - [Python 3.8+](https://www.python.org/downloads/)
