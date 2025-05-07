@@ -29,3 +29,5 @@ Voici les champs que vous pouvez y voir
 ![Image de mon projet](./webPageImages/itineraire.png)
 # Vue 3D
 ![Image de mon projet](./webPageImages/visual3D.png)
+
+## Veuillez ouvrir la page html pour mieux visualiser 
