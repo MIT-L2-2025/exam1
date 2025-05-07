@@ -8,7 +8,7 @@ async def main():
     print("[INFO] Scraping terminé.")
     
     print("[INFO] Extraction des données en JSON...")
-    # extract_json(all_data)
+    extract_json(all_data)
     print("[INFO] Extraction terminée. Les données ont été sauvegardées.")
 
 if __name__ == "__main__":
