@@ -1,0 +1,180 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        -20
+      ],
+      "id": "41596f31-f694-48e7-ae74-060d147ec21c",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://api.apify.com/v2/datasets/B1PSCIyhp4GuDuimN/items?clean=true&format=json",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -80,
+        260
+      ],
+      "id": "e1506487-db6f-48bd-a558-31e1db7984ef",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7e752422-2a02-4ae6-a5a7-9e09da62b892",
+              "name": "Name",
+              "value": "={{ $json[\"title\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "e2cc87bc-baad-42bd-a441-4a897d7692d6",
+              "name": "Speciality",
+              "value": "={{ $json[\"categoryName\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "b7404a60-8012-48ce-ac2f-372a0d7f5396",
+              "name": "Address",
+              "value": "={{ $json[\"address\"]  || \"Adresse indisponible\"}}",
+              "type": "string"
+            },
+            {
+              "id": "2e0d1141-7edc-41a6-8366-1de5177ccac4",
+              "name": "Phone",
+              "value": "={{ $json[\"phone\"] || \"contact indisponible\"}}",
+              "type": "string"
+            },
+            {
+              "id": "ea133097-94e3-4073-bc7c-1f121a3ed013",
+              "name": "lat",
+              "value": "=  {{ $json[\"location\"][\"lat\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "d8d2e2be-f5df-4d48-9c59-f3473a6ca195",
+              "name": "lng",
+              "value": "={{ $json[\"location\"][\"lng\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "379c5e67-4635-4c45-a2f2-d8c345c15dbd",
+              "name": "images",
+              "value": "={{ $json[\"imageUrl\"]}}",
+              "type": "string"
+            },
+            {
+              "id": "55fe5d32-7442-4199-94a6-d4a74ab5dadb",
+              "name": "maps",
+              "value": "={{ $json[\"url\"]}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        160,
+        260
+      ],
+      "id": "1bc58cc7-4e0c-4ff1-9f48-fa65e03f745e",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "let htmlContent = `\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Restaurants Chinois à Antananarivo</title>\n  <style>\n    body {\n      font-family: 'Segoe UI', sans-serif;\n      background: #f4bbf9;\n      margin: 0;\n      padding: 20px;\n    }\n\n    h1 {\n      text-align: center;\n      color: #0d47a1;\n      margin-bottom: 40px;\n    }\n\n    .restaurant {\n      display: flex;\n      flex-direction: row;\n       background-color: #031627;\n      color: #fff;\n      border-radius: 12px;\n      box-shadow: 0 6px 20px rgba(0,0,0,0.1);\n      overflow: hidden;\n      margin: 40px auto;\n      max-width: 1000px;\n      transition: transform 0.3s ease;\n    }\n\n    .restaurant:hover {\n      transform: scale(1.01);\n    }\n\n    .restaurant img {\n      width: 300px;\n      object-fit: cover;\n      height: auto;\n    }\n\n    .info {\n      padding: 25px;\n      flex: 1;\n    }\n\n    .info h2 {\n      margin-top: 0;\n      color: #fff;\n      font-size: 1.8em;\n    }\n\n    .info p {\n      margin: 10px 0;\n      font-size: 1em;\n      color: #f0f0f0;\n    }\n\n    .map-button {\n      display: inline-block;\n      margin-top: 15px;\n      padding: 10px 20px;\n      background-color: #0d47a1;\n      color: #fff;\n      text-decoration: none;\n      border-radius: 5px;\n      font-weight: bold;\n      transition: background-color 0.3s ease;\n    }\n\n    .map-button:hover {\n      background-color: #1565c0;\n    }\n\n    @media (max-width: 768px) {\n      .restaurant {\n        flex-direction: column;\n      }\n      .restaurant img {\n        width: 100%;\n        height: auto;\n      }\n    }\n  </style>\n</head>\n<body>\n  <h1>Restaurants Chinois à Antananarivo</h1>\n`;\n\nfor (let item of items) {\n  const name = item.json.Name || 'N/A';\n  const speciality = item.json.Speciality || 'N/A';\n  const phone = item.json.Phone || 'N/A';\n  const address = item.json.Address || 'N/A';\n  const lat = item.json.lat || '';\n  const lng = item.json.lng || '';\n  const imageUrl = item.json.images || 'https://via.placeholder.com/300x200?text=Image+non+dispo';\n\n  const mapLink = (lat && lng)\n    ? `<a class=\"map-button\" href=\"https://www.google.com/maps/search/?api=1&query=${lat},${lng}\" target=\"_blank\">Voir sur Google Maps</a>`\n    : '';\n\n  htmlContent += `\n    <div class=\"restaurant\">\n      <img src=\"${imageUrl}\" alt=\"Image de ${name}\">\n      <div class=\"info\">\n        <h2>${name}</h2>\n        <p><strong>Spécialité :</strong> ${speciality}</p>\n        <p><strong>Contact :</strong> ${phone}</p>\n        <p><strong>Adresse :</strong> ${address}</p>\n        <p><strong>Latitude :</strong> ${lat}</p>\n        <p><strong>Longitude:</strong> ${lng}</p>\n        ${mapLink}\n      </div>\n    </div>\n  `;\n}\n\nhtmlContent += `\n</body>\n</html>\n`;\n\nreturn [\n  {\n    binary: {\n      data: await this.helpers.prepareBinaryData(Buffer.from(htmlContent, 'utf8'), 'restaurants.html', 'text/html')\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        380,
+        260
+      ],
+      "id": "d4ffb55e-210d-4626-8a2e-07723ce34ab8",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "restaurants.html",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        560,
+        260
+      ],
+      "id": "9162ec59-7792-4511-a229-998d72036804",
+      "name": "Read/Write Files from Disk"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4ada1cd3-63c5-48cd-ab7d-c737b9818f23",
+  "meta": {
+    "instanceId": "bc19525dfe44b2c5e2663926acb845c0407328a6f8d66235e51deb892627d99b"
+  },
+  "id": "qrOKNSMR46Qh0keH",
+  "tags": []
+}
