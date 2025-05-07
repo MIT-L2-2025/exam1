@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurants Chinois à Antananarivo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background: linear-gradient(to right, #8b0000, #b22222);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .restaurant {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .restaurant:hover {
+            transform: translateY(-5px);
+        }
+        .restaurant img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .restaurant h2 {
+            color: #8b0000;
+            margin-top: 10px;
+            font-size: 1.4rem;
+        }
+        .restaurant p {
+            color: #555;
+            margin: 8px 0;
+        }
+        .restaurant a {
+            display: inline-block;
+            background-color: #8b0000;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .restaurant a:hover {
+            background-color: #b22222;
+        }
+        footer {
+            background: linear-gradient(to right, #8b0000, #b22222);
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 30px;
+        }
+        .separator {
+            border-bottom: 1px solid #eee;
+            margin: 10px 0;
+        }
+        .search-box {
+            margin: 20px auto;
+            max-width: 600px;
+            text-align: center;
+        }
+        .search-box input {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+        }
+        .search-box input:focus {
+            border-color: #8b0000;
+        }
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Restaurants Chinois à Antananarivo</h1>
+        <p>Découvrez les meilleurs restaurants chinois de la capitale malgache</p>
+    </header>
+
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Rechercher un restaurant..." onkeyup="searchRestaurants()">
+    </div>
+
+    <div class="container" id="restaurantContainer">
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d" alt="Grand Resto de Chine">
+            <h2>Grand Resto de Chine</h2>
+            <p><strong>Adresse:</strong> Lalana Rasamuol Maurice, Antananarivo, Madagascar</p>
+            <p><strong>Contact:</strong> +261 33 83 594 63</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.9141849,47.5384142" target="_blank">Voir l'itinéraire</a>
+        </div>
+
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1569058242567-93de6f36f8e6" alt="O Loft Chinois">
+            <h2>O Loft Chinois</h2>
+            <p><strong>Adresse:</strong> 4G39+2J7, Antananarivo, Madagascar</p>
+            <p><strong>Contact:</strong> Contact non disponible</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.8974503,47.5190589" target="_blank">Voir l'itinéraire</a>
+        </div>
+
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1607330289024-1535c6b4e1c1" alt="La Fleur De Sel">
+            <h2>La Fleur De Sel</h2>
+            <p><strong>Adresse:</strong> Antananarivo, Madagascar</p>
+            <p><strong>Contact:</strong> +261 34 12 582 22</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.8715948,47.5426065" target="_blank">Voir l'itinéraire</a>
+        </div>
+
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836" alt="Restaurant L'EURASIE - Ankorondrano">
+            <h2>Restaurant L'EURASIE - Ankorondrano</h2>
+            <p><strong>Adresse:</strong> Face à l'hôtel Ibis - Ankorondrano, Antananarivo 101, Madagascar</p>
+            <p><strong>Contact:</strong> +261 38 51 944 37</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.878854999999998,47.521268299999996" target="_blank">Voir l'itinéraire</a>
+        </div>
+
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1583032015879-e5022e0b3474" alt="Restaurant Fong Mei">
+            <h2>Restaurant Fong Mei</h2>
+            <p><strong>Adresse:</strong> 4GHM+JMX, Rue Andriantsihoarana Ratsimbazafy, Antananarivo, Madagascar</p>
+            <p><strong>Contact:</strong> +261 33 25 571 99</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.870893799999997,47.5342498" target="_blank">Voir l'itinéraire</a>
+        </div>
+
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1561626423-a51b45aef329" alt="l'Orient Asian Fusion Restaurant">
+            <h2>l'Orient Asian Fusion Restaurant</h2>
+            <p><strong>Adresse:</strong> Madagascar, Antananarivo, Lalana Rainandriamampandry, 邮政编码: 101</p>
+            <p><strong>Contact:</strong> +261 34 36 788 88</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.907249399999998,47.5280373" target="_blank">Voir l'itinéraire</a>
+        </div>
+
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1541696490-8744a5dc0228" alt="凤城 Soleil">
+            <h2>凤城 Soleil</h2>
+            <p><strong>Adresse:</strong> Lot IVK 89 bis Anosivavaka Ambohimanarina, Antananarivo 101, Madagascar</p>
+            <p><strong>Contact:</strong> +261 33 11 336 28</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.8729457,47.507969499999994" target="_blank">Voir l'itinéraire</a>
+        </div>
+
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1555126634-323283e090fa" alt="Dun Huang">
+            <h2>Dun Huang</h2>
+            <p><strong>Adresse:</strong> 42 Arabe Andrinampoinimerina, Antananarivo 101, Madagascar</p>
+            <p><strong>Contact:</strong> Contact non disponible</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.905614,47.524070699999996" target="_blank">Voir l'itinéraire</a>
+        </div>
+
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9" alt="Le Grand Orient">
+            <h2>Le Grand Orient</h2>
+            <p><strong>Adresse:</strong> Rue Andriantsihoarana Ratsimbazafy, Antananarivo 101, Madagascar</p>
+            <p><strong>Contact:</strong> +261 20 22 202 88</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.8698272,47.5317034" target="_blank">Voir l'itinéraire</a>
+        </div>
+
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1544601284-8d17779a37e2" alt='Hirondelle "燕子" Chinese FOOD'>
+            <h2>Hirondelle "燕子" Chinese FOOD</h2>
+            <p><strong>Adresse:</strong> Lalana Dama-Ntsoha Razatintsalama Jean-Baptiste, Antananarivo 101, Madagascar</p>
+            <p><strong>Contact:</strong> +261 34 11 166 78</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.9174137,47.5366284" target="_blank">Voir l'itinéraire</a>
+        </div>
+
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1571066811602-716837d681de" alt="La Jonquille">
+            <h2>La Jonquille</h2>
+            <p><strong>Adresse:</strong> Antananarivo 101, Madagascar</p>
+            <p><strong>Contact:</strong> +261 20 22 206 37</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.909325799999998,47.536889599999995" target="_blank">Voir l'itinéraire</a>
+        </div>
+
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1617622141573-64e33cf0a531" alt="Zen Garden">
+            <h2>Zen Garden</h2>
+            <p><strong>Adresse:</strong> II M 38 F Androhibe Antananarivo Antananarivo, 101, Madagascar</p>
+            <p><strong>Contact:</strong> +261 32 05 135 03</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.865723499999998,47.5428709" target="_blank">Voir l'itinéraire</a>
+        </div>
+
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1609183480237-ccbb4789e8c3" alt="Kaizen Restaurant">
+            <h2>Kaizen Restaurant</h2>
+            <p><strong>Adresse:</strong> 3GPR+F3J, Lalana Vvs, Antananarivo, Madagascar</p>
+            <p><strong>Contact:</strong> Contact non disponible</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.9137837,47.5401532" target="_blank">Voir l'itinéraire</a>
+        </div>
+
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1542648972-2ca290abea98" alt="HONG KONG Restaurant - salon de The">
+            <h2>HONG KONG Restaurant - salon de The</h2>
+            <p><strong>Adresse:</strong> Toyota, Lalana Doktera. Joseph Raseta, Maibahoaka Ivato Antananarivo IVATO, Antananarivo 105, Madagascar</p>
+            <p><strong>Contact:</strong> +261 38 68 509 77</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.830986199999998,47.465352599999996" target="_blank">Voir l'itinéraire</a>
+        </div>
+
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1534422298391-e4f8c172dddb" alt="Restaurant 19° C">
+            <h2>Restaurant 19° C</h2>
+            <p><strong>Adresse:</strong> 4G9C+8Q2, Galana service station, Rue Ravoninahitriniarivo Ankorondrano, Antananarivo, Madagascar, across the street from, Rue Ravoninahitriniarivo, Antananarivo, Madagascar</p>
+            <p><strong>Contact:</strong> +261 34 02 818 66</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.8817394,47.5219035" target="_blank">Voir l'itinéraire</a>
+        </div>
+
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1623595119708-26b1f7300075" alt="吕府私房菜（KTV）">
+            <h2>吕府私房菜（KTV）</h2>
+            <p><strong>Adresse:</strong> Madagascar, Antananarivo, AUTOREX, Amitie Fandian</p>
+            <p><strong>Contact:</strong> +261 38 82 066 66</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.910683199999998,47.503318" target="_blank">Voir l'itinéraire</a>
+        </div>
+
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1518983546433-84f35e85dada" alt="Restaurant La Belle Ville">
+            <h2>Restaurant La Belle Ville</h2>
+            <p><strong>Adresse:</strong> 3GQP+WJP, Rue Razafindralombo Pierre, Antananarivo, Madagascar</p>
+            <p><strong>Contact:</strong> +261 34 03 244 36</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.9101641,47.5365779" target="_blank">Voir l'itinéraire</a>
+        </div>
+
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1633237308525-cd587cf71926" alt="Restaurant Lai">
+            <h2>Restaurant Lai</h2>
+            <p><strong>Adresse:</strong> 3GQ4+RWG, Antananarivo, Madagascar</p>
+            <p><strong>Contact:</strong> +261 32 79 660 89</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.9104281,47.5073277" target="_blank">Voir l'itinéraire</a>
+        </div>
+
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1526318896980-cf78c088247c" alt="Dragon Royal Restaurant IVATO">
+            <h2>Dragon Royal Restaurant IVATO</h2>
+            <p><strong>Adresse:</strong> 5FQF+WHH, Antananarivo, Madagascar</p>
+            <p><strong>Contact:</strong> +261 38 12 579 79</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.8101926,47.4739989" target="_blank">Voir l'itinéraire</a>
+        </div>
+
+        <div class="restaurant">
+            <img src="https://images.unsplash.com/photo-1614545479968-205936ff4a6f" alt="Restaurant Le Cantilène">
+            <h2>Restaurant Le Cantilène</h2>
+            <p><strong>Adresse:</strong> 3GQ4+RWM, Antananarivo, Madagascar</p>
+            <p><strong>Contact:</strong> +261 34 86 576 67</p>
+            <div class="separator"></div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=-18.9104223,47.507293499999996" target="_blank">Voir l'itinéraire</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Restaurants Chinois à Antananarivo. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        function searchRestaurants() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toUpperCase();
+            const container = document.getElementById('restaurantContainer');
+            const restaurants = container.getElementsByClassName('restaurant');
+            
+            for (let i = 0; i < restaurants.length; i++) {
+                const restaurant = restaurants[i];
+                const name = restaurant.getElementsByTagName('h2')[0];
+                const address = restaurant.getElementsByTagName('p')[0];
+                
+                if (name.textContent.toUpperCase().indexOf(filter) > -1 || 
+                    address.textContent.toUpperCase().indexOf(filter) > -1) {
+                    restaurant.style.display = "";
+                } else {
+                    restaurant.style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
