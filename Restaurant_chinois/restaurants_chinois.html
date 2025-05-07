@@ -1,0 +1,515 @@
+
+  <!DOCTYPE html>
+  <html lang="fr">
+  <head>
+      <meta charset="UTF-8">
+      <title>Liste des Restaurants</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+      <style>
+          body {
+              font-family: 'Segoe UI', sans-serif;
+              background: #f2f2f2;
+              margin: 0;
+              padding: 20px;
+              animation: fadein 2s ease-out;
+          }
+          @keyframes fadein {
+              0% { opacity: 0; }
+              100% { opacity: 1; }
+          }
+          .container {
+              max-width: 1200px;
+              margin: auto;
+              background: white;
+              padding: 30px;
+              border-radius: 20px;
+              box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+              animation: slideIn 1.5s ease-out;
+          }
+          @keyframes slideIn {
+              0% { transform: translateY(50px); opacity: 0; }
+              100% { transform: translateY(0); opacity: 1; }
+          }
+          .restaurant-grid {
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+              gap: 30px;
+          }
+          .restaurant {
+              padding: 20px;
+              border-radius: 15px;
+              background: #fff;
+              box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+              transition: transform 0.3s ease, box-shadow 0.3s ease;
+              opacity: 0;
+              transform: translateY(50px);
+              animation: fadeUp 1s ease-out forwards;
+          }
+          @keyframes fadeUp {
+              0% { opacity: 0; transform: translateY(50px); }
+              100% { opacity: 1; transform: translateY(0); }
+          }
+          .restaurant:hover {
+              transform: scale(1.05);
+              box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+          }
+          h1 {
+              text-align: center;
+              color: #2c3e50;
+              font-size: 2.5em;
+          }
+          h2 {
+              margin: 0;
+              color: #34495e;
+              font-size: 1.8em;
+              font-weight: 600;
+          }
+          p {
+              font-size: 1.1em;
+              color: #555;
+          }
+          img {
+              width: 100%;
+              height: auto;
+              border-radius: 10px;
+              margin-top: 15px;
+              box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+              transition: transform 0.4s ease-in-out;
+          }
+          img:hover {
+              transform: scale(1.05);
+          }
+          .map {
+              height: 300px;
+              margin-top: 20px;
+              border-radius: 10px;
+              box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+          }
+          a {
+              color: #007bff;
+              text-decoration: none;
+              font-weight: bold;
+              transition: color 0.3s ease;
+          }
+          a:hover {
+              color: #0056b3;
+          }
+      </style>
+  </head>
+  <body>
+  <div class="container">
+      <h1>Liste des Restaurants</h1>
+      <div class="restaurant-grid">
+  
+      <div class="restaurant">
+          <h2>l&#x27;Orient Asian Fusion Restaurant</h2>
+          <p><strong>Téléphone :</strong> +261 34 36 788 88</p>
+          <p><strong>Adresse :</strong> Madagascar, Antananarivo, Lalana Rainandriamampandry, 邮政编码: 101</p>
+          <p><strong>Spécialité :</strong> Pan-Asian restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -18.907249399999998, Longitude 47.5280373<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-18.907249399999998,47.5280373" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipMEtu4ta7YgG-CL3VT7miGqijPe1Too2f9jrSaP=w122-h92-k-no" alt="Photo de l&#x27;Orient Asian Fusion Restaurant">
+          <div id="map-0" class="map"></div>
+      </div>
+      
+      <div class="restaurant">
+          <h2>La Fleur De Sel</h2>
+          <p><strong>Téléphone :</strong> +261 34 12 582 22</p>
+          <p><strong>Adresse :</strong> Antananarivo, Madagascar</p>
+          <p><strong>Spécialité :</strong> Mandarin restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -18.8715948, Longitude 47.5426065<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-18.8715948,47.5426065" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipOQOGgQ0ObZ5MrCEVpNp5mKBTcQCh0GEM77h5YL=w158-h92-k-no" alt="Photo de La Fleur De Sel">
+          <div id="map-1" class="map"></div>
+      </div>
+      
+      <div class="restaurant">
+          <h2>Grand Resto de Chine</h2>
+          <p><strong>Téléphone :</strong> +261 33 83 594 63</p>
+          <p><strong>Adresse :</strong> Lalana Rasamuol Maurice, Antananarivo, Madagascar</p>
+          <p><strong>Spécialité :</strong> Asian restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -18.9141849, Longitude 47.5384142<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-18.9141849,47.5384142" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipN7yiBNA30KEizkiXJxu3ZUeiYA7jnqdu52kJMZ=w163-h92-k-no" alt="Photo de Grand Resto de Chine">
+          <div id="map-2" class="map"></div>
+      </div>
+      
+      <div class="restaurant">
+          <h2>Restaurant L&#x27;EURASIE - Ankorondrano</h2>
+          <p><strong>Téléphone :</strong> +261 38 51 944 37</p>
+          <p><strong>Adresse :</strong> Face à l&#x27;hôtel Ibis - Ankorondrano, Antananarivo 101, Madagascar</p>
+          <p><strong>Spécialité :</strong> Chinese restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -18.878854999999998, Longitude 47.521268299999996<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-18.878854999999998,47.521268299999996" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipOtq5x8wMn4L97OL30vkqmmLhgHeeJskz-a6ipY=w163-h92-k-no" alt="Photo de Restaurant L&#x27;EURASIE - Ankorondrano">
+          <div id="map-3" class="map"></div>
+      </div>
+      
+      <div class="restaurant">
+          <h2>O Loft Chinois</h2>
+          <p><strong>Téléphone :</strong> Aucun</p>
+          <p><strong>Adresse :</strong> 4G39+2J7, Antananarivo, Madagascar</p>
+          <p><strong>Spécialité :</strong> Restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -18.8974503, Longitude 47.5190589<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-18.8974503,47.5190589" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipNHPeTD3gUVFTfRHfj-ncIHDw58513AyhFo_hRm=w122-h92-k-no" alt="Photo de O Loft Chinois">
+          <div id="map-4" class="map"></div>
+      </div>
+      
+      <div class="restaurant">
+          <h2>Zen Garden</h2>
+          <p><strong>Téléphone :</strong> +261 32 05 135 03</p>
+          <p><strong>Adresse :</strong> II M 38 F Androhibe Antananarivo Antananarivo, 101, Madagascar</p>
+          <p><strong>Spécialité :</strong> Chinese restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -18.865723499999998, Longitude 47.5428709<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-18.865723499999998,47.5428709" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipN43283kmuuBmRt07-4IJshNImNdRb7Y6BpnpX1=w122-h92-k-no" alt="Photo de Zen Garden">
+          <div id="map-5" class="map"></div>
+      </div>
+      
+      <div class="restaurant">
+          <h2>凤城 Soleil</h2>
+          <p><strong>Téléphone :</strong> +261 33 11 336 28</p>
+          <p><strong>Adresse :</strong> Lot IVK 89 bis Anosivavaka Ambohimanarina, Antananarivo 101, Madagascar</p>
+          <p><strong>Spécialité :</strong> Chinese restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -18.8729457, Longitude 47.507969499999994<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-18.8729457,47.507969499999994" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipMT80IzDef8niQl-4eeDjoNIITK_qRcFk21kD0I=w80-h106-k-no" alt="Photo de 凤城 Soleil">
+          <div id="map-6" class="map"></div>
+      </div>
+      
+      <div class="restaurant">
+          <h2>Dragon Royal Restaurant IVATO</h2>
+          <p><strong>Téléphone :</strong> +261 38 12 579 79</p>
+          <p><strong>Adresse :</strong> 5FQF+WHH, Antananarivo, Madagascar</p>
+          <p><strong>Spécialité :</strong> Asian restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -18.8101926, Longitude 47.4739989<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-18.8101926,47.4739989" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipOtJoCztcg9BWvy5KjmUpPcbjQNaYS4J2871A2s=w80-h106-k-no" alt="Photo de Dragon Royal Restaurant IVATO">
+          <div id="map-7" class="map"></div>
+      </div>
+      
+      <div class="restaurant">
+          <h2>Restaurant Longo</h2>
+          <p><strong>Téléphone :</strong> Aucun</p>
+          <p><strong>Adresse :</strong> RCR5+8RH, De Lattre De Tassigny, Toamasina 501, Madagascar</p>
+          <p><strong>Spécialité :</strong> Chinese restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -18.1591851, Longitude 49.4096002<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-18.1591851,49.4096002" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipNZRydwfIKpcd3AgRl4PmpS6gAvqvTNND4gfEYf=w80-h142-k-no" alt="Photo de Restaurant Longo">
+          <div id="map-8" class="map"></div>
+      </div>
+      
+      <div class="restaurant">
+          <h2>Restaurant La Belle Ville</h2>
+          <p><strong>Téléphone :</strong> +261 34 03 244 36</p>
+          <p><strong>Adresse :</strong> 3GQP+WJP, Rue Razafindralombo Pierre, Antananarivo, Madagascar</p>
+          <p><strong>Spécialité :</strong> Chinese restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -18.9101641, Longitude 47.5365779<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-18.9101641,47.5365779" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipNDWX5a1IpH3BSryRA9ZpB_u7tet_SNh7nS-Jqt=w189-h92-k-no" alt="Photo de Restaurant La Belle Ville">
+          <div id="map-9" class="map"></div>
+      </div>
+      
+      <div class="restaurant">
+          <h2>Hirondelle &quot;燕子&quot; Chinese FOOD</h2>
+          <p><strong>Téléphone :</strong> +261 34 11 166 78</p>
+          <p><strong>Adresse :</strong> Lalana Dama-Ntsoha Razatintsalama Jean-Baptiste, Antananarivo 101, Madagascar</p>
+          <p><strong>Spécialité :</strong> Hot pot restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -18.9174137, Longitude 47.5366284<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-18.9174137,47.5366284" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipOlL8D5QE7w7pW9LtkTvqny7HBjfKkNXaCAdGwC=w163-h92-k-no" alt="Photo de Hirondelle &quot;燕子&quot; Chinese FOOD">
+          <div id="map-10" class="map"></div>
+      </div>
+      
+      <div class="restaurant">
+          <h2>Resto-ling</h2>
+          <p><strong>Téléphone :</strong> +261 32 60 551 47</p>
+          <p><strong>Adresse :</strong> Madagascar, Sambava</p>
+          <p><strong>Spécialité :</strong> Chinese restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -14.2573809, Longitude 50.153433799999995<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-14.2573809,50.153433799999995" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipMf26CQxUDXoNeH2rO31H_a5_ztoOudMl61Yt6N=w80-h106-k-no" alt="Photo de Resto-ling">
+          <div id="map-11" class="map"></div>
+      </div>
+      
+      <div class="restaurant">
+          <h2>Dun Huang</h2>
+          <p><strong>Téléphone :</strong> Aucun</p>
+          <p><strong>Adresse :</strong> 42 Arabe Andrinampoinimerina, Antananarivo 101, Madagascar</p>
+          <p><strong>Spécialité :</strong> Chinese restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -18.905614, Longitude 47.524070699999996<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-18.905614,47.524070699999996" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipOrcLrnddjVPe8CMEGLkJqhV5o2dOq01yCnhGaf=w163-h92-k-no" alt="Photo de Dun Huang">
+          <div id="map-12" class="map"></div>
+      </div>
+      
+      <div class="restaurant">
+          <h2>PACIFIQUE</h2>
+          <p><strong>Téléphone :</strong> +261 20 53 322 23</p>
+          <p><strong>Adresse :</strong> RCR9+P29, Toamasina 501, Madagascar</p>
+          <p><strong>Spécialité :</strong> Chinese restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -18.158212499999998, Longitude 49.417609399999996<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-18.158212499999998,49.417609399999996" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipM6kMbrrw1MwKbA26UMijsFj_NY10pcbx_Sfv13=w163-h92-k-no" alt="Photo de PACIFIQUE">
+          <div id="map-13" class="map"></div>
+      </div>
+      
+      <div class="restaurant">
+          <h2>Restaurant 19° C</h2>
+          <p><strong>Téléphone :</strong> +261 34 02 818 66</p>
+          <p><strong>Adresse :</strong> 4G9C+8Q2, Galana service station, Rue Ravoninahitriniarivo Ankorondrano, Antananarivo, Madagascar, across the street from, Rue Ravoninahitriniarivo, Antananarivo, Madagascar</p>
+          <p><strong>Spécialité :</strong> Chinese restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -18.8817394, Longitude 47.5219035<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-18.8817394,47.5219035" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://via.placeholder.com/400" alt="Photo de Restaurant 19° C">
+          <div id="map-14" class="map"></div>
+      </div>
+      
+      <div class="restaurant">
+          <h2>Kaizen Restaurant</h2>
+          <p><strong>Téléphone :</strong> Aucun</p>
+          <p><strong>Adresse :</strong> 3GPR+F3J, Lalana Vvs, Antananarivo, Madagascar</p>
+          <p><strong>Spécialité :</strong> Chinese restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -18.9137837, Longitude 47.5401532<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-18.9137837,47.5401532" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipOQHJqXZUk4vpRga6ZBl4XFhFTOkgjwqM7oPCAI=w80-h106-k-no" alt="Photo de Kaizen Restaurant">
+          <div id="map-15" class="map"></div>
+      </div>
+      
+      <div class="restaurant">
+          <h2>Lotus Blanc Restaurant 荷花酒店</h2>
+          <p><strong>Téléphone :</strong> Aucun</p>
+          <p><strong>Adresse :</strong> LOT II W 23 B, Antananarivo 101, Madagascar</p>
+          <p><strong>Spécialité :</strong> Chinese restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -18.9134037, Longitude 47.537774399999996<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-18.9134037,47.537774399999996" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipM8NDE-zVjI5XzZluG0roZbgxqkJDnGuLV5Zz1j=w122-h92-k-no" alt="Photo de Lotus Blanc Restaurant 荷花酒店">
+          <div id="map-16" class="map"></div>
+      </div>
+      
+      <div class="restaurant">
+          <h2>Restaurant Le Cantilène</h2>
+          <p><strong>Téléphone :</strong> +261 34 86 576 67</p>
+          <p><strong>Adresse :</strong> 3GQ4+RWM, Antananarivo, Madagascar</p>
+          <p><strong>Spécialité :</strong> Chinese restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -18.9104223, Longitude 47.507293499999996<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-18.9104223,47.507293499999996" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://via.placeholder.com/400" alt="Photo de Restaurant Le Cantilène">
+          <div id="map-17" class="map"></div>
+      </div>
+      
+      <div class="restaurant">
+          <h2>Le Grand Orient</h2>
+          <p><strong>Téléphone :</strong> +261 20 22 202 88</p>
+          <p><strong>Adresse :</strong> Rue Andriantsihoarana Ratsimbazafy, Antananarivo 101, Madagascar</p>
+          <p><strong>Spécialité :</strong> Chinese restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -18.8698272, Longitude 47.5317034<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-18.8698272,47.5317034" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipNfdthhKgfEkk6YKFWRam1O6ptNiH2m1M3uGwE1=w163-h92-k-no" alt="Photo de Le Grand Orient">
+          <div id="map-18" class="map"></div>
+      </div>
+      
+      <div class="restaurant">
+          <h2>佬湘好</h2>
+          <p><strong>Téléphone :</strong> +261 38 52 066 66</p>
+          <p><strong>Adresse :</strong> Madagascar, Antanetib, 3, MG Antananarivo, 邮政编码: 105</p>
+          <p><strong>Spécialité :</strong> Chinese restaurant</p>
+          <p><strong>Coordonnées :</strong><br>Latitude -18.835245699999998, Longitude 47.4647325<br>
+              <a href="https://www.google.com/maps?q=&layer=c&cbll=-18.835245699999998,47.4647325" target="_blank">
+                🌐 Voir en vue immersive (Street View)
+              </a></p>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipNsuuKz6ddAPMpV_-i5na-PMdZnsDpdU3CsJSYz=w92-h92-k-no" alt="Photo de 佬湘好">
+          <div id="map-19" class="map"></div>
+      </div>
+      
+      </div>
+  </div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          
+                  var map0 = L.map('map-0').setView([-18.907249399999998, 47.5280373], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map0);
+                  L.marker([-18.907249399999998, 47.5280373]).addTo(map0)
+                      .bindPopup('l&#x27;Orient Asian Fusion Restaurant');
+              
+                  var map1 = L.map('map-1').setView([-18.8715948, 47.5426065], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map1);
+                  L.marker([-18.8715948, 47.5426065]).addTo(map1)
+                      .bindPopup('La Fleur De Sel');
+              
+                  var map2 = L.map('map-2').setView([-18.9141849, 47.5384142], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map2);
+                  L.marker([-18.9141849, 47.5384142]).addTo(map2)
+                      .bindPopup('Grand Resto de Chine');
+              
+                  var map3 = L.map('map-3').setView([-18.878854999999998, 47.521268299999996], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map3);
+                  L.marker([-18.878854999999998, 47.521268299999996]).addTo(map3)
+                      .bindPopup('Restaurant L&#x27;EURASIE - Ankorondrano');
+              
+                  var map4 = L.map('map-4').setView([-18.8974503, 47.5190589], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map4);
+                  L.marker([-18.8974503, 47.5190589]).addTo(map4)
+                      .bindPopup('O Loft Chinois');
+              
+                  var map5 = L.map('map-5').setView([-18.865723499999998, 47.5428709], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map5);
+                  L.marker([-18.865723499999998, 47.5428709]).addTo(map5)
+                      .bindPopup('Zen Garden');
+              
+                  var map6 = L.map('map-6').setView([-18.8729457, 47.507969499999994], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map6);
+                  L.marker([-18.8729457, 47.507969499999994]).addTo(map6)
+                      .bindPopup('凤城 Soleil');
+              
+                  var map7 = L.map('map-7').setView([-18.8101926, 47.4739989], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map7);
+                  L.marker([-18.8101926, 47.4739989]).addTo(map7)
+                      .bindPopup('Dragon Royal Restaurant IVATO');
+              
+                  var map8 = L.map('map-8').setView([-18.1591851, 49.4096002], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map8);
+                  L.marker([-18.1591851, 49.4096002]).addTo(map8)
+                      .bindPopup('Restaurant Longo');
+              
+                  var map9 = L.map('map-9').setView([-18.9101641, 47.5365779], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map9);
+                  L.marker([-18.9101641, 47.5365779]).addTo(map9)
+                      .bindPopup('Restaurant La Belle Ville');
+              
+                  var map10 = L.map('map-10').setView([-18.9174137, 47.5366284], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map10);
+                  L.marker([-18.9174137, 47.5366284]).addTo(map10)
+                      .bindPopup('Hirondelle &quot;燕子&quot; Chinese FOOD');
+              
+                  var map11 = L.map('map-11').setView([-14.2573809, 50.153433799999995], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map11);
+                  L.marker([-14.2573809, 50.153433799999995]).addTo(map11)
+                      .bindPopup('Resto-ling');
+              
+                  var map12 = L.map('map-12').setView([-18.905614, 47.524070699999996], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map12);
+                  L.marker([-18.905614, 47.524070699999996]).addTo(map12)
+                      .bindPopup('Dun Huang');
+              
+                  var map13 = L.map('map-13').setView([-18.158212499999998, 49.417609399999996], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map13);
+                  L.marker([-18.158212499999998, 49.417609399999996]).addTo(map13)
+                      .bindPopup('PACIFIQUE');
+              
+                  var map14 = L.map('map-14').setView([-18.8817394, 47.5219035], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map14);
+                  L.marker([-18.8817394, 47.5219035]).addTo(map14)
+                      .bindPopup('Restaurant 19° C');
+              
+                  var map15 = L.map('map-15').setView([-18.9137837, 47.5401532], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map15);
+                  L.marker([-18.9137837, 47.5401532]).addTo(map15)
+                      .bindPopup('Kaizen Restaurant');
+              
+                  var map16 = L.map('map-16').setView([-18.9134037, 47.537774399999996], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map16);
+                  L.marker([-18.9134037, 47.537774399999996]).addTo(map16)
+                      .bindPopup('Lotus Blanc Restaurant 荷花酒店');
+              
+                  var map17 = L.map('map-17').setView([-18.9104223, 47.507293499999996], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map17);
+                  L.marker([-18.9104223, 47.507293499999996]).addTo(map17)
+                      .bindPopup('Restaurant Le Cantilène');
+              
+                  var map18 = L.map('map-18').setView([-18.8698272, 47.5317034], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map18);
+                  L.marker([-18.8698272, 47.5317034]).addTo(map18)
+                      .bindPopup('Le Grand Orient');
+              
+                  var map19 = L.map('map-19').setView([-18.835245699999998, 47.4647325], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  }).addTo(map19);
+                  L.marker([-18.835245699999998, 47.4647325]).addTo(map19)
+                      .bindPopup('佬湘好');
+              
+      });
+  </script>
+  </body>
+  </html>
+  

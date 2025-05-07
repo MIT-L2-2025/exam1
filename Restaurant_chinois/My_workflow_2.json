@@ -1,0 +1,143 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        -360
+      ],
+      "id": "0bdcb148-1e76-4638-b772-30ac5ad0842f",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://serpapi.com/search.json?engine=google_maps&q=restaurant+chinois+madagascar",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "restaurant chinoix"
+            },
+            {
+              "name": "key",
+              "value": "7160fd124ad77a622daf4eb617fd112c13dfb3fdda044fdfc25df24d27430e0c"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -140,
+        -40
+      ],
+      "id": "99757687-af97-4f3d-9885-52ef54934c1b",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "data = items[0].get(\"json\", {})\n\nresults = data.get(\"local_results\", [])\n\noutput = []\nfor place in results:\n    output.append({\n        \"json\": {\n            \"nom\": place.get(\"title\", \"Inconnu\"),\n            \"contact\": place.get(\"phone\", \"Aucun\"),\n            \"adresse\": place.get(\"address\", \"Inconnue\"),\n            \"latitude\": place.get(\"gps_coordinates\", {}).get(\"latitude\"),\n            \"longitude\": place.get(\"gps_coordinates\", {}).get(\"longitude\"),\n            \"specialite\": place.get(\"type\", \"Aucune\"),\n            \"photo\": place.get(\"thumbnail\")\n        }\n    })\n\nreturn output\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        160,
+        -340
+      ],
+      "id": "51a96838-c41f-4a61-a266-8c0f67d28785",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "import base64\nimport html\n\ndef escape_html(text):\n    if not isinstance(text, str):\n        return \"Non disponible\"\n    return html.escape(text)\n\nrestaurants = [item[\"json\"] for item in items]\n\nif not restaurants:\n    return [{\"json\": {\"error\": \"Aucune donnée de restaurant valide.\"}}]\n\nhtml_content = \"\"\"\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Liste des Restaurants</title>\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.css\" />\n    <style>\n        body {\n            font-family: 'Segoe UI', sans-serif;\n            background: #f2f2f2;\n            margin: 0;\n            padding: 20px;\n            animation: fadein 2s ease-out;\n        }\n        @keyframes fadein {\n            0% { opacity: 0; }\n            100% { opacity: 1; }\n        }\n        .container {\n            max-width: 1200px;\n            margin: auto;\n            background: white;\n            padding: 30px;\n            border-radius: 20px;\n            box-shadow: 0 5px 20px rgba(0,0,0,0.2);\n            animation: slideIn 1.5s ease-out;\n        }\n        @keyframes slideIn {\n            0% { transform: translateY(50px); opacity: 0; }\n            100% { transform: translateY(0); opacity: 1; }\n        }\n        .restaurant-grid {\n            display: grid;\n            grid-template-columns: repeat(2, 1fr);\n            gap: 30px;\n        }\n        .restaurant {\n            padding: 20px;\n            border-radius: 15px;\n            background: #fff;\n            box-shadow: 0 5px 25px rgba(0,0,0,0.1);\n            transition: transform 0.3s ease, box-shadow 0.3s ease;\n            opacity: 0;\n            transform: translateY(50px);\n            animation: fadeUp 1s ease-out forwards;\n        }\n        @keyframes fadeUp {\n            0% { opacity: 0; transform: translateY(50px); }\n            100% { opacity: 1; transform: translateY(0); }\n        }\n        .restaurant:hover {\n            transform: scale(1.05);\n            box-shadow: 0 10px 30px rgba(0,0,0,0.2);\n        }\n        h1 {\n            text-align: center;\n            color: #2c3e50;\n            font-size: 2.5em;\n        }\n        h2 {\n            margin: 0;\n            color: #34495e;\n            font-size: 1.8em;\n            font-weight: 600;\n        }\n        p {\n            font-size: 1.1em;\n            color: #555;\n        }\n        img {\n            width: 100%;\n            height: auto;\n            border-radius: 10px;\n            margin-top: 15px;\n            box-shadow: 0 5px 20px rgba(0,0,0,0.1);\n            transition: transform 0.4s ease-in-out;\n        }\n        img:hover {\n            transform: scale(1.05);\n        }\n        .map {\n            height: 300px;\n            margin-top: 20px;\n            border-radius: 10px;\n            box-shadow: 0 5px 20px rgba(0,0,0,0.1);\n        }\n        a {\n            color: #007bff;\n            text-decoration: none;\n            font-weight: bold;\n            transition: color 0.3s ease;\n        }\n        a:hover {\n            color: #0056b3;\n        }\n    </style>\n</head>\n<body>\n<div class=\"container\">\n    <h1>Liste des Restaurants</h1>\n    <div class=\"restaurant-grid\">\n\"\"\"\n\nmap_scripts = \"\"\n\nfor index, r in enumerate(restaurants):\n    nom = escape_html(r.get(\"nom\", \"Nom inconnu\"))\n    contact = escape_html(r.get(\"contact\", \"Non disponible\"))\n    adresse = escape_html(r.get(\"adresse\", \"Non disponible\"))\n    specialite = escape_html(r.get(\"specialite\", \"Non disponible\"))\n    photo = r.get(\"photo\", \"\")\n    if not photo or photo == \"Pas de photo disponible\":\n        photo = \"https://via.placeholder.com/400\"\n    else:\n        photo = escape_html(photo)\n\n    lat = r.get(\"latitude\")\n    lon = r.get(\"longitude\")\n    coords_html = \"Non disponible\"\n    map_div = \"\"\n\n    if lat and lon:\n        try:\n            lat = float(lat)\n            lon = float(lon)\n            coords_html = f\"\"\"Latitude {lat}, Longitude {lon}<br>\n            <a href=\"https://www.google.com/maps?q=&layer=c&cbll={lat},{lon}\" target=\"_blank\">\n              🌐 Voir en vue immersive (Street View)\n            </a>\"\"\"\n            map_div = f'<div id=\"map-{index}\" class=\"map\"></div>'\n            map_scripts += f\"\"\"\n                var map{index} = L.map('map-{index}').setView([{lat}, {lon}], 13);\n                L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{\n                    attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>'\n                }}).addTo(map{index});\n                L.marker([{lat}, {lon}]).addTo(map{index})\n                    .bindPopup('{nom}');\n            \"\"\"\n        except:\n            pass\n\n    html_content += f\"\"\"\n    <div class=\"restaurant\">\n        <h2>{nom}</h2>\n        <p><strong>Téléphone :</strong> {contact}</p>\n        <p><strong>Adresse :</strong> {adresse}</p>\n        <p><strong>Spécialité :</strong> {specialite}</p>\n        <p><strong>Coordonnées :</strong><br>{coords_html}</p>\n        <img src=\"{photo}\" alt=\"Photo de {nom}\">\n        {map_div}\n    </div>\n    \"\"\"\n\nhtml_content += f\"\"\"\n    </div>\n</div>\n<script src=\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.js\"></script>\n<script>\n    document.addEventListener('DOMContentLoaded', function () {{\n        {map_scripts}\n    }});\n</script>\n</body>\n</html>\n\"\"\"\n\nhtml_base64 = base64.b64encode(html_content.encode(\"utf-8\")).decode(\"utf-8\")\n\nreturn [{\n    \"json\": { \"fileName\": \"restaurants.html\" },\n    \"binary\": {\n        \"data\": {\n            \"data\": html_base64,\n            \"mimeType\": \"text/html\",\n            \"fileName\": \"restaurants.html\"\n        }\n    }\n}]\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        -40
+      ],
+      "id": "fe427b99-c8e3-449a-aff8-20d9d3d10691",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "restaurant.html",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        760,
+        -280
+      ],
+      "id": "f083c74d-1631-4603-9447-364822c7f438",
+      "name": "Read/Write Files from Disk"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ef54fe25-2f60-42f1-abfa-57ead65b49e2",
+  "meta": {
+    "instanceId": "27ee1cf65374fd1aaa932e56fef6362e6216a6a9e46b6ea929efd85683fceb15"
+  },
+  "id": "LAK0DBIRDAEh0TLr",
+  "tags": []
+}
