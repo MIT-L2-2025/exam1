@@ -1,4 +1,4 @@
-# 🧪 Projet d’Examen – Workflow n8n
+# 🧪 Projet Workflow n8n
 
 Ce dépôt contient un workflow n8n permet de recenser automatiquement les restaurants chinois situés à Antananarivo et de générer une page HTML avec leurs informations.
 
