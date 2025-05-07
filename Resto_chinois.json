@@ -1,0 +1,141 @@
+{
+  "name": "Resto_chinois",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "45fe9216-989d-419e-8fc7-12cba0118c01",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://serpapi.com/search.json?engine=google_maps&q=restaurant+chinois+antananarivo",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "restaurant chinois Antananarivo"
+            },
+            {
+              "name": "key",
+              "value": "7160fd124ad77a622daf4eb617fd112c13dfb3fdda044fdfc25df24d27430e0c"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "3d81c321-2bbb-4c9f-8e04-65b08b79f625",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.all()[0].json; // Supposons que les données JSON sont dans le premier item\n\n// Vérifier si les données existent\nconst results = data?.local_results || [];\n\n// Mapper les résultats pour extraire les infos voulues\nreturn results.map(place => ({\n  json: {\n    nom: place.title || 'Inconnu',\n    contact: place.phone || 'Aucun',\n    adresse: place.address || 'Inconnue',\n    latitude: place.gps_coordinates?.latitude || null,\n    longitude: place.gps_coordinates?.longitude || null,\n    specialite: place.type || 'Aucune',\n    photo : place.thumbnail\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "f68055ed-fcf0-4d2f-a702-29255a22d045",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "jsCode": "const escapeHtml = (unsafe) => {\n  if (typeof unsafe !== 'string') return 'Non disponible';\n  return unsafe\n    .replace(/&/g, '&amp;')\n    .replace(/</g, '&lt;')\n    .replace(/>/g, '&gt;')\n    .replace(/\"/g, '&quot;')\n    .replace(/'/g, '&#039;');\n};\n\nlet restaurants = [];\ntry {\n  restaurants = $input.all().map(item => item.json).filter(r => r && typeof r === 'object');\n  if (restaurants.length === 0) {\n    throw new Error('Aucune donnée de restaurant valide trouvée.');\n  }\n} catch (error) {\n  return [{\n    json: { error: 'Erreur lors de la récupération des données', message: error.message },\n  }];\n}\n\nlet htmlContent = `\n  <!DOCTYPE html>\n  <html lang=\"fr\">\n  <head>\n      <meta charset=\"UTF-8\">\n      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n      <title>Liste des Restaurants</title>\n      <meta name=\"description\" content=\"Liste interactive de restaurants avec carte et détails.\">\n      <link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.css\" />\n      \n<style>\n    body {\n        font-family: 'Segoe UI', Arial, sans-serif;\n        margin: 0;\n        padding: 20px;\n        background-color: #f4f4f9;\n    }\n\n    .container {\n        max-width: 900px;\n        margin: auto;\n        padding: 20px;\n        background: #ffffff;\n        border-radius: 15px;\n        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\n    }\n\n    h1 {\n        text-align: center;\n        color: #5e35b1; /* violet foncé */\n        font-size: 28px;\n        margin-bottom: 30px;\n    }\n\n    .restaurant {\n        padding: 25px;\n        margin-bottom: 25px;\n        border-radius: 12px;\n        transition: transform 0.3s ease, box-shadow 0.3s ease;\n        border-left: 8px solid #7e57c2; /* violet moyen */\n        box-shadow: 0 4px 10px rgba(126, 87, 194, 0.15);\n    }\n\n    /* Alternance de couleurs de fond */\n    .restaurant:nth-child(odd) {\n        background: #f0e9ff;\n    }\n\n    .restaurant:nth-child(even) {\n        background: #f7f3ff;\n    }\n\n    .restaurant:hover {\n        transform: translateY(-5px);\n        box-shadow: 0 8px 18px rgba(94, 53, 177, 0.3);\n    }\n\n    h2 {\n        margin-top: 0;\n        color: #4527a0; /* violet foncé */\n    }\n\n    img {\n        max-width: 100%;\n        height: auto;\n        border-radius: 8px;\n        margin-top: 15px;\n        box-shadow: 0 2px 6px rgba(0,0,0,0.1);\n    }\n\n    .map {\n        height: 200px;\n        width: 100%;\n        margin-top: 15px;\n        border-radius: 8px;\n        border: 2px solid #d1c4e9;\n    }\n\n    a {\n        color: #7b1fa2; /* violet vif */\n        text-decoration: none;\n        font-weight: 500;\n    }\n\n    a:hover {\n        text-decoration: underline;\n    }\n\n    strong {\n        color: #311b92; /* très foncé pour les titres */\n    }\n\n    @media (max-width: 600px) {\n        .container { padding: 10px; }\n        .restaurant { padding: 15px; }\n    }\n</style>\n\n  </head>\n  <body>\n      <div class=\"container\">\n          <h1>Les Restaurants Chinois d'Antananarivo </h1>\n`;\n\nrestaurants.forEach((restaurant, index) => {\n  const nom = escapeHtml(restaurant.nom || 'Nom inconnu');\n  const contact = escapeHtml(restaurant.contact || 'Non disponible');\n  const adresse = escapeHtml(restaurant.adresse || 'Non disponible');\n  const specialite = escapeHtml(restaurant.specialite || 'Non disponible');\n  const photo = restaurant.photo && restaurant.photo !== 'Pas de photo disponible'\n    ? escapeHtml(restaurant.photo)\n    : 'https://via.placeholder.com/400';\n\n  const latitude = Number.isFinite(+restaurant.latitude) ? +restaurant.latitude : null;\n  const longitude = Number.isFinite(+restaurant.longitude) ? +restaurant.longitude : null;\n\n  htmlContent += `\n    <div class=\"restaurant\">\n        <h2 id=\"restaurant-${index}\">${nom}</h2>\n        <p><strong>Téléphone :</strong> ${contact}</p>\n        <p><strong>Adresse :</strong> ${adresse}</p>\n        <p><strong>Spécialité :</strong> ${specialite}</p>\n        <p><strong>Coordonnées :</strong><br>\n            ${latitude !== null && longitude !== null ? `\n                Latitude ${latitude}, Longitude ${longitude}<br>\n                <a href=\"https://www.google.com/maps?q=&layer=c&cbll=${latitude},${longitude}\" target=\"_blank\">\n                Voir en vue immersive \n                </a>\n            ` : 'Non disponible'}\n        </p>\n        <img src=\"${photo}\" alt=\"${escapeHtml('Photo de ' + nom)}\">\n        ${latitude !== null && longitude !== null ? `\n          <div id=\"map-${index}\" class=\"map\"></div>\n        ` : ''}\n    </div>\n  `;\n});\n\nhtmlContent += `\n      </div>\n      <script src=\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.js\"></script>\n      <script>\n          document.addEventListener('DOMContentLoaded', () => {\n              ${restaurants.map((restaurant, index) => {\n                const latitude = Number.isFinite(+restaurant.latitude) ? +restaurant.latitude : null;\n                const longitude = Number.isFinite(+restaurant.longitude) ? +restaurant.longitude : null;\n                if (latitude !== null && longitude !== null) {\n                  return `\n                    var map = L.map('map-${index}').setView([${latitude}, ${longitude}], 13);\n                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {\n                        attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>'\n                    }).addTo(map);\n                    L.marker([${latitude}, ${longitude}]).addTo(map)\n                        .bindPopup(${JSON.stringify(restaurant.nom || 'Restaurant')});\n                  `;\n                }\n                return '';\n              }).join('')}\n          });\n      </script>\n  </body>\n  </html>\n`;\n\nreturn [{\n  json: { fileName: 'restaurants.html' },\n  binary: {\n    data: {\n      data: Buffer.from(htmlContent).toString('base64'),\n      mimeType: 'text/html',\n      fileName: 'restaurants.html'\n    }\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        0
+      ],
+      "id": "cad5c0e8-8d43-4fdf-8f24-9c42abeed514",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "resto-chinois.html",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        880,
+        0
+      ],
+      "id": "46ef55c7-ea00-443d-8aaf-73d5872582bb",
+      "name": "Read/Write Files from Disk"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "62dd6b05-71ed-433c-a0d2-3d259c703caf",
+  "meta": {
+    "instanceId": "625f09f8eeaa98e8522e94bab42106747fb1bccf30b68bba43d0cbef588c89f7"
+  },
+  "id": "pdzkALo51AdbxaUV",
+  "tags": []
+}
