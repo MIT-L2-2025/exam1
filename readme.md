@@ -24,4 +24,4 @@ Voici les champs que vous pouvez y voir
         - Visualisation du lieu: 2D 3D (cliquer satelite) puis draguer le petit homme jaune pour avoir une vue 3D 
 
 ## Informations
-![Image de mon projet](./images/image.png)
+![Image de mon projet](./webPageImages/Capture d’écran\ du\ 2025-05-07\ 13-53-28.png)
