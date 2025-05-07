@@ -1,0 +1,480 @@
+
+  <!DOCTYPE html>
+  <html lang="fr">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Liste des Restaurants</title>
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+      <style>
+          body {
+              font-family: 'Poppins', sans-serif;
+              margin: 0;
+              background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+              color: #333;
+          }
+          .container {
+              max-width: 900px;
+              margin: 40px auto;
+              padding: 0 20px;
+          }
+          h1 {
+              text-align: center;
+              color: #2c3e50;
+              font-size: 2.5em;
+              margin-bottom: 40px;
+              text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+          }
+          .restaurant {
+              background: #fff;
+              border-radius: 15px;
+              padding: 20px;
+              margin-bottom: 30px;
+              box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+              transition: transform 0.3s ease, box-shadow 0.3s ease;
+              animation: fadeIn 0.5s ease-in-out;
+          }
+          .restaurant:hover {
+              transform: translateY(-5px);
+              box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+          }
+          .restaurant h2 {
+              color: #e74c3c;
+              font-size: 1.8em;
+              margin: 0 0 10px;
+          }
+          .restaurant p {
+              margin: 8px 0;
+              font-size: 1em;
+              color: #555;
+              display: flex;
+              align-items: center;
+          }
+          .restaurant p i {
+              margin-right: 10px;
+              color: #3498db;
+              font-size: 1.2em;
+          }
+          .restaurant img {
+              max-width: 100%;
+              height: auto;
+              border-radius: 10px;
+              margin: 15px 0;
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          }
+          .website-link, .route-button {
+              display: inline-block;
+              margin: 10px 10px 10px 0;
+              padding: 10px 20px;
+              color: #fff;
+              text-decoration: none;
+              border-radius: 5px;
+              transition: background 0.3s ease;
+          }
+          .website-link {
+              background: #3498db;
+          }
+          .website-link:hover {
+              background: #2980b9;
+          }
+          .route-button {
+              background: #2ecc71;
+              border: none;
+              cursor: pointer;
+              font-size: 1em;
+          }
+          .route-button:hover {
+              background: #27ae60;
+          }
+          .map {
+              height: 300px;
+              width: 100%;
+              margin-top: 20px;
+              border-radius: 10px;
+              overflow: hidden;
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          }
+          @keyframes fadeIn {
+              from { opacity: 0; transform: translateY(20px); }
+              to { opacity: 1; transform: translateY(0); }
+          }
+          @media (max-width: 600px) {
+              .restaurant h2 { font-size: 1.5em; }
+              .restaurant p { font-size: 0.9em; }
+              .container { margin: 20px; }
+              .website-link, .route-button { font-size: 0.9em; padding: 8px 15px; }
+          }
+      </style>
+      <!-- Inclure l'API Google Maps -->
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM&callback=initMaps" defer></script>
+  </head>
+  <body>
+      <div class="container">
+          <h1>Liste des Restaurants</h1>
+
+    <div class="restaurant">
+        <h2>Zen Garden</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> II M 38 F Androhibe Antananarivo Antananarivo, 101, Madagascar</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> 032 05 135 03</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> +261 32 05 135 03</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.8657389, Longitude 47.5428293</p>
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcLc1LZOil2c-vWHMsASorFwuGcCOlY7VqKffYq2EGgOgg2K_LXPNSaWHeSK9L2_NO2JpHin1exKH8gLn6Iy4zW6Av5-JRLNN1lY6FF_QU08JRRqbDmqXHMUnINX0RZhM-sTmr-M4Az8ga5ig9u-WkRU6g0GcGHXeMEe1N5r-8QRFhVrFNcL8mOZUqL8qk_bbUsTwhE0jOeiImCHfW70kDPhulEMsnmY-FbjivXjdR4kASYJInD-FlKxfpTHDrtCJXR2kZDtTqNmIBpPIiYo38A5h4g7GaqnHcpLB05Vd1bylN9tsjmsFWLmDPfWk6o6KIS-8vQAG-csGGXxSfzv1iyvP9RrrhWCcvkqaGy5sr_rpt-BICaHws3kTnx13bt84b9cQxC4-HxicmhkXs9csaLHsfacwpiUVk_y1frYc2Ed4qwXqdHytzsOtXTzNYlJubt9jT-3KX6T7eHhJesQp9QhNLZOhbLjJQRDROEiWA9a9xkRTzFT65r8CNYK-Pm7h7SfA3hKc-SqDwEL658ZdfHryOBk6RgfjpiADv7gsT9b_TwW6Fq7JMnO56ngNqLwTCCZVyJH9Fnpjg&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Photo de Zen Garden">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(0)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-0" class="map"></div>
+    </div>
+  
+    <div class="restaurant">
+        <h2>Grand Resto de Chine</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> Lalana Rasamuol Maurice, Antananarivo, Madagascar</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> 033 83 594 63</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> +261 33 83 594 63</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.9141664, Longitude 47.5386078</p>
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcLxR6uMGxxKj1MM84ACKCcWpeqFwlew2E5PxtSE_M5KJMUIVHCEZ4_YR4J8kd2MTN1DrgaN2Kw8I6AUdatDFltsFYA1wK6pL-8ABczoyQW12F_AHDXAQAGzRqCShV8PLJo4ZvAjCWnRucpY-UqOp6lrUGc_1ZgGF8WQFdoHqvank9g1wmY8eDzLEvUkaAJTVbpAxhU2SUEBrYK1geMXPq0ZVZ7LnSn3LJT_VTA3o_UVtXIn-nhqPEIE2Q-7KCDn7wJvH84j4dtP777mteCCOYjfh-fhKuiFmcL0Wsz5Hg1NRARrGZ22PUnjM5H-iWFOe_MPw7ce0YBAd8kpjYbhpZuQ8xBbfC-njAMSFOloeD0fdipRmXlo2NnGH7HPpeSQNGiAcH3Dw1CzbrKzaFqFUAYefnNyWmC6dydr7VFgmuVE7kt01c5YA8kwCuvVyJW3_NZ-QmFhi_8MdtHNlpTLxA-NJg3R0YSDm9Eha9G2h85RWSl6GIsWHoje4NpJfkb9yghiP3lLdvTpFuOFUzxmqi8TXUYIa2QkMstCH6koXbu8BrDF5DjowXD05ytSQZWyQqfrHpLH&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Photo de Grand Resto de Chine">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(1)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-1" class="map"></div>
+    </div>
+  
+    <div class="restaurant">
+        <h2>佬湘好</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> MG Antananarivo, Lot 135 B 3Antanetib 105, Madagascar</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> 038 52 066 66</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> +261 38 52 066 66</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.8352457, Longitude 47.4647325</p>
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcJWGGIlAthHRXJcXXvteX4g56UJKEWSCyyfdzymmnV08MYJuYUrj98JA9i3R7Dps_KnLs4ubKwkeg_20CYIK6svlMi-LqXjBA5r2kxjp56CgN8RdPCm3S0u6uvnfH_zb74SZ1tdu_kc4AEZm0RLJ3Vy7C_4OBo6_BDLEFtCd8NxxoQElycS27iwW6rLnTFv5HCrvoCi_GgNIl2fOvBC8KyxT_fj__BaYIPAZHU7hQ9Mcc8cZ7miQgR2_QLG7Y2rSLp6NRGxKV6IgKm3S2qW9yTOxiZ_TLhavJYoH2OyZHOPiTMJv6esSOWFkx0LUDU7t8DHwjTPHK2UBBGefHaeK1DPCp9x8zu2RdANhrGM1Bo4qu4nH05-UcuKv9BYdP39Qx2eqvyMdU7cHTr-PG3x1q5oMEWMjc0B62ixhlDNNpS4tM8VTJ5ZdQuMGLjLaAWnGnB55s0VyZfoRt6EiVf60gt4MEtD3gzfN6F9YHgwCjV4rzuMx5XaTLcZyWxqvidhAkdWzD5BnWXIn-hIi8lLkj7cGCb7V18ipy3x7t5MHURBKhDLo8Loh2-pyokpv5ZhelJtTG3u&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Photo de 佬湘好">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(2)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-2" class="map"></div>
+    </div>
+  
+    <div class="restaurant">
+        <h2>Restaurant Shanghai</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> 4 Lalana Rainitovo, Antananarivo, Madagascar</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> Non disponible</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> Non disponible</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.9088796, Longitude 47.5238203</p>
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcKsVOY-ax4U8jYOuBMMWI5lCWkoZ13lNwotjoZ--tnyEEKuyJEwCMrhzJGz_wk-SbBTlhGlnZMVK5SAWx_3fa75-CEnFgkKHoE-BhGYOUt2Zy7OtMEJa3imI3Ft0TwqWMzZhFbJU1E5465VJolwrv07WWDhXKmnrpxyRTL7QCiyVHI-9UsSnlRu75iDdI14dSLLwlVm0EaQyRs4vy2pwZj2_qmL8HQxZEZJAOzo13cxquSOwXUKe3-xGSrlTeu3eqNPKxAQlIina39DlbCcy5_cfBRvFgYnKuJf8HYSI8O20jCuTu8I9jgyYuRQ1On4_DPOZ4Y5NW1mjQu7mKdoG2Ci5nQ8tXUC7KlrAr3iC-kDCjAtMOK8q8G5mwFFIwZN7cyg-FeDEmJsgHdKV0fcTCqGV2BghwTmfLW08dXNeCUs63GR_K4XUJuYfLxBbuOM4IbNM6sozicJ8crVSwRcBEDptNUhjch0cV47QDsFCbzIt6oiiXXywHowhAAPinpJ_djY1iISeorg-Mrh4Nwp5ClAvaq9HedfqRZxuEYdv1diFO-8-JKl5gs-eWQxE1djWEFLEnsOAzSD3g&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Photo de Restaurant Shanghai">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(3)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-3" class="map"></div>
+    </div>
+  
+    <div class="restaurant">
+        <h2>l'Orient Asian Fusion Restaurant</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> Madagascar, Antananarivo, Lalana Rainandriamampandry, 邮政编码: 101</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> 034 36 788 88</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> +261 34 36 788 88</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.9072463, Longitude 47.5280583</p>
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcLM6DOk2LOGZ_R6TDQGOO5ZUG7pTM9-5XQvv13RN_lcVGvUaE7eOUzcz6TRPwcVCkvRST6jUgB1sqN4XtmBlDNeEfTAGPUAB0HJLIwvXmVcGXVVUxa0Ov39fEp3QUuAyKH0boaMSjMfCJWXeEzydgKWA5kb301p0H5ZOzo2a2tLmZd_GMKZIo6bklktQnfxAna8dgX7fJCKm9XorHDnkP87R_90iNk1JknvNtGXeqaNtj6wPl03s-NK_2pckVyE8ftRAIvjs8dzYv3ilt4DDtHIZR5_FNnLMkaIsPF9cc250YBoLMo&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Photo de l'Orient Asian Fusion Restaurant">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(4)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-4" class="map"></div>
+    </div>
+  
+    <div class="restaurant">
+        <h2>逸香酒樓 Yixiang Restaurant</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> IVT 10, 4G48+V2P, Rue Docteur Joseph Raseta, Antananarivo, Madagascar</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> 034 57 088 88</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> +261 34 57 088 88</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.8928125, Longitude 47.5150625</p>
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcIc3pfbeLencYOg32eCYtyTMjR626S-3EHqeYxLZXmYj7ixK2l3gW0B_HC4U4D6RjF88USM23CagKilj_CR24oCkNxknaB9iUxeQhcFLVaKyFMr5VLoRaTD0m7JYjAooMNA0qqZku_-MtvV-8gx99PCbZ8nJvh8pQb-pKQ0v3ayQ8LToxxGvUJL1KEJisMNyZZ81JxoeO5GnUsgKxR8HI1lzaLUQ2_jN5OS7ccy21Knu0duZXN06RCpgYNVqWKtMySh3qhErYa5SIOGt6Sa9_H94v54atrYEynPNyYC3PXhKGtsAAVa9R8B8xCP908wb5gJKsHyxdIT2Sy_aZIoSQjXfHJv2_QvEaIpSFyEYKicug8TfIAZeTZm5yte8Ev8R7Ow4AzlNjWa67klMNQyHGu46qOhMpFMg83ySwKKgcxBdH_UgvLI_Z0Pobf2Nob8GKrtT4xLDS9Or8DMHEawoaVjK3mFmYII15wzBV-_uyZcGLSzAOkA6C6v9aCCT8z4h8Xl5JYD-3cLffEV4U7u8WVUHQ4MtkV8GygkuIRO4f61w5OzANugqr3dX0OAf5gFGj2DUo2m&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Photo de 逸香酒樓 Yixiang Restaurant">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(5)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-5" class="map"></div>
+    </div>
+  
+    <div class="restaurant">
+        <h2>Kaizen Restaurant</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> 3GPR+F3J, Lalana Vvs, Antananarivo, Madagascar</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> Non disponible</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> Non disponible</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.9137555, Longitude 47.5401585</p>
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcKSU16OB2Tf5eatkyy6bucCf5Hq6Mn5OSSb6V91hmP5zXQJLTaNRnyGeALVx00xDOEuRge_ALzEwRsjV61xK3bAZjk56pDh5YEc50QFSyWtAiBsFsTZ_LXmT4z_ASPfoDiShsikQLfiso0LVV_5BBT4_02UXZWrEoMYTJe8Q1JQHLbC8tYovuorre0_DR10QnXIpvUaNeHoF__bWLoUgb4Yybk_SkrGvhw0-fWIIYMG4loeZwhCe6P8UuqAlApSDCig5U-UaCOY5VvwpFQL-NpyNpfTHjxg6uzi2lgatZvNCoufht3h-F3nl4E4C2xKtghKvPcJwANxNPZEfzEKI0Rkx9aOWCB0CSiHAxoQzDEXwrxnrPpF1ypQBFMkEZgGl-6N1Z5HIXvdaderSzyJUb1oB0Xt-bCKSfBMyyHJbnjVxhzNVL_w2q3sc6G9n7Zda6Ny4EDDw_EEwt-jKlNrRcJzsz-D_f3EYLtqCsMBGM0G4Eg1hnRswesEs7KhqimTZ9fqepiVm49zqIrWHOzeiOUHHC-ZBcAUuGkFZks0wyGWbXdWBOZQ-fswTG-sjjoe-tycSU0B&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Photo de Kaizen Restaurant">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(6)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-6" class="map"></div>
+    </div>
+  
+    <div class="restaurant">
+        <h2>吕府私房菜（KTV）</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> Madagascar, Antananarivo, AUTOREXAmitie Fandian</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> 038 82 066 66</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> +261 38 82 066 66</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.9106832, Longitude 47.503318</p>
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcLOpB1e1CGUUAsLIQpKweUC389hd8d1RHv9J8iAVmStokzX0Sr0YVWuF8Fu8Br6XdV6mgH4Kk206LcYB01DF2jfPY_B4AfuG8ZqrhaUnQicVY5M12miL4nwKyIom0giNFiS6wBgR_djChu_4s68dODfBv4bfAzaK-r9FB1T-0B3VB3dUIqimo-OiXf00VGcfKUcUbIx3Wj7V_sOhstEO_JIY4d5eZ4V048UKZFreSzVdvFqU2Gc9zlRQq26o3a4fPHnnuOtp04xiXO7yQG19AjrQL9CaFsP6qBVKGu-69KJcOMIsyE&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Photo de 吕府私房菜（KTV）">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(7)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-7" class="map"></div>
+    </div>
+  
+    <div class="restaurant">
+        <h2>Hirondelle "燕子" Chinese FOOD</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> Lalana Dama-Ntsoha Razatintsalama Jean-Baptiste, Antananarivo 101, Madagascar</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> 034 11 166 78</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> +261 34 11 166 78</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.9174137, Longitude 47.5366284</p>
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcKzLCPyguWVVfqPxPE-cbuz8Qfeeo4wdaZJMEKJO4l_rIQ4TS8OeJlpJpQdZqRE1dDWDLgfodslFmqZZx49X3-qchwlQC7T05XVNnOq0c0pLHNR-PIdy0AUx5l6U1_ItDoejoX0mDweD8RCgk5rajlKjhHcqg9yUFi-GK9IyxP_gsVmRMYZQ_cm273Myyhe6NCp2tKsWNvO0R159aqAlKvl6zPcO1J95ondR6T7FScpfCcMMncDPsyIEO8DAFjxm8ZxL98yWdnjxHMcrvGorVl_Pd5pYfe2RPQiuuG6eTZw8A3SVLGGsL6xytvy9eQV-1_C6G5WfLlgfsingKVckfuwRi3HHIvEjcNPGKAoMsgMvVBl21QPX0SnQCyz0VcCaZPIkHBuB35QkivgYZHdRNmcVMT-A_JRafPQKXKZejOysxrNFnL_8RE-msHCN92_TZjieKH4W41i4Qe6heQj5jc1_OA478lCCs9Vl91oIYTAjvz8LHCbeK9iNv_qR5FIqem-OwXVTgPY5o4L53MJxYk-3Oc35i-6BMYK73MCZ7N6H94Tmtu5IDgpRQSNfU8uLHq1j1TJCa4Z3g&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Photo de Hirondelle "燕子" Chinese FOOD">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(8)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-8" class="map"></div>
+    </div>
+  
+    <div class="restaurant">
+        <h2>DIMA Hirondelle "燕子" chinese food</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> 4F5R+4P7, Andohatapenaka, Antananarivo, Madagascar</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> 038 18 456 78</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> +261 38 18 456 78</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.8922222, Longitude 47.4919444</p>
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcJwVHgM_xHbOFxlFcvP53OMB06EajEiG5b-EsxjRRth2hlutdUndi8G8PGwfJxTpQEso8SGTnDqRx5LdD_e1HteQ9fiKUs2AIKgm21KtMEJz3tYNy_2r8b5CQnmaTGjeB1tczRD972HB5C5qxyLjjlBpsYW10bu0N3R99iDhJ83L2jT7Clr6QP6m3aMxxqQ8blRGrVoMq3Htce3FONm9xvyMl93nmHmYcqM1O2y9rdWoA13KjbvZVOW3SX88HPgVl313-wQIL-bPEYIpVREWzbfbNttodStKlAqPHSkoAuHz7b9DB2YJFamKYby2arBFliYD_zFQKQgoaD3gnoI1m0b_Ce3RjvFbgTm6fIVQQDRo3ws5wo8cCJb7Y8ZRSmMw_khgT4TPqNngn1KXd42s-Ia_9aYc3DkflqIbaKj_pCqSW0Ogb8cO-5fQfMEPl74PEVxzJb9lhVEIBEc55Fk_FrQK7S7IGhoq4BeRcLQ45KuGE3_kX_z9b_i-QWSYMxP6KZtnaCM2uvlePUrLCyEtgw8lqa6NJybT4HEqcCLfSKejFV1DkgSVZ8lgGB72zVanpsXPjmh&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Photo de DIMA Hirondelle "燕子" chinese food">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(9)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-9" class="map"></div>
+    </div>
+  
+    <div class="restaurant">
+        <h2>La Jonquille</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> Antananarivo 101, Madagascar</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> 020 22 206 37</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> +261 20 22 206 37</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.9093195, Longitude 47.5369177</p>
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcLp7xmClOQMPiSVtYMMTJ6g9VrovF2kBqSsHIY0a58PQFW880lbuteygDQ2sROoj9yaCfNecADm3qI4z-cDYcN8g1zTMC0qyF_7DDDrAvnhLKC1XU9N1gnyb9HnN5ywwTYJ2cDUFVyv45W34trSarsXwCfZxyD2NedP-XUQMu4ewnLeAq4xCcnjCurNdsWDq1hFCzt1SzPIhG4XL5RfxAznmFpgB6P8d7xxdtaobD1WgA9YD9jB8uPZG_hp_d5Gxke7I8Q_EgDxaSlbOJQrELhFEj6ny_PgfemdE2x6VHI-kNGv3vmVArxk-HagmOb-qK5ZFdH9D7N3u8x6qsTCB56qzSvRv7Mfxd0aClYQSo_u55ekw0bKzraep8CBSqZcmAOANgZu6ACHToObKc63APL08orQNtfWEoXRQgRDHaxLCApSalQ5V1eT54p_4CybzQ0iiwng4y8s7MVx-oiFRD7b2TmhG6KGdMf2iLC9NJ7nRDnWZj9urTL6RxrXgIf-ZZLn3WviBVDWNKg16o9g_-hdkSBJHMkreX0Cz6898a9DKsy-NQqv84LXCanX3tDIT-8Yz1XD&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Photo de La Jonquille">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(10)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-10" class="map"></div>
+    </div>
+  
+    <div class="restaurant">
+        <h2>Restaurant Fong Mei</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> 4GHM+JMX, Rue Andriantsihoarana Ratsimbazafy, Antananarivo, Madagascar</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> 033 25 571 99</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> +261 33 25 571 99</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.8709271, Longitude 47.5342318</p>
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcKmKv4NAXJzD2u29khmGLp7abbJmkR2d_0VTx2VPc0rXyLIvFCqF2k3jEQzMlhmwJtaqCxADNBRBv0A62r5_Y7btBjS3FUfnKazU7692qk0PQRlM4eBC_p6-9nOKozZo17bNyKcqDYNt1pkSpC1VYct6AFSgS-lfdJp8G_ZWcfkxtryp-jMuX_tvsZJq76GPzOkGiSnpOuFz8arvpwtbgyY2MVEYVEj9vMNFzTIaPvWuCP9VnQPFDqS1KrwdW0UD2ajhM3n7ANLUAnqZIroWfVDkQWGukZBC4b03hxFn8HfZ_FAa9pSQ42EQ3hDFgwr3_tFgh5427B_GQnL7LccabHl__4poOol18Z_jdfsobdt4mkR5tK5pU8yww6wSs8pUoRoV10MYmu9WkiKasZYMJGfSqaRHJmgfumEEdFQdLxBl1TPO4WPMPkrB4T646IuJh63Wy6QxFK5WxVYmgzt5hyqDXOTkJstJ-mzHQkSlw7HyJoNPe-2YUJ9N7oZybE6snZ-6ZLEAVax_7Y9p3b0TMy0qFbja3W1JQ9_4GtZsreRtNnaLkQF8Co0KGOxoC0OLeKL2bWq&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Photo de Restaurant Fong Mei">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(11)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-11" class="map"></div>
+    </div>
+  
+    <div class="restaurant">
+        <h2>Fortuna Tana</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> 3GJ9+JC3, IMM, Antananarivo, Madagascar</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> 038 63 366 66</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> +261 38 63 366 66</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.8987591, Longitude 47.5210699</p>
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcLLEg-U-ygWhdJ63fPtECaEbn34QdIZTM9c-LpPGXxTIermUfLWcEtFSJiiR8cC4o-VNZEyjropZ4XtXmWLtRx_bi4XBW2dppiVxDkWDE6xguy7vF-O94XkA8rn9i1vSc_BTC4DDmtJ_gqc2zS_FKuo9cTg4cjIeo0bCd707ppmOeB6uO92kQp_N0GakGwUOKF-TxpVijRP8I86qGIyplxCgpYA_drJkKxupfp-M8DNrdXEjqEXu6aqPk1d-lIyZNTOLplQu4fSNjPGoWnYeGdx_-j9rO7_hUxBZ3ZjyYogDkHtWq0&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Photo de Fortuna Tana">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(12)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-12" class="map"></div>
+    </div>
+  
+    <div class="restaurant">
+        <h2>Restaurant Le Cantilène</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> 3GQ4+RWM, Antananarivo, Madagascar</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> 034 86 576 67</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> +261 34 86 576 67</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.9104301, Longitude 47.5072927</p>
+        <img src="https://via.placeholder.com/400" alt="Photo de Restaurant Le Cantilène">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(13)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-13" class="map"></div>
+    </div>
+  
+    <div class="restaurant">
+        <h2>Wai Man</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> 3GW6+VMX Nord-Est-Coté parking, Antananarivo, Madagascar</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> Non disponible</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> Non disponible</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.9027416, Longitude 47.5117281</p>
+        <img src="https://via.placeholder.com/400" alt="Photo de Wai Man">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(14)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-14" class="map"></div>
+    </div>
+  
+    <div class="restaurant">
+        <h2>凤城 Soleil</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> Lot IVK 89 bis Anosivavaka Ambohimanarina, Antananarivo 101, Madagascar</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> 033 11 336 28</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> +261 33 11 336 28</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.8729937, Longitude 47.5080215</p>
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcLKBhflfyr08EJEbpbq85UE9scsyn47atHHrWIX0t547Yuu0HFDyncwT599O8GesUhnTOmpxwUoiS6y_HMSCzgx_-w-HMoEC5FcHcT96_YFIy8lZe8FETIsDsTlyGeuIpXACiRH8PkQbe9AKAOWrHxQO6Ka7X7ywSSa-EyUxh5SqpK4ybF6tsy7ek2Cmkn6e_GYE1LXXMY0GD-mOjWFTc4Kw19kR-zUj0QsOYoOjMfSREG0nRj18qiHVsbT6Tiy5y6vqHIExxXaZeD1VcLpTLHlsHzht-ZvzFu6pDtqVPeG15J502w&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Photo de 凤城 Soleil">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(15)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-15" class="map"></div>
+    </div>
+  
+    <div class="restaurant">
+        <h2>DRAGON ROYAL Restaurant</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> Rue Me Albertini, Antananarivo, Madagascar</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> 034 14 579 79</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> +261 34 14 579 79</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.8945895, Longitude 47.5283391</p>
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcIBSTNnsUSR13fp2LQwX5NdgzRQ2dEmXUhRh7P6Uc2NcT5sn72yAEd0kwNH4rVqd56TCpRW4y164DHz7pEwVMyYUVIMaljI875VZOh3kT749elwwUZIzIf0OzAq5bAbNh-_RIsdJX-vyoYPMDANz-5FqzyNEQrwjabtz7BdBaxwBNjeazL-9B_mqrIlTObHKCj92YfftHt8aX7iM4s2H9wL34M9GoP4VoowT03as4010nz5OWR4ZeKy5QltI5SG2L2PdhO7n1TxUon0-4-GpLVhMnOVGk91vfx0lbsWGNhnNOIzkPs&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Photo de DRAGON ROYAL Restaurant">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(16)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-16" class="map"></div>
+    </div>
+  
+    <div class="restaurant">
+        <h2>Lakoziako</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> 3GWF+4FP, Antananarivo, Madagascar</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> 034 79 061 61</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> +261 34 79 061 61</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.9046663, Longitude 47.5237008</p>
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcKaZVOjxsK-7bpiArGUiLQKZV8jkvT-jLMOldf2gqb27GAeN4NKlBlAy0IsVWRfTmFTsDZni44wegjz4lTSratY83u2Hf-8pRbVb3o_ZrfXtxj-FXGdLchXznSlBH_FuEmxuEb_kI89G2X_bux11ubIjDcTsvLxYW2fZoGDhyIyfsgEFWurEOPPUHXFZ5vizmDLfB3MX9XTYvau1rP0M4tp3B3fUrkWf1NalbTMtGSY5r0yHNQdOlb-k1Rb-JHD2-JKeegYTZFYSCmdThDG1hXypkyavtyGEzL4ne5_-T0NqnTPLH1kPm16w_JqRAc9x1XpyN5biRanJPx1ZLBmVo1bFG8mEy5GFmooo9uIfKyGMtv8SLNjqlnRnK0rCsWeBVlcA0nk7WcudTTP1wPKJnfIHTYhWAMr98XbDQ92hGwNaNRbNNF25cnUFOBRwnwFNaeUnvWPSpycPXzcxJyZwyry7xVBPDnxwVDJjOGmqFecRZEdTXG_yGtR0yIZ8p98hs1mskb7RttBPRu1ryJtovYp_no0h10Uh8GMq4q_YpMDbaobStEouwXS32LXcmUMZJPIl6e7&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Photo de Lakoziako">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(17)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-17" class="map"></div>
+    </div>
+  
+    <div class="restaurant">
+        <h2>Lotus Blanc Restaurant 荷花酒店</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> LOT II W 23 B, Antananarivo 101, Madagascar</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> Non disponible</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> Non disponible</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.913438, Longitude 47.537768</p>
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcKTIu6ETHISl_2NpN-TcJ4dLooXw3MUVLgJdySjpA_FqAWOjRqmJ8kWuItJ0uwILxAC0523b2g-pWTTT0ry3pi7bopYBb97RCTnq3d6gjiOMqbybBRBK3S1RaobK6UIAWK4h6Kzu7sIFWLh1NAQPVkkt6aT1kUIZcSJuuSZ4up9T3-_MG-15H1jEbT0v1jBN8OEiWi2Xh7wUBfjOv8a6We3ZaFZVm6byQRobK_FOO9STMqnbWPJOnEBz08T2Kxb82PtMAS2KnUGh6Ox5C_L1AOedqfGFIwxYx-6CnrU4cwUJOkjDnzwJa8CLfsdAWucz7t6Z2bl4LMENnZAvFy7rKS_bpUlvH3hkG5mHtZ_o4f-RJAHDTO8voGJ6_ecli4xePyqPyYGAWgjro2KgNVixsbe3UgTeljj9jdxg028CAPgh_ffQAyE4O0roqt9yiWiCXV8AU9rx5fVMxu0s5xoKL-Ezfrq63n2y1B8XUBIccspNslxNAVkUG3lyLEbBntf6wb7qpv5kDVLnlQ3AhBgK7mZzfPIf1H_oXRrG1GAfeL0FsUdMUjgfskCioh9irWL2o-lZz9y&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Photo de Lotus Blanc Restaurant 荷花酒店">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(18)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-18" class="map"></div>
+    </div>
+  
+    <div class="restaurant">
+        <h2>Hotel New Century</h2>
+        <p><i class="fas fa-map-marker-alt"></i><strong>Adresse :</strong> 3GWF+J7P, Antananarivo 101, Madagascar</p>
+        <p><i class="fas fa-phone"></i><strong>Téléphone :</strong> 033 29 661 68</p>
+        <p><i class="fas fa-globe"></i><strong>Téléphone international :</strong> +261 33 29 661 68</p>
+        <a href="Non disponible" class="website-link" target="_blank"><i class="fas fa-link"></i> Visiter le site web</a>
+        <p><i class="fas fa-map-pin"></i><strong>Coordonnées :</strong> Latitude -18.9034858, Longitude 47.52320539999999</p>
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcIoFWUwKbd4IKE35j0Oma0bXSf4imQ9fptP1a-Rb-azkt21hiq5Rb_patV42-IO4BOE-vs3711xmIvCuANFrTkam0bAMvhT74EQ3cJV6kGsZfciYLUT-wrgQH4703dhuChTTueqn3bAKfaXmf_0OKCr410nVhduKd6cZlvVgzFZX_y8Ndl9Ja5uKJXnvces5h2KJtU-IiZ7OzNLqoSvC1kf_v7TqpHE6GI0g0_YVnLA5gVkTunackb5Y1UwuTU6edp7aELL-ZaCdB_rZnQ7TOvAMEo4FOosEyXEZhju0M7CFHgoIq8k1hHhwSe0OFVi15S6HAPyJcAq2QzkgQHb2c-ABwXqGQpo7CS0bKb87wPe5srly53kN3GcuCugAjitrMCHa3yENgk71cMOjGUkLib6bCaEHgDVq4g_tIRSdOcQ7-j51JtTM-lElYPEj6huliEcWlWwTa4_-zMwRJXlpCUkOsprLXgcgroV5_SffMf7TERQzIoiMU2k1BAWg9EZk-P-Fcjce3GA1izojFYI0KAuXGsNSkKRDSeoOtQfxpZuAnPMIrVtxd5DEmTJBKIl6Bvv4eq_O_h93g&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Photo de Hotel New Century">
+        <!-- Bouton pour afficher l'itinéraire -->
+        <button class="route-button" onclick="showRoute(19)"><i class="fas fa-route"></i> Voir l'itinéraire</button>
+        <!-- Conteneur pour la carte -->
+        <div id="map-19" class="map"></div>
+    </div>
+  
+      </div>
+      <script>
+          // Tableau pour stocker les données des cartes
+          const mapData = [{"lat":-18.8657389,"lng":47.5428293,"name":"Zen Garden"},{"lat":-18.9141664,"lng":47.5386078,"name":"Grand Resto de Chine"},{"lat":-18.8352457,"lng":47.4647325,"name":"佬湘好"},{"lat":-18.9088796,"lng":47.5238203,"name":"Restaurant Shanghai"},{"lat":-18.9072463,"lng":47.5280583,"name":"l'Orient Asian Fusion Restaurant"},{"lat":-18.8928125,"lng":47.5150625,"name":"逸香酒樓 Yixiang Restaurant"},{"lat":-18.9137555,"lng":47.5401585,"name":"Kaizen Restaurant"},{"lat":-18.9106832,"lng":47.503318,"name":"吕府私房菜（KTV）"},{"lat":-18.9174137,"lng":47.5366284,"name":"Hirondelle \"燕子\" Chinese FOOD"},{"lat":-18.8922222,"lng":47.4919444,"name":"DIMA Hirondelle \"燕子\" chinese food"},{"lat":-18.9093195,"lng":47.5369177,"name":"La Jonquille"},{"lat":-18.8709271,"lng":47.5342318,"name":"Restaurant Fong Mei"},{"lat":-18.8987591,"lng":47.5210699,"name":"Fortuna Tana"},{"lat":-18.9104301,"lng":47.5072927,"name":"Restaurant Le Cantilène"},{"lat":-18.9027416,"lng":47.5117281,"name":"Wai Man"},{"lat":-18.8729937,"lng":47.5080215,"name":"凤城 Soleil"},{"lat":-18.8945895,"lng":47.5283391,"name":"DRAGON ROYAL Restaurant"},{"lat":-18.9046663,"lng":47.5237008,"name":"Lakoziako"},{"lat":-18.913438,"lng":47.537768,"name":"Lotus Blanc Restaurant 荷花酒店"},{"lat":-18.9034858,"lng":47.52320539999999,"name":"Hotel New Century"}];
+
+          // Tableau pour stocker les instances de carte et de rendu d'itinéraire
+          const maps = [];
+          const directionsRenderers = [];
+
+          // Fonction pour initialiser les cartes
+          function initMaps() {
+              mapData.forEach((data, index) => {
+                  // Vérifier si les coordonnées sont valides
+                  if (data.lat !== 0 && data.lng !== 0) {
+                      const map = new google.maps.Map(document.getElementById('map-' + index), {
+                          center: { lat: data.lat, lng: data.lng },
+                          zoom: 15,
+                          mapTypeId: 'roadmap'
+                      });
+                      // Ajouter un marqueur
+                      new google.maps.Marker({
+                          position: { lat: data.lat, lng: data.lng },
+                          map: map,
+                          title: data.name
+                      });
+                      // Stocker la carte et un renderer pour les itinéraires
+                      maps[index] = map;
+                      directionsRenderers[index] = new google.maps.DirectionsRenderer({
+                          map: map,
+                          suppressMarkers: false // Garder les marqueurs pour l'origine et la destination
+                      });
+                  } else {
+                      // Cacher le conteneur de la carte si les coordonnées ne sont pas valides
+                      document.getElementById('map-' + index).style.display = 'none';
+                      document.querySelector('#map-' + index + ' + .route-button').style.display = 'none';
+                  }
+              });
+          }
+
+          // Fonction pour afficher l'itinéraire
+          function showRoute(index) {
+              if (!maps[index]) return;
+              
+              // Vérifier si la géolocalisation est disponible
+              if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(
+                      (position) => {
+                          const userLocation = {
+                              lat: position.coords.latitude,
+                              lng: position.coords.longitude
+                          };
+                          const destination = {
+                              lat: mapData[index].lat,
+                              lng: mapData[index].lng
+                          };
+
+                          // Initialiser le service de calcul d'itinéraire
+                          const directionsService = new google.maps.DirectionsService();
+                          directionsService.route(
+                              {
+                                  origin: userLocation,
+                                  destination: destination,
+                                  travelMode: google.maps.TravelMode.DRIVING // Mode de transport (peut être modifié)
+                              },
+                              (result, status) => {
+                                  if (status === google.maps.DirectionsStatus.OK) {
+                                      // Afficher l'itinéraire sur la carte
+                                      directionsRenderers[index].setDirections(result);
+                                  } else {
+                                      alert('Impossible de calculer l\'itinéraire : ' + status);
+                                  }
+                              }
+                          );
+                      },
+                      (error) => {
+                          alert('Erreur de géolocalisation : ' + error.message);
+                      }
+                  );
+              } else {
+                  alert('La géolocalisation n\'est pas prise en charge par votre navigateur.');
+              }
+          }
+      </script>
+  </body>
+  </html>
