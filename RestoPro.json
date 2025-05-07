@@ -1,0 +1,142 @@
+{
+  "name": "Demo: My first AI Agent in n8n",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://serpapi.com/search.json?engine=google_maps&q=restaurant+chinois+antananarivo",
+        "options": {},
+        "queryParametersUi": {
+          "parameter": [
+            {
+              "name": "key",
+              "value": "7160fd124ad77a622daf4eb617fd112c13dfb3fdda044fdfc25df24d27430e0c"
+            },
+            {
+              "name": "query",
+              "value": "restaurants chinois antananarivo"
+            }
+          ]
+        }
+      },
+      "id": "32e89493-f154-4c15-84c4-92e2dc81780c",
+      "name": "Nearby Search",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -400
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "e9e76898-2f64-43a5-ba48-07e1b0537f66",
+      "name": "When clicking 'Test workflow'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -280,
+        -480
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Fonction pour échapper les données et éviter les attaques XSS\nconst escapeHtml = (unsafe) => {\n  if (typeof unsafe !== 'string') return 'Non disponible';\n  return unsafe\n    .replace(/&/g, '&')\n    .replace(/</g, '<')\n    .replace(/>/g, '>')\n    .replace(/\"/g, '\"')\n    .replace(/'/g, '\\'');\n};\n\n// Fonction pour valider les URLs d'image\nconst validateImageUrl = (url) => {\n  if (!url || typeof url !== 'string') {\n    console.log('Image URL invalide ou absente:', url);\n    return null; // Ne pas rendre d'image\n  }\n  // Accepter les URLs HTTP/HTTPS\n  const urlPattern = /^https?:\\/\\/.+/i;\n  if (urlPattern.test(url)) {\n    try {\n      new URL(url);\n      console.log('Image URL valide:', url);\n      return url;\n    } catch {\n      console.log('Image URL invalide:', url);\n      return null; // Ne pas rendre d'image\n    }\n  }\n  console.log('Image URL non conforme:', url);\n  return null; // Ne pas rendre d'image\n};\n\n// Récupérer et valider les données d'entrée\nlet restaurants = [];\ntry {\n  restaurants = $input.all().map(item => item.json).filter(r => r && typeof r === 'object');\n  if (restaurants.length === 0) {\n    throw new Error('Aucune donnée de restaurant valide trouvée.');\n  }\n} catch (error) {\n  return [{\n    json: { error: 'Erreur lors de la récupération des données', message: error.message },\n  }];\n}\n\n// Générer le contenu HTML\nlet htmlContent = `\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Liste des Restaurants</title>\n    <style>\n        body {\n            font-family: \"Segoe UI\", Arial, sans-serif;\n            margin: 0;\n            padding: 20px;\n            background-color: #f4f4f9;\n        }\n        .container {\n            max-width: 900px;\n            margin: auto;\n            padding: 20px;\n            background: #fff;\n            border-radius: 10px;\n            box-shadow: 0 4px 12px rgba(0,0,0,0.1);\n        }\n        .restaurant {\n            border: 1px solid #e0e0e0;\n            padding: 20px;\n            margin-bottom: 20px;\n            border-radius: 8px;\n            transition: transform 0.2s, box-shadow 0.2s;\n        }\n        .restaurant:hover {\n            transform: translateY(-5px);\n            box-shadow: 0 6px 16px rgba(0,0,0,0.15);\n        }\n        img {\n            max-width: 100%;\n            height: auto;\n            border-radius: 5px;\n            margin-top: 10px;\n            display: block;\n        }\n        img[alt]:not([src]), img[alt][src=\"\"], img[alt][src*=\"via.placeholder.com\"] {\n            display: none !important;\n        }\n        .image-container {\n            margin-top: 10px;\n        }\n        h1 {\n            text-align: center;\n            color: #333;\n        }\n        h2 {\n            margin-top: 0;\n            color: #2c3e50;\n        }\n        .map {\n            height: 150px;\n            width: 100%;\n            margin-top: 10px;\n            border-radius: 5px;\n        }\n        .map-streetview, .map-satellite {\n            margin-bottom: 10px;\n        }\n        .map-label {\n            font-size: 14px;\n            font-weight: bold;\n            margin-top: 10px;\n            color: #2c3e50;\n        }\n        .error {\n            color: red;\n            text-align: center;\n        }\n        .map-container {\n            display: flex;\n            flex-wrap: wrap;\n            gap: 10px;\n        }\n        .map-container > div {\n            flex: 1;\n            min-width: 300px;\n        }\n        @media (max-width: 600px) {\n            .container { padding: 10px; }\n            .restaurant { padding: 15px; }\n            .map { height: 120px; }\n            .map-container { flex-direction: column; }\n        }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <h1>Liste des Restaurants</h1>\n        <div id=\"location-error\" class=\"error\" style=\"display: none;\">Impossible de détecter votre position</div>\n`;\n\n// Ajouter les restaurants\nrestaurants.forEach((restaurant, index) => {\n  const nom = escapeHtml(restaurant.nom || 'Nom inconnu');\n  const contact = escapeHtml(restaurant.contact || 'Non disponible');\n  const adresse = escapeHtml(restaurant.adresse || 'Non disponible');\n  const specialite = escapeHtml(restaurant.specialite || 'Non disponible');\n  const photo = validateImageUrl(restaurant.photo);\n  const latitude = parseFloat(restaurant.latitude) || null;\n  const longitude = parseFloat(restaurant.longitude) || null;\n  const error = escapeHtml(restaurant.error || '');\n\n  htmlContent += `\n    <div class=\"restaurant\">\n        <h2>${nom}</h2>\n        <p><strong>Téléphone :</strong> ${contact}</p>\n        <p><strong>Adresse :</strong> ${adresse}</p>\n        <p><strong>Spécialité :</strong> ${specialite}</p>\n        <p><strong>Coordonnées :</strong> \n            ${latitude && longitude ? `Latitude ${latitude}, Longitude ${longitude}` : 'Non disponible'}\n        </p>\n        ${error ? `<p class=\"error\">${error}</p>` : ''}\n        ${photo ? `<div class=\"image-container\"><img src=\"${photo}\" alt=\"Photo de ${nom}\"></div>` : ''}\n        ${latitude && longitude ? `\n          <div class=\"map-container\">\n            <div>\n              <div class=\"map-label\">Street View</div>\n              <div id=\"map-streetview-${index}\" class=\"map map-streetview\"></div>\n            </div>\n            <div>\n              <div class=\"map-label\">Itinéraire (Vue Satellite)</div>\n              <div id=\"map-satellite-${index}\" class=\"map map-satellite\"></div>\n            </div>\n          </div>\n        ` : ''}\n    </div>\n  `;\n});\n\n// Ajouter le script pour initialiser les cartes et itinéraires\nhtmlContent += `\n      </div>\n      <script src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM&v=3.exp&libraries=geometry,places\"></script>\n      <script>\n          const views = [];\n          const isStreetViewAvailable = [];\n          let userLocation = null;\n\n          // Obtenir la position de l'utilisateur\n          function getUserLocation(callback) {\n              if (navigator.geolocation) {\n                  navigator.geolocation.getCurrentPosition(\n                      (position) => {\n                          userLocation = {\n                              lat: position.coords.latitude,\n                              lng: position.coords.longitude\n                          };\n                          console.log(\"Position utilisateur:\", userLocation);\n                          callback();\n                      },\n                      (error) => {\n                          document.getElementById(\"location-error\").style.display = \"block\";\n                          console.error(\"Erreur géolocalisation:\", error);\n                          callback();\n                      }\n                  );\n              } else {\n                  document.getElementById(\"location-error\").style.display = \"block\";\n                  console.error(\"Géolocalisation non supportée\");\n                  callback();\n              }\n          }\n\n          function initMaps() {\n              getUserLocation(() => {\n                  try {\n                      ${restaurants.map((restaurant, index) => {\n                        const latitude = parseFloat(restaurant.latitude) || null;\n                        const longitude = parseFloat(restaurant.longitude) || null;\n                        if (latitude && longitude) {\n                          return `\n                            try {\n                                // Fonction pour afficher Street View\n                                function showStreetView${index}() {\n                                    console.log(\"Affichage Street View pour restaurant ${index}\");\n                                    const streetViewDiv = document.getElementById(\"map-streetview-${index}\");\n                                    if (!streetViewDiv) {\n                                        console.error(\"Conteneur map-streetview-${index} non trouvé\");\n                                        return;\n                                    }\n                                    const panorama = new google.maps.StreetViewPanorama(\n                                        streetViewDiv,\n                                        {\n                                            position: { lat: ${latitude}, lng: ${longitude} },\n                                            pov: { heading: 0, pitch: 0 },\n                                            zoom: 1,\n                                            addressControl: false,\n                                            fullscreenControl: false,\n                                            motionTracking: false,\n                                            motionTrackingControl: false,\n                                            panControl: false,\n                                            zoomControl: false,\n                                            showRoadLabels: false\n                                        }\n                                    );\n                                    views[${index}] = views[${index}] || {};\n                                    views[${index}].streetview = { type: \"streetview\", instance: panorama };\n                                }\n                                \n                                // Fonction pour afficher l'itinéraire\n                                function showRoute${index}() {\n                                    console.log(\"Affichage itinéraire pour restaurant ${index}\");\n                                    const satelliteDiv = document.getElementById(\"map-satellite-${index}\");\n                                    if (!satelliteDiv) {\n                                        console.error(\"Conteneur map-satellite-${index} non trouvé\");\n                                        return;\n                                    }\n                                    if (!userLocation) {\n                                        satelliteDiv.innerHTML = '<p class=\"error\">Position de l\\\\'utilisateur non disponible</p>';\n                                        console.error(\"Position utilisateur non disponible\");\n                                        return;\n                                    }\n                                    const map = new google.maps.Map(satelliteDiv, {\n                                        center: { lat: ${latitude}, lng: ${longitude} },\n                                        zoom: 14,\n                                        mapTypeId: \"satellite\",\n                                        tilt: 45,\n                                        heading: 0,\n                                        mapTypeControl: false,\n                                        streetViewControl: false,\n                                        rotateControl: true,\n                                        fullscreenControl: false\n                                    });\n                                    map.setTilt(45);\n                                    const directionsService = new google.maps.DirectionsService();\n                                    const directionsRenderer = new google.maps.DirectionsRenderer({\n                                        map: map,\n                                        suppressMarkers: false,\n                                        polylineOptions: {\n                                            strokeColor: \"#0000FF\",\n                                            strokeOpacity: 1.0,\n                                            strokeWeight: 5\n                                        }\n                                    });\n                                    directionsService.route(\n                                        {\n                                            origin: userLocation,\n                                            destination: { lat: ${latitude}, lng: ${longitude} },\n                                            travelMode: google.maps.TravelMode.DRIVING\n                                        },\n                                        (result, status) => {\n                                            if (status === google.maps.DirectionsStatus.OK) {\n                                                directionsRenderer.setDirections(result);\n                                                console.log(\"Itinéraire affiché avec succès pour ${index}\");\n                                            } else {\n                                                satelliteDiv.innerHTML = '<p class=\"error\">Impossible de calculer l\\\\'itinéraire</p>';\n                                                console.error(\"Erreur itinéraire pour ${index}:\", status);\n                                            }\n                                        }\n                                    );\n                                    views[${index}] = views[${index}] || {};\n                                    views[${index}].satellite = { type: \"satellite\", instance: map };\n                                }\n                                \n                                // Vérifier la disponibilité de Street View\n                                const streetViewService = new google.maps.StreetViewService();\n                                streetViewService.getPanorama({\n                                    location: { lat: ${latitude}, lng: ${longitude} },\n                                    radius: 50\n                                }, (data, status) => {\n                                    isStreetViewAvailable[${index}] = status === google.maps.StreetViewStatus.OK;\n                                    console.log(\"Street View disponible pour ${index}:\", isStreetViewAvailable[${index}]);\n                                    if (isStreetViewAvailable[${index}]) {\n                                        // Afficher les deux vues\n                                        showStreetView${index}();\n                                        showRoute${index}();\n                                    } else {\n                                        // Afficher uniquement l'itinéraire\n                                        document.getElementById(\"map-streetview-${index}\").parentElement.style.display = \"none\";\n                                        showRoute${index}();\n                                    }\n                                });\n                            } catch (err) {\n                                const satelliteDiv = document.getElementById(\"map-satellite-${index}\");\n                                if (satelliteDiv) {\n                                    satelliteDiv.innerHTML = '<p class=\"error\">Erreur de rendu: ' + err.message + '</p>';\n                                }\n                                console.error(\"Erreur pour restaurant ${index}:\", err);\n                            }\n                          `;\n                        }\n                        return '';\n                      }).join('')}\n                      \n                      // Ajouter la navigation clavier\n                      window.addEventListener(\"keydown\", (event) => {\n                          views.forEach((view, index) => {\n                              if (!view) return;\n                              if (view.streetview && view.streetview.type === \"streetview\") {\n                                  const panorama = view.streetview.instance;\n                                  let pov = panorama.getPov();\n                                  switch (event.key) {\n                                      case \"ArrowUp\": // Avancer\n                                          const links = panorama.getLinks();\n                                          if (links && links.length > 0) {\n                                              const closestLink = links.reduce((prev, curr) => {\n                                                  const prevDiff = Math.abs((prev.heading - pov.heading + 360) % 360);\n                                                  const currDiff = Math.abs((curr.heading - pov.heading + 360) % 360);\n                                                  return currDiff < prevDiff ? curr : prev;\n                                              });\n                                              panorama.setPano(closestLink.pano);\n                                          }\n                                          break;\n                                      case \"ArrowDown\": // Reculer\n                                          const reverseLinks = panorama.getLinks();\n                                          if (reverseLinks && reverseLinks.length > 0) {\n                                              const closestReverseLink = reverseLinks.reduce((prev, curr) => {\n                                                  const prevDiff = Math.abs(((prev.heading + 180) % 360 - pov.heading + 360) % 360);\n                                                  const currDiff = Math.abs(((curr.heading + 180) % 360 - pov.heading + 360) % 360);\n                                                  return currDiff < prevDiff ? curr : prev;\n                                              });\n                                              panorama.setPano(closestReverseLink.pano);\n                                          }\n                                          break;\n                                      case \"ArrowLeft\": // Tourner à gauche\n                                          pov.heading = (pov.heading - 5 + 360) % 360;\n                                          panorama.setPov(pov);\n                                          break;\n                                      case \"ArrowRight\": // Tourner à droite\n                                          pov.heading = (pov.heading + 5) % 360;\n                                          panorama.setPov(pov);\n                                          break;\n                                  }\n                              }\n                              if (view.satellite && view.satellite.type === \"satellite\") {\n                                  const map = view.satellite.instance;\n                                  const center = map.getCenter();\n                                  let lat = center.lat();\n                                  let lng = center.lng();\n                                  const heading = map.getHeading() || 0;\n                                  const rad = heading * Math.PI / 180;\n                                  const step = 0.0001; // Ajuster pour la vitesse de déplacement\n                                  switch (event.key) {\n                                      case \"ArrowUp\": // Avancer\n                                          lat += step * Math.cos(rad);\n                                          lng += step * Math.sin(rad);\n                                          map.setCenter({ lat, lng });\n                                          break;\n                                      case \"ArrowDown\": // Reculer\n                                          lat -= step * Math.cos(rad);\n                                          lng -= step * Math.sin(rad);\n                                          map.setCenter({ lat, lng });\n                                          break;\n                                      case \"ArrowLeft\": // Tourner à gauche\n                                          map.setHeading(heading - 5);\n                                          break;\n                                      case \"ArrowRight\": // Tourner à droite\n                                          map.setHeading(heading + 5);\n                                          break;\n                                  }\n                              }\n                          });\n                      });\n                  } catch (err) {\n                      console.error(\"Erreur globale:\", err);\n                  }\n              });\n          }\n          \n          window.onload = initMaps;\n      </script>\n</body>\n</html>\n`;\n\n// Retourner le résultat\nreturn [{\n  json: { fileName: 'restaurants.html' },\n  binary: {\n    data: {\n      data: Buffer.from(htmlContent).toString('base64'),\n      mimeType: 'text/html',\n      fileName: 'restaurants.html'\n    }\n  }\n}];"
+      },
+      "id": "03c1ced3-983a-40e0-b281-585e1bc273d6",
+      "name": "Code1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        620,
+        -440
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/home/isaia/resto/restaurants.html",
+        "options": {}
+      },
+      "id": "8dce016d-91cb-4546-a8ea-5e3e5d6a7605",
+      "name": "Read/Write Files from Disk",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        920,
+        -420
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Récupérer les données d'entrée (les données JSON de SerpAPI)\nconst data = $input.all()[0].json;\n\n// Vérifier si les données existent\nconst results = data?.local_results || [];\n\n// Mapper les résultats pour extraire les infos voulues\nreturn results.map(place => {\n  const latitude = parseFloat(place.gps_coordinates?.latitude);\n  const longitude = parseFloat(place.gps_coordinates?.longitude);\n  if (isNaN(latitude) || isNaN(longitude)) {\n    return {\n      json: {\n        nom: place.title || 'Inconnu',\n        contact: place.phone || 'Aucun',\n        adresse: place.address || 'Inconnue',\n        latitude: null,\n        longitude: null,\n        specialite: place.type || 'Aucune',\n        photo: place.thumbnail,\n        error: 'Coordonnées invalides'\n      }\n    };\n  }\n  return {\n    json: {\n      nom: place.title || 'Inconnu',\n      contact: place.phone || 'Aucun',\n      adresse: place.address || 'Inconnue',\n      latitude: latitude,\n      longitude: longitude,\n      specialite: place.type || 'Aucune',\n      photo: place.thumbnail\n    }\n  };\n}).filter(item => item.json);\n"
+      },
+      "id": "80011133-c334-4685-94f1-84993e5573ed",
+      "name": "dataCollect",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        300,
+        -460
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Nearby Search": {
+      "main": [
+        [
+          {
+            "node": "dataCollect",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking 'Test workflow'": {
+      "main": [
+        [
+          {
+            "node": "Nearby Search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "dataCollect": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ce6cdbf8-925c-4a83-8aa6-611ee05779cd",
+  "meta": {
+    "templateId": "self-building-ai-agent",
+    "templateCredsSetupCompleted": true,
+    "instanceId": "52d68418f1aae01c45db1eaf0100898e2b12f6213baf84cf93b1295f80db2c38"
+  },
+  "id": "BontgZ7f5g9Ktj2O",
+  "tags": []
+}
