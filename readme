@@ -1,6 +1,9 @@
 //instructions
 /* pour lancer l'affichage */
 1 - aller dans n8n/source et décompresser node_modules.zip pour avoir un dossier node_modules 
+le but de cette manoeuvre et juste d'installer express, cors et fs, je les ai déja mis en zip donc ça évite l'installation manuelle, en
+cas d'erreur veuillez installer manuellent express, fs et cors a l'aide de npm install
+
 2 - lancer la commande node server.js ou npm start dans le dossier /n8n/source
 3 - lancer index.html avec live-server dans vs-code ou http-server 
 rmq: actualisez si les restaurants ne chargent pas ou vérifier que le serveur express a bien été lancée
