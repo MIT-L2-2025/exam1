@@ -1,0 +1,908 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurants Chinois - Antananarivo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #7e9a9a;
+            --secondary: #34495e;
+            --accent: #c4a484;
+            --light: #f5f5f5;
+            --dark: #2c3e50;
+            --shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, #92a8a8 100%);
+            color: white;
+            padding: 80px 0 120px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .header:before {
+            content: '';
+            position: absolute;
+            background: url('https://api.placeholder.com/1920x400') center/cover;
+            opacity: 0.2;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .header h1:after {
+            content: '中餐厅';
+            display: block;
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            margin-top: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: -60px auto 80px;
+            padding: 0 20px;
+            position: relative;
+        }
+        
+        .restaurants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .restaurant-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .restaurant-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .restaurant-image {
+            height: 200px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .restaurant-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .restaurant-card:hover .restaurant-image img {
+            transform: scale(1.05);
+        }
+        
+        .restaurant-content {
+            padding: 25px;
+        }
+        
+        .restaurant-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.8rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .restaurant-title::before {
+            content: '茶';
+            margin-right: 10px;
+            font-size: 1.4rem;
+            color: var(--accent);
+        }
+        
+        .info-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            color: #666;
+        }
+        
+        .info-item i {
+            width: 20px;
+            margin-right: 15px;
+            color: var(--primary);
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #6a8383;
+            box-shadow: 0 5px 15px rgba(126, 154, 154, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #b39478;
+            box-shadow: 0 5px 15px rgba(196, 164, 132, 0.3);
+        }
+        
+        .map-container {
+            height: 0;
+            overflow: hidden;
+            transition: height 0.5s ease;
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .map {
+            height: 250px;
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .expanded {
+            height: 250px;
+        }
+        
+        .footer {
+            background-color: var(--secondary);
+            color: #e0e0e0;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        
+        .footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .restaurants-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .btn-container {
+                flex-direction: column;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .restaurant-card {
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .restaurant-card:nth-child(2) { animation-delay: 0.2s; }
+        .restaurant-card:nth-child(3) { animation-delay: 0.4s; }
+        .restaurant-card:nth-child(4) { animation-delay: 0.6s; }
+        .restaurant-card:nth-child(5) { animation-delay: 0.8s; }
+        .restaurant-card:nth-child(6) { animation-delay: 1s; }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM&callback=initMaps" async defer></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>Restaurants Chinois à Antananarivo</h1>
+            <p>Découvrez les meilleures saveurs authentiques de la cuisine chinoise</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="restaurants-grid">
+
+            <div class="restaurant-card" data-index="0">
+                <div class="restaurant-image">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcJ6yTtYke5MPBQHonSlqXG2AsjacDwFHFwtLe_d9v-nQVxuA5cEhaLj28_arc5mxOQKUuoflpFqG-b1CbASLki7iEa7x9fLVFIvSQ41axHoLCnoMm1iIgOiTrYYOzrfXYR5_XE0j4WPKukH-RvmOEirgo7q1HSPzOo1DPAEDErLIzlWQlwgv7VwivJ_1CRTMKRWJXrsFqirI3gEJTMNV5-h3d1J8alZ-A1yyNJustYOmss_Bu0Gue_KnqCDLImA1cyFRlju-WasrGk9NE5mZhLyqo84soMpUJgBXUsxb1BwiZ53aQb9ENaeYxuNDehrpxb3ycMW6RlYQX9Wj6WBuYg5oSTv02i57RHb4m8SchtSnJkBlbCrRrQfzn3-TWw4kEUWdAzeAzLic1K6k0oSlXWK-4pl4fnQtmqaU4iNtI20QtH-eLqnNY23mPaPYPaUITYPaZj15ByiEQWFXTGZEfryMRTgmC89P__08gmSe6cYRjQHXOve-_PT_hkhEviiZqa_2fpWRcER-6nzGpc017paSGXqZLWLVU1YOyp8cnvD8allfMdQT-JfCX_2cwc394Bh8YkOo0l7WCEL8v5NbDoWc6fvDGheuggXS06Yc2NxaY4WQTwZHe9vPlnbBphrQG8TsVGC&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Grand Resto de Chine">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">Grand Resto de Chine</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> Lalana Rasamuol Maurice, Antananarivo, Madagascar</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> 033 83 594 63</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> +261 33 83 594 63</li>
+                    </ul>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" disabled><i class="fas fa-link"></i> Pas de site</button>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(0)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-0">
+                        <div id="map-0" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="restaurant-card" data-index="1">
+                <div class="restaurant-image">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcJSWsm7dNXtJ93iwn3KivOGMpk5Y32MHvCbqcVkdYD86wBS-MR2wJydkJmJFoR4VPIJ_Wk_rRRBKF87AJHY5Shnlv-EyG36FZJVB86Zcv8BxF8om_Vr_luh5xaL65zd2VQsEi8bRsgksCq9OTBpUy-z0eunwh_547kfHfnDIDlINFTPmUEn94PdQfoF04sCU9s6kE3QXWdXSuGdulin7Hv-mUC2pbJmdLYq-iEL4VbVeLweYy6pgqrqLrHWYqDLiH7mEt_1GnMXks_ctmCoJbDTt74QCgHm7tAgFqESRls2MAhF14PyHVPkN4NDAPVHPCW6WgOpJqAXW8TYnO7zaOiswEOBQhHwKtvc0cqJwudD4D_dSz4QkQp9HSVl3Zu6sEqf6xOWF-Z2gtzvEJEp7m3pi9-vegLYMajTrFxrw0ev3ZAmA-wyjFmR4Na_8Trysj12X7JnUjLCjHtSfXwUWPGpMsvFc-1gIAqzCFoG6tho6WNvABBsYFcF4tZzZ9w_no-1GA17RfZvPfA_jieRUdIxp5fFyiD-AB4v24-bxRRLTN7rXsaxmio3MfmhVb6y1Fyl2BA7avfaZm3oyoDW15hGEbnwuGjgpOBCQay-FN6sFN6dvsP-WIOYKt8_KIGdlrqW4liK&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Hirondelle "燕子" Chinese FOOD">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">Hirondelle "燕子" Chinese FOOD</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> Lalana Dama-Ntsoha Razatintsalama Jean-Baptiste, Antananarivo 101, Madagascar</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> 034 11 166 78</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> +261 34 11 166 78</li>
+                    </ul>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" disabled><i class="fas fa-link"></i> Pas de site</button>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(1)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-1">
+                        <div id="map-1" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="restaurant-card" data-index="2">
+                <div class="restaurant-image">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcIdaCUf8PL2N6ylQRXdbbLflBFP4SCNyPVyEU54QCxcvNLhFyikTU_pgFHA0MqSX_Yqx-b9M68SdFhoJ4yI0DSWWaqsYjI8BlaNJ-UlWH6Yghv1uSTbecHea2Hjn3yueJsso_tkst-Jrwqqmqsyw7OSrMqc3xTsQR0uR3lteRV9ItiR4fiEWkJu6H2skB4zIUv-WKtOymS7kOjMhDSih1j-bnexUuXXzvimi7BL_uy8zTwX67o7bMH-ynEzsGzkip7hpOan7oqZGvWGowRDDcbCuumFiEsBdQcrda-TqwCE86z6FQlPWIEPPJK37bmHBn7jsqwp3nnPYJHeWaaGfQSv4eITjZZ76EAc0C1DI2YnXf2r1SsaUSoPTzJwN3nQ8k8nq_N0FApwL77WR3bJrzR2fR3nz5PI_9l0C8kJbJR24wA5DrZhoel4xtP5FiqCKf74YeZWQffyBGiYCgCOmYNOQSGUEvm8y5IgzdGTfAyOir6RpxPfuR-cdCHZAV2riYHWyOAiBR1vFCuUkYaJhs-3HeEj4bJQtCSm-tR0vhw2ekSRaVo52jo_P9IvHhPptOSKDKFeDnOgROYTNDkdUZMTN5l1xG-XD3RyytZ58bsfkRuaZbwBQ2ykI977reEeXNgS6CeG&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="La Jonquille">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">La Jonquille</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> Antananarivo 101, Madagascar</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> 020 22 206 37</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> +261 20 22 206 37</li>
+                    </ul>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" disabled><i class="fas fa-link"></i> Pas de site</button>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(2)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-2">
+                        <div id="map-2" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="restaurant-card" data-index="3">
+                <div class="restaurant-image">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcLGMgNzb2zRyX3HacwdskYHHAesuJq-6lW40YaDMWM7KcYYAodIj5yI8Rx__m52y0Occ5RcxrIYehB2giWnjvY_tC3fy-m09v6dL2k1F6e_Azkx6jeoa1HUPFBaOnNiqR_ZXys4L1UQ-ch6_40QH8mGfENE_ZhMBzqgaRdmOvVN0QM1RYzhDLrC_rbJngZ-oGM39Bn71u0JP0uBa2WDC4N9F3NiYS-JX8CyyA9q2DReFSZZArNHmVzr-ZSdDtZfZq4B8xVNpE-hFTaKYWYHD4VlB1zywNNA5rIMtd04gXj8rKuULqXPO1zare4uAPwemyp6j2mBgAWzCtnaTHzhS6qE4fPXjGdsuHHIgeW-eS8Dp6OHRqlksN6DLJIKBi_06PZ7bCIoTqb8RYFS5w7gmhAyECIaMaG6Abg9bBgC2A7K7b3HA1EOIQ00eIswNrU9BqROxPAhCfKs6oIXBCh53CPx8vfF-mBBU_dNQJi0agRHO2IexZZZBOLRH3Z_WqJZq53LjzrOfKtCKLy-XP80lOD0M7oxsABdLISOqyZBpPDi65xscQSGrJbp8yi1F9xt46SHkCmTwwbG4medWDZahaeqUt7doDTG9rzqRat7LxdHS8kZsQAisMyKudo_BvlFAlTFww&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Zen Garden">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">Zen Garden</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> II M 38 F Androhibe Antananarivo Antananarivo, Tananarive 101, Madagascar</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> 032 05 135 03</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> +261 32 05 135 03</li>
+                    </ul>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" disabled><i class="fas fa-link"></i> Pas de site</button>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(3)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-3">
+                        <div id="map-3" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="restaurant-card" data-index="4">
+                <div class="restaurant-image">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcLQtfRtYCX5mJJgVHvH6QKKEGLKRs81WENhQ8SZTs4KsMP78mCnaxmmHnXkF2ptP3LKC5vunWS1qEydNY4jYvlsze4V2FTV6sb_KaInGOiFFU5HRSc8JnGeUXvz1dN6HyzYgn4FkJXW9SbO6s5tEKqK0nBBOwDu8lOC0L_Fdy41jLa1KLIlNKb1c0o2nAMcHspmkSZ7DUdywJ1M2VEqtO001YM6zeyhGxqgydZQRnjdIcV4nKRT4IDJv_jhVuez1Zt1lglCwr4SZ710_OKoGLDBeNNAemGQKwPJf-91YouDfnTHkcKpOePzLWabDA4O2vR98DK58kABeaAlea-l7ERw6mahk14eEbdxYrI2c5uZM5Shsaq96oK-kX8nzKLg7cKdzOBP4lZwsiebr3xO-KTVhjoklS3m_kq_b77lbcybwXNJxCCH3vP0tnLpH3BQ55KPqxatmVjB026lMfAbYhluo7cmvDe1fbuGKcs8hJDGXYOxeoQR1mr-NNO6NMhO1BimffuslOymKUac3n8UUjMaNC_xAceRd7pFwmaBodz7Al9XuIWfGi70FlTbNNFWk8nLc_RE1G6ho6i7WK6jpkkG_30E6pO3ctpGL-SM-0Zctzcp_rLs8kznfe1gGQ8hqhZMjw&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Kaizen Restaurant">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">Kaizen Restaurant</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> 3GPR+F3J, Lalana Vvs, Antananarivo, Madagascar</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> Non disponible</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> Non disponible</li>
+                    </ul>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" disabled><i class="fas fa-link"></i> Pas de site</button>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(4)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-4">
+                        <div id="map-4" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="restaurant-card" data-index="5">
+                <div class="restaurant-image">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcLguYKsClNyVngJ3uDb3FHIoUyiuuvD124eSuTzZc59_yxaVucOfR4dzhDQdOgV46I-Z34_pz5HocRI8DpPQoiwgF6pny-rlCsjTeKBX0AuCxTXQBg1RhRc3-6RSsa_ZSENLv2EaLY1h1-KPOaeCd1kA_71KrsBy-fHMvsEdTQLW-satUA9afxGWnBvIdj8nzyjjzIgtYmBwSWd8KcfzJCvDOPVaYWSmfaX8IAy1qvbpGh9FFZQNCdG1aJzWRQ9Yqb1bYF9BUzdZERuQdy7SvuhUf9UDARtq_vF4sCjemAJpBlTdAPnDM7r8-KNEoqbb3MCG5luvYc&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="La Fleur De Sel">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">La Fleur De Sel</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> Antananarivo, Madagascar</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> 034 12 582 22</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> +261 34 12 582 22</li>
+                    </ul>
+                    <div class="btn-container">
+                        <a href="http://www.lafleurdesel.mg/" class="btn btn-primary" target="_blank"><i class="fas fa-link"></i> Site Web</a>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(5)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-5">
+                        <div id="map-5" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="restaurant-card" data-index="6">
+                <div class="restaurant-image">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcL2TG87BKlyy4HgtsDf7WBPNWRbBHDncuw4-ejB8eFpvZERTunWXMI9ILCp-uyVGPbMoZKXVdy7pdToH9DSeNfjIUQygglVlDI4H-fCZx4AYE3eR0lPZfJ9q8dxgWgb4ABVGIPHCA0MQ9lwwLUMe_W0Td8Y_M4w-NH11Gxg_XVWuE24M4aJIGapDYq_oIIptuVkLVrcfdW_fRRUu7oCLCe6aPGQFOXN-M3meIZexfR0J-GqWDa0Ikbbx9bN-8CAI0i545djxf7z6-wR-hi_nrl5aFo_5n7aX2Jgu86qKQojuvdss2_XgVYvkJd2GfPcE8XB8WGllPHi8aVqi6R3-3TrnXLU7bvnGV0q6fnQMPZAVgqDC5F3cqtMCMGgNFHoIxTs3XSeVqUz0alrtPsGUENM3lu6hOlteT0Rkdok5jTNX9bqcZ0BtyB7QZ3Fd092sO1nWPu7zjTIKpe8lCZww6mU5OmU2_vMikEVF07ZSMnGaEkodVll7gZNrNyyBGgYJ5bOP9p4MM6W__3OKdT7jSZPHb-t-kx9TMbl7riJw3TxNnUUib5gcUOLtNkoETnD4d6vNV47JbQ084wI73d4_eSp1ZsaYLeyHe0GM6enHAWvmYVELNcRDg9QUOGh0qm8FFF-Yg&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="l'Orient Asian Fusion Restaurant">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">l'Orient Asian Fusion Restaurant</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> Madagascar, Antananarivo, Lalana Rainandriamampandry, Lot Siah邮政编码: 101</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> 034 36 788 88</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> +261 34 36 788 88</li>
+                    </ul>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" disabled><i class="fas fa-link"></i> Pas de site</button>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(6)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-6">
+                        <div id="map-6" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="restaurant-card" data-index="7">
+                <div class="restaurant-image">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcLKQnm68yclx1YxqaKF82EIZt7d1CYIC9NatBls29V1DHGiQ0-M-iFmQMJZI9LPbuGvGbDyPNn03uorIrxMxrxF5imEnCFuuKjwMxNM9AH-kUXjxw-NNgdXFutaVm-1X40hJfCXQtc2oi1awdqj8CjcQsGwwfSSq_-Qqd5fVKoMYYGYm0FL5WDo9alF6xZgF_bVJADElex2dgCHQaTGkn6A1_O4KeDQ5z75THDCymDbkeCZlSNBHBGyw8bxzNSrmqGMoMGYUku9lvyx9EoE4mmhwLcSXo1egKmAjmYFw9LmE7Qpj781BrMOTQICRS8rK2pIyeVM23Y&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant L'EURASIE - Ankorondrano">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">Restaurant L'EURASIE - Ankorondrano</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> Face à l'hôtel Ibis - Ankorondrano, Antananarivo 101, Madagascar</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> 038 51 944 37</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> +261 38 51 944 37</li>
+                    </ul>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" disabled><i class="fas fa-link"></i> Pas de site</button>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(7)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-7">
+                        <div id="map-7" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="restaurant-card" data-index="8">
+                <div class="restaurant-image">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcJFplg2sJ2EFavQ4Aksl00Ru8Qchxf4aPqG2bv8FjfLtF04M-P0Fxu4IC3VP6VEYhX4_sTCh7BRZVOH2d6AGV8A7ukqwsSozftsi_mslWXMiK5HXZ-kdazeiIHOpLHrrkowCLQFilYYhUPLSuZlmkdZ6YNJjR-b-Z8tlx6dcXYieHIZkRd7IstrDx6mCsyR41BE4EXNlcCYgvyJgaeZciQ7iwbyPCRE7IMWU2EHZptRl8poR4kVh_BuxT7HduoFhD0rOhSRkLHCQuwAZjSRqSTDdyrPVjBsYqerJtgZYibeJ2T90mcN_Dqgs0n7UOINMms2PF6lPa5fn4aA9TbUX6GXONAjILjfTEzT1taCS_Y94MOaw02Q_OWjN4vAEXj1Fkd64evgziDKHCAcfci5b2CCv61ML0UMWJGUcPf_LXOE-chaZ9R-Id26-h_Q76Sog2M9IAMvk4jnEqM05OnxIbaXNZ9qULkYi0E-2Qhtg8Hdd2AlS8hTmpE7E6GKRWg27fBU2HTRshSIw6Ppd3TZ4bpX9weqgCW9W1COPhR2vHja9TIll8Oj_LRZn9zohkMB1DKAJkC-rCtLUtiMMkwiaZpBDCmvixtOeeLmQ3fookRCbWuze_3fWptI6nT_OPkn&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant Shanghai">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">Restaurant Shanghai</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> 4 Lalana Rainitovo, Antananarivo, Madagascar</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> Non disponible</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> Non disponible</li>
+                    </ul>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" disabled><i class="fas fa-link"></i> Pas de site</button>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(8)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-8">
+                        <div id="map-8" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="restaurant-card" data-index="9">
+                <div class="restaurant-image">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcISlU1ofJcJY1jTgI8xMF03xUibfhnB1i8PZpcC1vyvM9STLnYNAjw3ciWtoSnwXN7AkawrVCimB_tEvemvlcXQNIHkIZZwie4enXlPje4-L4lgitczXmjBlaLJg6rK8P2gzIWAWOrCeI1Zf8_M1mCc022NrxegrbRonIpe9b4rtKFnt5LmiN5qhJ60EqaIP-dyvOfq-r3FjlMZuLFNxvi09URMz_bc8ikyu9aS6hY7mHj7_iifdpzluOW9n2d3rSXbTDSljPsiHdLVB7i67mooTGFDuf-Pp16FhI18cYMHKUCE9LpN8d5jcPlfjsNm8fMS5zqOX64T8K18fATQPYdG5NqXeQLcxFcQwm0Uiwa7WqKBb3MWYmXbI2t4ySH5XgOTAGnTfUNmpNdxrJEGYnmkzI63l8O7rCf2xwx2kKYpq26q3qoSzjBjQM2psf9GWV0S5bY_NTfVTW8tdBCZWpbmVoR7Spv7Kxc3eQsetmZN4b_66hLpyQZ6bucKDbJ9Yz54yLtqixV6vRB5eYWh3MmQjpeniUvFBQG1VPriGdWu-u0p4TLyLMUL3r8VWgtuLL_4YWfs-rWLS7cMjUed4Qll65QZquqH9GE5tS-PQ7I5-tMI3jVhY4d_GDE77yWW&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant Fong Mei">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">Restaurant Fong Mei</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> 4GHM+JMX, Rue Andriantsihoarana Ratsimbazafy, Antananarivo, Madagascar</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> 033 25 571 99</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> +261 33 25 571 99</li>
+                    </ul>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" disabled><i class="fas fa-link"></i> Pas de site</button>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(9)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-9">
+                        <div id="map-9" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="restaurant-card" data-index="10">
+                <div class="restaurant-image">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcKAnoKlxdw_2iE3L8yBzwO7X_dHT0dCVriIhksBEtLV6L7gbgStlQKCuKlIw7FRYaspTjl8CQUaaoKrVJ5caNA0fkIt8sxeOp1Yz2UVXxT_P8PJysptiCfi2pEX1Xv2yBicd0K6u0o3n1rleL0bUx-SdtI3h7VPhPmsXAmdhfIGQJBglCuFTgLf2G1MRixgkcMuUe6dUzkM20tpVBvmxWI58uHfq7P4v1FEPqA1RDu2i8151pnWKYwpz-epoBK6yZTMrknx5hcTpJ7XAnBMm4UjRa6dVVXRbFPWT0XTulqXLlK_vb19sGV9J-g6vz2Jnka7B148_Iic94bAX_S9jjD27fk8m7zbbJlPMJiKWWwwNFnKNckKMLPFdzt4g8O6zQNhamE-XLsnif1woob9HIXDg9B9AiUuFwR_7ayhwAP-nSqnI88O8i9wPY0fdjAEOfGQ_YMV7gcQ1Mc4oHsd1pYRg6y3hoLjBmTH9OcOlAORVMbL2j8quh3bE9_vHOkAwLTeOl2fTTlLNjOCabbRe_maRcLQBp7MgaoogtMg7HhCZcesTSIQ1xtOX3-k_xwZc1_adoqUMt0g1HydMU_HVjzwdvppwI2L4eukdD40e3d3k7p_QEU494BXl3NWxkU8gK1cpA&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="逸香酒樓 Yixiang Restaurant">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">逸香酒樓 Yixiang Restaurant</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> IVT 10, 4G48+V2P, Rue Docteur Joseph Raseta, Antananarivo, Madagascar</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> 034 57 088 88</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> +261 34 57 088 88</li>
+                    </ul>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" disabled><i class="fas fa-link"></i> Pas de site</button>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(10)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-10">
+                        <div id="map-10" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="restaurant-card" data-index="11">
+                <div class="restaurant-image">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcINs4mqiTz5VspjmXTijHbEIPUcpXGXBcmPc2mgxWAmb7zj1Z5JP7PT8_kDzrmn2GTFs71tfFcjfq62JQOpXnd6xXzKBgaNn3DzyHrgIRTA8zbOq9WOvRcLw5nQrKEDFic0btXbyeVXmEwOOGTDcH5cnQkDS0o0X8Uu43zN9qgCjXov2XbBopD4qMWrMibakuKi7KoDIYbbNV5m_gfbSbzvzCCr_peSY6Qf_x5KJ-XzCxHs5NHK9adxgAruQzdNg7GlAgX4bpHDIwl-JbDDBUfKvHQ8zN5LObo3nCqf1k0ZL-uNOP2yIRPmE5x1paY_-vxcVVwOoFivRJfi7dIdiLUxVzzgM2TJptsQnRorvjSHKj2z0DPUdOnA_QNuc7vgp1xyLxl-gRxcvpKnYdl8gaCoPVK-mL-8o9pZTVv1avU61cC_80cRGcGNQyOMz165OIXyCmqe9jyZo_MDckbGC6mjSHLc0RNKFHZSrv1staaLHtaQgNu2qWlFAuIBOH6nY9bFXoStaDKSAWpwKAS98N5GoryxZl5Hy2GtpMLl12vBp-5GJdkuUKUf4kkhlqZL0aL99LwgSPEaiaIhYFWPfKmoAMB5EGP6X7qrTv5iZeSJObks0FNIr7ZketFxbANfxzTpOg&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Dun Huang">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">Dun Huang</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> 42 Arabe Andrinampoinimerina, Antananarivo 101, Madagascar</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> Non disponible</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> Non disponible</li>
+                    </ul>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" disabled><i class="fas fa-link"></i> Pas de site</button>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(11)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-11">
+                        <div id="map-11" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="restaurant-card" data-index="12">
+                <div class="restaurant-image">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcLwCN8Mz8T92okMQAMFQJldLgaLt6M8PP4QPpTPWhyGiPdn1oIxfyRWVWwERD0_eI9_FKnrlRH-YZj0WaPJh0JFoc_S4NQ1ylbguuiL8nZ7cgpc9gFvl8VY-yWOir2sE1-bdYnojUVPItfMktjfOZGleEvJOtaPLwOcrzLi8QXD-JKWlsH5rz2mVmSxrV9EgXO1q7JeER0PsGZ8s1BLxKA0EZKj6eQWZi_tbmEUwqRE15bZWDoxBS5yXdXdbpkPq_jx_hfWUC9GSIJyY5iSnvpvdHEyGKm1gqwzpODXe61MAtk9E6NBKnobhFUF9rbEm3Aj3BZUwr9knDQeCQZQalv0fwjVraS7mQMsleV4hET-_R43nBBJjI4qXwD72gO7o6E3K_1rYsjTW6902RC_rQ46oY7ydVjQ86Nkf9vYcO6aLA3kSWhN-0UEEQOv2spbHFRCcglJbFuTYywam9Bg8r2v90a2muBwlLhpaLW4ToCyq3lIdXtuS0fooB7314L_m3cJZt4B5mZqqjQvDrKC8NaiD0R21Abi4iIlb9MENcewqTTeW3wivwBCAfl-tJ66jxHN3hLDqkMb7Z3aiXdwjBchJlaSNQrutoUg-W9WxHteihZm5YJwug7g0RL_cEzPvOJFyA&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="DIMA Hirondelle "燕子" chinese food">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">DIMA Hirondelle "燕子" chinese food</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> Andohatapenaka, 4F5R+4P7, Antananarivo, Madagascar</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> 038 18 456 78</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> +261 38 18 456 78</li>
+                    </ul>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" disabled><i class="fas fa-link"></i> Pas de site</button>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(12)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-12">
+                        <div id="map-12" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="restaurant-card" data-index="13">
+                <div class="restaurant-image">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcKqBQ25vV6l4DEfEQaiirTYHA01-KgjmvVh9I4yu179NvZuLMr2N2_36orvvt5bSmS_q_rtFjcvgFgKBFKXBjbi0hPXPRazW2J6wHWcZWDN7gUzhI0nMaSPsuL4dnBVBk5iqEEZrh_H38CwCsbfnjWUJMVU593PBcrLTUa-yVzbvhugI06nJuNxhLntZoOpz496c4kWX4bg6o9Av2b-yYpKl9RaTK-hpEZAJ8xVovp43kAduIQJ3NTKQrfPVHAhu5323aQs5aLCL5mbApKjeRiev0ChQ1UeDGnr6VbL33znEbgB3lA_jecs6px9CytN7sHlyRvP9I0&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="吕府私房菜（KTV）">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">吕府私房菜（KTV）</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> Madagascar, Antananarivo, Amitie FandianAUTOREX</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> 038 82 066 66</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> +261 38 82 066 66</li>
+                    </ul>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" disabled><i class="fas fa-link"></i> Pas de site</button>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(13)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-13">
+                        <div id="map-13" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="restaurant-card" data-index="14">
+                <div class="restaurant-image">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcIi7mGzFEmRWPNYjJyYtkYjQu94dG2jrwrLu0uovEr3c2THRIGeaHNjcgoyYtnSaaMLKQU-qe3xh7D39nfoql0MqcFKrrl2attrSQGa5gzUBsSFMjTs2Nb9bJCPjCntbWIxytX2U1mQFmZVHn9JyR2i7KDhtkBMKcO6fbz1WXvzZ7pdkQfme8uSLtwsPo_Hfr3IEgKj5ZeJGKhtq3jUbIL70_ALnwGrl2mElaH0zJwqzptbi8FFjPqOwo7qrMsnmvbm9i9SwwlfoAXhjPxHd30KikBov35lPjWkyd5KD1aqCAtqWPmjfADaSEgHH9p7vxA-iIUJ-pbN-qg3u2Xj2Gl_GnIbqCeyAdwuNuGBJVRBippHEKMXbrhxao6Y7RirbYpHoWCq83iiq5jSW4ZzwNpYU76Szknn07iqId2NdxFQSB0239lT4S_4F5hPYHrIuz-fnrs1TS3RyGM2lutmO-u5_11Bxwo8ilw8em6JdI8zvgJ43meJ3h4EUKQDdVq8VryK2CWPKhKrqHcNOQzvb2uEPck7pfSokP4iIlNtvlKE2UI_FTZS0LH5o8Br5QieIC36EqE566ossnIdZKjteO-8ajsR0iJrgCWHdUe3YfheI-4OFOetqfHqIqvydXRa8YJNyA&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant La Belle Ville">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">Restaurant La Belle Ville</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> 3GQP+WJP, Rue Razafindralombo Pierre, Antananarivo, Madagascar</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> 034 03 244 36</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> +261 34 03 244 36</li>
+                    </ul>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" disabled><i class="fas fa-link"></i> Pas de site</button>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(14)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-14">
+                        <div id="map-14" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="restaurant-card" data-index="15">
+                <div class="restaurant-image">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcIofyeyUi701Qh-OIEYh0BlT4FPZdxrk7U59M52OiTeqGOsGBiSKEZ2K5r6eeEkExFRYq3NuoCxHAXAr8h99S9vjAx9Fihf322UXiciFEUCTOwwvocJu9YMuftfdT7pF97Y_1sdJLWsKsWqimlsI9sk1zCv_AIApAGo5QqqqS27xsNaRtdg_XzvRSb9Jiwp_YDdDj8G1KMNhiZeG9mLpg-6vZVZi6bByJDw83ehHi4RQBdD_PXBTT3gXk2frh-zI2bJChdQDqwKBtm7ysSfh8kt8Bs5Et5zYtMuMnhoJUeQ8c7PBdnbZNYnhnWGJlF6ZUYbN6_x&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="凤城 Soleil">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">凤城 Soleil</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> Lot IVK 89 bis Anosivavaka Ambohimanarina, Antananarivo 101, Madagascar</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> 033 11 336 28</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> +261 33 11 336 28</li>
+                    </ul>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" disabled><i class="fas fa-link"></i> Pas de site</button>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(15)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-15">
+                        <div id="map-15" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="restaurant-card" data-index="16">
+                <div class="restaurant-image">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcJ8kQanpCzKl_GOqoNhjPKpN9yP8P-_iALAyOBNkFeh6_uf7cZMBNN2ZXfA4R9Y6FrJpaVB-0RPW7aJpOTFhz0rdPXnAjLr415vdsNQIC6owCtGdOb6dCEWM-hSjTkSfGrG06cnPgiGyGF3MTE183zsnpdEkqAa9516jgILu7qmkBIKITMQHqITfcTrrEN3k7MuiMYQyn3KogGBcI5RkYgPRAVwe5NBJuGmCr-jWAJeURGZbmW1rgEJkyxYHhNAkzplcdnTZizQZsxRe4SLwVrrs6Gc3S9gLOuyWFSejE9A2vg8Bi3wZulpBeJBwlV3jwTswGx_2PchuLWGkimwT0QUChRkGSXCwUbQ9IB75fmgMYPgZaTcJYpa7XWYRDGqZ-VUqJby8_jSKkoFIX3m8gvn0yIXBxzfTR32YZOAA4OxkdktBqHvPdLmW5YmtOsubTguoPR-FVqYrgBZiP0mXWF-ISIs1xw--DvVlG77MIAbwmHvK_vE4JzEvwAiA8OD06P8CQHUMZAosKwNZBuCDTor76HvSDNdTY97RDPlxIKe1AWsGneQ-s7adVzLpH2atl_RINnYumwv0cMUNaskf9fw5EDcF5jnH2fvy97jni8cXqzk83y3m9AsHyj0Grd22PhpXaiY&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Lotus Blanc Restaurant 荷花酒店">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">Lotus Blanc Restaurant 荷花酒店</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> LOT II W 23 B, Antananarivo 101, Madagascar</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> Non disponible</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> Non disponible</li>
+                    </ul>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" disabled><i class="fas fa-link"></i> Pas de site</button>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(16)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-16">
+                        <div id="map-16" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="restaurant-card" data-index="17">
+                <div class="restaurant-image">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcJauZJq9yljFPVNI4r2x12QINz0HPH518vTPvNmjawe_nQGqOTxdnnxto4sbG8PxQXYL4FDRDahgKrzGtzZdu8sLJO8F6STnTVEZXfYKdqJH65t2xm9TyZpM1WKSdBg1puCnsmhVyTUqnHHs-6emOd854VejPk1MeEmN9LnDYCy_DwzeoLP9he3QJDhLs_njCFdbS73b2khCjNQ2Hs2NGdRUDkfBPM96srZTHYDciEe3fVQ8jD7KO0rSkld6siBlUwnh6V7O3nJlbuA5KHO1EpqoAW8j_MMPrUrFtstm2KetUczx1234wptkdijqhoT4GXSzz8lD4Q&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant Le JASMIN">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">Restaurant Le JASMIN</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> 8 Rue Paul Dussac analamakelydohan Analakley, Tananarive, Madagascar</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> 034 62 413 75</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> +261 34 62 413 75</li>
+                    </ul>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" disabled><i class="fas fa-link"></i> Pas de site</button>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(17)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-17">
+                        <div id="map-17" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="restaurant-card" data-index="18">
+                <div class="restaurant-image">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeeoHcKv0iTlk8cygOCE5yd311zTzYo3wuI3PDIO2QLA17VwGD7UuUk7qBF7eAbxF9b0c3Cqya_cIevPoW13rAT7npPqyhN77vkRVZ8bfDIyqx8ZSm-Razpyi9ugLqhBJ_-1GN4wHHpOPBDzLV0CTWjyJ7Ke8mAKihCHFuQqzKVZYC3InHKKajQn5VF61ITvWnrC1sDKBUr9CBp77DDNLj_7gw-WaBdjlyXHbrnRxt8wSHfzEQIuQCNfzyARzZgS_5XVb7AA9U5b6x7npcZcR0rBfCAn2h4LFqTCecokO2TwuvanznLvaD0GdibRisjfU7eqN-_vqE2IF7s&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Huo Cuisine">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">Huo Cuisine</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> 4GH9+2PR, Antananarivo, Madagascar</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> 038 44 481 56</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> +261 38 44 481 56</li>
+                    </ul>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" disabled><i class="fas fa-link"></i> Pas de site</button>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(18)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-18">
+                        <div id="map-18" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="restaurant-card" data-index="19">
+                <div class="restaurant-image">
+                    <img src="https://via.placeholder.com/400" alt="Restaurant Le Cantilène">
+                </div>
+                <div class="restaurant-content">
+                    <h2 class="restaurant-title">Restaurant Le Cantilène</h2>
+                    <ul class="info-list">
+                        <li class="info-item"><i class="fas fa-map-marker-alt"></i> 3GQ4+RWM, Antananarivo, Madagascar</li>
+                        <li class="info-item"><i class="fas fa-phone"></i> 034 86 576 67</li>
+                        <li class="info-item"><i class="fas fa-globe"></i> +261 34 86 576 67</li>
+                    </ul>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" disabled><i class="fas fa-link"></i> Pas de site</button>
+                        <button class="btn btn-secondary route-btn" onclick="toggleMap(19)"><i class="fas fa-route"></i> Itinéraire</button>
+                    </div>
+                    <div class="map-container" id="map-container-19">
+                        <div id="map-19" class="map"></div>
+                    </div>
+                </div>
+            </div>
+  
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; 2025 - Guide des Restaurants Chinois à Antananarivo</p>
+    </footer>
+
+    <script>
+        const mapData = [{"lat":-18.9141849,"lng":47.5384142,"name":"Grand Resto de Chine"},{"lat":-18.9174137,"lng":47.5366284,"name":"Hirondelle \"燕子\" Chinese FOOD"},{"lat":-18.9093258,"lng":47.53688959999999,"name":"La Jonquille"},{"lat":-18.8657235,"lng":47.5428709,"name":"Zen Garden"},{"lat":-18.9137837,"lng":47.5401532,"name":"Kaizen Restaurant"},{"lat":-18.8715948,"lng":47.54260650000001,"name":"La Fleur De Sel"},{"lat":-18.9072494,"lng":47.52803729999999,"name":"l'Orient Asian Fusion Restaurant"},{"lat":-18.878855,"lng":47.5212683,"name":"Restaurant L'EURASIE - Ankorondrano"},{"lat":-18.9088825,"lng":47.5238114,"name":"Restaurant Shanghai"},{"lat":-18.8708938,"lng":47.5342498,"name":"Restaurant Fong Mei"},{"lat":-18.8928125,"lng":47.5150625,"name":"逸香酒樓 Yixiang Restaurant"},{"lat":-18.905614,"lng":47.5240707,"name":"Dun Huang"},{"lat":-18.8922222,"lng":47.4919444,"name":"DIMA Hirondelle \"燕子\" chinese food"},{"lat":-18.9106832,"lng":47.50331799999999,"name":"吕府私房菜（KTV）"},{"lat":-18.9101641,"lng":47.53657789999999,"name":"Restaurant La Belle Ville"},{"lat":-18.8729457,"lng":47.50796949999999,"name":"凤城 Soleil"},{"lat":-18.9134037,"lng":47.5377744,"name":"Lotus Blanc Restaurant 荷花酒店"},{"lat":-18.9103791,"lng":47.52670089999999,"name":"Restaurant Le JASMIN"},{"lat":-18.8722175,"lng":47.53477549999999,"name":"Huo Cuisine"},{"lat":-18.9104223,"lng":47.50729349999999,"name":"Restaurant Le Cantilène"}];
+
+        const maps = [];
+        const directionsRenderers = [];
+        const mapContainers = [];
+
+        function initMaps() {
+            mapData.forEach((data, index) => {
+                mapContainers[index] = document.getElementById('map-container-' + index);
+                
+                if (data.lat !== 0 && data.lng !== 0) {
+                    const map = new google.maps.Map(document.getElementById('map-' + index), {
+                        center: { lat: data.lat, lng: data.lng },
+                        zoom: 15,
+                        mapTypeId: 'roadmap',
+                        styles: [
+                            {
+                                featureType: "all",
+                                elementType: "labels.text.fill",
+                                stylers: [{ color: "#1d3557" }]
+                            },
+                            {
+                                featureType: "water",
+                                elementType: "geometry.fill",
+                                stylers: [{ color: "#a8dadc" }]
+                            },
+                            {
+                                featureType: "landscape",
+                                elementType: "geometry.fill",
+                                stylers: [{ color: "#f1faee" }]
+                            },
+                            {
+                                featureType: "poi",
+                                elementType: "geometry.fill",
+                                stylers: [{ color: "#e6f2e6" }]
+                            },
+                            {
+                                featureType: "road",
+                                elementType: "geometry.fill",
+                                stylers: [{ color: "#fff" }]
+                            }
+                        ]
+                    });
+
+                    new google.maps.Marker({
+                        position: { lat: data.lat, lng: data.lng },
+                        map: map,
+                        title: data.name,
+                        animation: google.maps.Animation.DROP,
+                        icon: {
+                            path: google.maps.SymbolPath.CIRCLE,
+                            scale: 10,
+                            fillColor: '#7e9a9a',
+                            fillOpacity: 1,
+                            strokeColor: '#ffffff',
+                            strokeWeight: 2
+                        }
+                    });
+
+                    maps[index] = map;
+                    directionsRenderers[index] = new google.maps.DirectionsRenderer({
+                        map: map,
+                        suppressMarkers: false,
+                        polylineOptions: {
+                            strokeColor: '#f7b801',
+                            strokeWeight: 5
+                        }
+                    });
+                } else {
+                    const routeBtn = document.querySelectorAll('.route-btn')[index];
+                    routeBtn.disabled = true;
+                    routeBtn.innerHTML = '<i class="fas fa-map-marker-alt"></i> Pas de carte';
+                    mapContainers[index].style.display = 'none';
+                }
+            });
+        }
+
+        function toggleMap(index) {
+            if (!maps[index]) return;
+            
+            const container = mapContainers[index];
+            
+            if (container.classList.contains('expanded')) {
+                container.classList.remove('expanded');
+            } else {
+                // Close any open maps
+                mapContainers.forEach(c => {
+                    if (c && c.classList.contains('expanded')) {
+                        c.classList.remove('expanded');
+                    }
+                });
+                
+                container.classList.add('expanded');
+                
+                // Ensure map is properly sized after expansion
+                setTimeout(() => {
+                    google.maps.event.trigger(maps[index], 'resize');
+                    maps[index].setCenter({
+                        lat: mapData[index].lat, 
+                        lng: mapData[index].lng
+                    });
+                    
+                    // Modify the button text when map is expanded
+                    const buttons = document.querySelectorAll('.route-btn');
+                    const routeBtn = buttons[index];
+                    const originalText = routeBtn.innerHTML;
+                    routeBtn.innerHTML = '<i class="fas fa-location-arrow"></i> Calculer itinéraire';
+                    
+                    routeBtn.onclick = function() {
+                        showRoute(index);
+                        routeBtn.innerHTML = '<i class="fas fa-map-marker-alt"></i> Masquer la carte';
+                        routeBtn.onclick = function() {
+                            container.classList.remove('expanded');
+                            routeBtn.innerHTML = originalText;
+                            routeBtn.onclick = function() { toggleMap(index); };
+                        };
+                    };
+                }, 500);
+            }
+        }
+
+        function showRoute(index) {
+            if (!maps[index]) return;
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const userLocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    const destination = {
+                        lat: mapData[index].lat,
+                        lng: mapData[index].lng
+                    };
+
+                    const directionsService = new google.maps.DirectionsService();
+                    directionsService.route({
+                        origin: userLocation,
+                        destination: destination,
+                        travelMode: google.maps.TravelMode.DRIVING
+                    }, (result, status) => {
+                        if (status === google.maps.DirectionsStatus.OK) {
+                            directionsRenderers[index].setDirections(result);
+                            
+                            // Add a success message
+                            const mapContainer = document.getElementById('map-container-' + index);
+                            const successMsg = document.createElement('div');
+                            successMsg.className = 'route-success';
+                            successMsg.innerHTML = '<i class="fas fa-check-circle"></i> Itinéraire calculé';
+                            successMsg.style.backgroundColor = '#e8f5e9';
+                            successMsg.style.color = '#2e7d32';
+                            successMsg.style.padding = '8px';
+                            successMsg.style.borderRadius = '4px';
+                            successMsg.style.marginTop = '10px';
+                            successMsg.style.textAlign = 'center';
+                            successMsg.style.fontWeight = 'bold';
+                            
+                            // Remove any existing message
+                            const existingMsg = mapContainer.querySelector('.route-success');
+                            if (existingMsg) {
+                                mapContainer.removeChild(existingMsg);
+                            }
+                            
+                            mapContainer.appendChild(successMsg);
+                        } else {
+                            alert('Impossible de calculer l\'itinéraire : ' + status);
+                        }
+                    });
+                }, error => {
+                    // If geolocation fails, just center on restaurant
+                    maps[index].setCenter({
+                        lat: mapData[index].lat, 
+                        lng: mapData[index].lng
+                    });
+                    
+                    alert('Erreur de géolocalisation : ' + error.message + '. Assurez-vous que votre navigateur autorise la géolocalisation.');
+                });
+            } else {
+                alert('La géolocalisation n\'est pas prise en charge par votre navigateur.');
+            }
+        }
+        
+        // Add scroll reveal effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.restaurant-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

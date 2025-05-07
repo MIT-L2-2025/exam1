@@ -1,0 +1,210 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -820,
+        200
+      ],
+      "name": "Start",
+      "id": "d50e49e5-4480-47f9-acee-8079b327bdb7"
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/textsearch/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "chinese restaurant Antananarivo"
+            },
+            {
+              "name": "key",
+              "value": "AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -640,
+        200
+      ],
+      "name": "Search Restaurants",
+      "id": "fca1b1fb-557d-4156-89ce-2e0b1c7aa699"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extraire place_id pour requêter les détails\nconst results = $input.item.json.results || [];\nreturn results.map(item => ({\n  json: {\n    place_id: item.place_id\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -460,
+        200
+      ],
+      "name": "Extract Place IDs",
+      "id": "17da0360-d952-490b-b73c-846d6aeb7d3b"
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/details/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "place_id",
+              "value": "={{ $json.place_id }}"
+            },
+            {
+              "name": "fields",
+              "value": "formatted_phone_number,international_phone_number,website,name,geometry,formatted_address,photos"
+            },
+            {
+              "name": "key",
+              "value": "AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -280,
+        200
+      ],
+      "name": "Get Place Details",
+      "id": "6a37c74b-ccab-4bde-a663-e0d9a002661b"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parser les détails\nconst details = $input.all().map(item => item.json.result || {});\nconst data = details.map(result => ({\n  json: {\n    name: result.name || 'N/A',\n    phone_number: result.formatted_phone_number || 'Non disponible',\n    international_phone_number: result.international_phone_number || 'Non disponible',\n    website: result.website || '',\n    adresse: result.formatted_address || 'Non disponible',\n    latitude: result.geometry?.location?.lat || 0,\n    longitude: result.geometry?.location?.lng || 0,\n    photo: result.photos?.[0]?.photo_reference \n      ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${result.photos[0].photo_reference}&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM`\n      : 'https://via.placeholder.com/400'\n  }\n}));\nreturn data;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -100,
+        200
+      ],
+      "name": "Parse & Format Data",
+      "id": "5e2fbe7b-9ea5-42ff-a6ef-adc5fd3c8b57"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Générer le HTML stylé\nconst restaurants = $input.all().map(item => item.json);\nlet htmlContent = `\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Restaurants Chinois - Antananarivo</title>\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Noto+Serif+SC:wght@700&display=swap\" rel=\"stylesheet\">\n    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css\">\n    <style>\n        :root {\n            --primary: #7e9a9a;\n            --secondary: #34495e;\n            --accent: #c4a484;\n            --light: #f5f5f5;\n            --dark: #2c3e50;\n            --shadow: 0 8px 25px rgba(0, 0, 0, 0.07);\n        }\n        \n        * {\n            margin: 0;\n            padding: 0;\n            box-sizing: border-box;\n        }\n        \n        body {\n            font-family: 'Poppins', sans-serif;\n            background-color: #f9f9f9;\n            color: var(--dark);\n            line-height: 1.6;\n        }\n        \n        .header {\n            background: linear-gradient(135deg, var(--primary) 0%, #92a8a8 100%);\n            color: white;\n            padding: 80px 0 120px;\n            position: relative;\n            overflow: hidden;\n            text-align: center;\n        }\n        \n        .header:before {\n            content: '';\n            position: absolute;\n            background: url('https://api.placeholder.com/1920x400') center/cover;\n            opacity: 0.2;\n            width: 100%;\n            height: 100%;\n            top: 0;\n            left: 0;\n            z-index: 0;\n        }\n        \n        .header-content {\n            position: relative;\n            z-index: 1;\n        }\n        \n        .header h1 {\n            font-family: 'Noto Serif SC', serif;\n            font-size: 3.5rem;\n            margin-bottom: 20px;\n            position: relative;\n        }\n        \n        .header h1:after {\n            content: '中餐厅';\n            display: block;\n            font-size: 1.2rem;\n            font-weight: 300;\n            letter-spacing: 4px;\n            margin-top: 10px;\n        }\n        \n        .header p {\n            font-size: 1.2rem;\n            max-width: 600px;\n            margin: 0 auto;\n            opacity: 0.9;\n        }\n        \n        .container {\n            max-width: 1200px;\n            margin: -60px auto 80px;\n            padding: 0 20px;\n            position: relative;\n        }\n        \n        .restaurants-grid {\n            display: grid;\n            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));\n            gap: 30px;\n        }\n        \n        .restaurant-card {\n            background: white;\n            border-radius: 15px;\n            overflow: hidden;\n            box-shadow: var(--shadow);\n            transition: transform 0.3s ease, box-shadow 0.3s ease;\n            position: relative;\n        }\n        \n        .restaurant-card:hover {\n            transform: translateY(-10px);\n            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);\n        }\n        \n        .restaurant-image {\n            height: 200px;\n            width: 100%;\n            overflow: hidden;\n            position: relative;\n        }\n        \n        .restaurant-image img {\n            width: 100%;\n            height: 100%;\n            object-fit: cover;\n            transition: transform 0.5s ease;\n        }\n        \n        .restaurant-card:hover .restaurant-image img {\n            transform: scale(1.05);\n        }\n        \n        .restaurant-content {\n            padding: 25px;\n        }\n        \n        .restaurant-title {\n            font-family: 'Noto Serif SC', serif;\n            font-size: 1.8rem;\n            color: var(--secondary);\n            margin-bottom: 15px;\n            display: flex;\n            align-items: center;\n        }\n        \n        .restaurant-title::before {\n            content: '茶';\n            margin-right: 10px;\n            font-size: 1.4rem;\n            color: var(--accent);\n        }\n        \n        .info-list {\n            list-style: none;\n            margin-bottom: 20px;\n        }\n        \n        .info-item {\n            display: flex;\n            align-items: center;\n            margin-bottom: 12px;\n            color: #666;\n        }\n        \n        .info-item i {\n            width: 20px;\n            margin-right: 15px;\n            color: var(--primary);\n        }\n        \n        .btn-container {\n            display: flex;\n            gap: 10px;\n            margin-top: 20px;\n        }\n        \n        .btn {\n            display: inline-block;\n            padding: 12px 20px;\n            border-radius: 50px;\n            text-decoration: none;\n            font-weight: 600;\n            transition: all 0.3s ease;\n            flex: 1;\n            text-align: center;\n            border: none;\n            cursor: pointer;\n            font-family: 'Poppins', sans-serif;\n            font-size: 0.9rem;\n        }\n        \n        .btn-primary {\n            background-color: var(--primary);\n            color: white;\n        }\n        \n        .btn-primary:hover {\n            background-color: #6a8383;\n            box-shadow: 0 5px 15px rgba(126, 154, 154, 0.3);\n        }\n        \n        .btn-secondary {\n            background-color: var(--accent);\n            color: white;\n        }\n        \n        .btn-secondary:hover {\n            background-color: #b39478;\n            box-shadow: 0 5px 15px rgba(196, 164, 132, 0.3);\n        }\n        \n        .map-container {\n            height: 0;\n            overflow: hidden;\n            transition: height 0.5s ease;\n            width: 100%;\n            border-radius: 10px;\n            margin-top: 20px;\n        }\n        \n        .map {\n            height: 250px;\n            width: 100%;\n            border-radius: 10px;\n            overflow: hidden;\n        }\n        \n        .expanded {\n            height: 250px;\n        }\n        \n        .footer {\n            background-color: var(--secondary);\n            color: #e0e0e0;\n            text-align: center;\n            padding: 30px 0;\n            margin-top: 50px;\n        }\n        \n        .footer p {\n            opacity: 0.8;\n            font-size: 0.9rem;\n        }\n        \n        @media (max-width: 768px) {\n            .restaurants-grid {\n                grid-template-columns: 1fr;\n            }\n            \n            .header h1 {\n                font-size: 2.5rem;\n            }\n            \n            .btn-container {\n                flex-direction: column;\n            }\n        }\n        \n        @keyframes fadeIn {\n            from { opacity: 0; transform: translateY(20px); }\n            to { opacity: 1; transform: translateY(0); }\n        }\n        \n        .restaurant-card {\n            animation: fadeIn 0.6s ease-out forwards;\n            opacity: 0;\n        }\n        \n        .restaurant-card:nth-child(2) { animation-delay: 0.2s; }\n        .restaurant-card:nth-child(3) { animation-delay: 0.4s; }\n        .restaurant-card:nth-child(4) { animation-delay: 0.6s; }\n        .restaurant-card:nth-child(5) { animation-delay: 0.8s; }\n        .restaurant-card:nth-child(6) { animation-delay: 1s; }\n    </style>\n    <script src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM&callback=initMaps\" async defer></script>\n</head>\n<body>\n    <header class=\"header\">\n        <div class=\"header-content\">\n            <h1>Restaurants Chinois à Antananarivo</h1>\n            <p>Découvrez les meilleures saveurs authentiques de la cuisine chinoise</p>\n        </div>\n    </header>\n\n    <div class=\"container\">\n        <div class=\"restaurants-grid\">\n`;\n\nrestaurants.forEach((restaurant, index) => {\n  htmlContent += `\n            <div class=\"restaurant-card\" data-index=\"${index}\">\n                <div class=\"restaurant-image\">\n                    <img src=\"${restaurant.photo && restaurant.photo !== 'Pas de photo disponible' ? restaurant.photo : 'https://via.placeholder.com/400x200'}\" alt=\"${restaurant.name || 'Restaurant chinois'}\">\n                </div>\n                <div class=\"restaurant-content\">\n                    <h2 class=\"restaurant-title\">${restaurant.name || 'Nom inconnu'}</h2>\n                    <ul class=\"info-list\">\n                        <li class=\"info-item\"><i class=\"fas fa-map-marker-alt\"></i> ${restaurant.adresse || 'Adresse non disponible'}</li>\n                        <li class=\"info-item\"><i class=\"fas fa-phone\"></i> ${restaurant.phone_number || 'Téléphone non disponible'}</li>\n                        <li class=\"info-item\"><i class=\"fas fa-globe\"></i> ${restaurant.international_phone_number || 'Tél. international non disponible'}</li>\n                    </ul>\n                    <div class=\"btn-container\">\n                        ${\n                          restaurant.website\n                            ? `<a href=\"${restaurant.website}\" class=\"btn btn-primary\" target=\"_blank\"><i class=\"fas fa-link\"></i> Site Web</a>`\n                            : `<button class=\"btn btn-primary\" disabled><i class=\"fas fa-link\"></i> Pas de site</button>`\n                        }\n                        <button class=\"btn btn-secondary route-btn\" onclick=\"toggleMap(${index})\"><i class=\"fas fa-route\"></i> Itinéraire</button>\n                    </div>\n                    <div class=\"map-container\" id=\"map-container-${index}\">\n                        <div id=\"map-${index}\" class=\"map\"></div>\n                    </div>\n                </div>\n            </div>\n  `;\n});\n\nhtmlContent += `\n        </div>\n    </div>\n    \n    <footer class=\"footer\">\n        <p>&copy; ${new Date().getFullYear()} - Guide des Restaurants Chinois à Antananarivo</p>\n    </footer>\n\n    <script>\n        const mapData = ${JSON.stringify(\n          restaurants.map(restaurant => ({\n            lat: parseFloat(restaurant.latitude) || 0,\n            lng: parseFloat(restaurant.longitude) || 0,\n            name: restaurant.name || 'Restaurant'\n          }))\n        )};\n\n        const maps = [];\n        const directionsRenderers = [];\n        const mapContainers = [];\n\n        function initMaps() {\n            mapData.forEach((data, index) => {\n                mapContainers[index] = document.getElementById('map-container-' + index);\n                \n                if (data.lat !== 0 && data.lng !== 0) {\n                    const map = new google.maps.Map(document.getElementById('map-' + index), {\n                        center: { lat: data.lat, lng: data.lng },\n                        zoom: 15,\n                        mapTypeId: 'roadmap',\n                        styles: [\n                            {\n                                featureType: \"all\",\n                                elementType: \"labels.text.fill\",\n                                stylers: [{ color: \"#1d3557\" }]\n                            },\n                            {\n                                featureType: \"water\",\n                                elementType: \"geometry.fill\",\n                                stylers: [{ color: \"#a8dadc\" }]\n                            },\n                            {\n                                featureType: \"landscape\",\n                                elementType: \"geometry.fill\",\n                                stylers: [{ color: \"#f1faee\" }]\n                            },\n                            {\n                                featureType: \"poi\",\n                                elementType: \"geometry.fill\",\n                                stylers: [{ color: \"#e6f2e6\" }]\n                            },\n                            {\n                                featureType: \"road\",\n                                elementType: \"geometry.fill\",\n                                stylers: [{ color: \"#fff\" }]\n                            }\n                        ]\n                    });\n\n                    new google.maps.Marker({\n                        position: { lat: data.lat, lng: data.lng },\n                        map: map,\n                        title: data.name,\n                        animation: google.maps.Animation.DROP,\n                        icon: {\n                            path: google.maps.SymbolPath.CIRCLE,\n                            scale: 10,\n                            fillColor: '#7e9a9a',\n                            fillOpacity: 1,\n                            strokeColor: '#ffffff',\n                            strokeWeight: 2\n                        }\n                    });\n\n                    maps[index] = map;\n                    directionsRenderers[index] = new google.maps.DirectionsRenderer({\n                        map: map,\n                        suppressMarkers: false,\n                        polylineOptions: {\n                            strokeColor: '#f7b801',\n                            strokeWeight: 5\n                        }\n                    });\n                } else {\n                    const routeBtn = document.querySelectorAll('.route-btn')[index];\n                    routeBtn.disabled = true;\n                    routeBtn.innerHTML = '<i class=\"fas fa-map-marker-alt\"></i> Pas de carte';\n                    mapContainers[index].style.display = 'none';\n                }\n            });\n        }\n\n        function toggleMap(index) {\n            if (!maps[index]) return;\n            \n            const container = mapContainers[index];\n            \n            if (container.classList.contains('expanded')) {\n                container.classList.remove('expanded');\n            } else {\n                // Close any open maps\n                mapContainers.forEach(c => {\n                    if (c && c.classList.contains('expanded')) {\n                        c.classList.remove('expanded');\n                    }\n                });\n                \n                container.classList.add('expanded');\n                \n                // Ensure map is properly sized after expansion\n                setTimeout(() => {\n                    google.maps.event.trigger(maps[index], 'resize');\n                    maps[index].setCenter({\n                        lat: mapData[index].lat, \n                        lng: mapData[index].lng\n                    });\n                    \n                    // Modify the button text when map is expanded\n                    const buttons = document.querySelectorAll('.route-btn');\n                    const routeBtn = buttons[index];\n                    const originalText = routeBtn.innerHTML;\n                    routeBtn.innerHTML = '<i class=\"fas fa-location-arrow\"></i> Calculer itinéraire';\n                    \n                    routeBtn.onclick = function() {\n                        showRoute(index);\n                        routeBtn.innerHTML = '<i class=\"fas fa-map-marker-alt\"></i> Masquer la carte';\n                        routeBtn.onclick = function() {\n                            container.classList.remove('expanded');\n                            routeBtn.innerHTML = originalText;\n                            routeBtn.onclick = function() { toggleMap(index); };\n                        };\n                    };\n                }, 500);\n            }\n        }\n\n        function showRoute(index) {\n            if (!maps[index]) return;\n\n            if (navigator.geolocation) {\n                navigator.geolocation.getCurrentPosition(position => {\n                    const userLocation = {\n                        lat: position.coords.latitude,\n                        lng: position.coords.longitude\n                    };\n                    const destination = {\n                        lat: mapData[index].lat,\n                        lng: mapData[index].lng\n                    };\n\n                    const directionsService = new google.maps.DirectionsService();\n                    directionsService.route({\n                        origin: userLocation,\n                        destination: destination,\n                        travelMode: google.maps.TravelMode.DRIVING\n                    }, (result, status) => {\n                        if (status === google.maps.DirectionsStatus.OK) {\n                            directionsRenderers[index].setDirections(result);\n                            \n                            // Add a success message\n                            const mapContainer = document.getElementById('map-container-' + index);\n                            const successMsg = document.createElement('div');\n                            successMsg.className = 'route-success';\n                            successMsg.innerHTML = '<i class=\"fas fa-check-circle\"></i> Itinéraire calculé';\n                            successMsg.style.backgroundColor = '#e8f5e9';\n                            successMsg.style.color = '#2e7d32';\n                            successMsg.style.padding = '8px';\n                            successMsg.style.borderRadius = '4px';\n                            successMsg.style.marginTop = '10px';\n                            successMsg.style.textAlign = 'center';\n                            successMsg.style.fontWeight = 'bold';\n                            \n                            // Remove any existing message\n                            const existingMsg = mapContainer.querySelector('.route-success');\n                            if (existingMsg) {\n                                mapContainer.removeChild(existingMsg);\n                            }\n                            \n                            mapContainer.appendChild(successMsg);\n                        } else {\n                            alert('Impossible de calculer l\\\\'itinéraire : ' + status);\n                        }\n                    });\n                }, error => {\n                    // If geolocation fails, just center on restaurant\n                    maps[index].setCenter({\n                        lat: mapData[index].lat, \n                        lng: mapData[index].lng\n                    });\n                    \n                    alert('Erreur de géolocalisation : ' + error.message + '. Assurez-vous que votre navigateur autorise la géolocalisation.');\n                });\n            } else {\n                alert('La géolocalisation n\\\\'est pas prise en charge par votre navigateur.');\n            }\n        }\n        \n        // Add scroll reveal effect\n        document.addEventListener('DOMContentLoaded', function() {\n            const observer = new IntersectionObserver((entries) => {\n                entries.forEach(entry => {\n                    if (entry.isIntersecting) {\n                        entry.target.style.opacity = 1;\n                    }\n                });\n            }, { threshold: 0.1 });\n            \n            document.querySelectorAll('.restaurant-card').forEach(card => {\n                observer.observe(card);\n            });\n        });\n    </script>\n</body>\n</html>\n`;\n\nreturn [{\n  json: { fileName: 'restaurants.html' },\n  binary: {\n    data: {\n      data: Buffer.from(htmlContent).toString('base64'),\n      mimeType: 'text/html',\n      fileName: 'restaurants.html'\n    }\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        80,
+        200
+      ],
+      "name": "Generate Styled HTML",
+      "id": "abab63fc-485e-49c8-9f55-2ae04bb9361a"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "={{ $json.fileName }}",
+        "options": {
+          "append": false
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        260,
+        200
+      ],
+      "name": "Save HTML File",
+      "id": "4f6d20b1-5d0c-4451-a07d-a1f78fe33ec5"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Search Restaurants",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Restaurants": {
+      "main": [
+        [
+          {
+            "node": "Extract Place IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Place IDs": {
+      "main": [
+        [
+          {
+            "node": "Get Place Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Place Details": {
+      "main": [
+        [
+          {
+            "node": "Parse & Format Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse & Format Data": {
+      "main": [
+        [
+          {
+            "node": "Generate Styled HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Styled HTML": {
+      "main": [
+        [
+          {
+            "node": "Save HTML File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b1fae8e7-efb5-4bc8-8c9d-6dc3dd31594f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8ef5de57c49fa2f25509f8632b0559fc2f27183bda9db2a79ccb46070cc6dff8"
+  },
+  "id": "zQ0Y0VECXfbdUaj6",
+  "tags": []
+}
