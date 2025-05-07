@@ -1,0 +1,335 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        80
+      ],
+      "id": "66b9cbae-0ca2-40fa-b12e-71e529bb5555",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/details/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "place_id",
+              "value": "={{ $json.place_id }}"
+            },
+            {
+              "name": "fields",
+              "value": "formatted_phone_number,international_phone_number,website"
+            },
+            {
+              "name": "key",
+              "value": "AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b49bbf55-d215-4591-8b46-6124e3d23e1b",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/textsearch/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "chinese restaurant Antananarivo"
+            },
+            {
+              "name": "key",
+              "value": "AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -400,
+        120
+      ],
+      "id": "9e21c19e-4356-46a8-9fd9-b3c6ea55aa95",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map((item, index) => {\n  const details = item.json.result || {};\n  return {\n    json: {\n      phone_number: details.formatted_phone_number || \"Non disponible\",\n      international_phone_number: details.international_phone_number || \"Non disponible\",\n      website: details.website || \"Non disponible\"\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        120
+      ],
+      "id": "cd30d78a-a7c6-4276-93c5-29a6eaf29e91",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {
+          "clashHandling": {
+            "values": {
+              "resolveClash": "addSuffix"
+            }
+          },
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        -160,
+        380
+      ],
+      "id": "96afe192-a116-4ed6-8b12-2b323f918a1a",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dfa74518-8ef9-4931-806a-bab6badc7809",
+              "name": "phone_number",
+              "value": "={{ $json.phone_number_1 }}",
+              "type": "string"
+            },
+            {
+              "id": "e224e82b-255b-4829-9697-0ebed03b348f",
+              "name": "international_phone_number",
+              "value": "={{ $json.international_phone_number_1 }}",
+              "type": "string"
+            },
+            {
+              "id": "22d01969-249a-44ef-aaa3-59883aeb040f",
+              "name": "website",
+              "value": "={{ $json.website_1 }}",
+              "type": "string"
+            },
+            {
+              "id": "cefd174f-7e19-4c06-9323-273252ca05b7",
+              "name": "name",
+              "value": "={{ $json.name_2 }}",
+              "type": "string"
+            },
+            {
+              "id": "c31f3ca2-b0ff-49dd-8ac6-c203e7741e19",
+              "name": "latitude",
+              "value": "={{ $json.latitude_2 }}",
+              "type": "number"
+            },
+            {
+              "id": "19fa4183-619c-4289-b581-eb864e0c0c7a",
+              "name": "longitude",
+              "value": "={{ $json.longitude_2 }}",
+              "type": "number"
+            },
+            {
+              "id": "3ee7be9b-80df-45bc-b89e-e4bf086d7a44",
+              "name": "adresse",
+              "value": "={{ $json.vicinity_2 }}",
+              "type": "string"
+            },
+            {
+              "id": "58624679-a1ae-478b-ac6d-006cb8254ae6",
+              "name": "photo",
+              "value": "={{ $json.photo_2.replace('VOTRE_CLE_API', 'AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM') }}",
+              "type": "string"
+            },
+            {
+              "id": "9258abe2-f626-48ce-8197-da1bf1a14330",
+              "name": "place_id",
+              "value": "={{ $json.place_id_2 }}",
+              "type": "string"
+            },
+            {
+              "id": "7a55a350-3a3f-4943-ac21-12269121c559",
+              "name": "icon",
+              "value": "={{ $json.icon }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        120,
+        380
+      ],
+      "id": "fd60267e-2380-475c-8083-9796d1343af6",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "const restaurants = $input.all().map(item => item.json);\n\nlet htmlContent = `\n  <!DOCTYPE html>\n  <html lang=\"fr\">\n  <head>\n      <meta charset=\"UTF-8\">\n      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n      <title>Liste des Restaurants</title>\n      <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap\" rel=\"stylesheet\">\n      <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\n      <style>\n          body {\n              font-family: 'Poppins', sans-serif;\n              margin: 0;\n              background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);\n              color: #333;\n          }\n          .container {\n              max-width: 900px;\n              margin: 40px auto;\n              padding: 0 20px;\n          }\n          h1 {\n              text-align: center;\n              color: #2c3e50;\n              font-size: 2.5em;\n              margin-bottom: 40px;\n              text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);\n          }\n          .restaurant {\n              background: #fff;\n              border-radius: 15px;\n              padding: 20px;\n              margin-bottom: 30px;\n              box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);\n              transition: transform 0.3s ease, box-shadow 0.3s ease;\n              animation: fadeIn 0.5s ease-in-out;\n          }\n          .restaurant:hover {\n              transform: translateY(-5px);\n              box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);\n          }\n          .restaurant h2 {\n              color: #e74c3c;\n              font-size: 1.8em;\n              margin: 0 0 10px;\n          }\n          .restaurant p {\n              margin: 8px 0;\n              font-size: 1em;\n              color: #555;\n              display: flex;\n              align-items: center;\n          }\n          .restaurant p i {\n              margin-right: 10px;\n              color: #3498db;\n              font-size: 1.2em;\n          }\n          .restaurant img {\n              max-width: 100%;\n              height: auto;\n              border-radius: 10px;\n              margin: 15px 0;\n              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);\n          }\n          .website-link, .route-button {\n              display: inline-block;\n              margin: 10px 10px 10px 0;\n              padding: 10px 20px;\n              color: #fff;\n              text-decoration: none;\n              border-radius: 5px;\n              transition: background 0.3s ease;\n          }\n          .website-link {\n              background: #3498db;\n          }\n          .website-link:hover {\n              background: #2980b9;\n          }\n          .route-button {\n              background: #2ecc71;\n              border: none;\n              cursor: pointer;\n              font-size: 1em;\n          }\n          .route-button:hover {\n              background: #27ae60;\n          }\n          .map {\n              height: 300px;\n              width: 100%;\n              margin-top: 20px;\n              border-radius: 10px;\n              overflow: hidden;\n              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);\n          }\n          @keyframes fadeIn {\n              from { opacity: 0; transform: translateY(20px); }\n              to { opacity: 1; transform: translateY(0); }\n          }\n          @media (max-width: 600px) {\n              .restaurant h2 { font-size: 1.5em; }\n              .restaurant p { font-size: 0.9em; }\n              .container { margin: 20px; }\n              .website-link, .route-button { font-size: 0.9em; padding: 8px 15px; }\n          }\n      </style>\n      <!-- Inclure l'API Google Maps -->\n      <script src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM&callback=initMaps\" defer></script>\n  </head>\n  <body>\n      <div class=\"container\">\n          <h1>Liste des Restaurants Chinois à Antananarivo</h1>\n`;\n\nrestaurants.forEach((restaurant, index) => {\n  htmlContent += `\n    <div class=\"restaurant\">\n        <h2>${restaurant.name || 'Nom inconnu'}</h2>\n        <p><i class=\"fas fa-map-marker-alt\"></i><strong>Adresse :</strong> ${restaurant.adresse || 'Non disponible'}</p>\n        <p><i class=\"fas fa-phone\"></i><strong>Téléphone :</strong> ${restaurant.phone_number || 'Non disponible'}</p>\n        <p><i class=\"fas fa-globe\"></i><strong>Téléphone international :</strong> ${restaurant.international_phone_number || 'Non disponible'}</p>\n        ${\n          restaurant.website\n            ? `<a href=\"${restaurant.website}\" class=\"website-link\" target=\"_blank\"><i class=\"fas fa-link\"></i> Visiter le site web</a>`\n            : '<p><i class=\"fas fa-link\"></i><strong>Site web :</strong> Non disponible</p>'\n        }\n        <p><i class=\"fas fa-map-pin\"></i><strong>Coordonnées :</strong> Latitude ${restaurant.latitude || 'N/A'}, Longitude ${restaurant.longitude || 'N/A'}</p>\n        <img src=\"${restaurant.photo && restaurant.photo !== 'Pas de photo disponible' ? restaurant.photo : 'https://via.placeholder.com/400'}\" alt=\"Photo de ${restaurant.name || 'restaurant'}\">\n        <!-- Bouton pour afficher l'itinéraire -->\n        <button class=\"route-button\" onclick=\"showRoute(${index})\"><i class=\"fas fa-route\"></i> Voir l'itinéraire</button>\n        <!-- Conteneur pour la carte -->\n        <div id=\"map-${index}\" class=\"map\"></div>\n    </div>\n  `;\n});\n\nhtmlContent += `\n      </div>\n      <script>\n          // Tableau pour stocker les données des cartes\n          const mapData = ${JSON.stringify(\n            restaurants.map(restaurant => ({\n              lat: parseFloat(restaurant.latitude) || 0,\n              lng: parseFloat(restaurant.longitude) || 0,\n              name: restaurant.name || 'Restaurant'\n            }))\n          )};\n\n          // Tableau pour stocker les instances de carte et de rendu d'itinéraire\n          const maps = [];\n          const directionsRenderers = [];\n\n          // Fonction pour initialiser les cartes\n          function initMaps() {\n              mapData.forEach((data, index) => {\n                  // Vérifier si les coordonnées sont valides\n                  if (data.lat !== 0 && data.lng !== 0) {\n                      const map = new google.maps.Map(document.getElementById('map-' + index), {\n                          center: { lat: data.lat, lng: data.lng },\n                          zoom: 15,\n                          mapTypeId: 'roadmap'\n                      });\n                      // Ajouter un marqueur\n                      new google.maps.Marker({\n                          position: { lat: data.lat, lng: data.lng },\n                          map: map,\n                          title: data.name\n                      });\n                      // Stocker la carte et un renderer pour les itinéraires\n                      maps[index] = map;\n                      directionsRenderers[index] = new google.maps.DirectionsRenderer({\n                          map: map,\n                          suppressMarkers: false // Garder les marqueurs pour l'origine et la destination\n                      });\n                  } else {\n                      // Cacher le conteneur de la carte si les coordonnées ne sont pas valides\n                      document.getElementById('map-' + index).style.display = 'none';\n                      document.querySelector('#map-' + index + ' + .route-button').style.display = 'none';\n                  }\n              });\n          }\n\n          // Fonction pour afficher l'itinéraire\n          function showRoute(index) {\n              if (!maps[index]) return;\n              \n              // Vérifier si la géolocalisation est disponible\n              if (navigator.geolocation) {\n                  navigator.geolocation.getCurrentPosition(\n                      (position) => {\n                          const userLocation = {\n                              lat: position.coords.latitude,\n                              lng: position.coords.longitude\n                          };\n                          const destination = {\n                              lat: mapData[index].lat,\n                              lng: mapData[index].lng\n                          };\n\n                          // Initialiser le service de calcul d'itinéraire\n                          const directionsService = new google.maps.DirectionsService();\n                          directionsService.route(\n                              {\n                                  origin: userLocation,\n                                  destination: destination,\n                                  travelMode: google.maps.TravelMode.DRIVING // Mode de transport (peut être modifié)\n                              },\n                              (result, status) => {\n                                  if (status === google.maps.DirectionsStatus.OK) {\n                                      // Afficher l'itinéraire sur la carte\n                                      directionsRenderers[index].setDirections(result);\n                                  } else {\n                                      alert('Impossible de calculer l\\\\'itinéraire : ' + status);\n                                  }\n                              }\n                          );\n                      },\n                      (error) => {\n                          alert('Erreur de géolocalisation : ' + error.message);\n                      }\n                  );\n              } else {\n                  alert('La géolocalisation n\\\\'est pas prise en charge par votre navigateur.');\n              }\n          }\n      </script>\n  </body>\n  </html>\n`;\n\nreturn [{\n  json: { fileName: 'restaurants.html' },\n  binary: {\n    data: {\n      data: Buffer.from(htmlContent).toString('base64'),\n      mimeType: 'text/html',\n      fileName: 'restaurants.html'\n    }\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        380
+      ],
+      "id": "0acb3fed-6617-438b-8308-a4f85ea93bff",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "={{ $json.fileName }}",
+        "options": {
+          "append": false
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        700,
+        380
+      ],
+      "id": "0ba3928f-46ef-48fb-8daf-14c476ffd547",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Combiner tous les restaurants de tous les items\nconst allRestaurants = items\n  .flatMap(item => item.json.results || [])\n  .map(restaurant => ({\n    json: {\n      name: restaurant.name || \"Nom inconnu\",\n      latitude: restaurant.geometry?.location?.lat || 0,\n      longitude: restaurant.geometry?.location?.lng || 0,\n      vicinity: restaurant.formatted_address || \"Adresse inconnue\",\n      photo: restaurant.photos?.[0]?.photo_reference \n        ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${restaurant.photos[0].photo_reference}&key=VOTRE_CLE_API`\n        : \"Pas de photo disponible\",\n      place_id: restaurant.place_id || \"\", // Conserver le place_id\n      icon: restaurant.icon || \"Sans icone\"\n    }\n  }));\n\nreturn allRestaurants;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -200,
+        120
+      ],
+      "id": "b9201e75-3e27-4edd-bc5d-785ceb9fda24",
+      "name": "Code"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "38596bdb-2000-4c31-a226-08c0b4e800df",
+  "meta": {
+    "instanceId": "c49c0f976de77a9ed888a5ba0d2d58e9fd42d06b0d1226a3b2a7a9e238e05795"
+  },
+  "id": "BYVqPmrKTvum21fA",
+  "tags": []
+}
