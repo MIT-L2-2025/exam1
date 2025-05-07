@@ -1,1 +1,11 @@
 //instructions
+/* pour lancer l'affichage */
+1 - aller dans n8n/source et décompresser node_modules.zip pour avoir un dossier node_modules 
+2 - lancer la commande node server.js ou npm start dans le dossier /n8n/source
+3 - lancer index.html avec live-server dans vs-code ou http-server 
+rmq: actualisez si les restaurants ne chargent pas ou vérifier que le serveur express a bien été lancée
+/**/
+/* pour lancer le workflow ,n8n doit être lancée avec un docker sinon le répértoire /files/ n'aura aucun sens*/
+1- mettre le dossier n8n dans votre répértoire personnel, attention ne changez pas le nom du dossier
+2- aller dans docker-compose.yml et a la ligne volume remplacer $USER par votre nom d'utilisateur
+3- lancer n8n dans ce dossier de docker puis importer my_workflow.json
