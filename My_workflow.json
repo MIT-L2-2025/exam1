@@ -1,0 +1,284 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "restaurants",
+              "value": "[{\"name\":\"Le Jasmin\",\"address\":\"8 Rue Paul Dussac, Analakely, Antananarivo, Madagascar\",\"phone\":\"+261 34 62 413 75\",\"specialty\":\"Cuisine asiatique\",\"coordinates\":\"-18.9103791, 47.5267009\",\"image\":\"https://lh3.googleusercontent.com/p/AF1QipMHp_2LCbBD87BGTiFCNQTCW4EIJQVMrJaDI7Fc=w408-h534-k-no\",\"mapLink\":\"https://www.google.com/maps/search/?api=1&query=Restaurant%20Le%20JASMIN&query_place_id=ChIJCaT1iJmH8CERXgpKE4hO9Hg\"},{\"name\":\"O Loft Chinois\",\"address\":\"4G39+2J7, Antananarivo, Madagascar\",\"phone\":\"Non disponible\",\"specialty\":\"Cuisine chinoise\",\"coordinates\":\"-18.8974503, 47.5190589\",\"image\":\"https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrNSFXLHuXK0HmuKT_O2vavSJCMbohK2CcfIAHhrORa51KLw19rXK8SWD8pHLRRiZ8HCy5VvWaaIldcaFjbjcjUr6LhEaPT_MoOXwxw0wOOrB0ZTtr1i48iT5dpkX78JYTceXRC=w408-h306-k-no\",\"mapLink\":\"https://www.google.com/maps/search/?api=1&query=O%20Loft%20Chinois&query_place_id=ChIJZeg6x6iA8CERnwTWxnHzqoY\"}]"
+            },
+            {
+              "name": "htmlTemplate",
+              "value": "<!DOCTYPE html><html lang=\"zh\"><head><meta charset=\"UTF-8\"><title>Restaurants Chinois à Antananarivo</title><style>body{font-family:Arial,Helvetica,sans-serif;max-width:1100px;margin:0 auto;padding:30px;background-color:#f8f1e9}h1{color:#333;text-align:center;margin-bottom:40px}.restaurant-container{background:#fff;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.15);margin-bottom:20px;display:flex;align-items:stretch;overflow:hidden}.restaurant-image{width:280px;height:180px;object-fit:cover}.restaurant-details{padding:25px;flex:1}.restaurant-title{color:#b22222;font-size:22px;margin:0 0 15px}.detail-row{display:flex;margin-bottom:10px;font-size:16px}.detail-label{font-weight:bold;min-width:120px;color:#444}.detail-value{flex:1;color:#666}.no-image-placeholder{width:280px;height:180px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#777;font-style:italic}.map-link{color:#0066cc;text-decoration:none;font-size:14px;margin-top:12px;display:inline-block}.map-link:hover{text-decoration:underline}</style></head><body><h1>Restaurants Chinois à Antananarivo</h1>{{#restaurants}}<div class=\"restaurant-container\"><img src=\"{{image}}\" class=\"restaurant-image\" alt=\"{{name}}\"><div class=\"restaurant-details\"><h2 class=\"restaurant-title\">{{index}}. {{name}}</h2><div class=\"detail-row\"><span class=\"detail-label\">Adresse:</span><span class=\"detail-value\">{{address}}</span></div><div class=\"detail-row\"><span class=\"detail-label\">Téléphone:</span><span class=\"detail-value\">{{phone}}</span></div><div class=\"detail-row\"><span class=\"detail-label\">Spécialité:</span><span class=\"detail-value\">{{specialty}}</span></div><div class=\"detail-row\"><span class=\"detail-label\">Coordonnées:</span><span class=\"detail-value\">{{coordinates}}</span></div><a href=\"{{mapLink}}\" target=\"_blank\" class=\"map-link\">Voir sur Google Maps</a></div></div>{{/restaurants}}</body></html>"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "notes": "Définit les données des restaurants et le modèle HTML."
+    },
+    {
+      "parameters": {
+        "functionCode": "const restaurants = JSON.parse($node['Set Data'].json['restaurants']);\nlet html = $node['Set Data'].json['htmlTemplate'];\nlet restaurantHtml = '';\nrestaurants.forEach((r, index) => {\n  restaurantHtml += `<div class=\"restaurant-container\"><img src=\"${r.image}\" class=\"restaurant-image\" alt=\"${r.name}\"><div class=\"restaurant-details\"><h2 class=\"restaurant-title\">${index + 1}. ${r.name}</h2><div class=\"detail-row\"><span class=\"detail-label\">Adresse:</span><span class=\"detail-value\">${r.address}</span></div><div class=\"detail-row\"><span class=\"detail-label\">Téléphone:</span><span class=\"detail-value\">${r.phone}</span></div><div class=\"detail-row\"><span class=\"detail-label\">Spécialité:</span><span class=\"detail-value\">${r.specialty}</span></div><div class=\"detail-row\"><span class=\"detail-label\">Coordonnées:</span><span class=\"detail-value\">${r.coordinates}</span></div><a href=\"${r.mapLink}\" target=\"_blank\" class=\"map-link\">Voir sur Google Maps</a></div></div>`;\n});\nhtml = html.replace('{{#restaurants}}{{/restaurants}}', restaurantHtml);\nreturn [{ json: { htmlContent: html } }];"
+      },
+      "name": "Generate HTML",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [450, 300],
+      "notes": "Génère le HTML dynamiquement à partir des données des restaurants."
+    },
+    {
+      "parameters": {
+        "filePath": "/tmp/restaurants_chinois.html",
+        "dataPropertyName": "htmlContent"
+      },
+      "name": "Write File",
+      "type": "n8n-nodes-base.writeBinaryFile",
+      "typeVersion": 1,
+      "position": [650, 300],
+      "notes": "Enregistre le HTML dans /tmp/restaurants_chinois.html."
+    },
+    {
+      "parameters": {
+        "path": "/tmp/restaurants_chinois.html",
+        "binaryPropertyName": "file"
+      },
+      "name": "Read File",
+      "type": "n8n-nodes-base.readBinaryFile",
+      "typeVersion": 1,
+      "position": [850, 300],
+      "notes": "Lit le fichier HTML pour l'envoi."
+    },
+    {
+      "parameters": {
+        "requestMethod": "POST",
+        "url": "https://httpbin.org/post",
+        "options": {
+          "timeout": 30000,
+          "responseFormat": "json"
+        },
+        "bodyParametersUi": {
+          "parameter": [
+            {
+              "name": "file",
+              "value": "={{$node['Read File'].binary.file}}"
+            }
+          ]
+        },
+        "sendBinaryData": true,
+        "binaryPropertyName": "file"
+      },
+      "name": "Send File",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [1050, 300],
+      "notes": "Envoie le fichier HTML à l'endpoint."
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "status",
+              "value": "Success"
+            },
+            {
+              "name": "file",
+              "value": "/tmp/restaurants_chinois.html"
+            },
+            {
+              "name": "response",
+              "value": "={{$node['Send File'].json['data']}}"
+            }
+          ],
+          "number": [
+            {
+              "name": "timestamp",
+              "value": "={{Date.now()}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Log Success",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [1250, 200],
+      "notes": "Logue les envois réussis."
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "status",
+              "value": "Error"
+            },
+            {
+              "name": "file",
+              "value": "/tmp/restaurants_chinois.html"
+            },
+            {
+              "name": "error",
+              "value": "={{$node['Send File'].error.message}}"
+            }
+          ],
+          "number": [
+            {
+              "name": "timestamp",
+              "value": "={{Date.now()}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Log Error",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [1250, 400],
+      "continueOnFail": true,
+      "notes": "Logue les erreurs d'envoi."
+    },
+    {
+      "parameters": {
+        "sourcePath": "/tmp/restaurants_chinois.html",
+        "destinationPath": "/tmp/sent/restaurants_chinois_{{Date.now()}}.html"
+      },
+      "name": "Move File",
+      "type": "n8n-nodes-base.moveBinaryFile",
+      "typeVersion": 1,
+      "position": [1450, 200],
+      "notes": "Déplace le fichier envoyé vers /tmp/sent/ avec un timestamp."
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "summary",
+              "value": "Fichier HTML des restaurants envoyé. Statut: {{$node['Log Success'].json['status'] || $node['Log Error'].json['status']}}."
+            }
+          ],
+          "number": [
+            {
+              "name": "timestamp",
+              "value": "={{Date.now()}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Final Notification",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [1650, 300],
+      "notes": "Produit un résumé final de l'opération."
+    }
+  ],
+  "connections": {
+    "Set Data": {
+      "main": [
+        [
+          {
+            "node": "Generate HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate HTML": {
+      "main": [
+        [
+          {
+            "node": "Write File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write File": {
+      "main": [
+        [
+          {
+            "node": "Read File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read File": {
+      "main": [
+        [
+          {
+            "node": "Send File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send File": {
+      "main": [
+        [
+          {
+            "node": "Log Success",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Success": {
+      "main": [
+        [
+          {
+            "node": "Move File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Move File": {
+      "main": [
+        [
+          {
+            "node": "Final Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Error": {
+      "main": [
+        [
+          {
+            "node": "Final Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
