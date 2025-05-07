@@ -1,0 +1,233 @@
+{
+  "name": "Examen Theorie des graphs",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://overpass-api.de/api/interpreter",
+        "sendBody": true,
+        "contentType": "raw",
+        "body": "=[out:json][timeout:25];\n(\n  node[\"amenity\"=\"restaurant\"][\"cuisine\"~\"chinese\"](around:10000, -18.9137, 47.5361);\n  way[\"amenity\"=\"restaurant\"][\"cuisine\"~\"chinese\"](around:10000, -18.9137, 47.5361);\n  relation[\"amenity\"=\"restaurant\"][\"cuisine\"~\"chinese\"](around:10000, -18.9137, 47.5361);\n);\nout center;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -320,
+        -60
+      ],
+      "id": "e1e581b0-c8cf-410c-89cb-465bfd189e0f",
+      "name": "overpass Open Street map"
+    },
+    {
+      "parameters": {
+        "jsCode": "let uniqueRestaurants = [];\nlet restaurantNames = new Set();\n\nfor (let el of items[0].json.elements) {\n  if (el.tags && el.tags.name && el.tags.cuisine && el.tags.cuisine.toLowerCase().includes(\"chinese\")) {\n    let name = el.tags.name;\n\n    if (!restaurantNames.has(name)) {\n      uniqueRestaurants.push({\n        json: {\n          name: name,\n          lat: el.lat || null,\n          lon: el.lon || null,\n          source: \"overpass\",\n          address: el.tags[\"addr:full\"] || el.tags[\"addr:street\"] || null,\n          contact: el.tags[\"contact:phone\"] || el.tags[\"phone\"] || null,\n          lien_image2D: el.tags[\"image\"] || el.tags[\"image_2D\"] || null,\n          lienmap: null,\n          lien_image3D: el.tags[\"image_3D\"] || null,\n          lien_imagePlat: el.tags[\"image_dish\"] || el.tags[\"dish_image\"] || null,\n          specialité: el.tags.cuisine || null\n        }\n      });\n      restaurantNames.add(name);\n    }\n  }\n}\n\nreturn uniqueRestaurants;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        60,
+        -60
+      ],
+      "id": "25643014-32cd-4788-b0f8-105b2311fed8",
+      "name": "Normaliser Overpass"
+    },
+    {
+      "parameters": {
+        "url": "https://api.apify.com/v2/datasets/d3ISnmjdypnsDZdpF/items?clean=true",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -320,
+        320
+      ],
+      "id": "c66784fc-5926-440d-8dc1-966ef01f8c36",
+      "name": "Aptify"
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => {\n  const data = item.json;\n\n  return {\n    json: {\n      nom: data.title || \"Nom non disponible\",\n      lat: data.location?.lat || null,\n      lon: data.location?.lng || null,\n      source: \"aptify\",\n      address: data.address || null,\n      contact: data.phone || null,\n      lien_image2D: data.imageUrl || null,\n      lienmap: data.url || null,\n      lien_image3D : null, // Tu peux l'ajuster si tu as des données spécifiques pour les images 3D\n      lien_imagePlat: null, // Ajoute une logique ici si tu as des images de plats\n      specialité: data.categoryName || \"Spécialité non précisée\",\n      }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        80,
+        320
+      ],
+      "id": "bf92990c-32bd-43a8-8fa9-78a5871e8ee3",
+      "name": "Normaliser donnée Aptify"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        340,
+        0
+      ],
+      "id": "b26d8eed-bb83-400b-ae11-fb5ecd9e2739",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst raw = $input.all().map(i => i.json);\n\n\nfunction normalizeName(str) {\n  if (!str) return \"\";\n  return str\n    .toLowerCase()\n    .replace(/^restaurant\\s+/, \"\")  \n    .replace(/[^a-z0-9]/g, \"\")      \n    .trim();\n}\n\nconst keysToCount = [\n  \"name\",\"nom\",\"lat\",\"lon\",\"source\",\"address\",\"contact\",\n  \"lien_image2D\",\"lien_image3D\",\"lien_imagePlat\",\n  \"specialité\",\"openingHours\",\"additionalInfo\",\"url\"\n];\n\nconst groups = {};\nfor (const item of raw) \n{\n  const originalName = item.name || item.nom || \"\";\n  const key = normalizeName(originalName);\n  if (!groups[key]) groups[key] = [];\n  groups[key].push(item);\n}\n\nconst merged = Object.values(groups).map(group => {\n  let best = group[0];\n  let bestScore = -1;\n\n  for (const candidate of group) {\n    const score = keysToCount.reduce((acc, k) => {\n      const v = candidate[k];\n      const hasValue = v !== null && v !== undefined\n        && !(Array.isArray(v) && v.length === 0)\n        && !(typeof v === \"object\" && !Array.isArray(v) && Object.keys(v).length === 0);\n      return acc + (hasValue ? 1 : 0);\n    }, 0);\n\n    if (score > bestScore) {\n      best = candidate;\n      bestScore = score;\n    }\n  }\n\n  return best;\n});\n\nreturn merged.map(r => ({ json: r }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        0
+      ],
+      "id": "76322183-edc4-48e4-96f3-a564d2e3c5ff",
+      "name": "Suppression doublon"
+    },
+    {
+      "parameters": {
+        "jsCode": "const generateHTML = (data) => {\n  let html = `\n  <!DOCTYPE html>\n  <html lang=\"zh\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <style>\n      body {\n        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n        max-width: 1200px;\n        margin: 0 auto;\n        padding: 20px;\n        background-color: #f5f0e6;\n      }\n      .restaurant-card {\n        background: white;\n        border-radius: 10px;\n        box-shadow: 0 4px 8px rgba(0,0,0,0.1);\n        margin-bottom: 25px;\n        overflow: hidden;\n        display: flex;\n        align-items: center;\n      }\n      .restaurant-image {\n        width: 300px;\n        height: 200px;\n        object-fit: cover;\n      }\n      .restaurant-info {\n        padding: 20px;\n        flex: 1;\n      }\n      .restaurant-name {\n        color: #d23c3c;\n        margin-top: 0;\n        font-size: 24px;\n      }\n      .info-row {\n        display: flex;\n        margin-bottom: 8px;\n      }\n      .info-label {\n        font-weight: bold;\n        min-width: 100px;\n        color: #555;\n      }\n      .info-value {\n        flex: 1;\n      }\n      .no-image {\n        width: 300px;\n        background: #eee;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        color: #888;\n        height: 200px;\n      }\n      .map-link {\n        font-size: 14px;\n        margin-top: 10px;\n        display: inline-block;\n        color: #1a73e8;\n      }\n    </style>\n  </head>\n  <body>\n    <h1>Restaurants Chinois à Antananarivo par HERIMANANTSOA Manitriniaina Christian</h1>\n  `;\n\n  let index = 1;\n\n  data.forEach(item => {\n    const nom = item.nom;\n    if (!nom || typeof nom !== 'string' || nom.trim() === '') return;\n\n    const adresse = item.address || 'Non disponible';\n    const contact = item.contact || 'Non disponible';\n    const specialite = item.specialité || 'Non spécifié';\n    const lat = item.lat;\n    const lon = item.lon;\n    const lienMap = item.lienmap;\n\n    const hasImage = item.lien_image2D || item.lien_image3D || item.lien_imagePlat;\n    const mainImage = item.lien_image2D || item.lien_image3D || item.lien_imagePlat;\n\n    const coords = (lat && lon) ? `${lat}, ${lon}` : 'Non disponible';\n\n    html += `\n    <div class=\"restaurant-card\">\n      ${hasImage \n        ? `<img src=\"${mainImage}\" class=\"restaurant-image\" alt=\"${nom}\">`\n        : `<div class=\"no-image\">Image non disponible</div>`\n      }\n      <div class=\"restaurant-info\">\n        <h2 class=\"restaurant-name\">${index}. ${nom}</h2>\n        <div class=\"info-row\">\n          <span class=\"info-label\">Adresse:</span>\n          <span class=\"info-value\">${adresse}</span>\n        </div>\n        <div class=\"info-row\">\n          <span class=\"info-label\">Téléphone:</span>\n          <span class=\"info-value\">${contact}</span>\n        </div>\n        <div class=\"info-row\">\n          <span class=\"info-label\">Spécialité:</span>\n          <span class=\"info-value\">${specialite}</span>\n        </div>\n        <div class=\"info-row\">\n          <span class=\"info-label\">Coordonnées:</span>\n          <span class=\"info-value\">${coords}</span>\n        </div>\n        ${lienMap ? `<a href=\"${lienMap}\" target=\"_blank\" class=\"map-link\">Voir sur Google Maps</a>` : ''}\n      </div>\n    </div>\n    `;\n\n    index++;\n  });\n\n  html += `</body></html>`;\n  return html;\n};\n\nconst restaurants = items.map(item => item.json);\nconst htmlOutput = generateHTML(restaurants);\nconst buffer = Buffer.from(htmlOutput, 'utf-8');\n\nreturn [\n  {\n    binary: {\n      data: {\n        data: buffer.toString('base64'),\n        mimeType: 'text/html',\n        fileName: 'restaurants_chinois.html',\n      }\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        0
+      ],
+      "id": "52b616ce-8969-42ce-8a95-e0feec99d642",
+      "name": "Generateur HTML"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -740,
+        120
+      ],
+      "id": "fe3035e2-bb34-43f3-8381-ce7f92f0a7b5",
+      "name": "Start"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "restaurant.html",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        1220,
+        0
+      ],
+      "id": "ec91e397-97e2-4c17-9e71-7118bb4c2f32",
+      "name": "Read/Write Files from Disk"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "overpass Open Street map": {
+      "main": [
+        [
+          {
+            "node": "Normaliser Overpass",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normaliser Overpass": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aptify": {
+      "main": [
+        [
+          {
+            "node": "Normaliser donnée Aptify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normaliser donnée Aptify": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Suppression doublon",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Suppression doublon": {
+      "main": [
+        [
+          {
+            "node": "Generateur HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generateur HTML": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "overpass Open Street map",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Aptify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3ea28dca-5c1c-405c-879f-43b8ff3c699d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "22512dc53930be3cf53447faf8986e0d413e50eb896da31018ab8f94220ed4d3"
+  },
+  "id": "H84Gr7zHLN95Pa6u",
+  "tags": []
+}
