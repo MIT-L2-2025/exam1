@@ -1,3 +1,4 @@
 //instructions
 Mon projet a été fait à partir du langage python ,alors pour l'executer il faut installer python3 dans l'environnement
+Il faut aussi installer le bibliothèque apify_client car j'ai utiliser l'API Apify
 Les resultats à partir du code sont générés dans le fichier output.html
