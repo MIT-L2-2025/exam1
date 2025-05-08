@@ -1,0 +1,483 @@
+{
+  "name": "Restaurant chinois Antananarivo",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -780,
+        580
+      ],
+      "id": "9335a45e-c9e7-44c5-a2b0-5552a63aa010",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://www.findglocal.com/MG/Antananarivo/153643-7/genre/174483852595760/Chinese+Restaurant",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "n8n-webscrapping-bot"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -980,
+        140
+      ],
+      "id": "98f206f2-e73a-446c-abfa-a77fff12f260",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "link",
+              "cssSelector": ".inneritembox a:nth-of-type(2)",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            },
+            {
+              "key": "image",
+              "cssSelector": ".inneritembox a:nth-of-type(1) img",
+              "returnValue": "attribute",
+              "attribute": "src",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        -780,
+        100
+      ],
+      "id": "091a8a3b-07b3-4590-a811-593be5043300",
+      "name": "HTML1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const baseUrl = 'https://www.findglocal.com';\n\nconst links = items[0].json.link;\n\nif (!Array.isArray(links)) {\n  throw new Error('Le champ \"link\" n\\'est pas un tableau.');\n}\n\nreturn links.map(path => {\n  return {\n    json: {\n      url: `${baseUrl}${path}`\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -580,
+        320
+      ],
+      "id": "13bdac5c-b01f-41f2-a442-12fd877a656f",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -40,
+        460
+      ],
+      "id": "98b69a3f-72b2-451e-ab11-7b0fd48c8c0f",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "url": "={{$json[\"url\"]}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        640
+      ],
+      "id": "82623857-3c54-441e-a327-d4de9fc49753",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "amount": 0.5
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        500,
+        620
+      ],
+      "id": "079d9f83-66ac-4703-ace3-ad0aefc1a71f",
+      "name": "Wait",
+      "webhookId": "93f5a2e7-df94-49ec-9108-e8c31ecdd792"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "nom",
+              "cssSelector": "h1.h1[itemprop=\"name\"]",
+              "returnArray": true
+            },
+            {
+              "key": "telephone",
+              "cssSelector": "a[itemprop=\"telephone\"]",
+              "returnArray": true
+            },
+            {
+              "key": "adresse",
+              "cssSelector": "div.address[itemprop=\"address\"]",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        780,
+        640
+      ],
+      "id": "454c29f3-7246-45c1-9a2b-e70da048c44d",
+      "name": "HTML2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const restaurants = items;\n\nlet html = `\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Restaurants à Antananarivo</title>\n  <style>\n    body {\n      font-family: Arial, sans-serif;\n      padding: 20px;\n      background-color: #f9f9f9;\n    }\n    h1 {\n      text-align: center;\n      color: #333;\n    }\n    .container {\n      display: flex;\n      flex-wrap: wrap;\n      gap: 20px;\n      justify-content: center;\n    }\n    .restaurant {\n      background-color: #fff;\n      border-radius: 10px;\n      border: 1px solid #ddd;\n      width: 300px;\n      padding: 15px;\n      box-shadow: 0 2px 5px rgba(0,0,0,0.1);\n      display: flex;\n      flex-direction: column;\n      align-items: center;\n      text-align: center;\n    }\n    .restaurant img {\n      width: 250px;\n      height: 250px;\n      object-fit: cover;\n      border-radius: 10px;\n      margin-bottom: 10px;\n    }\n    .details h3 {\n      margin: 10px 0 5px;\n    }\n    .details a {\n      text-decoration: none;\n      color: #007bff;\n    }\n    .map-link {\n      margin-top: 8px;\n      display: inline-block;\n    }\n  </style>\n</head>\n<body>\n  <h1>Restaurants à Antananarivo</h1>\n  <div class=\"container\">\n`;\n\nrestaurants.forEach(resto => {\n  const name = resto.json.nom?.[0] || 'Nom inconnu';\n  const phone = resto.json.telephone?.[0] || 'Téléphone non fourni';\n  const address = (resto.json.adresse?.[0] || 'Adresse non disponible').replace(/\\n/g, '<br>');\n  const url = resto.json.link || '#';\n  const lat = resto.json.latitude;\n  const lng = resto.json.longitude;\n  const image = resto.json.image || 'https://via.placeholder.com/250';\n\n  // Générer le lien Google Maps uniquement si lat & lng sont valides\n  const showMapLink = lat !== undefined && lng !== undefined && lat !== null && lng !== null;\n  const mapLinkHTML = showMapLink\n    ? `<p><a class=\"map-link\" href=\"https://www.google.com/maps?q=${lat},${lng}\" target=\"_blank\">📍 Voir sur Google Maps</a></p>`\n    : '';\n\n  html += `\n    <div class=\"restaurant\">\n      <img src=\"${image}\" alt=\"${name}\">\n      <div class=\"details\">\n        <h3><a href=\"${url}\" target=\"_blank\">${name}</a></h3>\n        <p><strong>Téléphone:</strong> ${phone}</p>\n        <p><strong>Adresse:</strong> ${address}</p>\n        ${mapLinkHTML}\n      </div>\n    </div>\n  `;\n});\n\nhtml += `\n  </div>\n</body>\n</html>\n`;\n\n// Convertir en base64 pour export\nconst buffer = Buffer.from(html, 'utf8');\nconst base64data = buffer.toString('base64');\n\nreturn [\n  {\n    binary: {\n      data: {\n        data: base64data,\n        mimeType: 'text/html',\n        fileName: 'restaurants_antananarivo.html'\n      }\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        220
+      ],
+      "id": "f9cc06a6-9631-4bc2-82d0-dfaba91dc0bf",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 3,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        380,
+        200
+      ],
+      "id": "c57fc5bc-5021-4954-80e0-d8fb490b03f9",
+      "name": "Merge",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -120,
+        -140
+      ],
+      "id": "eda6febd-a1fc-4c77-9e82-6af283557939",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "method": "=GET",
+        "url": "=https://api.opencagedata.com/geocode/v1/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{$json[\"nom\"][0]}}{{$json[\"adresse\"][0]}}, Madagascar"
+            },
+            {
+              "name": "key",
+              "value": "ae3649d8c75b4b50810bd20fea9e605b"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        -140
+      ],
+      "id": "bf85a521-f0a1-4d6b-85c6-9605740d3fa0",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "amount": 0.05
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        440,
+        -80
+      ],
+      "id": "ded5a0cd-206e-4856-aab5-16f36b687137",
+      "name": "Wait1",
+      "webhookId": "93f5a2e7-df94-49ec-9108-e8c31ecdd792"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = items[0].json;\nconst result = input.results && input.results[0];\n\nlet lat = \"inconnu\";\nlet lng = \"inconnu\";\n\n// Vérifie si les coordonnées sont présentes dans la réponse\nif (result && result.geometry) {\n\tlat = result.geometry.lat;\n\tlng = result.geometry.lng;\n}\n\nreturn [\n\t{\n\t\tjson: {\n\t\t\tlatitude: lat,\n\t\t\tlongitude: lng,\n\t\t\tgoogleMapsLink: lat !== \"inconnu\" && lng !== \"inconnu\" \n\t\t\t\t? `https://www.google.com/maps?q=${lat},${lng}` \n\t\t\t\t: \"Lien Google Maps non disponible\"\n\t\t}\n\t}\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        -60
+      ],
+      "id": "223b759d-dc86-4560-afa9-2222ff4106e1",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "jsCode": "const links = items[0].json.link;\nconst images = items[0].json.image;\n\nconst results = [];\n\nfor (let i = 0; i < links.length; i++) {\n  results.push({\n    json: {\n      link: \"https://www.findglocal.com\" + links[i],\n      image: images[i]\n    }\n  });\n}\n\nreturn results;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -460,
+        120
+      ],
+      "id": "f665b1a3-0959-416a-b88f-f529744977d2",
+      "name": "Code1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Replace Me",
+      "typeVersion": 1,
+      "position": [
+        920,
+        0
+      ],
+      "id": "bd984d19-6b9f-44fc-93f5-b4f2e18c6897"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTML1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML1": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTML2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Replace Me",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Me": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "89dc2fd7-ef26-456d-a8a3-80d10757fb40",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8e039c7f63d2b56437ff5fc8f30a0f0bd027a1c563089b99112c82cce2c13d97"
+  },
+  "id": "DfRr4SOYc3LSKQ7F",
+  "tags": []
+}
