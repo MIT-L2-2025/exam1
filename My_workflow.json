@@ -1,0 +1,155 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        -440
+      ],
+      "id": "a917dbd5-f6c6-457c-bb50-bd586d96a4b9",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "url": "=https://serpapi.com/search.json?engine=google_maps&q=restaurant+chinois+antananarivo&api_key=b0f8f4db145bcaec71c4f35e99321245c72d076764009fa355d0bff799b91682",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        20,
+        -440
+      ],
+      "id": "af9dd4aa-3151-4011-8a55-d6f3f8e4d6f0",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items[0].json.local_results.map(r => {\n  return {\n    json: {\n      nom: r.title,\n      adresse: r.address,\n      téléphone: r.phone || \"Non disponible\",\n      latitude: r.gps_coordinates?.latitude,\n      longitude: r.gps_coordinates?.longitude,\n      spécialité: r.type || \"Non précisée\",\n      photo: r.thumbnail || \"\",\n      maps_url:`https://www.google.com/maps/place/${encodeURIComponent(r.title)}/@${r.gps_coordinates?.latitude},${r.gps_coordinates?.longitude},17z`,\n    }\n  }\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        -440
+      ],
+      "id": "cdae55bb-9efa-4123-adf8-53bc289d0f41",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "restaurant-chinois.html",
+        "options": {
+          "append": false
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        900,
+        -440
+      ],
+      "id": "6c15ab6e-102e-44a5-993e-9a9a7556d8ed",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "jsCode": "const buffer = Buffer.from($json[\"html\"], 'utf8');\nreturn [{\n  binary: {\n    data: {\n      data: buffer.toString('base64'),\n      mimeType: 'text/html',\n      fileName: 'restaurants-chinois.html'\n    }\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        680,
+        -440
+      ],
+      "id": "34183a76-69bf-4f64-8211-6ea23bfa97fd",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = items.map(item => {\n  const r = item.json;\n  const lat = r.latitude?.toFixed(6);\n  const lon = r.longitude?.toFixed(6);\n  const mapsLink = `https://www.google.com/maps?q=${lat},${lon}&z=15&t=k`;\n  const mapsEmbed = `https://www.google.com/maps?q=${lat},${lon}&output=embed&z=15&t=k`;\n\n  return `\n    <div style=\"border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 30px; background-color: #f9f9f9;\">\n      <div style=\"display: flex; gap: 20px;\">\n        <img src=\"${r.photo}\" style=\"max-width: 150px; max-height: 150px; border-radius: 8px;\" />\n        <div style=\"flex-grow: 1;\">\n          <h2 style=\"margin: 0; font-size: 18px; color: #333;\">${r.nom}</h2>\n          <p style=\"margin: 5px 0; color: #555; font-style: italic;\">${r.spécialité}</p>\n          <p style=\"margin: 5px 0; color: #777;\">${r.adresse}</p>\n          <p><strong>Téléphone:</strong> ${r.téléphone}</p>\n          <p><strong>Coordonnées:</strong> ${lat}, ${lon}</p>\n        </div>\n      </div>\n\n      <div style=\"margin-top: 15px; display: flex; flex-wrap: wrap; gap: 20px;\">\n        <!-- Google Maps Embed (Satellite View) -->\n        <div style=\"flex: 1; min-width: 300px;\">\n          <iframe\n            src=\"${mapsEmbed}\"\n            width=\"100%\"\n            height=\"200\"\n            style=\"border:0; border-radius: 8px;\"\n            allowfullscreen=\"\"\n            loading=\"lazy\"\n            referrerpolicy=\"no-referrer-when-downgrade\">\n          </iframe>\n          <a href=\"${mapsLink}\" target=\"_blank\" style=\"display: block; margin-top: 5px; color: #1a73e8; font-weight: bold;\">Voir sur Google Maps (Satellite)</a>\n        </div>\n      </div>\n    </div>\n  `;\n}).join('');\n\nconst html = `\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>restaurants chinois à Tananarive</title>\n</head>\n<body style=\"font-family: Arial, sans-serif; padding: 20px; background-color: #fafafa;\">\n  <h1 style=\"font-size: 24px; color: #333;\">Restaurants chinois à Tananarive</h1>\n  ${rows}\n</body>\n</html>\n`;\n\nreturn [{ json: { html } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        -440
+      ],
+      "id": "21aca1bd-f9a6-48fa-80ea-6f1bd542d4a2",
+      "name": "Code4"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Code4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code4": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "cd383388-1819-4eb8-882c-c900f39eaff4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3f723b2ac95f6e8f56380323eb97d7e968e53be3d546f2761ae50395aa2c6d38"
+  },
+  "id": "l5An0jE5uocEwZ00",
+  "tags": []
+}
