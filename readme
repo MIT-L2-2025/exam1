@@ -1,1 +1,59 @@
-//instructions
+# 📦 n8n Web Scraper – Restaurants Chinois Antananarivo
+
+Ce projet est un **workflow n8n** qui extrait automatiquement des données de restaurants chinois à Antananarivo depuis un site Web, enrichit les données (numéros de téléphone, coordonnées GPS), puis génère une page HTML élégante listant ces lieux.
+
+## 🚀 Fonctionnalités
+
+- 🕷️ Scraping d’une page contenant des restaurants chinois
+- 🧠 Extraction avancée (nom, adresse, lien, spécialités, image)
+- 🔁 Boucle sur chaque restaurant pour :
+  - 📞 Récupérer le numéro de téléphone
+  - 📍 Obtenir les coordonnées GPS avec l'API Google Maps
+- 🖼️ Génération d’une page HTML responsive avec toutes les informations
+- ⏱️ Attente configurable entre les requêtes pour éviter les blocages
+
+## 🔧 Technologies
+
+- [n8n](https://n8n.io/) – Outil de workflows automatisés
+- HTTP Request Node
+- HTML Extract Node
+- Code Node (JavaScript)
+- Google Maps API
+
+## 📄 Pré-requis
+
+- Un compte **n8n** opérationnel (auto-hébergé ou cloud)
+- Une clé **Google Maps API** pour la géolocalisation (`geocode`)
+
+## 📍 Étapes du Workflow
+
+1. **Déclencheur manuel** (`Manual Trigger`)
+2. **Requête HTTP** sur une page listant les restaurants
+3. **Extraction HTML** pour obtenir :
+   - Nom
+   - Adresse
+   - Lien
+   - Spécialités
+   - Image
+4. **Transformation JSON** avec regroupement des données
+5. **Boucle `SplitInBatches`** sur chaque restaurant
+6. **Pause courte** (`Wait`) pour respecter le site cible
+7. **Requête HTTP** vers la page du restaurant
+8. **Extraction du numéro de téléphone**
+9. **Nouvelle boucle** pour enrichir avec les coordonnées via **Google Maps API**
+10. **Code Node** pour créer la page HTML responsive
+11. **Génération d’un buffer HTML (fichier téléchargeable)**
+
+## 📸 Aperçu visuel
+
+La page générée affiche chaque restaurant comme une carte contenant :
+
+- 📷 Image
+- 🏠 Adresse
+- 🍜 Spécialité
+- 📞 Numéro
+- 🌐 Lien Google Maps
+
+## 🛠️ Configuration
+
+- Remplace la clé dans le node `Fetch numero1` :
