@@ -208,7 +208,7 @@ else:
     restaurants_html = '<p class="no-results">Aucun restaurant chinois trouvé.</p>'
 
 # Générez le fichier HTML
-with open('rest.html', 'w', encoding='utf-8') as f:
+with open('output.html', 'w', encoding='utf-8') as f:
     f.write(html_template.format(restaurants_html=restaurants_html))
 
-print("Fichier HTML généré : rest.html")
+print("Fichier HTML généré : output.html")
