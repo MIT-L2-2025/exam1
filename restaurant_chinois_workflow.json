@@ -1,0 +1,161 @@
+{
+  "name": "My workflow 4",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -640,
+        -20
+      ],
+      "id": "700d514a-1361-4dd0-bfab-e2878e4a1b5e",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://google.serper.dev/maps",
+        "sendHeaders": true,
+        "specifyHeaders": "json",
+        "jsonHeaders": "{\n    \"X-API-KEY\": \"d5beb8775a8461d489b20ea5fedccf2c27209fe2\" \n}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"q\": \"restaurant chinois Antananrivo\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -360,
+        -20
+      ],
+      "id": "428427f6-4d6f-4d9c-97a0-7d811b09f37b",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Récupère tous les items en entrée\nconst items = $input.all();\n\n// Vérifie qu'il y a bien un item et une liste de places\nif (!items.length || !items[0].json.places) {\n  console.log(\"Aucune donnée valide trouvée\");\n  return [];\n}\n\n// Accède au tableau \"places\" du premier item\nconst places = items[0].json.places;\n\n// Pour chaque restaurant, extrait uniquement les champs utiles\nreturn places.map(place => ({\n  json: {\n    title: place.title,\n    address: place.address,\n    rating: place.rating,\n    latitude: place.latitude,\n    longitude: place.longitude,\n    phoneNumber: place.phoneNumber || 'Non disponible'\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -120,
+        -20
+      ],
+      "id": "6e9c2943-c90f-45ac-86d7-5afea6daa5e2",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Récupère tous les items en entrée (vos données de restaurants)\nconst items = $input.all();\n\n// Vérifie qu'il y a bien des données\nif (!items.length) {\n  return [];\n}\n\n// Début du HTML avec intégration du style CSS\nlet htmlContent = `\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Liste des Restaurants Chinois</title>\n  <style>\n    body {\n      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n      background-color: #f0f4f8;\n      margin: 0;\n      padding: 20px;\n      color: #333;\n    }\n\n    h1 {\n      text-align: center;\n      color: #2c3e50;\n      margin-bottom: 40px;\n    }\n\n    .restaurant {\n      background-color: #ffffff;\n      border-radius: 10px;\n      box-shadow: 0 4px 10px rgba(0,0,0,0.05);\n      display: flex;\n      flex-wrap: wrap;\n      gap: 20px;\n      padding: 20px;\n      margin-bottom: 30px;\n      transition: transform 0.2s ease;\n    }\n\n    .restaurant:hover {\n      transform: scale(1.01);\n    }\n\n    .info {\n      flex: 1;\n      min-width: 250px;\n    }\n\n    .map {\n      flex: 1;\n      height: 300px;\n      min-width: 300px;\n      border-radius: 8px;\n      overflow: hidden;\n    }\n\n    iframe {\n      width: 100%;\n      height: 100%;\n      border: none;\n    }\n\n    p {\n      margin: 8px 0;\n    }\n\n    strong {\n      color: #2980b9;\n    }\n\n    .rating-stars {\n      display: inline-block;\n      position: relative;\n      width: 100px;\n      height: 20px;\n      background-image: url('https://upload.wikimedia.org/wikipedia/commons/9/9d/Star_outline.svg');\n      background-repeat: repeat-x;\n      background-size: contain;\n    }\n\n    .rating-stars::after {\n      content: '';\n      position: absolute;\n      top: 0;\n      left: 0;\n      height: 100%;\n      width: var(--rating-width);\n      background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/e7/Star_full.svg');\n      background-repeat: repeat-x;\n      background-size: contain;\n      z-index: 1;\n      pointer-events: none;\n    }\n  </style>\n</head>\n<body>\n  <h1>Liste des Restaurants Chinois à Antananarivo</h1>\n`;\n\n// Boucle sur chaque restaurant pour générer un bloc HTML\nfor (const item of items) {\n  const data = item.json;\n\n  // Lien vers l'iframe Google Maps\n  const mapLink = `https://www.google.com/maps?q=${data.latitude},${data.longitude}&z=15&output=embed`;\n\n  // Calcul dynamique de la largeur d'étoiles remplies\n  const ratingPercent = ((data.rating || 0) / 5) * 100;\n\n  htmlContent += `\n  <div class=\"restaurant\">\n    <div class=\"info\">\n      <h2>${data.title}</h2>\n      <p><strong>Adresse :</strong> ${data.address}</p>\n      <p><strong>Note :</strong> \n        <span class=\"rating-stars\" style=\"--rating-width: ${ratingPercent}%\"></span>\n        (${data.rating ? `${data.rating} / 5` : 'non évalué'})\n      </p>\n      <p><strong>Téléphone :</strong> ${data.phoneNumber || 'Non disponible'}</p>\n      <p><strong>Latitude :</strong> ${data.latitude}</p>\n      <p><strong>Longitude :</strong> ${data.longitude}</p>\n    </div>\n    <div class=\"map\">\n      <iframe src=\"${mapLink}\" allowfullscreen></iframe>\n    </div>\n  </div>\n  `;\n}\n\n// Fin du HTML\nhtmlContent += `\n</body>\n</html>\n`;\n\n// Retourne le contenu HTML comme payload\nreturn [{ json: { html: htmlContent } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        120,
+        -20
+      ],
+      "id": "8baa2de6-1ed8-4f33-b53e-467041e088ed",
+      "name": "Code1",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Récupérer la chaîne JSON brute\nconst rawData = $input.item.json.html || $input.item.json;\n\n// Nettoyer les échappements JSON\nlet cleanHTML = rawData;\n\n// Si le texte commence par \"html\": c'est un format JSON\nif (typeof rawData === 'string') {\n  // Supprimer la partie \"html\": au début\n  cleanHTML = rawData.replace(/^\"html\": \"\\\\n/, '')\n                    .replace(/\\\\n\"$/, '') // Supprime la fin\n                    .replace(/\\\\n/g, '\\n') // Remplace \\n par des sauts de ligne réels\n                    .replace(/\\\\\"/g, '\"')  // Remplace \\\" par \"\n                    .replace(/\\\\\\\\/g, '\\\\'); // Remplace \\\\ par \\\n}\n\n// Créer un objet binaire directement\nconst binaryData = {\n  data: Buffer.from(cleanHTML).toString('base64'),\n  mimeType: 'text/html',\n  fileName: 'restaurants-chinois.html'\n};\n\n// Retourner l'objet avec les données binaires\nreturn {\n  json: {\n    success: true\n  },\n  binary: {\n    data: binaryData\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        340,
+        -20
+      ],
+      "id": "a1bf0cab-60dc-4750-814a-6902fda8e419",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "result.html",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        560,
+        -20
+      ],
+      "id": "49a04709-2cb6-45a5-b3f3-f2a4be6421eb",
+      "name": "Read/Write Files from Disk"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "75a5e1cf-d80c-4d19-8c14-814db901e38c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0a3d18b26b74dbc9bf3448f0ae1e01d53edacd0b3c696560502434535056376c"
+  },
+  "id": "qXzrvbAta64JEhvR",
+  "tags": []
+}
