@@ -1,0 +1,715 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "try {\n    // Récupérer les données d'entrée\n    const input = $input.all();\n    \n    // Vérifier si l'entrée existe\n    if (!input || input.length === 0) {\n        throw new Error('Aucune donnée reçue depuis le nœud précédent');\n    }\n\n    // Récupérer les données JSON\n    const jsonData = input[0].json;\n\n    // Vérifier si jsonData existe\n    if (!jsonData) {\n        throw new Error('Les données JSON sont absentes ou non définies');\n    }\n\n    // Déterminer la structure des données\n    let restaurantData;\n    if (Array.isArray(jsonData) && jsonData.length > 0 && jsonData[0].body && jsonData[0].body.data) {\n        // Cas 1 : JSON est un tableau comme [ { body: { data: [...] } } ]\n        restaurantData = jsonData[0].body.data;\n    } else if (jsonData.body && jsonData.body.data) {\n        // Cas 2 : JSON est un objet comme { body: { data: [...] } }\n        restaurantData = jsonData.body.data;\n    } else if (Array.isArray(jsonData)) {\n        // Cas 3 : JSON est un tableau de restaurants directement\n        restaurantData = jsonData;\n    } else {\n        throw new Error('Structure JSON non reconnue : ' + JSON.stringify(jsonData).slice(0, 100));\n    }\n\n    // Vérifier si restaurantData est un tableau non vide\n    if (!Array.isArray(restaurantData) || restaurantData.length === 0) {\n        throw new Error('Aucune donnée de restaurant trouvée dans les données JSON');\n    }\n\n    // Extraire et structurer les données nécessaires\n    const restaurants = restaurantData.map(restaurant => ({\n        name: restaurant.name || 'N/A',\n        address: restaurant.full_address || 'N/A',\n        phone: restaurant.phone || 'N/A',\n        email: restaurant.emails && restaurant.emails.length > 0 ? restaurant.emails[0] : 'N/A',\n        specialties: restaurant.categories || 'N/A',\n        latitude: restaurant.latitude || null,\n        longitude: restaurant.longitude || null,\n        link3D: restaurant.google_maps_url || 'N/A',\n        image: restaurant.featured_image  || 'N/A',\n        hours_opening: restaurant.opening_hours  || 'N/A'\n    }));\n\n    // Trier par nom (optionnel, peut être supprimé si non nécessaire)\n    restaurants.sort((a, b) => a.name.localeCompare(b.name));\n\n    // Retourner les données traitées dans un objet\n    return [{ json: { restaurants: restaurants } }];\n} catch (error) {\n    // Retourner une erreur détaillée pour le débogage\n    return [{ json: { \n        error: `Erreur lors du traitement des données : ${error.message}`, \n        inputSample: JSON.stringify($input.all()[0]?.json || {}, null, 2).slice(0, 200) \n    } }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -480,
+        1220
+      ],
+      "id": "5f36729a-08b2-4c9a-9d27-69496c338b2a",
+      "name": "Liste d'objet Restaurant"
+    },
+    {
+      "parameters": {
+        "jsCode": "try {\n    // Récupérer les données d'entrée\n    const input = $input.all();\n    \n    // Vérifier si l'entrée existe\n    if (!input || input.length === 0) {\n        throw new Error('Aucune donnée reçue depuis le nœud précédent');\n    }\n\n    // Récupérer les données JSON\n    const jsonData = input[0].json;\n\n    // Vérifier si jsonData existe\n    if (!jsonData) {\n        throw new Error('Les données JSON sont absentes ou non définies');\n    }\n\n    // Déterminer la structure des données\n    let restaurantData;\n    if (Array.isArray(jsonData) && jsonData.length > 0 && jsonData[0].body && jsonData[0].body.data) {\n        // Cas 1 : JSON est un tableau comme [ { body: { data: [...] } } ]\n        restaurantData = jsonData[0].body.data;\n    } else if (jsonData.body && jsonData.body.data) {\n        // Cas 2 : JSON est un objet comme { body: { data: [...] } }\n        restaurantData = jsonData.body.data;\n    } else if (Array.isArray(jsonData)) {\n        // Cas 3 : JSON est un tableau de restaurants directement\n        restaurantData = jsonData;\n    } else if (jsonData.restaurants && Array.isArray(jsonData.restaurants)) {\n        // Cas 4 : JSON est un objet comme { restaurants: [...] }\n        restaurantData = jsonData.restaurants;\n    } else {\n        throw new Error('Structure JSON non reconnue : ' + JSON.stringify(jsonData).slice(0, 100));\n    }\n\n    // Vérifier si restaurantData est un tableau non vide\n    if (!Array.isArray(restaurantData) || restaurantData.length === 0) {\n        throw new Error('Aucune donnée de restaurant trouvée dans les données JSON');\n    }\n\n    // Extraire et structurer les données nécessaires comme un tableau d'objets plats\n    const restaurants = restaurantData.map(restaurant => ({\n        name: restaurant.name || restaurant.name || 'N/A',\n        address: restaurant.full_address || restaurant.address || 'N/A',\n        phone: restaurant.phone || restaurant.phone || 'N/A',\n        email: restaurant.emails && restaurant.emails.length > 0 ? restaurant.emails[0] : restaurant.email || 'N/A',\n        specialties: restaurant.categories || restaurant.specialties || 'N/A',\n        latitude: restaurant.latitude || restaurant.latitude || null,\n        longitude: restaurant.longitude || restaurant.longitude || null,\n        link3D: restaurant.google_maps_url || restaurant.link3D || 'N/A',\n        image: restaurant.featured_image || restaurant.image || 'N/A',\n        hours_opening: restaurant.opening_hours || restaurant.hours_opening || 'N/A'\n    }));\n\n    // Retourner les données traitées comme un tableau d'objets\n    return restaurants.map(restaurant => ({ json: restaurant }));\n} catch (error) {\n    // Retourner une erreur détaillée pour le débogage\n    return [{ json: { \n        error: `Erreur lors du traitement des données : ${error.message}`, \n        inputSample: JSON.stringify($input.all()[0]?.json || {}, null, 2).slice(0, 200) \n    } }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -160,
+        1220
+      ],
+      "id": "6b438efa-b15e-4cb2-aaf5-1fbe7a5c95ca",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://cloud.gmapsextractor.com/api/v2/search",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer UXXtBBG8w1KmeXubDfmEWhgCVxsy0iCYUq0kEUBJkFuh4hVN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "restaurant chinois Antananarivo Madagascar"
+            },
+            {
+              "name": "page",
+              "value": "=1"
+            },
+            {
+              "name": "ll",
+              "value": "@-18.8792,47.5079,11z"
+            },
+            {
+              "name": "hl",
+              "value": "fr"
+            },
+            {
+              "name": "gl",
+              "value": "mg"
+            },
+            {
+              "name": "extra",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -860,
+        1220
+      ],
+      "id": "381a19d9-942a-41e6-bd39-d2f07805beac",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "nom",
+              "cssSelector": ".inneritembox a:nth-of-type(2)",
+              "returnArray": true
+            },
+            {
+              "key": "address",
+              "cssSelector": "div.itembox div.inneritembox",
+              "skipSelectors": "p, a",
+              "returnArray": true
+            },
+            {
+              "key": "link_info",
+              "cssSelector": ".inneritembox a:nth-of-type(2)",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            },
+            {
+              "key": "image",
+              "cssSelector": ".inneritembox a:nth-of-type(1) img",
+              "returnValue": "attribute",
+              "attribute": "src",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        -220,
+        920
+      ],
+      "id": "b3b34167-1a97-48e8-b235-122a0a9e47d3",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "url": "https://www.findglocal.com/MG/Antananarivo/153643-7/genre/174483852595760/Chinese+Restaurant",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "n8n-webscrapping-bot"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -600,
+        920
+      ],
+      "id": "3ba0728b-e623-4c8c-b8a2-4a7bae78e681",
+      "name": "HTTP Request3"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get the input data\nconst input = $input.first().json;\n\n// Extract the arrays\nconst names = input.nom;\nconst addresses = input.address;\nconst links = input.link_info;\nconst imaged = input.image;\n\n// Ensure all arrays have the same length to avoid mismatches\nif (names.length !== addresses.length || names.length !== links.length) {\n  throw new Error('Array lengths do not match');\n}\n\n// Map the arrays to an array of objects\nconst restaurants = names.map((name, index) => {\n  // Clean up the address by removing the map key (e.g., \"A\\n\") and joining lines\n  const cleanedAddress = addresses[index]\n    .split('\\n') // Split by newline\n    .slice(1) // Remove the first element (map key like \"A\")\n    .join(', ') // Join with commas\n    .trim(); // Remove trailing spaces\n\n  return {\n    json: {\n      nom: name,\n      address: cleanedAddress,\n      info: links[index],\n      image: imaged[index]\n    }\n  };\n});\n\n// Return the array of restaurant objects\nreturn restaurants;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -480,
+        500
+      ],
+      "id": "0d8da335-078e-4a40-bc29-7f825d47e742",
+      "name": "Code3"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Replace Me",
+      "typeVersion": 1,
+      "position": [
+        -900,
+        500
+      ],
+      "id": "df768da3-936a-4c0d-8169-21f2861b3bb2"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "num",
+              "cssSelector": "div.bio span a[href^=\"tel:\"]"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        -680,
+        500
+      ],
+      "id": "ea5888c9-a74f-4dad-aba4-9d83db8e1e7a",
+      "name": "HTML1"
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -820,
+        360
+      ],
+      "id": "52ff28f5-7602-497d-8a02-67e8f3346647",
+      "name": "Wait",
+      "webhookId": "97219aae-7609-40b1-a184-ab0ec6b780bc"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 3,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        100,
+        720
+      ],
+      "id": "0dcc10e1-3919-48e3-bf70-2fd1ce939a89",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.full_url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -680,
+        360
+      ],
+      "id": "a79cb14b-d19b-490f-a3ae-9b3bb241e6e5",
+      "name": "Sub Link Extractor"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1440,
+        1120
+      ],
+      "id": "04853bde-3bfc-4455-a372-82c66668c41d",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1f5c4c02-039e-4788-bcbc-bed140b787ea",
+              "name": "nom",
+              "value": "={{ $json.nom }}",
+              "type": "string"
+            },
+            {
+              "id": "0a5e3bd0-c033-4eb9-8e0e-0338e0495372",
+              "name": "address",
+              "value": "={{ $json.address }}",
+              "type": "string"
+            },
+            {
+              "id": "5d1bdf2a-19b6-4b9d-b8cc-11f1d87c56f0",
+              "name": "image",
+              "value": "={{ $json.image }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -300,
+        740
+      ],
+      "id": "286565fa-4f82-488d-a458-a2db25b2fb9f",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "try {\n    const input = $input.all();\n\n    if (!input || input.length === 0) {\n        throw new Error('Aucune donnée reçue');\n    }\n\n    const restaurants = input.map(item => {\n        const r = item.json;\n\n        return {\n            json: {\n                name: r.nom || 'N/A',\n                address: r.address || 'N/A',\n                phone: r.num || 'N/A',\n                email: r.mail || 'N/A', // Valeur par défaut ou personnalisée\n                specialties: 'Cuisine ',\n                latitude:  r.latitude || 'N/A',\n                longitude: r.longitude || 'N/A',\n                link3D: r.map_link || 'N/A',\n                image: r.image || 'N/A',\n                hours_opening: '08:00 - 22:00'\n            }\n        };\n    });\n\n    return restaurants;\n} catch (error) {\n    return [{\n        json: {\n            error: `Erreur : ${error.message}`,\n            exemple: JSON.stringify($input.all()[0]?.json || {}, null, 2).slice(0, 200)\n        }\n    }];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        120,
+        920
+      ],
+      "id": "b5ec534a-f60c-4097-b1e2-4a5f10c3fa58",
+      "name": "Code8"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        560,
+        960
+      ],
+      "id": "1c442cc7-c147-44bc-a483-7471707d5b7c",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get the input data\nconst input = $input.first().json;\n\n// Extract the links array\nconst links = input.link_info;\n\n// Map the links to an array of objects\nconst restaurants = links.map(link => ({\n  json: {\n    info: link\n  }\n}));\n\n// Return the array of restaurant objects\nreturn restaurants;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -900,
+        720
+      ],
+      "id": "c6e9589d-6066-4c33-8638-1e1574d9e6fa",
+      "name": "Link Extractor"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Base URL\nconst baseUrl = 'https://www.findglocal.com';\n\n// Transform each sub-link into a full URL (maximum 3)\nconst restaurants = $input.all().map(item => {\n  const subLink = item.json.info;\n\n  if (!subLink || typeof subLink !== 'string') {\n    return {\n      json: {\n        info: 'Invalid sub-link',\n        full_url: null\n      }\n    };\n  }\n\n  const fullUrl = `${baseUrl}${subLink}`;\n\n  return {\n    json: {\n      full_url: fullUrl\n    }\n  };\n}).slice(0, 100); // <= Limite à 3 éléments\n\nreturn restaurants;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -700,
+        720
+      ],
+      "id": "2fb67b1f-d4ec-40c0-9620-738891c156dd",
+      "name": "Create Sublink"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -920,
+        260
+      ],
+      "id": "5428f056-ff06-4bcf-be34-23cc2510e0c3",
+      "name": "Number Extractor"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -240,
+        340
+      ],
+      "id": "a275ee2d-f6cd-477b-8834-8c9677b74dda",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Replace Me2",
+      "typeVersion": 1,
+      "position": [
+        320,
+        340
+      ],
+      "id": "b1e033c7-7d60-4458-ab06-60331ef2a182"
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "address",
+              "value": "={{ $json.nom }} Antananarivo"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -20,
+        340
+      ],
+      "id": "bfed272d-6681-4466-b15a-e7c0f881cfe1",
+      "name": "HTTP Request4"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const result = item.json.results?.[0];\n  \n  if (!result || !result.geometry?.location) {\n    return { json: { error: 'Aucun résultat ou coordonnées manquants' } };\n  }\n\n  const lat = result.geometry.location.lat;\n  const lng = result.geometry.location.lng;\n  const mapsLink = `https://www.google.com/maps?q=${lat},${lng}`;\n\n  return {\n    json: {\n      latitude: lat,\n      longitude: lng,\n      map_link: mapsLink\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        140,
+        340
+      ],
+      "id": "eae6eb91-885f-45d1-94f0-c67bd53f4b33",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "jsCode": "// S'assurer que chaque item contient un restaurant\nconst restaurants = items.map(item => item.json);\n\nlet html = `\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Restaurants à Antananarivo</title>\n  <link href=\"https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css\" rel=\"stylesheet\">\n  <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap\" rel=\"stylesheet\">\n  <style>\n    body {\n      font-family: 'Poppins', sans-serif;\n      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);\n      min-height: 100vh;\n    }\n    .card {\n      transition: transform 0.3s ease, box-shadow 0.3s ease;\n    }\n    .card:hover {\n      transform: translateY(-5px);\n      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);\n    }\n    .card img {\n      object-fit: cover;\n      transition: transform 0.3s ease;\n    }\n    .card:hover img {\n      transform: scale(1.05);\n    }\n    .gradient-text {\n      background: linear-gradient(to right, #ff6b6b, #4ecdc4);\n      -webkit-background-clip: text;\n      background-clip: text;\n      color: transparent;\n    }\n    .btn-maps {\n      background: linear-gradient(to right, #ff6b6b, #4ecdc4);\n      transition: background 0.3s ease;\n    }\n    .btn-maps:hover {\n      background: linear-gradient(to right, #4ecdc4, #ff6b6b);\n    }\n    .badge {\n      background: linear-gradient(to right, #4ecdc4, #ff6b6b);\n      color: white;\n      font-size: 0.75rem;\n      padding: 0.5rem 1rem;\n      border-radius: 0 0.5rem 0.5rem 0;\n    }\n    .hours {\n      font-size: 0.875rem;\n      line-height: 1.5;\n    }\n  </style>\n</head>\n<body class=\"antialiased\">\n  <div class=\"container mx-auto px-4 py-12\">\n    <h1 class=\"text-4xl md:text-5xl font-bold text-center mb-12 gradient-text\">Restaurants à Antananarivo</h1>\n    <div class=\"grid gap-8 md:grid-cols-2 lg:grid-cols-3\">\n`;\n\n// Générer les cartes pour chaque restaurant\nrestaurants.forEach(resto => {\n  const name = resto.name || 'Nom inconnu';\n  const phone = resto.phone && resto.phone !== 'N/A' ? resto.phone : 'Téléphone non fourni';\n  const address = resto.address && resto.address !== 'N/A' ? resto.address : 'Adresse non disponible';\n  const specialties = resto.specialties && resto.specialties !== 'Cuisine' && resto.specialties !== 'Cuisine générale' ? resto.specialties : 'Spécialités non précisées';\n  const hours = resto.hours_opening && resto.hours_opening !== 'N/A' ? resto.hours_opening.replace(/\\[(.*?)\\]/g, '$1') : 'Horaires non disponibles';\n  const image = resto.image && resto.image !== 'https://example.com/image.jpg' ? resto.image : 'https://via.placeholder.com/250';\n  const link3D = resto.link3D && resto.link3D !== 'https://maps.google.com' ? resto.link3D : '#';\n  const firstSpecialty = specialties.split(',')[0].trim();\n  const showMapLink = link3D !== '#';\n\n  html += `\n      <div class=\"card bg-white rounded-2xl shadow-lg overflow-hidden\">\n        <div class=\"relative\">\n          <img src=\"${image}\" alt=\"${name}\" class=\"w-full h-48 object-cover rounded-t-2xl\">\n          <div class=\"absolute top-0 left-0 badge\">\n            ${firstSpecialty}\n          </div>\n        </div>\n        <div class=\"p-6\">\n          <h2 class=\"text-2xl font-semibold text-gray-800 mb-2\"><a href=\"${link3D}\" target=\"_blank\">${name}</a></h2>\n          <p class=\"text-gray-600 mb-2\"><span class=\"font-medium\">Adresse :</span> ${address}</p>\n          <p class=\"text-gray-600 mb-2\"><span class=\"font-medium\">Téléphone :</span> ${phone}</p>\n          <p class=\"text-gray-600 mb-2\"><span class=\"font-medium\">Spécialités :</span> ${specialties}</p>\n          <p class=\"text-gray-600 mb-4 hours\"><span class=\"font-medium\">Heures :</span> ${hours}</p>\n          ${showMapLink ? `<a href=\"${link3D}\" target=\"_blank\" class=\"btn-maps inline-block text-white font-medium py-2 px-4 rounded-lg\">Voir sur Google Maps</a>` : ''}\n        </div>\n      </div>\n  `;\n});\n\nhtml += `\n    </div>\n  </div>\n</body>\n</html>\n`;\n\n// Convertir en base64 pour sortie binaire\nconst buffer = Buffer.from(html, 'utf8');\nconst base64data = buffer.toString('base64');\n\nreturn [\n  {\n    binary: {\n      data: {\n        data: base64data,\n        mimeType: 'text/html',\n        fileName: 'restaurants_antananarivo.html'\n      }\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        780,
+        980
+      ],
+      "id": "7dcbe5d0-7028-4a42-9b6d-64f1351f8be6",
+      "name": "Code5"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Liste d'objet Restaurant": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Liste d'objet Restaurant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Link Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request3": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Me": {
+      "main": [
+        [
+          {
+            "node": "Number Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML1": {
+      "main": [
+        [
+          {
+            "node": "Replace Me",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Sub Link Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sub Link Extractor": {
+      "main": [
+        [
+          {
+            "node": "HTML1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code8": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Code5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Link Extractor": {
+      "main": [
+        [
+          {
+            "node": "Create Sublink",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Sublink": {
+      "main": [
+        [
+          {
+            "node": "Number Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Number Extractor": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Me2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request4": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Replace Me2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fdb0842a-d919-46da-b9d6-39e66bd54f39",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "94f992d9ba5a8c8ac512b3ec3764f8c8fa991b670708b220f6f99639fec2179c"
+  },
+  "id": "5SgUQMO998QLLiPQ",
+  "tags": []
+}
