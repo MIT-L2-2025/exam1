@@ -1,2 +1,6 @@
 FICHIER restaurants.html : fichier pour avoir la liste des restaurants chinois d'Antananarivo
 FICHIER MyWorkflows.json : fichier qui contient mon workflow
+Pour le workflow ,télecharger un clé API sur http://serpapi.com en se logant pour que le requete http marche.
+Après ouvrez le wokflow dans n8n , executez le workfolw "My_workflow.json" puis telechargez le resultat "restaurants.html".
+
+Merci beaucoup d'avoir lu ceci.
