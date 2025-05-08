@@ -1,0 +1,778 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Restaurants chinois à Antananarivo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Serif SC', serif;
+      background-image: url('https://www.transparenttextures.com/patterns/asanoha.png');
+      background-color: #fff8f0;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      text-align: center;
+      margin-top: 30px;
+      color: #a30000;
+      font-size: 36px;
+      text-shadow: 1px 1px #ffd700;
+    }
+    .container {
+      width: 95%;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+    }
+
+    .restaurant {
+      border: 2px solid #d4af37;
+      padding: 20px;
+      background-color: #fffdf6;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .restaurant:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .restaurant img {
+      width: 130px;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #a30000;
+    }
+
+    .details {
+      margin-top: 15px;
+      width: 100%;
+    }
+
+    .details h3 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      color: #a30000;
+    }
+
+    .details p {
+      margin: 4px 0;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .details a {
+      text-decoration: none;
+      color: #a30000;
+      font-weight: bold;
+    }
+
+    .details button {
+      background-color: #d00000;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      margin-top: 12px;
+      transition: background-color 0.3s;
+    }
+
+    .details button:hover {
+      background-color: #a30000;
+    }
+  </style>
+</head>
+<body>
+  <h1>Restaurants chinois de Tana</h1>
+  <div class="container">
+
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcIzt0mIWwadq_ocNo8__UFwAcMW_PuMhDAXQjf4RM2CZ_eYEf81GyuKv4v_syt_bOEZDckUcou4_iK_HASuDYj4ImZNds1JMma-3jDSiH-J12N5SNJlyQZMRl6J_c2SoxWIxN_ld9OFnh6xdZyjy1M2-tblu6Q5bQ0aRr-gjZqtJSuLfoZh5kUfnc70pDM8ae1GNchFBKjbs91wnAh5nH_RqV5qsCCf8uWWdXNS9mS0yykOmrHsnO4n7gG_aEJaWhxaQNfjtkFUAqsTg1J3OmrzGtVQzlcnoPoTHLuSRRoUOe2SJydl42tu2aD5iCuzvsAxfu2MRzInnckVB-mdJMpt0-wuqdRs7G7jC2FlYbx1kbnXkksSb_8BIJ0clU5A64Ji6EpG-2BN1p02uodSIBSYakT3NXu4X6K2u44Q-dQQ0fh1HAtz9BExoG9VnP0ZmjetbOp91OhcN1LvNZnu2s6Hy0CvgKp9y9GdSG_KiwBSRANcRHlhUxOAB79yG_eufOXSufSpK26X2azhKLmF_G5g4ldk--jcINJoPc1_SG4rHlkCJH7cn_bwJQHo8fpNdfZvDamm1F_vLfM2qz6leUSFMjQzRHScZSaU2VPGfuv_6ZMMoBa4XbtLBeL6pN7dkVn7FQ&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Kaizen Restaurant">
+      <div class="details">
+        <h3><a href="#" target="_blank">Kaizen Restaurant</a></h3>
+        <p><strong>Téléphone:</strong> Téléphone non fourni</p>
+        <p><strong>Adresse:</strong> 3GPR+F3J, Lalana Vvs, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 4.6</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9137837, Lng: 47.5401532</p>
+        <a href="https://www.google.com/maps?q=-18.9137837,47.5401532" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcJaA2yyJmuqIjX0ln7Y9yWid86aVE4zxzy6V3GKdJGrkEnCIizUM9mvcngMg_AJMNxMBbq1hC6vklf39Q3xd8dOST547tJUwTqfYWrFiSZeupkxp_NIrv8D0CHtrMq2s5x-9yokGmcVw2Fv9dPgYiSQwd4pZqP5iwYdBruX9kmnuVGwdLc2Jwr-Vzd9rOdknfGZPYl8r-959FqDehLLc9iQIZeYe2nU_yqeJTo-AhFhMipQ27B8iM5D1aT1yqSe-MFQUjDjWeK8D-36pG-oeDkUefDwFEEwC5wmGgDeD-FBhnxIQml24OSvyPR8pxztUfwaG1wZHJxglMoOZXG7WDEjLN-tTT89q6NJBWV6XcUaVz466R5lIhtIMfKAwOCdgmh6ElarlqoD-4cBMxEPpGP0bybm-ElRdF8jhcbawAiuoGw5xAWfZ0WqZonL2IRi-KZad2nAWbEx302WWVS5mmy62zJZRIx9PWtpL85o2194xIc7k_rbXj9nL0hM5VwbE91DuwTrdU-fxR0AEf6pDrQ22CQP8UG4TdNIp5Vl4UOKDyFezbKO9eWI7sX96TbyJqoTyD_hdXP2sgkN3GBhDy4Wk-pz1WDkd8x0TGY4zB6xbj8hn5UmDPsU-m1rxsG2KUYRpXMb&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Hirondelle "燕子" Chinese FOOD">
+      <div class="details">
+        <h3><a href="#" target="_blank">Hirondelle "燕子" Chinese FOOD</a></h3>
+        <p><strong>Téléphone:</strong> 034 11 166 78</p>
+        <p><strong>Adresse:</strong> Lalana Dama-Ntsoha Razatintsalama Jean-Baptiste, Antananarivo 101, Madagascar</p>
+        <p><strong>Note:</strong> 4.6</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9174137, Lng: 47.5366284</p>
+        <a href="https://www.google.com/maps?q=-18.9174137,47.5366284" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcLqGaPPkeec-EhCIC53XaW4UOI4wOlBfW7jzsSeG5XycrDm9rgyvMo5qGhQtIaQD1yhRUaA59z0Ev2CoWJCSZM4U18aj-rrFwDzvDBGKqB13HHOss4CUOquYvpXAOroDGXnUQBjPp_T6Q1Mzi9aOIlNFgdGbJLQmccxPw042r3Be1PLGXBPosvCuLJPttgXLfkP7Sf3GQsOP0f0jDsw6VmkmVFbG0yoyb54Gt4oN-l4RJVqOUttO_9M5zwq0D3Yu9nFS_vTx_7eI6wq3GjR2LguGqnacXQ--DYcIo_mOom0X456H4NtLuW0s2Fhy2XqRVH0EyGXqliohgguF90xfH9_BLMak5ctcgKQ0I3FE4udK1Fez6FXnF3q1_gsPPPlfmINYXVRXz1gMB9LSQfSdonlbVMUYcoxBVcqIeNXF22n0DfRf0VYtrO_gn93vq3NZE74s6Q2xfL_KIP6F_TGC69IWe2wft9_v2XzlpbjyC1ZYMG10LAIpSxCJsaGfTeywRa1dkPfRJJYbWeglLo9RhFQl2TYYN0riwZIqUiFxDaw7xemNWD7GUfDPSRIz0j9C0u8gz1mQYIfpuRS0PTj5Qes12U55Bx_sovVdLemHzXHLZ1B0MUS7466cOY8YmDqDWq_DQ&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="DIMA Hirondelle "燕子" chinese food">
+      <div class="details">
+        <h3><a href="#" target="_blank">DIMA Hirondelle "燕子" chinese food</a></h3>
+        <p><strong>Téléphone:</strong> 038 18 456 78</p>
+        <p><strong>Adresse:</strong> Andohatapenaka, 4F5R+4P7, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 5</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.8922222, Lng: 47.4919444</p>
+        <a href="https://www.google.com/maps?q=-18.8922222,47.4919444" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcIyg1zRhieVkyGAeMXo468-OHD2UKHhKjJQYU_UyYg_SnNUxwyjXdeXO6jg6fanjT9lmwBvexDhIHLFefxYK7DjvpEPIFz6wBGn6lY-SmTplA7yHE8VPqvL6cgb4-7e3VGBTvbq3TMs8sAhGHyMg88zODteK0yP_zt0BzNzhoAlWWNDHF0VvDvap4K5mcgBrlbrGqmPjtaUyCiW5KVh89fSvkCw7hUj15X3RHXVammNDBYKL9M91sPh9nOnGtlZo8-_nFPosI5UVagj8i8RG7lpwSJL1QMTAwOSKvm0KhsNwE9P2P3NZCVaYV8KjZjdEAYrUkVgT9IuzdHwdPDBka8BAra1IMNFFJ-lclu4kuSE_HpjFvqGA9wx3y5oqBQ_ASEWFND2qLA6pPE79lUjn2TlWx6unZMQLBtvsU-_UKS71gyE8YIQX5gn02jLoZBX0-iWezDHxvPc077ljJg6EC6J8KLfQ_qv1tLT6CRuUDKLMzyAxuRfYL62UOlGWOAkStNYETfYI_dU94fUJ1DQ3Eqf19l547EC3u5Ik_rPPiWCNWRnI96hAAmt7zwLOlTvQcEbA43EDj4FRYTU_P3eFLCDWb_S6a9WGrf4mPU-agxmGK6ghE9smRpEihc_34mTku5fqsmz&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Le Petit Bouchon">
+      <div class="details">
+        <h3><a href="#" target="_blank">Le Petit Bouchon</a></h3>
+        <p><strong>Téléphone:</strong> 038 92 329 02</p>
+        <p><strong>Adresse:</strong> Lot IVM, 122L Rue Agosthino Neto, Tananarive 101, Madagascar</p>
+        <p><strong>Note:</strong> 4.2</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9118866, Lng: 47.50861709999999</p>
+        <a href="https://www.google.com/maps?q=-18.9118866,47.50861709999999" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcJhy19MuLFZqr-tMWqUf1vk4jj1hTwX6rILk38vpV6oYqTw9WLXBxrLY7dkN6yrowstqRJjRzNqbpkG3ItDD8t3c1cnbC-gem5o9-fEGaqMxiRBQe6AS4O1F_1IPIzUvICaLb-FJ2GHZHhsEOBjRn5abDjSCL6Kwb_QZPSfHvVGd-E70JhOaWahpRMu6f4R39P8sfHtZQ6mppDAH_HkLHwbcXqMr1Z60CU2JWFV_PeBB223yt63dzKoWHCMMXUh8_F4gnEF6X8loF4iDE_I6mM8EOqlgNsRkgjXqgmZJECNUlMLn2uuQ1fRg57DywAzaU8kuyK-zpQ&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="La Fleur De Sel">
+      <div class="details">
+        <h3><a href="http://www.lafleurdesel.mg/" target="_blank">La Fleur De Sel</a></h3>
+        <p><strong>Téléphone:</strong> 034 12 582 22</p>
+        <p><strong>Adresse:</strong> Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 3.8</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.8715948, Lng: 47.54260650000001</p>
+        <a href="https://www.google.com/maps?q=-18.8715948,47.54260650000001" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcL-pnaiIKNQUmym-SPVcFABSKiYw5a9ddp1ZF3NqprwZhFbPLAgDOGMV7pxScRG3tkVOzsxUYPuHggjtADz3-OCCOY_Bib2DhrpaV-6Qllug1O18nP4BgfK2Pxqfm1spkKV9en9w3wfpMTHAL-35GVl1PpjIDTbl2M6ujjKz7P5fafbxLCm_0cByXNCTmd6gtfhRctN4M7XgW157NFYqivcrIBcx3xzDAEZRK1ZtD-mmXhX_MAGqkEIl-bMrf2y3MjHorbbHkCAdMhCPsqpuoPJ44BZ9ajt0Y0IHfo8Vc6JtpXeWSO2ke6Y90cuq_sxC8e_oyqi2lc&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant L'EURASIE - Ankorondrano">
+      <div class="details">
+        <h3><a href="#" target="_blank">Restaurant L'EURASIE - Ankorondrano</a></h3>
+        <p><strong>Téléphone:</strong> 038 51 944 37</p>
+        <p><strong>Adresse:</strong> Face à l'hôtel Ibis - Ankorondrano, Antananarivo 101, Madagascar</p>
+        <p><strong>Note:</strong> 4.4</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.878855, Lng: 47.5212683</p>
+        <a href="https://www.google.com/maps?q=-18.878855,47.5212683" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://via.placeholder.com/130" alt="OKAY RESTO">
+      <div class="details">
+        <h3><a href="#" target="_blank">OKAY RESTO</a></h3>
+        <p><strong>Téléphone:</strong> Téléphone non fourni</p>
+        <p><strong>Adresse:</strong> Unnamed Road, 3FPF+PH3, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> Non noté</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9132497, Lng: 47.473925</p>
+        <a href="https://www.google.com/maps?q=-18.9132497,47.473925" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://via.placeholder.com/130" alt="Sao Kuun">
+      <div class="details">
+        <h3><a href="#" target="_blank">Sao Kuun</a></h3>
+        <p><strong>Téléphone:</strong> 038 52 403 86</p>
+        <p><strong>Adresse:</strong> 4FWH+CX7, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 4.5</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.8539721, Lng: 47.4799192</p>
+        <a href="https://www.google.com/maps?q=-18.8539721,47.4799192" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcJBxmaeBdnlwXYpMG9BVAsDuGY0Qe-6L83kLWIE9XTUcjNWlj1FuarFzGRVvQkmMiwHcS3X6KmL1sEMiAxvWICLzE_iMYumMF7Jo8PC7zGwJQwy6LxLyMatHxQ5IJW3115AFdSsxoj0xglkiS1vvdGsur2k8ypYB5V5Ihs3S3UkkPZ3f_RRlu8lDHpWFaJWkZZpBG8GucDx1DiMupVdT9T860eEGuO9Qa3EIE4V6g5jzxLmr4tXNrVv2YeRNuEMDMiVnWm9KklZdqwkNZwbRY5NPyQt6HIhisvG8UaCR-WuG2KjKDK4OFRKviH-PsmLacZBGxTlN3MpdoWweN6CPkW1n-IAi5zroIMzL4eh0V0IdaRFpfTRvevmDQLhLWd2s7eiyqwYgwPlZBVQoFSZhY9R1VjpqFuYYJKUUH0z_p_AgAoieE24M77XpNQ_t79GPl3DRdhypFqpRW1g_qCTq-dW8vIjoAafpDZY6cq2EVmU5foYJd_TXR64IHTiIQDPaVBClTcl29c7mD6MiOu7P-DbX4BQdZX9j8ExAT0_rDJVgpACS8jZpu-fyiJYkh0eYiM9fex9PY01Jb4gATeMuuvh9CfrCzHhFPvsyUqd0jP3npOhOk_AjRqV1pe1t8Wzu-foQA&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Chez Jo">
+      <div class="details">
+        <h3><a href="#" target="_blank">Chez Jo</a></h3>
+        <p><strong>Téléphone:</strong> Téléphone non fourni</p>
+        <p><strong>Adresse:</strong> 3GP8+FFF, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 3.1</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.913824, Lng: 47.5161605</p>
+        <a href="https://www.google.com/maps?q=-18.913824,47.5161605" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://via.placeholder.com/130" alt="Dragon rouge">
+      <div class="details">
+        <h3><a href="#" target="_blank">Dragon rouge</a></h3>
+        <p><strong>Téléphone:</strong> 034 13 058 26</p>
+        <p><strong>Adresse:</strong> 3GXC+VQ8, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 3</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9003469, Lng: 47.5219587</p>
+        <a href="https://www.google.com/maps?q=-18.9003469,47.5219587" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcL-dNcUoaXh2dA3xHrobCkBy81MU4UA8IIB4eGcGgckjpO78NWbmbl5cgHe1R-dF42XnjnumH6ZeHpy3UEG7TzabPRvahujA7zxNlxWhpl5EmvzLN_CVY0utTL1R-OUyhZob0a0Ks3jYfKUwwsmw7xz48sDgtx89BZZF1abZw9jPdt5EcSN4L3sTzZTtwbFjnpbwv_s54U9kvqHlfwprW3fvXyo75GR01aUMYm0jmSs9Dqw6A8m_MHYHwsxbDbHyab-tqM3rAsU9hSWQ5MPGNCnv0tTmsEOpesbqhxGpISKXYCK3dwNvkLshxp2l2n7mkYh8XnAGSvtrvwbJLe55k2_-oTU6rmADVPO_NarqUSg8DPWr3J2ORv5UlBLgURSn34PzusCisrzxB91C72XJoGiUy3GW1cOSsaNpZTnqsJLH1i1HUXD0l1o5Dhhdibb3hUemwlZTM6sH5q0QkQKVNjYEERcOH5iAAneVsxKpeZsVPFY6dGZ2bnngWM38gbqdrZ_2FUIXSZ_Urbj7oeow_fdZ3zmGTIC_oeqrVTTQ651lEs4nWSRD3UVrccv1rrUpg6e1VPcoSVvfbeGI2XnOmxPdb18I71NLH_NcRgfJ9_KkM_bmXt7aQMMJzSZPXGi4yz1aw&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Au bon coin Tàna">
+      <div class="details">
+        <h3><a href="#" target="_blank">Au bon coin Tàna</a></h3>
+        <p><strong>Téléphone:</strong> 038 54 546 82</p>
+        <p><strong>Adresse:</strong> IIM41, Tananarive 101, Madagascar</p>
+        <p><strong>Note:</strong> Non noté</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9119475, Lng: 47.5343492</p>
+        <a href="https://www.google.com/maps?q=-18.9119475,47.5343492" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcKDnKAmI15e2LpWKy6DrOjoRLYEeut0jtye3Vmn0TGlUT2-Wnw2oTTrTMW6UK-FfYeJ7IZrJX831O7TvO1cYFf3N2nAdvjRC_YvujPnWd0zIwUx1qqbXbWMuv_YU5RyEUkHypkV_jNbmhZDr2h1UpzSNwgoiJTz6iV7CrYJ8t68EuDXtRVFGN01a5mlbjPqQyeqcZDnVk_inZov0I_LJagS52q19hzusRQuKBoQqpTMn4fg4DUjLtzTkig-1TgstAYB9wvn7a28Q5PD5xH5P_H5siTzG3RynsuSe0rGpBPvJOMQTNkOewSUnkDUtF2mIx-9ScVVWscTxYP2dBAR-i3vRLPGJu1LZjalF2HdO15tZ6HbzNqHM8vx6TRmuF01hUEpthE_LYBFx5VblSTqKsLlWjvRNt_OLnyqeKj1pxmvOW4k9WKKiLPMkr9_DpomqpjKmbkFndxe1zAhP9FzQFJKhAE2O2oW4oEe9FUePntpfUewSaIYmYWKAsBOz1XKUsGYL7rgOimazrPF34fept5eV28Ckt1w3OOVoMUClUwn-XZtV0PDcQ0EVEWzCmMqg-fwRP8vRpZcjjx2ICuWDYOeLFNLENyNqmkMsrhdj5AAAI6ecV6euseFPDAB9hFyoO5IMQ&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Le bon coin">
+      <div class="details">
+        <h3><a href="#" target="_blank">Le bon coin</a></h3>
+        <p><strong>Téléphone:</strong> Téléphone non fourni</p>
+        <p><strong>Adresse:</strong> 3GVG+94V, Arabe Andrinampoinimerina, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 3.7</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.906506, Lng: 47.5252959</p>
+        <a href="https://www.google.com/maps?q=-18.906506,47.5252959" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcJ03H9qrzKtTduxj7s4AJEdDICbreCNS4dv4cPXDP5Vk3IFwF8E1T3ATEgjC2zWtvNq70_fiBzytO_LiCnqosD3gZ9rFP9x3tBTSpfYai_yj504cGSwxIL2QNSdefuBAcBFTwjzluKI2MVGt5IvYNx5JDeeSNYnVeOasUMAjeVW-eNo6vFTGDv5j6aEhAiMNe31lJz5PRYC6M4JLEhW1UMr24bCSeryQUsgdPk2WRNQx6G1yOxtBiB5LUZSPzj3i3rSEYFldU7OY_xq2964EXd0LLSAglWwnzECWf-mcQl0DuungmCFf9XS94x6YzU0EwVjbgBYN2L4sSG3hd72cMzNwGS0A7ekCMU2BlqERBaXQAXy-O5weXTmVIc8GfkwFHS5epqjYFpxRQEV1Vak2s-xYczS2jnEFJyqIJ-Es4fBLc4kcn4ig9JK5UTeXdWqLbcdH3wvORKfAao2mdDkUqHYnKzcLj-O_R1oKeL3HCV31Cut68fleDJ-wIIc5yXPvIoZ0tMxRY-nyjurBx-vunyZmuXM5iN3IaKkJsksktOApV_ELH0Z4g9oDyQJ-mHR0kknEu5Xf4eunYkScKBcDMVVeDOkkADJ8v6PQ1ZxifCHgQKbpWpOQewIi81QHIe3&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Miso Food">
+      <div class="details">
+        <h3><a href="#" target="_blank">Miso Food</a></h3>
+        <p><strong>Téléphone:</strong> Téléphone non fourni</p>
+        <p><strong>Adresse:</strong> 19 Av. de L'Independance, Tananarive 101, Madagascar</p>
+        <p><strong>Note:</strong> 3</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.90584909999999, Lng: 47.5240274</p>
+        <a href="https://www.google.com/maps?q=-18.90584909999999,47.5240274" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcJ3mooOshqPntdfU2jQS3Lb7tOvziqcJ99_hoUDHCIuT84cGjmiXr1Lwp4-QGt2ORrzkpmu-R42QuPsUY77ZweL3kHYxkTHyPMwnVh9VlL-0X2iufV9zUsbrKYyCB2PIHM7PEP7-Ijx_rldQJb73Vl-O4J7BDXa3WDN3qXdjXORYYh-InZ4Y5838pyR8tCF1bBWBPDyLeEVCG8ctstvRnTRjItMDE6w5TV4Duz3Ta5mAdX-9moK6YhFzcSmkj-R4nA__92khwglUj9WXAe0h9r7upEdE6CuZgZOVySxRm6oTI2nIUx9TWru0P-qR46HEaQ0olqle6GYazTbcS4HNpb3U2bGjQ93UYVqOG9oEU71bB_adpdq9v34aOzmHQfHP2IaklSyQ4rBIpLcWY8VIjsNcm2f-W_-Fo7cpEAcg0y3IieoAl6a8q1sT8-BJ9iJNFubM_P81JbwJQKNphVDXIOerSdv8H7P1FYTdiEUBlu9eweeQhx99BwtXEkac0tcLNRVvJa4fmOsrjiE3ha8ytxgK4Wd_dblVkObzkUDrlvwn4yNdWci7Xjod_8U2bEhMWmbe_F_0a9TrOCjYcpRkVvsS49-ELBHKO7IvHLbtI70qFJG2SYHHbEQXIM2Nvl7UK75ljeM&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Grand Resto de Chine">
+      <div class="details">
+        <h3><a href="#" target="_blank">Grand Resto de Chine</a></h3>
+        <p><strong>Téléphone:</strong> 033 83 594 63</p>
+        <p><strong>Adresse:</strong> Lalana Rasamuol Maurice, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 3.7</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9141849, Lng: 47.5384142</p>
+        <a href="https://www.google.com/maps?q=-18.9141849,47.5384142" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcKbtSD09Y2PtXLmbj0BNw6aqkAgncoGigK3eXNGHzXrAU_WVii697e_5Jm0ckSaX_dr_KWUxwUAiGLphrybDv6mp35sAsOieJTT6Fv5Oz0Ss0Y7SWq8KdzmyXUawUdNzTwnIv4PnvmizEW5JXUElqmzYZh8Jeq-mJLtfctdjoJUzJ_xOXryU9W6dS7O4Y8HProGRcNBD2Dy2_zP3eCX3PDwrR1-1iddKN1tqJocQ3X15jvFKAPx8Fkvug2W4wFrhx8lVmkt9VuJzdcxf8nou-campnDqRPWy-OHmwrL2LnSDJZ0tS9ooiwCvyG8nXgtR3eZpVIoCNp0WEjFYln7k_2YQvt-d-ZPGJ26jq521uKQmAoKs10NO9oaX8zpOrFPXCweWp3uzMtqLLXa0jq1O52rTWXPuDh7nrTqmuBEQ4jL_oC9FbJGKANkTugDq1K02gt6ur4XTvBBuNaiBf3dkN2P_OJ4DDoLa4MeeGbcMi38kbnTbWtLZpq0Ls16fBk_5wfd2m0Dzqm3gqvuXN7ls-1rd4QXVGahgAd1i-Z8c0Uh1Cbk6g_ba2QtqHtCBDPiJM7ZxTqcBnKC_UwKJd4VLuahY5MwRR5b4g3uIYgu-HK0n8B7gUfppuI5-Uw5x8POj3PnfgDj&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="La DYNASTIE">
+      <div class="details">
+        <h3><a href="#" target="_blank">La DYNASTIE</a></h3>
+        <p><strong>Téléphone:</strong> Téléphone non fourni</p>
+        <p><strong>Adresse:</strong> 3GP5+FHP Arrêt FOKONTANY, Rue Seimad, Tananarive, Madagascar</p>
+        <p><strong>Note:</strong> 4.4</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9137797, Lng: 47.50893949999999</p>
+        <a href="https://www.google.com/maps?q=-18.9137797,47.50893949999999" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcI9nZWaHr2wJIwbX39MiVhmM0dM1APMz__EewrUOAhOxSs22JmLSEpq81TDA2g2ijrUKTKVKI4udWX0e3W0bHzxO-qVbadzVgvX7j8q5fCfGRDt9eAS6I2XraZfv6ED5dT2CJLWUIKyGCS7XuN-88ysx-OR-dSgXJn8D2a2grfy411A-YT-ogfXWsA4vKWRYPnGceoN2_cJjjghdkB-rkPYMgYtEeJPjtDWDpo3b6AfJO1WkYVhlLM9gsuuP0K8s9Mno-PdyaDgBKRN9KvZFVA3y2LbF3mylhhK_suvETqw7Fblgg5KsxzF35vugbVZ8NhrKgBPlqHpByxUHU6IO4xoWGaDApKhI5scQwVrv4D97Xvsnnoe960t4NAvNexGnO1I-KQKtJPzVrlVktxf0pZb1hFaJP8EWNSL49At3iQTcXrOgRjFWCqMsPWTiNozI3rYYLapaxTceGMkWajNNW12BADK9LNpxtj57AaXn7KPeoSL_4YKgoTmqU9IwCqkSRYE_ujJlRHyTj0lvA8fI_Z99nhWysd06uvCh5Xoto98MAMKiD2hm5UCAHU0uxPUJPVnCh9UDLOTofX0XFMCfGeQb0BM13E6UFiU1xgDpNygIZpVxMUvclyY4SQeHeLT5LAc9Q&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Le Cantonnais">
+      <div class="details">
+        <h3><a href="#" target="_blank">Le Cantonnais</a></h3>
+        <p><strong>Téléphone:</strong> 038 16 983 14</p>
+        <p><strong>Adresse:</strong> RCQ9+9H2, Toamasina 501, Madagascar</p>
+        <p><strong>Note:</strong> 4.3</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.1616125, Lng: 49.4188906</p>
+        <a href="https://www.google.com/maps?q=-18.1616125,49.4188906" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcKlB57bWNkFm1QHD3JGteXqRoiKpP3YK73AGhjM3fEsyIrkriktveq4U6GWiE0NR2zUh5vlZydFIk5XH_YknqrzjeAbOQ-vBIc0MGYfCyAA99PBaK3tONDsPb7ur8U687bwAQ6ORs2Dlx8SOaZADhovLLBb5DK6tLZ5ATOSSwMhUd7xUJIDrPeiRMFnlKJB_-QxlRAnxSqVdEmjhfm7cDHDyS6C5GbhJXcB84vLfgh2VNX80SGkgm4rETCKTG9fgAD9K-AgSouumAoj6OAJRoVNsT7Rz99xtFVUKvZfkJexzAvnBgpGROseltM7TAwOL9mwBtdRlSGWECpzRB-5BHSmQ2XOIOfdo7i4gNpvIzgoC9iu8-CeaCN-1kiI_ENduHy16WOm2ZxJuuextqBmISF8nB72qPfWoVbI9VNF88mz6_tgNhLm04ZTXXhp2gXgTdScNz4vEe-BDfCw_UGRqHV36jceETp46uUllFeKHKQe6BzmnLNR9az2BqAxirB2PSmiiDXjE_06s73x3KdkmWcKjQoDgUeU4Qk2XXypC8OuMMK_5ylO_9TzVlxvODogaHUwfqpunuQNlrJQwKhLzHnGLC0JHcog7pQ2wOQzqpML4C0gWnP6NcaxS0e45cePm8yodMP_&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Le Grand Tsang">
+      <div class="details">
+        <h3><a href="#" target="_blank">Le Grand Tsang</a></h3>
+        <p><strong>Téléphone:</strong> Téléphone non fourni</p>
+        <p><strong>Adresse:</strong> 3GVM+5JV, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 3.7</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9070166, Lng: 47.53404990000001</p>
+        <a href="https://www.google.com/maps?q=-18.9070166,47.53404990000001" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcJGfeWhzRytsxvJj-i9HRtLJFGrdt9M3zYhSOvkcyjS_sDP9CdpplFn60n-m0OoScEi8Hm0N4dtf-fqM8-0_Cb6BuH-THapCUgEbs-UgML0F0AKGFzCd_lDvxi8b94bwE95PL2ecE7JretftuB08vOwiOWfIUALTp30zUtSicNtXuQERTfbrXr-pSQ-QpX10Mo-R7-Y3i6BT86RH-y8oILXxdk1oP2ZulU8kzTxxs7uxxBTCyKGkQAWAPwLak8Zsjk7Vv01lWZXqTv7a8LhKPFEpRXyPTFUR9Ed1ONvB8ZmDkKLiT6CCBPcpnXzUaasipomAJK3&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="凤城 Soleil">
+      <div class="details">
+        <h3><a href="#" target="_blank">凤城 Soleil</a></h3>
+        <p><strong>Téléphone:</strong> 033 11 336 28</p>
+        <p><strong>Adresse:</strong> Lot IVK 89 bis Anosivavaka Ambohimanarina, Antananarivo 101, Madagascar</p>
+        <p><strong>Note:</strong> 3.4</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.8729457, Lng: 47.50796949999999</p>
+        <a href="https://www.google.com/maps?q=-18.8729457,47.50796949999999" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://via.placeholder.com/130" alt="Bamboo | Le Restau |">
+      <div class="details">
+        <h3><a href="https://www.facebook.com/bambo.le.restau" target="_blank">Bamboo | Le Restau |</a></h3>
+        <p><strong>Téléphone:</strong> 038 35 206 81</p>
+        <p><strong>Adresse:</strong> 3H72+4P3, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> Non noté</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.93723169999999, Lng: 47.5518082</p>
+        <a href="https://www.google.com/maps?q=-18.93723169999999,47.5518082" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcLtXAXaNrqF3ukgCV0nSebtveGpnOqFYY0qzetGXupRffMS9BqZSVxcRGQDGmQLJg2Pg_FDmBJE4tIOc36vEC52X7rNcaA7lyMR6r-bxrV8PaVY059i7h1XlOk5tfQMtIH_FDtP3Rztt6Re8ziGUbYzVdzZYBMl0oLejdqFnT9NOiDmX0vdNJufBC4GEi2TdQFJBc2ozN3goiXHGy6ew__ji7LZ4bcj8_oJZGafUpm0iE0-qkUzQVmG4TpWx9ugcTWYrk3NRXuUP1_AP-_91A8mlx4-DKN08vA11DShpDlohCcg57v8vXCeTXL_OvFSiS_-d-wmvS43Gk4uJM6xi_LQQMOOeI7nGIudU70-6LKRInIuw0zolTlxpcOz9R7CnhDm6MU6QfYrB8UeiqZtiGY14yP49GZ443NxzdAk64OgDrbCDHXM9-qaYqblzlZ0PyZBQzacUw-Wc8lrzFkj2ClIoMRooWBpfq-vZ9Cqys8HbSLzSWpp-tYH71oDKU_8l03s-ZRB9tOy_boxUgr8aAghO-L0Q6xj6IBJ-awDM5DH7UB0i_XhZoWdyGHYi_kJhOua9Yd47lBjwP3tJsOwKxdI5jdLxRtE4_5ssOQ7OHcH-4cmTl0CItuGXIXD5NTLVJun09-E&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Haka Fy Authentic Restaurant">
+      <div class="details">
+        <h3><a href="#" target="_blank">Haka Fy Authentic Restaurant</a></h3>
+        <p><strong>Téléphone:</strong> 034 07 162 06</p>
+        <p><strong>Adresse:</strong> Jardin Historique d'Andohalo ANTANANARIVO, Tananarive 101, Madagascar</p>
+        <p><strong>Note:</strong> 4.7</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9186909, Lng: 47.53234759999999</p>
+        <a href="https://www.google.com/maps?q=-18.9186909,47.53234759999999" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcJBY5bzgPAIAYTlfHwooh-0HDtOZvq02PHAxpE0eKd0oUXocJ0jrSxXDU_FHUyQcF00gu9h267IGja9P7W3gaubnocjgavGwlXpJkLV3ia-Z895Qz-3wXWYCfCj8p3-UTn8wXDUdFF-0Mj8DLJy4hlBHqkU_-_3LHn8O3hsySgMHS4HZDWK2b0UQDdR3QG9IVTv6VYU1WOwOdlrgp1ksBqROSirs3ZHKkQhghftkqFd12ek1CThOmky0RfxNs7Y_XLvWDCJth-MlfZ6ey--oK_FZiq1KbzQZgEfSPI9csPNXZM3rLdT_UQNFno6i2wZ0QWTRjlWa3pCGE3cXtEn4VD2DKxfq-JWAlj2C77VKBxzsgXZ2FsKBRHChBHkMISUyJ5y8hLake7dPFHotuL4_7uJUoCy_SwJpoCHs-F0RU8jSFDD5KQfnTaFt-VS1d0NrzRbyjtnFfCR2U7zX4Z9KvRjfWY6OhdODy3UpSy49aiW4W_YsOchPANGRbuD0v_FJSbxybw5fwxJ9uEeiA_Hg1lcgzHxrUVG55EV8zfdbBK6GnhmfVj_5iRmgvfdhfppmT7JcnjJwtkFcmAyyfk0nNtyF_zstnSz6xjdi8TgxZbnA-7bwbfc_w9bCgnNPxojW6X45w&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant La Belle Ville">
+      <div class="details">
+        <h3><a href="#" target="_blank">Restaurant La Belle Ville</a></h3>
+        <p><strong>Téléphone:</strong> 034 03 244 36</p>
+        <p><strong>Adresse:</strong> 3GQP+WJP, Rue Razafindralombo Pierre, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 4.1</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9101641, Lng: 47.53657789999999</p>
+        <a href="https://www.google.com/maps?q=-18.9101641,47.53657789999999" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcIwQxmuj30K8HdMjs1_bF_GTrPM95ODkpo_huzUB1ddtf05FNZ7SCWPYDI0bbHAp0lyMdJQTPhxY41Ikqvck3v4A9jG6P-Bx11roTBaHHtAnm_969xG0UjS0qH_T7TUAEadymxQek75yOSuCeCagRqwLTecrxVEclcMbgRGzqRbyOQTLrT9HdspIqo3bcHdld13twnV9I6Z3FRwsbanRZVlK5fHwgBJYL2NofPdhchx9SBnN7E7mzegzbofbDnRcLtBBef8eJzSLKqrteSmzp7wk52YU9SXFlXkSGQ0rH_ZtwSi08ZjfPklGDsYNSWMKCIHPw9RepOrw8ubkgqBAQiqbAkgqiw6jQugxlLwRhA8iyhiYkccoMexMCDskYt3SNXlKOchDkKQEsQaax2V7kYKPiOhamF_jP9oN7cFnokhSH9z_muKgY0v3AEZM2_QJc45rC-xAavj8hsNIHxLu2srW0hM9cq13_Ji-eMhLgUw6ZsBJrBo3SEMIRP7oY1vAP1vh9O-9XwIHPc6W1Y0LqbMxt3go8d0oVQ0SQ2tXHYD7LDYsfbbmd6SR6Y6DshEiIrDuv7xSSxZSt6TGYLcSJeY8LVg6XGYLqVDoypPDq1S1QrA9nJIvI-AI2qg6jHxoGeXOhyh&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Resto Baraoa">
+      <div class="details">
+        <h3><a href="#" target="_blank">Resto Baraoa</a></h3>
+        <p><strong>Téléphone:</strong> 034 83 186 16</p>
+        <p><strong>Adresse:</strong> 3F6V+H79, RN1, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 5</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9385842, Lng: 47.4932494</p>
+        <a href="https://www.google.com/maps?q=-18.9385842,47.4932494" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcIYOflcvsKTztSaSHCN-DVM_e9Pt3cvuvOwfbEccr6yJrWZHt-j04r5c816fX4w4ffX-oWy0pCDIV3yoO025sl_1Sf0oYaNfOOBA5OsDBthaVwfxJdaPX_u_l3gdOeHGANXlKGz78a4iwNzlej6H0XZkbA3aGCprn0m_KUSlug7Msam1_iQuKA0pXyFIPiJZFVU2GG_iINl52xIDoGqZlxUBxFllDgKAWDqYHNsaAwwCor-ZpyBVvJA6YP2gybm7GoeEETVhMZBCt1gzDjRDFwB1tN4DJxY8ydjLCZtUFZm8L3Tu098yEEcjzDHbrmVoI85UqYu875zq0iPFv5VTONVQLC6r2sb26Uv1otpp5vkUlxnNOZjLFjI4qe4oJUGrnsjoHlxTlfakEcsuC7RmN8MD_isWy2nAOswlqAtI3gXJApQQ6sSzjx5EH0RdyMo0qfD8nWfqr4CtK4RXSg35memNbjAtVtOBo-M64TnAjoM99QYvnFVThw2_smSbo0jXvrcrdEvKYmfEskifBtLDSLomlOYOXEt1emf-Kw8IR1wSqxwxC2lDydZa-3UIHNunvwJWf6jTkKSdb9UMzHi435i4h1v4iUxPfaBjEvprrFiZP6kJeu3hPGIvLZCjWvGbmAFkg&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Lotus rouge">
+      <div class="details">
+        <h3><a href="#" target="_blank">Lotus rouge</a></h3>
+        <p><strong>Téléphone:</strong> 034 44 620 82</p>
+        <p><strong>Adresse:</strong> 2G4J+8XQ, RN7, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 5</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9948473, Lng: 47.5323775</p>
+        <a href="https://www.google.com/maps?q=-18.9948473,47.5323775" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://via.placeholder.com/130" alt="LA TABLE DE CHINE">
+      <div class="details">
+        <h3><a href="#" target="_blank">LA TABLE DE CHINE</a></h3>
+        <p><strong>Téléphone:</strong> 038 47 253 32</p>
+        <p><strong>Adresse:</strong> 3GJV+JRJ Le Colisée, Tananarive 101, Madagascar</p>
+        <p><strong>Note:</strong> Non noté</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9184218, Lng: 47.5445059</p>
+        <a href="https://www.google.com/maps?q=-18.9184218,47.5445059" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcK7XewfbWG0IbTbE8TpwmReNuJeaE9O7JlT53YpSgmYY5MnpEx65eTY3CbWDfKXMpa8QfAgoil6E2rUkFaWQnnwZSmnzIkeg7_X3wXvClC5Pg3f3hyUIX8G16NmJOtE0aaqNP6xGzz8r8MPPka-Gb7k5ahRuCZHPqcdM2kHTCKJwTax4CT8uurrcMYcPFQ0mcNZtq3rK3ISHB8N1blD4KG94tm80g8KEPJK8_gAdr-WbkSCLl-O36y-k4ofKnywaF5nXoTK23uS9GnYyejuo1AAgJ2Ck_YwqM7S4ETTIDJDO9md9JQW-SOMXsMZKcbrAfmVNovkXsLn95OU2m_NL-547_sJbb8ux0vJUVjsUBHIHkgCKD4gf-wdEdpAoiYftgfzI-TjgRcqJnmATShLxGXicjvdjAYb7DMC_Lht4LsDZwalIEKonbyxGRmwkI8VsT4N8hFRrPrKiRpzQjQ4I2dEpij7P2j6QxgjuBz-i63OmTfm2QgunsOoAxBeVjWYKO2z-0iZHo5ubRVLagwC3Ff2I2M4vciWz5jpzzl8krYRQ_HNIGrwu7Lh-UmGak-omHz2usgjbTjvqZxim8HUmmWFziGbBfXQ3MFZFIDse1U558bKRQLlIq6cVal8CvsGDmklTFhN&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant la Saveur">
+      <div class="details">
+        <h3><a href="#" target="_blank">Restaurant la Saveur</a></h3>
+        <p><strong>Téléphone:</strong> 034 03 810 22</p>
+        <p><strong>Adresse:</strong> Bypass, Tananarive, Madagascar</p>
+        <p><strong>Note:</strong> 4.3</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9360875, Lng: 47.5699411</p>
+        <a href="https://www.google.com/maps?q=-18.9360875,47.5699411" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcLiQ931yhC_Yv9EbcxxnSym3obaSvQvtDJ-Bwujfrsj0g47HRV720NuBsuy1y_dYr0jlc3wbnZEUogqGefD1wbAjjxd2mjHbF8qzplH5GxjZBH2zApq2czXBaDczsWCDv2a8rpCnzfqWkXrzT7R6viQKK0yFo7xdRurh9YAPJtCVmZ5FP6rmcqUnFhdXS-h4gyuG5t2iim2tOUcte7ILonhqA-UJtCyqUHXszNYHf-ySs9bcmDFG88zHOcZorJl0hSnsVWXuHYIV7lbKbdzm-J0b50d5dGCjmalCkY0G7Fo6Nw5KuF7yyYFxbGUTdA15CaMoZRLmLJoI95uUi9ARDwawGffcaFFfjr1uQrMDeuYO9dPu9oWnWu_dRdcsuClCpMkHorkBYwKLDTi3onIcrcKNUcYhX4F0c6dsLcbdNznkZ0nRwALzguqKfO9MnXMdY13Z9XcmiKWWZDuzhkP3ejGjW0N-TELael4OreOm4IiSD57mijQCfmrf-pdAczMW_KyvizWYNd66hOuYfRt1YgRI7JhYfNp42s9eUZds2VI9SL46rhd5pCQQnwu9oGNQbKKlhsydiTsAbf4jhTSEDyTmaqyzac_t5WTzu5dch2_I0u1U8Bvji2ntgkROAQOjHLSCvCI&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Lotus Blanc Restaurant 荷花酒店">
+      <div class="details">
+        <h3><a href="#" target="_blank">Lotus Blanc Restaurant 荷花酒店</a></h3>
+        <p><strong>Téléphone:</strong> Téléphone non fourni</p>
+        <p><strong>Adresse:</strong> LOT II W 23 B, Antananarivo 101, Madagascar</p>
+        <p><strong>Note:</strong> 4.7</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9134037, Lng: 47.5377744</p>
+        <a href="https://www.google.com/maps?q=-18.9134037,47.5377744" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcIgwm23kOp-NhE6Mk_5-jl1WlsIPWdQB-HXiaz-gTDYeIkRKXXoVfRdqsUJwJJCLnRBMCqAFOgmGtabAwbuqS_SA7Z2Nc7nmoGmPhK8Pi-BjJNaeAHrIU8B-Jc4fIjkGDtCiZjIE9H1ePwh3DON0G7GqLeNp0wfJBkIksnO17EzbhTMxvCgTRWi_9fs1HhV0ugBqj_u5IYACXb4LkFjpjxP53q-4FXBu-rNMtJwN2FpqJPbWb6H83TkeRivlsBNVNOs3ZCEMVA-pdlbbU6mlIHLyUm3tuRvGkqtN2vWUdnwgc60hoYtFnancUd1i1gOcIcK6q8oTaImG680T8kd4il5T1hsVahPjzfB33vx75xqaTtaNbmx3DHVVakDOzxIyqRzq8Kd_2QOJ6fOq4DpwpTEWFYUqgE5Pa4Q3tyKtLAHhlR4DY0WB7IV2kAEDaSZoF4U4g2Zo-WE1AUv3DOK_Luz79vtl2LPCA_kRK8Ws9AG_oNUnvjYawSzE1J5-V0b3jbmsh1m_5wPdSXl2SADujtKLF19m2Q9LONZt_OVVnSreb0G4ax6686mDnuEd_4qmEsUmlBLnBlTr1wPceT0fPfHqoavdy4JMZeaAb29YkWN-dNfK90lLuhpMT6v0iuggaK4Hw&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="La Cabane Karaoke">
+      <div class="details">
+        <h3><a href="#" target="_blank">La Cabane Karaoke</a></h3>
+        <p><strong>Téléphone:</strong> 034 11 076 93</p>
+        <p><strong>Adresse:</strong> 3GM6+CV5, Antananarivo 101, Madagascar</p>
+        <p><strong>Note:</strong> 3.8</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9164974, Lng: 47.5122408</p>
+        <a href="https://www.google.com/maps?q=-18.9164974,47.5122408" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcI02wfavyNpzBWHdveFIYq0qxZtVfTyxP5i3CCFreGNbciQ45xYJ8Js9nevm-QV903SGK9wB5cOHkMnruV7UrvIynMn143zqFaqt8tDs6sIcw-aH8Wx6v7Uo7_mG9aLNAtb1oFz6CeVurjYw3k6GHvQjLMccdHXqv4mLekd9qP8EernR8EHDeQWByydDOWBTn9yc3mE4bkPYVo0xe0MIHimJAnd5TFz3dNS2BIacqtTB0P4XMGPqhzHuD9SaYylCQnHjYgEbSPUqNTFZ8Lx_nbbWgpPW23-1AK86Y9spVQf16cHenkNWrk6dXou4d9vhQ9S_1vMPk_GvHMmBapisOgiC2sbEObmQIXRo_peiSYJ91cEbSrvTWR8NJGONPrbymyp1LPdQ-nyKrjEY_QTkBBIsqmPMRX1-oEF4rCSbiCvvmIpQd0IJ9sLBXYkKmwsYhqheXxLqffov9QGw617hl5RiEnkfraIemduS2iZlJo46OEtD6Tl0KFhPknxjhGOQXd1xBWEbnAl1cL8Oi1-A938lrrpoo_YOptXNvq4x3YO1uDtSoueRescwD-nD9iTO7kcFhjvnM1ETzAM2XBowFpsZIpQEqL6Ico4yLVdeOj0EoIrxnaAyvR28RbSRmD3B0OvNQ&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Le Carnivore - Restaurant Bar Lounge">
+      <div class="details">
+        <h3><a href="#" target="_blank">Le Carnivore - Restaurant Bar Lounge</a></h3>
+        <p><strong>Téléphone:</strong> 034 05 125 04</p>
+        <p><strong>Adresse:</strong> 66 Rue Ratsimilaho Ambatonakanga, Lalana Ranavalona III, Antananarivo 101, Madagascar</p>
+        <p><strong>Note:</strong> 4.1</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9132425, Lng: 47.5271887</p>
+        <a href="https://www.google.com/maps?q=-18.9132425,47.5271887" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcK9RCMW88Y7VesYpIZ9hsCXeT0OS7VjL3_k5YAcrjTaB5KCGrFZQvy_WvdmjARXpKlqv9RWuy8EWvws-rCf3P2ywihylRgZoDDmV1jk9gOoKWSGLmzIAorI1k77krx64LDIDkfiyJEOFMjCAN_gdNnBjvju6HEtdeMD5EXiz8mx4FFTW9m8M-HW3NUbDonNHRvVEGY6WRxuIx6xW1Tdc5l0DLTO7a-WnUVlXJ-5mbSE4VJjevC2Bua_3LZ-OD2j-1KWnRO-Mcj4fvlQV5fKD98Uor3PUZS3umHqtaGjT3j3JEiXuFxxIufNrlqX2ld9ushThBIKbA4&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Cafe Ilang-Ilang">
+      <div class="details">
+        <h3><a href="http://manila-hotel.com.ph/cafe-ilang-ilang/" target="_blank">Cafe Ilang-Ilang</a></h3>
+        <p><strong>Téléphone:</strong> (02) 8527 0011</p>
+        <p><strong>Adresse:</strong> Manila Hotel, 1 Rizal Park, Ermita, Manila, 0913 Metro Manila, Philippines</p>
+        <p><strong>Note:</strong> 4.6</p>
+        <p><strong>Coordonnées:</strong> Lat: 14.5829586, Lng: 120.9740874</p>
+        <a href="https://www.google.com/maps?q=14.5829586,120.9740874" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://via.placeholder.com/130" alt="B'art Sakafo(recuperation)">
+      <div class="details">
+        <h3><a href="#" target="_blank">B'art Sakafo(recuperation)</a></h3>
+        <p><strong>Téléphone:</strong> 032 11 019 41</p>
+        <p><strong>Adresse:</strong> II M 66 Bis I Androhibe, Tananarive 101, Madagascar</p>
+        <p><strong>Note:</strong> 5</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.8625214, Lng: 47.53983350000001</p>
+        <a href="https://www.google.com/maps?q=-18.8625214,47.53983350000001" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcLWb125Z5M9eBunUQGaqBeg76cDYEIe7S91Rx6s2jZzdJhmJwxLM2-GHFy8xmQx46lrCT__Lm0x3VCqatHPQ-gmVfNX4l-kNFd-AWCsNHgTaXF3SgaNvxzKsi9hPKHRd6UMuncRzikA0wtubHMMijdujb2ukr_KuVQKW9UhQ8W4AZnY9TYldmMZHiHt4xgKGinOcCRKmtSM9FtdAVc81WIfyydAZb6tf7Dv034tEAjvm2FA-05seFTPoZaqjtElfVNdCtvrUu9EyPWO860Lyp248lwOjbz2eeichD3GmIwf0lXPOC3jyiBNYLTXYkYXO9Mvdo1jHjqqPVBygcAqd5GHV4pV8C-IIWO_b6QF8PszpK6FcaOOA4bEPqg69ScGqUQO3EuKpAe_Wesr0fvwHnuqcevULQWtkCaUW5vVu5mRrC2aAjXuUnZLe30nr8FZ5OtChEs-7P9Wv8HiiXgrP0LoCqAsOGmQqPmBe2ROMbZyTj1ofNwhNPkQFchokkaGsh8UExwUeCw3cDBdRr1HZ9bXKxeoW_GezXOFQJi-qGf73StHK9LMPro3jofFVaqm-LlHwTLuDl6Qxx6o3Id51JhAum0tV7db_bMwRAsAuvWKcMHwqgRYOJH5jnp72qaoiyp76w&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Le Grand Orient">
+      <div class="details">
+        <h3><a href="https://facebook.com/pages/Le-Grand-Orient-Ivandry/376251039171562" target="_blank">Le Grand Orient</a></h3>
+        <p><strong>Téléphone:</strong> 020 22 202 88</p>
+        <p><strong>Adresse:</strong> Rue Andriantsihoarana Ratsimbazafy, Antananarivo 101, Madagascar</p>
+        <p><strong>Note:</strong> 3.6</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.8698272, Lng: 47.5317034</p>
+        <a href="https://www.google.com/maps?q=-18.8698272,47.5317034" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcKq0P8HGjr1GQHs-lWHpkIeGOoOJUJknXM99eT0yUkrq9HGjRz9i_9alU1h6amVzCqVwo7Yh_f5yFSkwIAks0FmJkEBk6AV6F7BfAySqrRdme-EUs8KovlsVRU4JQ3-tLMiuI-P0HvOqVRXct7IixHwWSnxrrW-vvHdUUCOOtLlaBq3IBAcByOZX5iNyp9Hkzn8ZycnQDWUjiB5f89wkQxj7PL8uleoNQtsdvRj5HZXKaqOAHD_-Od30oyTiJCfKlgzz4L1UcBuuYDijUUULCMJeIpRYNn_D-jtuMzbwTOd1DHuuIjWn3KpIyV5Iz55bcXGkAZrZywxSuSlIyWaP08ILoPcQQ6BUbLAg_S_dQgVjb9j5q3ctgpcSXj_birfeHA8V3giu0XpjgjvJ8CaK_41wAEZ1OuBJEwunpG6imF-ks6v9JNt0VlMFRTUNw1RP_C1Y5Ky32FUyzu43vzQJM_6C4RzNJuzg2bgLLy9HA9dwehuURNoN9jUu0ohUQqvPw4l6heb28oWD8Vqxipq-aOStN5znkHiptcnSfFlwemXN9xjBr1SB7zrPA1gAlB-Ab0HyKW4bew4roMelFV6-BY4FCF3vMS8XtbFrsc7efAoycaY9pl2IcHjAsraXiMvH8cIPGL6&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Grand Resto de Chine">
+      <div class="details">
+        <h3><a href="#" target="_blank">Grand Resto de Chine</a></h3>
+        <p><strong>Téléphone:</strong> 033 83 594 63</p>
+        <p><strong>Adresse:</strong> Lalana Rasamuol Maurice, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 3.7</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9141849, Lng: 47.5384142</p>
+        <a href="https://www.google.com/maps?q=-18.9141849,47.5384142" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcLhOHfHHrQf9bTjLLNw6DB4SCKIjo_JncvDx9PcLVvQHHz_AM6o2WoKiLx_7nAlPldipnOHsCzmgC2g7FSxqSOwUVy3rDD1Axgifj6LKWITzYNkEEiJZ_KWQ7cd898gKWHVXAVxrJsFmm-Kz4skhYQqBy2iaLlhkzd0l7MrWaiouPH1jJKoFZGuqs_yS48lTmNu2E63HYRnuW1Mq7sOt6OxDzx5AY9oySkAq0fGuC8C18eTM6bVGJrOmayiW8uvZyCBkS0Qybg7W6u5F2KSmNkMW3VTzbsREmKoN2jrKN9O6yBO7NZgObN-J5E0Bt680xONZD8k7gc&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="La Fleur De Sel">
+      <div class="details">
+        <h3><a href="http://www.lafleurdesel.mg/" target="_blank">La Fleur De Sel</a></h3>
+        <p><strong>Téléphone:</strong> 034 12 582 22</p>
+        <p><strong>Adresse:</strong> Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 3.8</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.8715948, Lng: 47.54260650000001</p>
+        <a href="https://www.google.com/maps?q=-18.8715948,47.54260650000001" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcIWrOM_eOH62E6aoOR-5ddYElYZ-xfvzk_CObeyr815WxhRfaAKITxNdwmExO5Ld8OtIbVCedUoMMRxWFWgoxCqbKlz6QHetuM8Th58nh2IhYQjCnC_SCq5ZGf63aLz4BH8QzX82y-UEZ0_JaYG5xaN_jlrTg46Ms8ta-rmgEt6en44Tol-S4xwC5J1qykshQunlM88U5NTCOcLRar2KlqJj4CpPlvhHRDCO52myuTc_TerlOZhk1FyD31Iaq37mkt8mIQmJgcoC9mx95B2K3gz8Reyj2VnbuDm_tENLSw1etJwK3CEapiPayNjhZHFHu9lIEgbyQOcRm89ckhYU4TGXDxYprcv-HA0ojxN_zD98dyI12q8TbL4I2CmWpfyywlb7Rx2LBotCEC0dtKF_KpK3-WK8WyYR3XnwET29Zx2d8owFC0aumGCnG2CcCWG62uayQRVQUCoTkCj89ObVZgsVhE3moN1NQ9EV5LGaO_GPBxWbbmlHJZBgZjqvYEtbf-EvnUgoKvV0MQnwYimMXNP79sAZ8qIv1P_4H8LwqYpw22SbTMWlulHSDwWSgosNvXYvppkO5cVCo74si8mv3GAICS8XZ0-Fv7c0wuCqz6N1KPHREfc2IzdRArG83ZUjGASKx35&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="La Jonquille">
+      <div class="details">
+        <h3><a href="#" target="_blank">La Jonquille</a></h3>
+        <p><strong>Téléphone:</strong> 020 22 206 37</p>
+        <p><strong>Adresse:</strong> Antananarivo 101, Madagascar</p>
+        <p><strong>Note:</strong> 4</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9093258, Lng: 47.53688959999999</p>
+        <a href="https://www.google.com/maps?q=-18.9093258,47.53688959999999" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcJg77tKSxi_vu056e9UfLBNrRwmATZXkwGkPMWhEbucTJFVoxeuNmN-wFv33lw6daImXT0fK3BrVyJjkGg9D6pVIOO2hThalCq0Zenxpe5PKopnhfcDS-MtJwZ8CZS7ilpEqLPb9y9Lng5k6LZ5o91a3k7Leotf_r1eCl_NCLg-DSt2S-OuaoqgoTFBFEzeFozkb9ZCZXuUqzoNJd8YLfseNoHYf8oPCsKclL4trVp0uqsS7RS3HVbCVz26Nbfi3GtDgQ49SfzG1erUC_NsOlv1HJuhud6fgqrMk23Oykcj-VOs8BYgqPgBU9mEHUPb0Am8Dx-djNFWzvCPa5k3J3HMMYjsDPCJgqsrTDXizmQOTQBQQYGT9pzzlliA_5rdMpvLxp4JUuMSbiudMBTNLQshMVJkLdUSk5acAp-bOvvZpmfRSi-5tEsBZtRrVcfQngm-e1c-NtzWRhedU-UPa3yoURXzoYomyEbf-c8dVscg_t8hag4-aTF0E-0wHYVJMcmH7fqoxNhfYc3-whyVo6jvn41QJxFZ3g2XhllXg4jK-gytpGaHeGbU2DEdAVwfROU-tWeGBT0Y5WHhRzQK5XIJIhGja3zQlw8p4OxSyW-gdy3mHqpUUfTN4Q5fMgCYfqadSA&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="l'Orient Asian Fusion Restaurant">
+      <div class="details">
+        <h3><a href="#" target="_blank">l'Orient Asian Fusion Restaurant</a></h3>
+        <p><strong>Téléphone:</strong> 034 36 788 88</p>
+        <p><strong>Adresse:</strong> Madagascar, Antananarivo, Lalana Rainandriamampandry, Lot Siah邮政编码: 101</p>
+        <p><strong>Note:</strong> 5</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9072494, Lng: 47.52803729999999</p>
+        <a href="https://www.google.com/maps?q=-18.9072494,47.52803729999999" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcJBgM1iWdeD3MojQ8QdOFMMacgmvhw1BGYirzheB1Pl_F7qHrqfEle4quo8JNBLgHijVAxDxIvnxPgOQZ5c5APwf5Zg8RE7zeK1GfhO4vfHc9mt51mZ_LIV60mrHKt_qWQ2g0Q8XH5y-xnw4UEJwiC_hTtFIXlt0Z3eJXNiMZSSCDsQBRYhAXPDSzqX1JHyDOyL-r1QdvLAr6_KB_sRX_M6KBplDfvd9L2MuMsprYnAcb4_f8hmpntDqB-4d1U3VLi8UkF-TwdwvENGC-WuSaTs3ZThtJVxBm6xgSGfm0hWq50ryDUG5vN-JJgia7Q8-cvRONtz&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="凤城 Soleil">
+      <div class="details">
+        <h3><a href="#" target="_blank">凤城 Soleil</a></h3>
+        <p><strong>Téléphone:</strong> 033 11 336 28</p>
+        <p><strong>Adresse:</strong> Lot IVK 89 bis Anosivavaka Ambohimanarina, Antananarivo 101, Madagascar</p>
+        <p><strong>Note:</strong> 3.4</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.8729457, Lng: 47.50796949999999</p>
+        <a href="https://www.google.com/maps?q=-18.8729457,47.50796949999999" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcKIR8hGVUKwz054IPCviYGKEgbv-TfM_526OT1tVzpgvi4AvGwPW78DblojCBfqV-3fnjpJFCY3WyClNwGqMlVJpIPnq8aJBq6JeUSSVFhxNazZGUik9EHDPCdYz_5HCBa7Cd-QSKDC3Y362VTBjp7-mS17kS0JxvclTJ8riOcbR0TCvYaY2LVb7JBtpgRpJvbCv75geTCk4BiOtNgXhd6sjCarG4IKW3EhfP3WzQeWDHRR13RM35VmNdEMkkaHh9ICMeLXO1qcVai3eWF5JHhaLyIJ-NPTIRa9MYlsfvVLrLb_TIwIObMkj48e9AAxfYEYjHuyBpqDyMQZNdIptqNMbnOGDbfc9JCXf5UtQoEFCYDDI3_KzRgDYnCjOsr5ZErNagWX5y6n4SxucN0TAqKcCAAdH8UU4MUWEsrrfm1CaUVgCwHRRMa2Mk__e7bF8T1CIdYpsec1yOlzWwVwxOu2PDqRyuxUpZOh4V15B1uhHIOl9LeCUkyTo_RN0toC-h-cLd4tPo3sbXC6Ewb9GiWR-YBR_hOWFct1boZxKn5oEYzQhgqJqrPrHPetp7SvQMHuv9jD5zFuMThizk40W5-sg00ZJLvnHo0B5k_NqMkKjxvqLUrlg81UAPBitIdLxD_hgA&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="O Loft Chinois">
+      <div class="details">
+        <h3><a href="#" target="_blank">O Loft Chinois</a></h3>
+        <p><strong>Téléphone:</strong> Téléphone non fourni</p>
+        <p><strong>Adresse:</strong> 4G39+2J7, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 4.2</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.8974503, Lng: 47.5190589</p>
+        <a href="https://www.google.com/maps?q=-18.8974503,47.5190589" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcK1p9bcIpogEaDBJy7kp4uUxOfVEW5cD4ZVU2gHuVR05mO9T3Ui4gJPcqUizgziobVIlUO_ndSoZYIpDcgPX5ieRH4GDMJbSi6hJnUYb6g3NAMrNbtA1r5LYPbR9g4dXd_oIPrD7YnxD4QqhFFye-huoVIarYh-M5tzTOIPOcW4kt4HA3VUtdsGfjJnbQWrgj52j0qY8Z2q0BSYshtBQMe-MA8riD96EwFcbQXt34W-jkJ3nzJs1UdijMEele9EUznVEANq2eBWAcspaex1jXhjsEjsKGl49eGuW1DXA5bO88ydWQyadLHm45GlBnFwaDhao0tAZjIxiEzvaJwIYky_fXGh6Gbl_175Te1k3GPym8m6yFuxmxo71ZirMWsGYwpx7gM_ajaAH4LR9uAGZNrg-mLyI8V9zx8AUxFWUk0G1yPcTpPdCrFCLA8tjwcMamMytx_-9E5a8Dc0j3B1YxNZXFUgagcKuTxDxHvo1bb_RBpw7fn3egzo3EaKSqrTfEctblaZ_SBbg9UCtso4jdlYJaItRdmBDLMegBEj_et2h43jAQwuopXzcQiFQhTjOul3aIs19t2wP_Ssg7xTzIUcxtkj3kj7bM88vGCllhST8azGTjgDzIiIeSiFdJSc&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant Shanghai">
+      <div class="details">
+        <h3><a href="#" target="_blank">Restaurant Shanghai</a></h3>
+        <p><strong>Téléphone:</strong> Téléphone non fourni</p>
+        <p><strong>Adresse:</strong> 4 Lalana Rainitovo, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 4</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9088825, Lng: 47.5238114</p>
+        <a href="https://www.google.com/maps?q=-18.9088825,47.5238114" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcJnyVaYTwCumfVnrIqY7Yug5qupBCGI9_CnwrqTodXOh3CFYbL83DGANJLEA_jdWx_saHmE18YCrdlSfE5ifGB5a7kWdBMJRJVYO_K15FUIIxuaYyfvF4UuNpJJWrr-uYXkVluYXN8XiCADwWbF8r113FrUu6LnTG8WHUmjvkV1Gqxi9EaOzopgUFKzJl-U68zeP8nHV7h5Hda7W8HjiqljUzV2rcA2SGekB3ZlJHYxeSvLj4nXlZ2EHTCU7IOirwIGjD8an_1kpxz6c9lR4rczWadljrEMXjN7pfYc4drJV2o-4CgwDYWMm7AgUbxRPaV2HqzXTyczOffUVKz2GBDD8sCdZIiCNV7Ov2Oh9G1LADLLGtAgISjBGwpYSmt7JnU54AI_oXdGSmMY38lteaSvCMqojs1aN7hkKMwIBXpTY4ztbGooTwvSDEnzqsHGRY9Vdh8Qs8K8HVoiPxR1RozBe55pwiMRrzmy85jvuOjavfqj52ybwVax81EB8knqso3I6vxLkcuKzYoOuMlE7EsgJnko2450cMVHzr7EEiEVr1cLveBgu8W7xIoEwDSiO_FbaJ5B_IGbFiVbFtUeUtHV3z7Wp80aiHlYiYJ7iOgL1lo_TL9Z5pcVh0ggMEix6BrbKg&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Zen Garden">
+      <div class="details">
+        <h3><a href="#" target="_blank">Zen Garden</a></h3>
+        <p><strong>Téléphone:</strong> 032 05 135 03</p>
+        <p><strong>Adresse:</strong> II M 38 F Androhibe Antananarivo Antananarivo, Tananarive 101, Madagascar</p>
+        <p><strong>Note:</strong> 4.5</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.8657235, Lng: 47.5428709</p>
+        <a href="https://www.google.com/maps?q=-18.8657235,47.5428709" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcJ5cj-G5V90r_CQwliH5f3HNmb7hh3noCmMNS3yf6BPtkhNkTwo8r3tB2MpXlWnr_YXK3aKXgLnOAgKvMvwDvc41Z_TplnQ_yInhij-sTQZPfbywW4lGu8tEkGzh_8sdd5QthA6ug_nKt6FTIvFsNwHM_9_1d8xcq0H0OQln1soCzVfUQVjDoGFrWzHLYK8JbeGwSDIlEQAHJhLOT1NySs-ZFMdoZQOKIVnCAArEr9ywV1W0YveA-QSA71m9tno6H5lQAA1C23HA9Zm4Okes1A57ESxsPqviWojD1jDUqx_ji2cn_4envLOWp2uBvYhaYMNVamrh-8-H_WxhYyxPFBP3ySuyXrET2i1w594hwAvuPHFcwwixxGSdfC2P3yTV7axK62Maj9RH0k85HIKetXNgWcMRCkUuUeRfzZKFY6MhoQAWC6UqJa7OA-NfSYWqxY0kqbpP1-t-HcLYSkmwy1xjMz6JeGek7Yx1waf1voGCt-3WTgDKnV9tN06J3ZxeisVgZ8LHGvl3hAc2TIPdztnxz2ouhOZTpf4CyXI-VYDJ9byLRgEDN2yNrJCJZYLUg8iTBZ-qk5KWRA1779CbWT5gLEzZ0enKJ66SOp_5xul0_uvRu3sGB9URIJPFCyY&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant Fong Mei">
+      <div class="details">
+        <h3><a href="#" target="_blank">Restaurant Fong Mei</a></h3>
+        <p><strong>Téléphone:</strong> 033 25 571 99</p>
+        <p><strong>Adresse:</strong> 4GHM+JMX, Rue Andriantsihoarana Ratsimbazafy, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 3.7</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.8708938, Lng: 47.5342498</p>
+        <a href="https://www.google.com/maps?q=-18.8708938,47.5342498" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcIGdTvOOOUMcjwroshuIgSXlST2NUEVMu9vK9STZmertTkGATZQMwTi9O-VA6pYq7_kwvZNJpU9qYoNbXoPAPWFO4yrZP6jrJlfUZa0uC6Xk5BjONY-IalApPYqzGx0PmWxQOdkFLtZKJq53HkuGz8x2vHXFgErzsi_wcHVhgy9PZssnziVRliEe0dwEq5hY0fhwnOrMGFMIFniDfcm9Je-jMweVjqt5r25GFreGx3VF8ztYvtYHqVImbGlW8Qo83RNfmigw_CwnKhWd7BEzChCWIQjXkWdhQklOUJqdVwK4yp3yGVfdBPh70rzRikTIDd0woZ0oUU&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant L'EURASIE - Ankorondrano">
+      <div class="details">
+        <h3><a href="#" target="_blank">Restaurant L'EURASIE - Ankorondrano</a></h3>
+        <p><strong>Téléphone:</strong> 038 51 944 37</p>
+        <p><strong>Adresse:</strong> Face à l'hôtel Ibis - Ankorondrano, Antananarivo 101, Madagascar</p>
+        <p><strong>Note:</strong> 4.4</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.878855, Lng: 47.5212683</p>
+        <a href="https://www.google.com/maps?q=-18.878855,47.5212683" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcJYx8ogwS28cUqGXqjvpu-68JNUTxN-lm4oqSZQX5gMVGMIMkZzGgrKKe3krBtZr1B3msu4CtcfWx7ErqscAgjyrv7uNZ0KeIj0mKCVFrApyNDrcqxLb44lzDYq_RB7LlUM7Lsed3G9q2QWwFyujHRqlbWl_lOZ4EPj5RKje1jsBvYPzBmIuwkvWLMFm6txx3EzRsnPgBRL7FluQcgEkADLNyMlE_G7zOKzAGMf7b0QAdmHaJbksmrBY4CU0RqKHHIw-NcGrR_mWOhMy3WCMSSlxL_Arqds1MagXrjpF0YtUmj3n9sxAuIY7P-ErV1qmP0OoD7fz9nXre4uYO8oDKN7lH-7-WANFIBTl0EClqhpL59uVvBjylEytDVkl0riGeejDDwsYtwiwiyxOW9eY5iBiEo27LEQ0dXMI1RJQ3pATgdLJkEYaaTg0IXz5IYKD61HPzUg9eWy8f7GvPfz3O0jaMhCfgA8a7b6ehxcTfhhQJ8dBVPQzHfpfEDxkOwQF-FPgRQ8r_nUB4whA7-M-RJmT8uwfCVJiiJEMLg68NE4WlkPfnIIBPX0TkQw5kgIEFLoNVGgXPTUJl9mC-w-EEQIZq_TOrFPb_ckrhTmjNhGDaO0C_xwfCXjD6kWYVpmp2xODw&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant La Belle Ville">
+      <div class="details">
+        <h3><a href="#" target="_blank">Restaurant La Belle Ville</a></h3>
+        <p><strong>Téléphone:</strong> 034 03 244 36</p>
+        <p><strong>Adresse:</strong> 3GQP+WJP, Rue Razafindralombo Pierre, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 4.1</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9101641, Lng: 47.53657789999999</p>
+        <a href="https://www.google.com/maps?q=-18.9101641,47.53657789999999" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcKd8eVajBROo6qWoKEAz5mhEoCFLFc8reWT1MVfIzOsi3TboF-PzAxvi5PpjGAROz_9eB99CcHHHzbf7jgm659OiSttwOst6iCg5AeDZ2-v3QcEQHlFqC-TGCKMikAxiDGYjEJfU60d9pZ3jRRr7UsoYVswvLPo-AzlPm4Pm_01UN3RQsyJwSfZ6SHNNyOIH4x6kCumuFTXSrVxwnZRE-2xajEUAddpTmdEsy2yyPvHvGpAqm8gcLx0HuRfKxA1Yn8sfSEAGOnuCPB1Csk_CDkqHO9J5fUrvWrJU79w9s_-rwX5KXKnPFKT_OA9YPNlsmGpLxBwS98voKWRpRF-ZP5vEIAL3t38PSMoDsCgwXPlE3Tx8h7CLw4tgo7aAATWZz8cVCaVT3RmhI5MQ1Iyz_7jldFreB81P5DyayhRTqNz3NfSviznZEBJsiRZ3NDygvwpGZMi_qYQJrLXh6IbCSL5-trG7VK-P3HmqoMcHo789elGG9JvGOwPWayRBRq-n2CvlzIGATeQdcuNS3BvFV63qMw8R9HUQ80c63cvWVQb6PTMM3um7a3YCpSecUJ4oouJo3vfzOww3hhNyquOQ0aPWfLTCmIOs4cRpD2l3sovqVReGpnEZuIGhpHcEZ0i&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Dragon Royal Restaurant IVATO">
+      <div class="details">
+        <h3><a href="#" target="_blank">Dragon Royal Restaurant IVATO</a></h3>
+        <p><strong>Téléphone:</strong> 038 12 579 79</p>
+        <p><strong>Adresse:</strong> 5FQF+WHH, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 4.5</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.8101926, Lng: 47.4739989</p>
+        <a href="https://www.google.com/maps?q=-18.8101926,47.4739989" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcKJ3_WmvrMGp227Rr9va58_j96ZIQ7EikUbVzqNJHmG0aGc6fDRdzTrMnY2EV36S_7mscuw9Z16k04aGbb3tZ0kIHP05Y9OB6eW7z-nqnCMDJvw0DnjCHdaiarMM6kyQWdDtsmAS9qPEkgNR_6rMqd6yiquccglXVNEbrZ-KXxAKjirZrixuLIT5M6_OSHRcdj4idqcZbJePB6mocRpASFqaQz1qEh2J2OYSVpYr8lTHpdNBrll-fO3ol-4FBaIAzd3pSCNiowZIxIkOX5Snf_e0N_rsM-9cNgMxXvPsfwMXdMZuYMUD9nnE2DL8NfkyrSlQPbXhJA&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="吕府私房菜（KTV）">
+      <div class="details">
+        <h3><a href="#" target="_blank">吕府私房菜（KTV）</a></h3>
+        <p><strong>Téléphone:</strong> 038 82 066 66</p>
+        <p><strong>Adresse:</strong> Madagascar, Antananarivo, Amitie FandianAUTOREX</p>
+        <p><strong>Note:</strong> 5</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.9106832, Lng: 47.50331799999999</p>
+        <a href="https://www.google.com/maps?q=-18.9106832,47.50331799999999" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcKmhJIHxpfMrMeeJXHbqFjW-5QCQye0xM9sahtYpTM9iIz8WtzR25a8Sj3X8j0R-4hgTa6e_jImmgJjglMQXag2mS_qy52Lcyr_kn22TcUD8GH4RLWHiaVwHRQ-04ahXdlGtqWbFA8nI8DFerXI-glJRNAS3HzxFUyr01ODWkS2pZKxmRUWPCnQLfgVXLPZFYAyORCtb-rTLE7FIQrBoHSare5nbPAR0WvsvnkafNDfyxNUQVDfx-CyWfHiTFSyvlBna5oF6Vrj4Mq1gf-xt9UKzq0g_NvTV5NRY_YGAo3a5o37MGMLfwyfFPGuwK020oal5jp9LuW5Jcp7nFRRnyT6v5yt-qmInMcmWbUuUnliWar7rXnpdF61NJer-A86MkYYIfGOKL5Hoz6oD5pEPmi7URs1eLit7zDeX6L6oMw5TCNTIBinCy3qYTKibh6dyTR-0Xd1BRbav7F10xsgI3yqnSkCeYkLYllYfMyA3xpDR8dBI6SDFCNpAXXXNV90K2OunLB2r7_wwwEF1Dja6aS-kLmESzta0p4hTwPbdOYMCs4GDeaXjFWyRFQxL4maM9FJr26pLeUhzKL-GPLlGszVzZwHapxCMIAgi6WGDEMQbWe5rkJ9bsWviRZnkBm2jgMxKA&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="逸香酒樓 Yixiang Restaurant">
+      <div class="details">
+        <h3><a href="#" target="_blank">逸香酒樓 Yixiang Restaurant</a></h3>
+        <p><strong>Téléphone:</strong> 034 57 088 88</p>
+        <p><strong>Adresse:</strong> IVT 10, 4G48+V2P, Rue Docteur Joseph Raseta, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 3.2</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.8928125, Lng: 47.5150625</p>
+        <a href="https://www.google.com/maps?q=-18.8928125,47.5150625" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcJdpOG5_JVKFlnO1R8cjNdIjX85f3fkK0LhtpvTxZwNB6ur65Rl-SwuPnd1k6nsdlq93bFr40O1juad8a2lb9Has1ee-BIjvTymFM73NNaGf0QBSNQCgeB97xnDAu0W8VaY3EOhvsokUBxlexPGK7CU1dqL18hfoHOfakiU8PuD4o_5vcYIkXkw48SZb9rL9Y59Nixslb7L6uqO-cP9hhe8ESMAzFTxewxZSnp-WKUTfOedA_lUsipz4bH2Owdg629DfwFWMFsb0LxcyE5eceJD9rNtMOmA03y4ySJo6Blsiurxq-es_dMK3OrBTs5QYkk-3fjArWk&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Seoul N Hotel Dongdaemun">
+      <div class="details">
+        <h3><a href="https://hoteln.modoo.at/" target="_blank">Seoul N Hotel Dongdaemun</a></h3>
+        <p><strong>Téléphone:</strong> 02-6365-0008</p>
+        <p><strong>Adresse:</strong> 21 Jong-ro 66ga-gil, Jongno District, Seoul, South Korea</p>
+        <p><strong>Note:</strong> 3.8</p>
+        <p><strong>Coordonnées:</strong> Lat: 37.5732747, Lng: 127.0208022</p>
+        <a href="https://www.google.com/maps?q=37.5732747,127.0208022" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcI1Sv8WvTPQNyj9RSJb7Ra-7EOA0jA7fLRi_qXYG0Q6SvfKzm78SNzCx8-TNrVr0mzefBoZJII-4XoXtlPqjVaviP1yieDxSB5jiQVeEXNTMPO9C4W3i7xBCzgsEv9tf2CqRIx2ND7YCUEHFvyK50_IhSE-sq-ZazhntElSuN0MXUV__6cmhOJwoLoBFrHlL9YJ2duazOlUWY5CXJaM2Qg5xrPLLattlQbxSq7nlXRtIgm2MhY-VMjJlq8R1gs2oKUOca-3rN7uvy-DCkeF2MMuR_OgfnnJGwvKDJiofU-ng4JhChpyaUN6sReIssv2tcikf0jWWG0&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="DRAGON ROYAL Restaurant">
+      <div class="details">
+        <h3><a href="#" target="_blank">DRAGON ROYAL Restaurant</a></h3>
+        <p><strong>Téléphone:</strong> 034 14 579 79</p>
+        <p><strong>Adresse:</strong> Rue Me Albertini, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 4.2</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.8945895, Lng: 47.5283391</p>
+        <a href="https://www.google.com/maps?q=-18.8945895,47.5283391" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+    <div class="restaurant">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AeeoHcKM6OC1pvOrMSm-v2ewUQOm8GveUGCc0uqQoB-N1ojPyemnuwYOyXpqOVkq9KBpD88plOU0262go63aTaZCybNVBbBby_poDW122oiO8w_lX6fnqwtBm52nsLTSFUZEkxHHr6UOYbdjtXDwABcn8de8WI3xtnLVoEMG25HOJtgg59Ro0S8Qb4P8auoPqA34xuP62YRrnv28CbiJE-rnq8DeAaD8ThL8xLUT8Ss8zuqWAB1duAoLUnsHCfDoMEdZrw75po2qkKX7dp2RwCVHicFHG-i_ufj_yHLyMIk9ErX7DuCOwFiq3T1IhpE1l3-ATsrVDiaMENKH09B7m2cih6XguH9jooSDmTN4mEbJJFVJBQqcBhbxix3YgwNho0Q09zGKvBHUa92rtPES8ZfUafvIjYsts4riSpFICdLH4e0bNrdQg-jG1DSXtus2dVsAk_fhVdU8xcdXrw8KhsjzP591eP-CXT2iVt9rTf0z0h0kzQfbTLaUgeKNcLQ0I3SQAl7CjrqcArmtx4vJU7QN-kPS2OJpxQvvgX23rwu-fyzKS_j4FzXPN9ag5jb4NctV_hyTntTnmlhDDCM0GJcFT3DfeS_DgUsHfbPxlQNNt5eR4sK_ZkT7LQjOR1emLuxA&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Dragon Royal Restaurant IVATO">
+      <div class="details">
+        <h3><a href="#" target="_blank">Dragon Royal Restaurant IVATO</a></h3>
+        <p><strong>Téléphone:</strong> 038 12 579 79</p>
+        <p><strong>Adresse:</strong> 5FQF+WHH, Antananarivo, Madagascar</p>
+        <p><strong>Note:</strong> 4.5</p>
+        <p><strong>Coordonnées:</strong> Lat: -18.8101926, Lng: 47.4739989</p>
+        <a href="https://www.google.com/maps?q=-18.8101926,47.4739989" target="_blank">
+          <button>Voir sur Google Maps</button>
+        </a>
+      </div>
+    </div>
+  
+  </div>
+</body>
+</html>
