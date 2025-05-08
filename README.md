@@ -121,8 +121,4 @@ Avant d’utiliser ce workflow, assurez-vous d’avoir :
 
 ---
 
-## 🧑‍💻 Auteur
-
-Développé avec ❤️ par [Votre Nom / Équipe]  
-📧 Contact : [ranaivotrimobaritahiana@gmail.com] (optionnel)
 
