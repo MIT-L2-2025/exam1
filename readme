@@ -1,1 +1,15 @@
+***** getRestaurant – Scraping de restaurants chinois à Antananarivo ******
+Ce projet utilise n8n pour automatiser l’extraction, l’enrichissement et la présentation de données sur les restaurants chinois situés à Antananarivo (Madagascar).
 
+Le workflow scrape les données depuis FindGlocal, les complète via l’API Google Places, puis génère une page HTML prête à être publiée.
+
+** Déroulement du Workflow:
+    1) Scraping des liens FindGlocal → via CSS div.inneritembox a
+    2) Nettoyage et déduplication des URLs
+    3) Requête HTTP individuelle pour chaque restaurant
+    4) Extraction des horaires et nom
+    5) Fusion avec une liste fixe de restaurants
+    6) Recherche Google Place ID par nom
+    7) Requête Place Details
+    8) Extraction des infos enrichies : adresse, téléphone, types, note, etc.
+    9) Génération HTML final prêt à être publié ou hébergé
