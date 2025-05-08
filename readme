@@ -1,1 +1,6 @@
-//instructions
+Page web pour Localisation  de restaurant chinois à Antananarivo
+
+Pour bien ouvrir la page web, il faut :
+- importer le fichier Resto.json dans n8n (local pour moi)
+- Activer le service
+- Entrer sur navigateur le lien du webhook (dans la node webhook)
