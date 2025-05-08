@@ -1,0 +1,170 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1180,
+        -100
+      ],
+      "id": "077b0248-5ee5-40ea-8531-926a67b21d3b",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://serpapi.com/search.json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "engine",
+              "value": "google"
+            },
+            {
+              "name": "q",
+              "value": "restaurant chinois antananarivo"
+            },
+            {
+              "name": "location",
+              "value": "Antananarivo"
+            },
+            {
+              "name": "hl",
+              "value": "fr"
+            },
+            {
+              "name": "api_key",
+              "value": "ef83f4c7d8f749c86b17072355abc06d0d4d02ebbca3b8060935299c63680e3d"
+            },
+            {
+              "name": "gl",
+              "value": "mg"
+            },
+            {
+              "name": "google_domain",
+              "value": "google.com"
+            },
+            {
+              "name": "tbm",
+              "value": "lcl"
+            },
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -980,
+        -100
+      ],
+      "id": "45bafcd8-231d-4a45-becc-bfc492ee39d3",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// On récupère la liste des restaurants\nconst restaurants = $input.all().flatMap(item => item.json.restaurants);\n\n// On construit le HTML en une seule chaîne\nconst html = `\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>Restaurants à Tana</title>\n  <style>\n    :root {\n      --primary-color: #007bff;\n      --text-color: #333;\n      --card-bg-opacity: 0.85;\n      --card-hover-opacity: 1;\n      --shadow: 0 4px 12px rgba(0, 0, 0, 0.2);\n    }\n\n    * {\n      box-sizing: border-box;\n      margin: 0;\n      padding: 0;\n    }\n\n    body {\n      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;\n      background-image: url('https://www.chine-sur-mesure.com/app/uploads/sites/6/2018/12/cite-interdite-chine-chrwittm.jpeg');\n      background-size: cover;\n      background-attachment: fixed;\n      background-position: center;\n      color: var(--text-color);\n      line-height: 1.6;\n      min-height: 100vh;\n      display: flex;\n      flex-direction: column;\n    }\n\n    h1 {\n      text-align: center;\n      padding: 1.5rem;\n      background-color: rgba(255, 255, 255, 0.9);\n      font-size: clamp(1.75rem, 5vw, 2.25rem);\n      font-weight: 600;\n    }\n\n    .back-button {\n      display: none;\n      cursor: pointer;\n      font-size: 1rem;\n      margin: 1.5rem;\n      color: #fff;\n      background-color: rgba(0, 0, 0, 0.7);\n      padding: 0.75rem 1.5rem;\n      border-radius: 8px;\n      border: none;\n      transition: all 0.3s ease;\n    }\n\n    .back-button:hover {\n      background-color: var(--primary-color);\n      transform: translateY(-2px);\n    }\n\n    .container {\n      flex: 1;\n      display: flex;\n      flex-direction: column;\n      gap: 1.5rem;\n      padding: 1.5rem;\n      max-width: 1200px;\n      margin: 0 auto;\n      width: 100%;\n    }\n\n    .grid {\n      display: grid;\n      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));\n      gap: 1.5rem;\n    }\n\n    .card {\n      background-size: cover;\n      background-position: center;\n      border-radius: 12px;\n      box-shadow: var(--shadow);\n      cursor: pointer;\n      overflow: hidden;\n      transition: all 0.3s ease;\n      height: 220px;\n      position: relative;\n      opacity: var(--card-bg-opacity);\n    }\n\n    .card:hover {\n      transform: translateY(-5px);\n      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);\n      opacity: var(--card-hover-opacity);\n    }\n\n    .card h3 {\n      position: absolute;\n      bottom: 0;\n      width: 100%;\n      margin: 0;\n      padding: 0.75rem;\n      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);\n      color: white;\n      text-align: center;\n      font-size: 1.2rem;\n      font-weight: 500;\n    }\n\n    .info-panel {\n      position: fixed;\n      top: 50%;\n      left: 50%;\n      transform: translate(-50%, -50%);\n      background-color: rgba(255, 255, 255, 0.97);\n      border-radius: 12px;\n      padding: 2rem;\n      display: none;\n      flex-direction: row;\n      align-items: flex-start;\n      max-width: 1000px;\n      width: 90%;\n      box-shadow: var(--shadow);\n      z-index: 1000;\n      gap: 2rem;\n    }\n\n    .info-panel img {\n      width: 100%;\n      max-width: 350px;\n      height: auto;\n      border-radius: 10px;\n      object-fit: cover;\n    }\n\n    .info-text {\n      flex: 1;\n      min-width: 0;\n    }\n\n    .info-text h2 {\n      font-size: 1.75rem;\n      font-weight: 600;\n      margin-bottom: 1rem;\n      text-align: left;\n    }\n\n    .info-text p {\n      margin-bottom: 0.75rem;\n      font-size: 1rem;\n    }\n\n    .hidden {\n      display: none !important;\n    }\n\n    a {\n      color: var(--primary-color);\n      text-decoration: none;\n      font-weight: 500;\n    }\n\n    a:hover {\n      text-decoration: underline;\n    }\n\n    @media (max-width: 768px) {\n      .container {\n        padding: 1rem;\n      }\n\n      .grid {\n        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));\n      }\n\n      .info-panel {\n        flex-direction: column;\n        align-items: center;\n        max-height: 90vh;\n        overflow-y: auto;\n      }\n\n      .info-panel img {\n        max-width: 100%;\n      }\n\n      .info-text h2 {\n        text-align: center;\n      }\n    }\n\n    @media (max-width: 480px) {\n      .card {\n        height: 180px;\n      }\n\n      .card h3 {\n        font-size: 1rem;\n      }\n\n      .info-text h2 {\n        font-size: 1.5rem;\n      }\n    }\n  </style>\n</head>\n<body>\n  <h1>🍜 Restaurants à Tana 🇲🇬</h1>\n  <button class=\"back-button\" onclick=\"showAll()\">⬅ Retour</button>\n\n  <div class=\"container\">\n    <div class=\"grid\" id=\"restaurantGrid\"></div>\n    <div class=\"info-panel\" id=\"infoPanel\"></div>\n  </div>\n\n  <script>\n    const restaurants = ${JSON.stringify(restaurants, null, 2)};\n    const grid = document.getElementById('restaurantGrid');\n    const infoPanel = document.getElementById('infoPanel');\n\n    restaurants.forEach((resto) => {\n      const card = document.createElement('div');\n      card.className = 'card';\n      card.style.backgroundImage = \\`url('\\${resto.image}')\\`;\n      card.onclick = () => showOnly(resto);\n      card.innerHTML = \\`<h3>\\${resto.name}</h3>\\`;\n      grid.appendChild(card);\n    });\n\n    function showOnly(resto) {\n      document.querySelectorAll('.card').forEach(card => card.classList.add('hidden'));\n      document.querySelector('.back-button').style.display = 'block';\n      infoPanel.style.display = 'flex';\n\n      infoPanel.innerHTML = \\`\n        <img src=\"\\${resto.image}\" alt=\"Image de \\${resto.name}\" />\n        <div class=\"info-text\">\n          <h2>\\${resto.name}</h2>\n          <p><strong>Adresse :</strong> \\${resto.address}</p>\n          <p><strong>Spécialité :</strong> \\${resto.specialite}</p>\n          <p>\\${resto.description}</p>\n          <p>\n            <strong>Localisation :</strong><br/>\n            <a href=\"https://www.google.com/maps?q=\\${resto.latitude},\\${resto.longitude}\" target=\"_blank\" aria-label=\"Voir \\${resto.name} sur Google Maps\">📍 Voir sur la carte</a><br/>\n            <a href=\"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=\\${resto.latitude},\\${resto.longitude}\" target=\"_blank\" aria-label=\"Street View de \\${resto.name}\">🗺️ Street View</a><br/>\n            <small>Coordonnées : \\${resto.latitude}, \\${resto.longitude}</small>\n          </p>\n        </div>\n      \\`;\n    }\n\n    function showAll() {\n      document.querySelectorAll('.card').forEach(card => card.classList.remove('hidden'));\n      document.querySelector('.back-button').style.display = 'none';\n      infoPanel.style.display = 'none';\n    }\n  </script>\n</body>\n</html>\n`;\n\n// Retourne une seule sortie avec le HTML\nreturn [{ json: { html } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -560,
+        -100
+      ],
+      "id": "b318a50b-d20b-4bb4-9e34-7ef9457b7c0d",
+      "name": "Code to write the html file"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Créer un tableau pour stocker les résultats filtrés\nconst filteredResults = [];\n\nconst input = $input.first();\nconst places = input.json.local_results || [];\n\nfor (const item of places) {\n  const gps = item.gps_coordinates || {};\n\n  // Traiter l'URL de l'image pour s'assurer que c'est un .jpg et obtenir une meilleure qualité\n  let imageUrl = item.thumbnail || null;\n\n  if (imageUrl) {\n    // Remplacer .jpeg ou autres formats par .jpg\n    imageUrl = imageUrl.replace(/\\.(jpeg|png|webp)(\\?.*)?$/i, '.jpg');\n\n    // Si l’image est une image Unsplash ou similaire, enlever les paramètres de taille si existants\n    imageUrl = imageUrl.replace(/(\\?.*)$/, ''); // supprime les paramètres après ?\n  }\n\n  const filteredItem = {\n    name: item.title || null,\n    address: item.address || null,\n    latitude: gps.latitude || null,\n    longitude: gps.longitude || null,\n    description: item.description || null,\n    specialite: item.type || null,\n    image: imageUrl\n    // Ajoute ici d'autres champs si besoin\n  };\n\n  filteredResults.push(filteredItem);\n}\n\n// Retourner tous les résultats dans un seul objet JSON\nreturn [{\n  json: {\n    restaurants: filteredResults\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -780,
+        -100
+      ],
+      "id": "a2e1b88d-562d-4964-a626-42be8067d73c",
+      "name": "Code to filter the Json SerpApi"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "html",
+        "binaryPropertyName": "text/html ",
+        "options": {
+          "fileName": "restaurants_tana.html"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -300,
+        -100
+      ],
+      "id": "8975beb0-5632-4698-9e0b-3bba823c3871",
+      "name": "Convert to Html File"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code to filter the Json SerpApi",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code to write the html file": {
+      "main": [
+        [
+          {
+            "node": "Convert to Html File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code to filter the Json SerpApi": {
+      "main": [
+        [
+          {
+            "node": "Code to write the html file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2231f81d-f1c5-48ce-8255-6db4336f190f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f44e18df885ab14a70e289c3637e96cebbb0913c0582f05f9456880676c5bd9c"
+  },
+  "id": "tkodDh7aW4ByagG4",
+  "tags": []
+}
