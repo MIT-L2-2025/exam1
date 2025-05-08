@@ -1,0 +1,554 @@
+
+  <!DOCTYPE html>
+  <html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurants à Antananarivo</title>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f1f4f9;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 40px;
+      }
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+      }
+      .card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        overflow: hidden;
+        max-width: 320px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.2s ease;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+      }
+      .card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        background: #eee;
+      }
+      .card-body {
+        padding: 15px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .card h2 {
+        font-size: 1.2em;
+        color: #222;
+        margin: 0 0 10px;
+      }
+      .card p {
+        font-size: 0.95em;
+        margin: 5px 0;
+        color: #555;
+      }
+      @media (max-width: 600px) {
+        .card {
+          max-width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Restaurants à Antananarivo</h1>
+    <div class="container">
+  
+      <div class="card">
+        <img src="https://graph.facebook.com/100656102949738/picture?type=large" alt="Kaizen Restaurant">
+        <div class="card-body">
+          <h2>Kaizen Restaurant</h2>
+          <p><strong>Adresse :</strong> Rue VVS Antanimora ,Antananarivo</p>
+          <p><strong>Téléphone :</strong> 038 74 107 84</p>
+          <p><strong>Latitude :</strong> -18.9134592</p>
+          <p><strong>Longitude :</strong> 47.5415849</p>
+          <a href="https://www.google.com/maps?q=-18.9134592,47.5415849" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=47.5415849,-18.9134592&size=450,300&z=16&l=sat" alt="Carte Kaizen Restaurant">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/110916164578468/picture?type=large" alt="Hirondelle "燕子" Chinese FOOD">
+        <div class="card-body">
+          <h2>Hirondelle "燕子" Chinese FOOD</h2>
+          <p><strong>Adresse :</strong> Restaurant Hirondelle Ankorahotra </p>
+          <p><strong>Téléphone :</strong> +2613411166</p>
+          <p><strong>Latitude :</strong> 0</p>
+          <p><strong>Longitude :</strong> 0</p>
+          <a href="https://www.google.com/maps?q=0,0" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=0,0&size=450,300&z=16&l=sat" alt="Carte Hirondelle "燕子" Chinese FOOD">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/102088432917971/picture?type=large" alt="Le Petit Bouchon">
+        <div class="card-body">
+          <h2>Le Petit Bouchon</h2>
+          <p><strong>Adresse :</strong> restaurant le petit bouchon 67 Ha</p>
+          <p><strong>Téléphone :</strong> 038 92 329 02</p>
+          <p><strong>Latitude :</strong> -18.9028</p>
+          <p><strong>Longitude :</strong> 47.5092</p>
+          <a href="https://www.google.com/maps?q=-18.9028,47.5092" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=47.5092,-18.9028&size=450,300&z=16&l=sat" alt="Carte Le Petit Bouchon">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/103588078847250/picture?type=large" alt="La Fleur de Sel Restaurant">
+        <div class="card-body">
+          <h2>La Fleur de Sel Restaurant</h2>
+          <p><strong>Adresse :</strong> La Fleur de sel Analamahitsy</p>
+          <p><strong>Téléphone :</strong> 034 12 582 22</p>
+          <p><strong>Latitude :</strong> 0</p>
+          <p><strong>Longitude :</strong> 0</p>
+          <a href="https://www.google.com/maps?q=0,0" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=0,0&size=450,300&z=16&l=sat" alt="Carte La Fleur de Sel Restaurant">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/421678137880681/picture?type=large" alt="Restaurant L'Eurasie - Tana">
+        <div class="card-body">
+          <h2>Restaurant L'Eurasie - Tana</h2>
+          <p><strong>Adresse :</strong> l'Eurasie Ankorondrano</p>
+          <p><strong>Téléphone :</strong> 033 11 408 02</p>
+          <p><strong>Latitude :</strong> 0</p>
+          <p><strong>Longitude :</strong> 0</p>
+          <a href="https://www.google.com/maps?q=0,0" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=0,0&size=450,300&z=16&l=sat" alt="Carte Restaurant L'Eurasie - Tana">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/1620896638011680/picture?type=large" alt="OKAY restau">
+        <div class="card-body">
+          <h2>OKAY restau</h2>
+          <p><strong>Adresse :</strong> okay resto Route Poste Itaosy</p>
+          <p><strong>Téléphone :</strong> +2613439356</p>
+          <p><strong>Latitude :</strong> 0</p>
+          <p><strong>Longitude :</strong> 0</p>
+          <a href="https://www.google.com/maps?q=0,0" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=0,0&size=450,300&z=16&l=sat" alt="Carte OKAY restau">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/413657871838871/picture?type=large" alt="Sao Kuun">
+        <div class="card-body">
+          <h2>Sao Kuun</h2>
+          <p><strong>Adresse :</strong> Sao kuun Andranomena</p>
+          <p><strong>Téléphone :</strong> 038 52 403 86</p>
+          <p><strong>Latitude :</strong> 0</p>
+          <p><strong>Longitude :</strong> 0</p>
+          <a href="https://www.google.com/maps?q=0,0" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=0,0&size=450,300&z=16&l=sat" alt="Carte Sao Kuun">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/100689696183053/picture?type=large" alt="Restaurant JO Ji">
+        <div class="card-body">
+          <h2>Restaurant JO Ji</h2>
+          <p><strong>Adresse :</strong> restaurant jo ji Ivato</p>
+          <p><strong>Téléphone :</strong> 034 79 282 54</p>
+          <p><strong>Latitude :</strong> 0</p>
+          <p><strong>Longitude :</strong> 0</p>
+          <a href="https://www.google.com/maps?q=0,0" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=0,0&size=450,300&z=16&l=sat" alt="Carte Restaurant JO Ji">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/211404342048256/picture?type=large" alt="Dragon Rouge">
+        <div class="card-body">
+          <h2>Dragon Rouge</h2>
+          <p><strong>Adresse :</strong> dragon rouge Behoririka ranomaimbo sodiat</p>
+          <p><strong>Téléphone :</strong> 0381259415</p>
+          <p><strong>Latitude :</strong> 0</p>
+          <p><strong>Longitude :</strong> 0</p>
+          <a href="https://www.google.com/maps?q=0,0" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=0,0&size=450,300&z=16&l=sat" alt="Carte Dragon Rouge">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/395594843631046/picture?type=large" alt="Au bon coin Tanà">
+        <div class="card-body">
+          <h2>Au bon coin Tanà</h2>
+          <p><strong>Adresse :</strong> Au bon coin Tana Antsakaviro</p>
+          <p><strong>Téléphone :</strong> +2613854546</p>
+          <p><strong>Latitude :</strong> 0</p>
+          <p><strong>Longitude :</strong> 0</p>
+          <a href="https://www.google.com/maps?q=0,0" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=0,0&size=450,300&z=16&l=sat" alt="Carte Au bon coin Tanà">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/409113735611267/picture?type=large" alt="AVIA MONA">
+        <div class="card-body">
+          <h2>AVIA MONA</h2>
+          <p><strong>Adresse :</strong> Avia mona Ankatso Pylône</p>
+          <p><strong>Téléphone :</strong> No telephone</p>
+          <p><strong>Latitude :</strong> 0</p>
+          <p><strong>Longitude :</strong> 0</p>
+          <a href="https://www.google.com/maps?q=0,0" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=0,0&size=450,300&z=16&l=sat" alt="Carte AVIA MONA">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/449868878220266/picture?type=large" alt="Lé Snou">
+        <div class="card-body">
+          <h2>Lé Snou</h2>
+          <p><strong>Adresse :</strong> le snou Ambodifilao</p>
+          <p><strong>Téléphone :</strong> No telephone</p>
+          <p><strong>Latitude :</strong> 0</p>
+          <p><strong>Longitude :</strong> 0</p>
+          <a href="https://www.google.com/maps?q=0,0" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=0,0&size=450,300&z=16&l=sat" alt="Carte Lé Snou">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/503292452870912/picture?type=large" alt="Miso Food 67Ha">
+        <div class="card-body">
+          <h2>Miso Food 67Ha</h2>
+          <p><strong>Adresse :</strong> misou food 67HA</p>
+          <p><strong>Téléphone :</strong> +2613818381</p>
+          <p><strong>Latitude :</strong> 58.6161</p>
+          <p><strong>Longitude :</strong> 5.64497</p>
+          <a href="https://www.google.com/maps?q=58.6161,5.64497" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=5.64497,58.6161&size=450,300&z=16&l=sat" alt="Carte Miso Food 67Ha">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/319854941207915/picture?type=large" alt="Soupe Dinamika">
+        <div class="card-body">
+          <h2>Soupe Dinamika</h2>
+          <p><strong>Adresse :</strong> Eo Apita Ny Gastro Pizza Dalle Itaosy</p>
+          <p><strong>Téléphone :</strong> No telephone</p>
+          <p><strong>Latitude :</strong> 0</p>
+          <p><strong>Longitude :</strong> 0</p>
+          <a href="https://www.google.com/maps?q=0,0" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=0,0&size=450,300&z=16&l=sat" alt="Carte Soupe Dinamika">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/1473807299511537/picture?type=large" alt="LE GRAND RESTAURANT DE CHINE">
+        <div class="card-body">
+          <h2>LE GRAND RESTAURANT DE CHINE</h2>
+          <p><strong>Adresse :</strong> le grand restaurants de chine Tsiadana</p>
+          <p><strong>Téléphone :</strong> 034 84 534 51</p>
+          <p><strong>Latitude :</strong> 0</p>
+          <p><strong>Longitude :</strong> 0</p>
+          <a href="https://www.google.com/maps?q=0,0" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=0,0&size=450,300&z=16&l=sat" alt="Carte LE GRAND RESTAURANT DE CHINE">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/1515532858668671/picture?type=large" alt="La Dynastie">
+        <div class="card-body">
+          <h2>La Dynastie</h2>
+          <p><strong>Adresse :</strong> la dynastie antananarivo</p>
+          <p><strong>Téléphone :</strong> No telephone</p>
+          <p><strong>Latitude :</strong> -18.9142271</p>
+          <p><strong>Longitude :</strong> 47.5088765</p>
+          <a href="https://www.google.com/maps?q=-18.9142271,47.5088765" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=47.5088765,-18.9142271&size=450,300&z=16&l=sat" alt="Carte La Dynastie">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/467101170059400/picture?type=large" alt="Maison de couture junior thibault">
+        <div class="card-body">
+          <h2>Maison de couture junior thibault</h2>
+          <p><strong>Adresse :</strong> Maison de couture junior thibault antananarivo</p>
+          <p><strong>Téléphone :</strong> No telephone</p>
+          <p><strong>Latitude :</strong> -18.91368</p>
+          <p><strong>Longitude :</strong> 47.53613</p>
+          <a href="https://www.google.com/maps?q=-18.91368,47.53613" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=47.53613,-18.91368&size=450,300&z=16&l=sat" alt="Carte Maison de couture junior thibault">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/101672941707344/picture?type=large" alt="Le Cantonnais">
+        <div class="card-body">
+          <h2>Le Cantonnais</h2>
+          <p><strong>Adresse :</strong> le cantonais Itaosy</p>
+          <p><strong>Téléphone :</strong> +2613856865</p>
+          <p><strong>Latitude :</strong> 0</p>
+          <p><strong>Longitude :</strong> 0</p>
+          <a href="https://www.google.com/maps?q=0,0" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=0,0&size=450,300&z=16&l=sat" alt="Carte Le Cantonnais">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/116348686906075/picture?type=large" alt="TSANG">
+        <div class="card-body">
+          <h2>TSANG</h2>
+          <p><strong>Adresse :</strong> tsang Imerimanjaka</p>
+          <p><strong>Téléphone :</strong> 0340847883</p>
+          <p><strong>Latitude :</strong> -18.9814839</p>
+          <p><strong>Longitude :</strong> 47.5440888</p>
+          <a href="https://www.google.com/maps?q=-18.9814839,47.5440888" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=47.5440888,-18.9814839&size=450,300&z=16&l=sat" alt="Carte TSANG">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/128554757721502/picture?type=large" alt="Restaurant Villa Soleil">
+        <div class="card-body">
+          <h2>Restaurant Villa Soleil</h2>
+          <p><strong>Adresse :</strong> restaurants villa soleil ANOSIVAVAKA AMBOHIMANARINA</p>
+          <p><strong>Téléphone :</strong> 033 11 336 28</p>
+          <p><strong>Latitude :</strong> 0</p>
+          <p><strong>Longitude :</strong> 0</p>
+          <a href="https://www.google.com/maps?q=0,0" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=0,0&size=450,300&z=16&l=sat" alt="Carte Restaurant Villa Soleil">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/105286528052377/picture?type=large" alt="Hanova-ku">
+        <div class="card-body">
+          <h2>Hanova-ku</h2>
+          <p><strong>Adresse :</strong> Hanova-ku Antananarivo 101</p>
+          <p><strong>Téléphone :</strong> 0342251671</p>
+          <p><strong>Latitude :</strong> -18.91368</p>
+          <p><strong>Longitude :</strong> 47.53613</p>
+          <a href="https://www.google.com/maps?q=-18.91368,47.53613" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=47.53613,-18.91368&size=450,300&z=16&l=sat" alt="Carte Hanova-ku">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/131448496710388/picture?type=large" alt="Bamboo I Le Restau I">
+        <div class="card-body">
+          <h2>Bamboo I Le Restau I</h2>
+          <p><strong>Adresse :</strong> bamboo le restau MANDROSEZA</p>
+          <p><strong>Téléphone :</strong> +2613835206</p>
+          <p><strong>Latitude :</strong> 0</p>
+          <p><strong>Longitude :</strong> 0</p>
+          <a href="https://www.google.com/maps?q=0,0" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=0,0&size=450,300&z=16&l=sat" alt="Carte Bamboo I Le Restau I">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/1636134896641383/picture?type=large" alt="Gasy gourmet - Chef à domicile">
+        <div class="card-body">
+          <h2>Gasy gourmet - Chef à domicile</h2>
+          <p><strong>Adresse :</strong> Gasy gourme Chef à domicile antananarivo 101</p>
+          <p><strong>Téléphone :</strong> No telephone</p>
+          <p><strong>Latitude :</strong> -18.91368</p>
+          <p><strong>Longitude :</strong> 47.53613</p>
+          <a href="https://www.google.com/maps?q=-18.91368,47.53613" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=47.53613,-18.91368&size=450,300&z=16&l=sat" alt="Carte Gasy gourmet - Chef à domicile">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/104953424506997/picture?type=large" alt="La Belle Ville Antsakaviro">
+        <div class="card-body">
+          <h2>La Belle Ville Antsakaviro</h2>
+          <p><strong>Adresse :</strong> la belle ville antsakaviro Ambodiroatra-Antsakaviro</p>
+          <p><strong>Téléphone :</strong> 034 22 219 64</p>
+          <p><strong>Latitude :</strong> 0</p>
+          <p><strong>Longitude :</strong> 0</p>
+          <a href="https://www.google.com/maps?q=0,0" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=0,0&size=450,300&z=16&l=sat" alt="Carte La Belle Ville Antsakaviro">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/177103073110334/picture?type=large" alt="Restaurant Baraoa">
+        <div class="card-body">
+          <h2>Restaurant Baraoa</h2>
+          <p><strong>Adresse :</strong> restaurants baraoa Anosizato Ouest</p>
+          <p><strong>Téléphone :</strong> 034 23 186 16</p>
+          <p><strong>Latitude :</strong> 5.5</p>
+          <p><strong>Longitude :</strong> 10.66667</p>
+          <a href="https://www.google.com/maps?q=5.5,10.66667" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=10.66667,5.5&size=450,300&z=16&l=sat" alt="Carte Restaurant Baraoa">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/110089675167210/picture?type=large" alt="Lotus Rouge Tana">
+        <div class="card-body">
+          <h2>Lotus Rouge Tana</h2>
+          <p><strong>Adresse :</strong>  lotus rouge tana Cité Mandrimena Iavoloha</p>
+          <p><strong>Téléphone :</strong> 0344462082</p>
+          <p><strong>Latitude :</strong> 0</p>
+          <p><strong>Longitude :</strong> 0</p>
+          <a href="https://www.google.com/maps?q=0,0" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=0,0&size=450,300&z=16&l=sat" alt="Carte Lotus Rouge Tana">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/128947863640922/picture?type=large" alt="Capital Shí wù">
+        <div class="card-body">
+          <h2>Capital Shí wù</h2>
+          <p><strong>Adresse :</strong>  capital shi wu Mahamasina</p>
+          <p><strong>Téléphone :</strong> 034 01 725 45</p>
+          <p><strong>Latitude :</strong> 0</p>
+          <p><strong>Longitude :</strong> 0</p>
+          <a href="https://www.google.com/maps?q=0,0" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=0,0&size=450,300&z=16&l=sat" alt="Carte Capital Shí wù">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/105005758918490/picture?type=large" alt="La table de chine">
+        <div class="card-body">
+          <h2>La table de chine</h2>
+          <p><strong>Adresse :</strong> La table de chine Antananarivo, 101</p>
+          <p><strong>Téléphone :</strong> +2613847253</p>
+          <p><strong>Latitude :</strong> -18.91368</p>
+          <p><strong>Longitude :</strong> 47.53613</p>
+          <a href="https://www.google.com/maps?q=-18.91368,47.53613" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=47.53613,-18.91368&size=450,300&z=16&l=sat" alt="Carte La table de chine">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/727797514254731/picture?type=large" alt="Restaurant La Saveur">
+        <div class="card-body">
+          <h2>Restaurant La Saveur</h2>
+          <p><strong>Adresse :</strong> Restaurant La Saveur antananarivo 101</p>
+          <p><strong>Téléphone :</strong> +2613403810</p>
+          <p><strong>Latitude :</strong> -18.91368</p>
+          <p><strong>Longitude :</strong> 47.53613</p>
+          <a href="https://www.google.com/maps?q=-18.91368,47.53613" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=47.53613,-18.91368&size=450,300&z=16&l=sat" alt="Carte Restaurant La Saveur">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/104177509011997/picture?type=large" alt="Le lotus blanc Restaurant 荷花酒店">
+        <div class="card-body">
+          <h2>Le lotus blanc Restaurant 荷花酒店</h2>
+          <p><strong>Adresse :</strong> le lotus blanc Boulevarde De L'Europe</p>
+          <p><strong>Téléphone :</strong> 0349233998</p>
+          <p><strong>Latitude :</strong> 0</p>
+          <p><strong>Longitude :</strong> 0</p>
+          <a href="https://www.google.com/maps?q=0,0" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=0,0&size=450,300&z=16&l=sat" alt="Carte Le lotus blanc Restaurant 荷花酒店">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/138017892731554/picture?type=large" alt="La cavy karaoké">
+        <div class="card-body">
+          <h2>La cavy karaoké</h2>
+          <p><strong>Adresse :</strong> la cavy karaoke Andoharanofotsy Antananarivo</p>
+          <p><strong>Téléphone :</strong> +2613444378</p>
+          <p><strong>Latitude :</strong> -18.91368</p>
+          <p><strong>Longitude :</strong> 47.53613</p>
+          <a href="https://www.google.com/maps?q=-18.91368,47.53613" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=47.53613,-18.91368&size=450,300&z=16&l=sat" alt="Carte La cavy karaoké">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/895171443934530/picture?type=large" alt="Ylang Ylang Resto Café">
+        <div class="card-body">
+          <h2>Ylang Ylang Resto Café</h2>
+          <p><strong>Adresse :</strong> ylang ylang resto cafe Ex-Village Des Jeux Ankorondrano Antananarivo, 101</p>
+          <p><strong>Téléphone :</strong> +2612022319</p>
+          <p><strong>Latitude :</strong> -18.91368</p>
+          <p><strong>Longitude :</strong> 47.53613</p>
+          <a href="https://www.google.com/maps?q=-18.91368,47.53613" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=47.53613,-18.91368&size=450,300&z=16&l=sat" alt="Carte Ylang Ylang Resto Café">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/100602446333580/picture?type=large" alt="Tang Wei Hsien">
+        <div class="card-body">
+          <h2>Tang Wei Hsien</h2>
+          <p><strong>Adresse :</strong> Tang Wei Hsien Antananarivo</p>
+          <p><strong>Téléphone :</strong> 0344114059</p>
+          <p><strong>Latitude :</strong> -18.91368</p>
+          <p><strong>Longitude :</strong> 47.53613</p>
+          <a href="https://www.google.com/maps?q=-18.91368,47.53613" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=47.53613,-18.91368&size=450,300&z=16&l=sat" alt="Carte Tang Wei Hsien">
+          </a>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://graph.facebook.com/149080034944671/picture?type=large" alt="Fumé / laqué">
+        <div class="card-body">
+          <h2>Fumé / laqué</h2>
+          <p><strong>Adresse :</strong> Fume laque Antananarivo</p>
+          <p><strong>Téléphone :</strong> No telephone</p>
+          <p><strong>Latitude :</strong> -18.91368</p>
+          <p><strong>Longitude :</strong> 47.53613</p>
+          <a href="https://www.google.com/maps?q=-18.91368,47.53613" target="_blank">
+            <img src="https://static-maps.yandex.ru/1.x/?ll=47.53613,-18.91368&size=450,300&z=16&l=sat" alt="Carte Fumé / laqué">
+          </a>
+        </div>
+      </div>
+    
+    </div>
+  </body>
+  </html>
+  
