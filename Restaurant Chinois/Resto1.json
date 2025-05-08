@@ -1,0 +1,175 @@
+{
+  "name": "Resto1",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -640,
+        -500
+      ],
+      "id": "9cae7248-d0a5-46fd-8b5f-4c869d53a661",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "path": "a603cbd7-bbb1-4edd-9260-516438bf06fd",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        -300
+      ],
+      "id": "6e0ec57c-2626-41be-aeaa-561a7eecc0f2",
+      "name": "Webhook",
+      "webhookId": "a603cbd7-bbb1-4edd-9260-516438bf06fd"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $node[\"Code\"].json.html }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/html"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.2,
+      "position": [
+        -200,
+        -280
+      ],
+      "id": "78702b6d-ac33-4ef3-98b2-d88f0be4c214",
+      "name": "Respond to Webhook",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "jsCode": "// Récupère les données du nœud HTTP Request\nlet data = $node[\"HTTP Request\"].json;\n\n// Extrait local_results (tableau des restaurants)\nlet items = data.local_results;\n\n// Position actuelle par défaut (Antananarivo)\nconst userLat = -18.8792;\nconst userLng = 47.5079;\n\n// Clé API Google Maps (remplacez par votre clé API)\nconst googleMapsApiKey = 'AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM';\n\n// Génère les cartes de visite pour chaque restaurant\nlet cardsHtml = '';\nfor (const item of items) {\n  // Gestion des champs avec des valeurs par défaut\n  const title = item.title || 'Nom inconnu';\n  const phone = item.phone || 'Téléphone indisponible';\n  const address = item.address || 'Adresse indisponible';\n  const latitude = item.gps_coordinates?.latitude || null;\n  const longitude = item.gps_coordinates?.longitude || null;\n  const reviewsLink = item.reviews_link || '#';\n  const photosLink = item.photos_link || '#';\n  const website = item.website || '#';\n  const type = item.type || 'Type inconnu';\n  const hours = item.hours || 'Horaires non disponibles';\n  const rating = item.rating || 'Non évalué';\n  const reviews = item.reviews || '0';\n\n  // Génère l’URL de l’itinéraire\n  let mapEmbedUrl = '';\n  if (latitude && longitude) {\n    mapEmbedUrl = `https://www.google.com/maps/embed/v1/directions?key=${googleMapsApiKey}&origin=${userLat},${userLng}&destination=${latitude},${longitude}&mode=driving`;\n  }\n\n  // Génère les URLs pour Street View et la vue satellite (en fallback)\n  let streetViewUrl = '';\n  let satelliteUrl = '';\n  if (latitude && longitude) {\n    streetViewUrl = `https://www.google.com/maps/embed/v1/streetview?key=${googleMapsApiKey}&location=${latitude},${longitude}&heading=34&pitch=10`;\n    satelliteUrl = `https://www.google.com/maps/embed/v1/view?key=${googleMapsApiKey}&center=${latitude},${longitude}&zoom=18&maptype=satellite`;\n  }\n\n  cardsHtml += `\n    <div class=\"restaurant-card\">\n      <div class=\"card-front\">\n        <div class=\"card-title\">\n          <h2>${title}</h2>\n          <p>${type} | ${phone}</p>\n          <p>Note: ${rating} (${reviews} avis)</p>\n        </div>\n        <div class=\"map-container\">\n          ${latitude && longitude ? `\n            <button class=\"street-view-btn\" onclick=\"openStreetView('${streetViewUrl}', '${satelliteUrl}', {lat: ${latitude}, lng: ${longitude}})\">Voir en Street View</button>\n            <iframe class=\"map-iframe\" src=\"${mapEmbedUrl}\" allowfullscreen loading=\"lazy\"></iframe>\n          ` : '<p>Carte non disponible (coordonnées manquantes)</p>'}\n        </div>\n      </div>\n      <div class=\"card-details\">\n        <div class=\"details-header\">\n          <h3>Détails du restaurant</h3>\n        </div>\n        <div class=\"details-content\">\n          <div class=\"detail-item\">\n            <span class=\"icon\">📍</span> <strong>Adresse :</strong> ${address}\n          </div>\n          <div class=\"detail-item\">\n            <span class=\"icon\">⏰</span> <strong>Horaires :</strong> ${hours}\n          </div>\n          <div class=\"detail-item\">\n            <span class=\"icon\">📍</span> <strong>Latitude :</strong> ${latitude || 'Non disponible'}\n          </div>\n          <div class=\"detail-item\">\n            <span class=\"icon\">📍</span> <strong>Longitude :</strong> ${longitude || 'Non disponible'}\n          </div>\n          <div class=\"detail-item\">\n            <span class=\"icon\">🌐</span> <a href=\"${website}\" target=\"_blank\">Site Web</a>\n          </div>\n          <div class=\"detail-item\">\n            <span class=\"icon\">⭐</span> <a href=\"${reviewsLink}\" target=\"_blank\">Voir les avis</a>\n          </div>\n          <div class=\"detail-item\">\n            <span class=\"icon\">📸</span> <a href=\"${photosLink}\" target=\"_blank\">Voir les photos</a>\n          </div>\n        </div>\n      </div>\n    </div>\n  `;\n}\n\n// Crée la page HTML complète\nconst html = `\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Restaurants à Antananarivo</title>\n  <style>\n    body { \n      font-family: 'Georgia', serif; \n      background-color: #f0f2f5; \n      margin: 0; \n      padding: 20px; \n      display: flex; \n      justify-content: center; \n      align-items: flex-start; \n      min-height: 100vh; \n    }\n    #restaurants-container { \n      display: flex; \n      flex-wrap: wrap; \n      justify-content: center; \n      gap: 30px; \n      max-width: 1200px; \n    }\n    .restaurant-card { \n      position: relative; \n      width: 400px; \n      height: 550px; \n      cursor: pointer; \n      perspective: 1000px; \n      transition: transform 0.6s ease, box-shadow 0.3s ease; \n      border-radius: 20px; \n      overflow: hidden; \n      background-color: #fff; \n      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); \n    }\n    .restaurant-card:hover { \n      transform: scale(1.05) translateY(-5px); \n      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2); \n    }\n    .card-front { \n      position: absolute; \n      width: 100%; \n      height: 100%; \n      background: linear-gradient(135deg, #ffffff, #f8f9fa); \n      border-radius: 20px; \n      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); \n      overflow: hidden; \n      backface-visibility: hidden; \n      transition: transform 0.6s ease; \n      display: flex; \n      flex-direction: column; \n      justify-content: space-between; \n    }\n    .restaurant-card.expanded .card-front { \n      transform: rotateY(180deg); \n    }\n    .map-container { \n      flex-grow: 1; \n      position: relative; \n      display: flex; \n      flex-direction: column; \n      align-items: center; \n    }\n    .map-iframe { \n      width: 100%; \n      height: 65%; \n      border: none; \n      border-radius: 20px 20px 0 0; \n    }\n    .street-view-btn { \n      margin: 10px; \n      padding: 8px 15px; \n      background-color: #3498db; \n      color: #fff; \n      border: none; \n      border-radius: 5px; \n      cursor: pointer; \n      font-size: 14px; \n      transition: background-color 0.3s ease; \n    }\n    .street-view-btn:hover { \n      background-color: #2980b9; \n    }\n    .card-title { \n      padding: 20px; \n      text-align: center; \n      color: #2c3e50; \n      background: rgba(44, 62, 80, 0.05); \n    }\n    .card-title h2 { \n      margin: 0; \n      font-size: 26px; \n      font-weight: 700; \n      text-transform: uppercase; \n      letter-spacing: 1.5px; \n      color: #34495e; \n    }\n    .card-title p { \n      margin: 10px 0 0; \n      font-size: 18px; \n      color: #7f8c8d; \n    }\n    .card-details { \n      position: absolute; \n      width: 100%; \n      height: 100%; \n      background: linear-gradient(135deg, #2c3e50, #3498db); \n      color: #ecf0f1; \n      border-radius: 20px; \n      padding: 25px; \n      box-sizing: border-box; \n      backface-visibility: hidden; \n      transform: rotateY(-180deg); \n      transition: transform 0.6s ease; \n      display: flex; \n      flex-direction: column; \n      justify-content: space-between; \n      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); \n    }\n    .restaurant-card.expanded .card-details { \n      transform: rotateY(0deg); \n    }\n    .details-header { \n      text-align: center; \n      margin-bottom: 20px; \n    }\n    .details-header h3 { \n      margin: 0; \n      font-size: 22px; \n      font-weight: 600; \n      color: #fff; \n      text-transform: uppercase; \n      letter-spacing: 1px; \n    }\n    .details-content { \n      flex-grow: 1; \n      display: flex; \n      flex-direction: column; \n      gap: 15px; \n    }\n    .detail-item { \n      background: rgba(255, 255, 255, 0.1); \n      padding: 12px 15px; \n      border-radius: 10px; \n      display: flex; \n      align-items: center; \n      gap: 10px; \n      transition: background 0.3s ease; \n    }\n    .detail-item:hover { \n      background: rgba(255, 255, 255, 0.2); \n    }\n    .icon { \n      font-size: 18px; \n    }\n    .detail-item a { \n      color: #ecf0f1; \n      text-decoration: none; \n      font-weight: 500; \n      transition: color 0.3s ease; \n    }\n    .detail-item a:hover { \n      color: #1abc9c; \n      text-decoration: underline; \n    }\n    .street-view-modal { \n      display: none; \n      position: fixed; \n      top: 0; \n      left: 0; \n      width: 100%; \n      height: 100%; \n      background: rgba(0, 0, 0, 0.8); \n      z-index: 1000; \n      justify-content: center; \n      align-items: center; \n    }\n    .street-view-modal.active { \n      display: flex; \n    }\n    .street-view-content { \n      width: 80%; \n      height: 80%; \n      max-width: 800px; \n      max-height: 600px; \n      background: #fff; \n      border-radius: 10px; \n      position: relative; \n    }\n    .street-view-iframe { \n      width: 100%; \n      height: 100%; \n      border: none; \n      border-radius: 10px; \n    }\n    .close-btn { \n      position: absolute; \n      top: 10px; \n      right: 10px; \n      background: #e74c3c; \n      color: #fff; \n      border: none; \n      border-radius: 50%; \n      width: 30px; \n      height: 30px; \n      display: flex; \n      justify-content: center; \n      align-items: center; \n      cursor: pointer; \n      font-size: 16px; \n    }\n    .close-btn:hover { \n      background: #c0392b; \n    }\n    @media (max-width: 600px) { \n      .restaurant-card { \n        width: 100%; \n        height: 500px; \n      }\n      .street-view-content { \n        width: 90%; \n        height: 70%; \n      }\n    }\n  </style>\n</head>\n<body>\n  <div id=\"restaurants-container\">${cardsHtml}</div>\n  <div id=\"streetViewModal\" class=\"street-view-modal\">\n    <div class=\"street-view-content\">\n      <button class=\"close-btn\" onclick=\"closeStreetView()\">✕</button>\n      <iframe id=\"streetViewIframe\" class=\"street-view-iframe\" allowfullscreen loading=\"lazy\"></iframe>\n    </div>\n  </div>\n  <script src=\"https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}\" async defer></script>\n  <script>\n    document.querySelectorAll('.restaurant-card').forEach(card => {\n      card.addEventListener('click', () => {\n        card.classList.toggle('expanded');\n      });\n    });\n\n    function openStreetView(streetViewUrl, satelliteUrl, location) {\n      const modal = document.getElementById('streetViewModal');\n      const iframe = document.getElementById('streetViewIframe');\n\n      // Vérifie si Street View est disponible\n      const streetViewService = new google.maps.StreetViewService();\n      streetViewService.getPanorama({ location: location, radius: 50 }, (data, status) => {\n        if (status === google.maps.StreetViewStatus.OK) {\n          // Street View est disponible, on utilise l'URL Street View\n          iframe.src = streetViewUrl;\n        } else {\n          // Street View n'est pas disponible, on utilise la vue satellite\n          iframe.src = satelliteUrl;\n        }\n        modal.classList.add('active');\n      });\n    }\n\n    function closeStreetView() {\n      const modal = document.getElementById('streetViewModal');\n      const iframe = document.getElementById('streetViewIframe');\n      iframe.src = '';\n      modal.classList.remove('active');\n    }\n  </script>\n</body>\n</html>\n`;\n\n// Retourne le HTML\nreturn [{ json: { html: html } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -380,
+        -280
+      ],
+      "id": "3945c7a2-59cc-47bb-89a6-acf7ae50c661",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "url": "https://serpapi.com/search",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "serpApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "Chinese restaurants Antananarivo"
+            },
+            {
+              "name": "engine",
+              "value": "google_maps"
+            },
+            {
+              "name": "type",
+              "value": "search"
+            },
+            {
+              "name": "ll",
+              "value": "@-18.8792,47.5079,15z"
+            },
+            {
+              "name": "tbm",
+              "value": "isch"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -400,
+        -500
+      ],
+      "id": "07fcac9e-7731-459b-9ee2-d8205aed28fc",
+      "name": "HTTP Request",
+      "credentials": {
+        "serpApi": {
+          "id": "JvOdMCuEsQkrZSAf",
+          "name": "SerpAPI account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2fac0328-532a-4dd3-8ffa-88645657307f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9c94265af9b9cc01543a2257a488c88e3e36e4caec85337e9d41335a112dca44"
+  },
+  "id": "j2QOJPXQgePHF23c",
+  "tags": []
+}
