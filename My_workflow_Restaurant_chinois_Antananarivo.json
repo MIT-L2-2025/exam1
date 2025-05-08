@@ -1,0 +1,273 @@
+{
+  "name": "My workflow Restaurant chinois Antananarivo",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        -40
+      ],
+      "id": "fd8bd37f-3ff4-47d6-b15b-d878c3d539db",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurant+chinois+à+Antananarivo&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        -40
+      ],
+      "id": "d7e73f58-dcb1-4364-974a-d211d2c8260a",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items[0].json.results.map(result => {\n  return {\n    json: {\n      place_id: result.place_id,\n      name: result.name,\n      address: result.formatted_address,\n      lat: result.geometry.location.lat,\n      lng: result.geometry.location.lng,\n      types: result.types\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        360,
+        -20
+      ],
+      "id": "bd8e0b84-93fb-47cb-93c2-dc1fe1a6287f",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "url": "=https://maps.googleapis.com/maps/api/place/details/json?place_id={{$json[\"place_id\"]}}&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        560,
+        -20
+      ],
+      "id": "19375f69-91cc-4384-84a6-698f5db3d643",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const result = item.json.result;\n\n  return {\n    json: {\n      nom: result.name || '',\n      adresse: result.formatted_address || '',\n      telephone: result.formatted_phone_number || '',\n      types: result.types || [],\n      latitude: result.geometry?.location?.lat || null,\n      longitude: result.geometry?.location?.lng || null,\n      website: result.website || '',\n      rating: result.rating || ''\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        780,
+        -20
+      ],
+      "id": "d87f3ead-321b-46e7-982a-ba185e254379",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const restaurants = items;  // Données reçues depuis le nœud précédent\n\n// Fonction pour vérifier si l'URL est valide\nfunction isValidUrl(url) {\n  if (!url) return false;\n  const pattern = /^(https?:\\/\\/)/;\n  return pattern.test(url);\n}\n\nlet html = `\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Restaurants à Antananarivo</title>\n  <style>\n    body {\n      font-family: 'Arial', sans-serif;\n      background-color: #f4f4f4;\n      margin: 0;\n      padding: 0;\n    }\n    h1 {\n      text-align: center;\n      margin-top: 30px;\n      color: #333;\n    }\n    .container {\n      width: 80%;\n      margin: 0 auto;\n      padding: 20px;\n      background-color: #fff;\n      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);\n    }\n    .restaurant {\n      border: 1px solid #ddd;\n      margin-bottom: 20px;\n      padding: 15px;\n      display: flex;\n      gap: 20px;\n      background-color: #fafafa;\n      border-radius: 8px;\n    }\n    .restaurant img {\n      width: 120px;\n      height: 120px;\n      object-fit: cover;\n      border-radius: 8px;\n    }\n    .details {\n      flex: 1;\n    }\n    .details h3 {\n      margin: 0 0 10px;\n      font-size: 20px;\n      color: #007bff;\n    }\n    .details p {\n      margin: 5px 0;\n      font-size: 16px;\n    }\n    .details a {\n      text-decoration: none;\n      color: #007bff;\n      font-weight: bold;\n    }\n    .details button {\n      background-color: #28a745;\n      color: #fff;\n      border: none;\n      padding: 10px 20px;\n      border-radius: 5px;\n      cursor: pointer;\n      font-size: 16px;\n      margin-top: 10px;\n    }\n    .details button:hover {\n      background-color: #218838;\n    }\n  </style>\n</head>\n<body>\n  <h1>Restaurants à Antananarivo</h1>\n  <div class=\"container\">\n`;\n\nrestaurants.forEach(resto => {\n  // Extraction des données de chaque restaurant\n  const name = resto.json.nom || 'Nom inconnu';\n  const phone = resto.json.telephone || 'Téléphone non fourni';\n  const addressRaw = resto.json.adresse || 'Adresse non disponible';\n  const address = addressRaw.replace(/\\n/g, '<br>');\n  const url = resto.json.website || '#';\n  const imageUrl = resto.json.image;  // L'URL de l'image peut être vide, on utilise donc une image par défaut\n  \n  // Vérification de l'URL de l'image et ajout d'une image par défaut si nécessaire\n  const image = imageUrl && isValidUrl(imageUrl) ? imageUrl : 'https://via.placeholder.com/120';\n\n  // Coordonnées Google Maps\n  const lat = resto.json.latitude || '';\n  const lng = resto.json.longitude || '';\n  const mapUrl = lat && lng ? `https://www.google.com/maps?q=${lat},${lng}` : '#';\n\n  // Ajout des détails du restaurant à la page HTML\n  html += `\n    <div class=\"restaurant\">\n      <img src=\"${image}\" alt=\"${name}\">\n      <div class=\"details\">\n        <h3><a href=\"${url}\" target=\"_blank\">${name}</a></h3>\n        <p><strong>Téléphone:</strong> ${phone}</p>\n        <p><strong>Adresse:</strong> ${address}</p>\n        <p><strong>Note:</strong> ${resto.json.rating || 'Non noté'}</p>\n        <p><strong>Coordonnées:</strong> Lat: ${lat}, Lng: ${lng}</p>\n        <a href=\"${mapUrl}\" target=\"_blank\">\n          <button>Voir sur Google Maps</button>\n        </a>\n        <p><strong>Première image:</strong> <a href=\"${image}\" target=\"_blank\">${image}</a></p>\n      </div>\n    </div>\n  `;\n});\n\nhtml += `\n  </div>\n</body>\n</html>\n`;\n\n// Convertir le HTML en base64\nconst buffer = Buffer.from(html, 'utf8');\nconst base64data = buffer.toString('base64');\n\nreturn [\n  {\n    binary: {\n      data: {\n        data: base64data,\n        mimeType: 'text/html',\n        fileName: 'restaurants_antananarivo.html'\n      }\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        -20
+      ],
+      "id": "c1b6e731-ada9-4091-a34c-6b924385ed6f",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {
+          "clashHandling": {
+            "values": {
+              "resolveClash": "addSuffix"
+            }
+          },
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        180,
+        540
+      ],
+      "id": "f618d73c-693a-46a9-869b-34c1e96c6e5c",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dfa74518-8ef9-4931-806a-bab6badc7809",
+              "name": "phone_number",
+              "value": "={{ $json.phone_number_1 }}",
+              "type": "string"
+            },
+            {
+              "id": "e224e82b-255b-4829-9697-0ebed03b348f",
+              "name": "international_phone_number",
+              "value": "={{ $json.international_phone_number_1 }}",
+              "type": "string"
+            },
+            {
+              "id": "22d01969-249a-44ef-aaa3-59883aeb040f",
+              "name": "website",
+              "value": "={{ $json.website_1 }}",
+              "type": "string"
+            },
+            {
+              "id": "cefd174f-7e19-4c06-9323-273252ca05b7",
+              "name": "name",
+              "value": "={{ $json.name_2 }}",
+              "type": "string"
+            },
+            {
+              "id": "c31f3ca2-b0ff-49dd-8ac6-c203e7741e19",
+              "name": "latitude",
+              "value": "={{ $json.latitude_2 }}",
+              "type": "number"
+            },
+            {
+              "id": "19fa4183-619c-4289-b581-eb864e0c0c7a",
+              "name": "longitude",
+              "value": "={{ $json.longitude_2 }}",
+              "type": "number"
+            },
+            {
+              "id": "3ee7be9b-80df-45bc-b89e-e4bf086d7a44",
+              "name": "adresse",
+              "value": "={{ $json.vicinity_2 }}",
+              "type": "string"
+            },
+            {
+              "id": "58624679-a1ae-478b-ac6d-006cb8254ae6",
+              "name": "photo",
+              "value": "={{ $json.photo_2.replace('VOTRE_CLE_API', 'AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM') }}",
+              "type": "string"
+            },
+            {
+              "id": "9258abe2-f626-48ce-8197-da1bf1a14330",
+              "name": "place_id",
+              "value": "={{ $json.place_id_2 }}",
+              "type": "string"
+            },
+            {
+              "id": "7a55a350-3a3f-4943-ac21-12269121c559",
+              "name": "icon",
+              "value": "={{ $json.icon }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        460,
+        540
+      ],
+      "id": "024fe300-2f49-4c17-b917-e266569e212c",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a9ecaf7e-b19b-4f08-81f9-71ad8b389d3b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "275938a69ef89f82656e1084deb8be4e1207e93753e7360b731ce8eae5b3f466"
+  },
+  "id": "GoIujdwtf3REVMH2",
+  "tags": []
+}
