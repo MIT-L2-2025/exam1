@@ -1,0 +1,204 @@
+{
+  "name": "Restaurant_Final",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "66b351cb-1984-45d1-b7ff-bddd44f70811",
+      "name": "Start Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -620,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurant+chinois+à+Antananarivo&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM",
+        "options": {}
+      },
+      "id": "96a52396-1e21-40d1-9e6f-d3bc6e70d00f",
+      "name": "Fetch Restaurants",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -500,
+        -40
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return items[0].json.results.map(result => {\n  return {\n    json: {\n      place_id: result.place_id,\n      name: result.name,\n      address: result.formatted_address,\n      lat: result.geometry.location.lat,\n      lng: result.geometry.location.lng,\n      types: result.types\n    }\n  };\n});"
+      },
+      "id": "eea3166b-08a9-4eb2-a45f-7e704adc1361",
+      "name": "Extract Place Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -300,
+        -40
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://maps.googleapis.com/maps/api/place/details/json?place_id={{$json[\"place_id\"]}}&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM",
+        "options": {}
+      },
+      "id": "a1a40e0e-ad92-4cc6-b549-9d6eb8266379",
+      "name": "Fetch Place Details",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -40,
+        -40
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const result = item.json.result;\n  const photos = result.photos ? result.photos.map(photo => photo.photo_reference) : [];\n  return {\n    json: {\n      place_id: item.json.place_id,\n      nom: result.name || '',\n      adresse: result.formatted_address || '',\n      telephone: result.formatted_phone_number || '',\n      latitude: result.geometry && result.geometry.location ? result.geometry.location.lat : null,\n      longitude: result.geometry && result.geometry.location ? result.geometry.location.lng : null,\n      website: result.website || '',\n      rating: result.rating || '',\n      photo_references: photos\n    }\n  };\n});"
+      },
+      "id": "b20bf2a1-1675-4f38-8eb4-2de940ad7393",
+      "name": "Extract Place Details",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        320,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const apiKey = 'AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM';\nconst maxWidth = 120;\nconst maxHeight = 120;\n\nreturn items.map(item => {\n  const photoUrls = (item.json.photo_references || []).map(reference => {\n    return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${maxWidth}&maxheight=${maxHeight}&photoreference=${reference}&key=${apiKey}`;\n  });\n  return {\n    json: {\n      ...item.json,\n      image: photoUrls[0] || ''\n    }\n  };\n});"
+      },
+      "id": "41d66f66-724d-4fb6-9a87-b5a115d0017d",
+      "name": "Fetch Google Images",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -260,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const lat = item.json.latitude;\n  const lng = item.json.longitude;\n  const mapillaryInteractiveUrl = (lat && lng) ? `https://www.mapillary.com/app/?lat=${lat}&lng=${lng}&z=17&focus=image` : '';\n  return {\n    json: {\n      ...item.json,\n      mapillaryImage: mapillaryInteractiveUrl\n    }\n  };\n});"
+      },
+      "id": "e2f66f0c-d10b-4b49-b4ce-906f99341755",
+      "name": "Fetch Mapillary Images",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        40,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "let html = `<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Restaurants à Antananarivo</title>\n  <style>\n    body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin:0; padding:0; }\n    .container { width: 80%; margin: auto; padding:20px; background:#fff; }\n    .restaurant { border: 1px solid #ddd; padding:15px; margin-bottom:20px; display:flex; gap:20px; }\n    .restaurant img { width:120px; height:120px; object-fit:cover; border-radius:8px; }\n    .details { flex:1; }\n    .details h3 { margin:0 0 10px; }\n    .details p { margin:5px 0; }\n    .details button { background:#28a745; color:#fff; border:none; padding:10px 20px; border-radius:5px; cursor:pointer; }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <h1>Restaurants à Antananarivo</h1>\n`;\n\nitems.forEach(item => {\n  const resto = item.json;\n  const googleImage = resto.image || '';\n  const image = googleImage || 'https://via.placeholder.com/120';\n  // Use the Mapillary link generated above\n  const mapillaryLink = resto.mapillaryImage || '';\n  html += `\n    <div class=\"restaurant\">\n      <img src=\"${image}\" alt=\"${resto.nom}\">\n      <div class=\"details\">\n        <h3><a href=\"${resto.website || '#'}\" target=\"_blank\">${resto.nom}</a></h3>\n        <p><strong>Adresse:</strong> ${resto.adresse.replace(/\\n/g, '<br>')}</p>\n        <p><strong>Téléphone:</strong> ${resto.telephone || 'N/A'}</p>\n        <p><strong>Note:</strong> ${resto.rating || 'Non noté'}</p>\n        <p><strong>Coordonnées:</strong> ${resto.latitude}, ${resto.longitude}</p>\n        <a href=\"https://www.google.com/maps?q=${resto.latitude},${resto.longitude}\" target=\"_blank\">\n          <button>Voir sur Google Maps</button>\n        </a>\n        ${mapillaryLink ? `<a href=\"${mapillaryLink}\" target=\"_blank\"><button>Voir 3D sur Mapillary</button></a>` : ''}\n      </div>\n    </div>\n  `;\n});\n\nhtml += `\n  </div>\n</body>\n</html>`;\n\nconst buffer = Buffer.from(html, 'utf8');\n\nreturn [{\n  binary: {\n    data: {\n      data: buffer.toString('base64'),\n      mimeType: 'text/html',\n      fileName: 'restaurants_antananarivo.html'\n    }\n  }\n}];"
+      },
+      "id": "825269a6-45c8-422e-91db-97a3cc892cc5",
+      "name": "Generate HTML Output",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        300,
+        320
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Start Trigger": {
+      "main": [
+        [
+          {
+            "node": "Fetch Restaurants",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Restaurants": {
+      "main": [
+        [
+          {
+            "node": "Extract Place Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Place Data": {
+      "main": [
+        [
+          {
+            "node": "Fetch Place Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Place Details": {
+      "main": [
+        [
+          {
+            "node": "Extract Place Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Place Details": {
+      "main": [
+        [
+          {
+            "node": "Fetch Google Images",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Google Images": {
+      "main": [
+        [
+          {
+            "node": "Fetch Mapillary Images",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Mapillary Images": {
+      "main": [
+        [
+          {
+            "node": "Generate HTML Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate HTML Output": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6ebb64b4-09a8-4d3f-a63d-c00ff0e468b5",
+  "meta": {
+    "instanceId": "59446a07eb5bed74dbd266b88047e146660cfc61f58b7f61d2f5713dd0c55acf"
+  },
+  "id": "zahRGnIbULB3qAC5",
+  "tags": []
+}
