@@ -124,5 +124,5 @@ Avant d’utiliser ce workflow, assurez-vous d’avoir :
 ## 🧑‍💻 Auteur
 
 Développé avec ❤️ par [Votre Nom / Équipe]  
-📧 Contact : [votre-email@example.com] (optionnel)
+📧 Contact : [ranaivotrimobaritahiana@gmail.com] (optionnel)
 
