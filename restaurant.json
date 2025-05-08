@@ -1,0 +1,136 @@
+{
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -20,
+        20
+      ],
+      "id": "53ca01ac-9cb0-4b1b-b1de-93646ea9182f",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "test.csv",
+        "options": {
+          "append": false
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        880,
+        100
+      ],
+      "id": "91885bac-5a74-4a8e-84c6-20980149e5ff",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = items[0].json.local_results || [];\n\nreturn results.map(result => {\n  return {\n    json: {\n      nom: result.title || '',\n      adresse: result.address || '',\n      téléphone: result.phone || 'Non disponible',\n      latitude: result.gps_coordinates?.latitude || null,\n      longitude: result.gps_coordinates?.longitude || null,\n      site_web: result.website || 'Non disponible',\n      image: result.thumbnail || 'https://via.placeholder.com/400x250?text=Pas+d\\'image' // Image par défaut si aucune trouvée\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        420,
+        280
+      ],
+      "id": "32f5e702-dce6-4739-ba11-559c27a0f2a9",
+      "name": "Parcelle et Format"
+    },
+    {
+      "parameters": {
+        "url": "https://serpapi.com/search.json?engine=google_maps&q=restaurant+chinois+antananarivo",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "restaurant chinois Antananarivo"
+            },
+            {
+              "name": "key",
+              "value": "3473c7f33ea61c15e29e4e1de420bb7d499354d0c02ee1ab38a40abd04163401"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        200,
+        100
+      ],
+      "id": "e5f7759e-8baf-456a-aac9-bbfbc0ae071a",
+      "name": "Recuperation Donnee"
+    },
+    {
+      "parameters": {
+        "jsCode": "const restaurants = $input.all().map(item => item.json);\n\nlet htmlContent = `\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n    <meta charset=\"UTF-8\" />\n    <title>Liste des Restaurants Chinois</title>\n    <link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.css\" />\n    <style>\n        /* Reset & Fonts */\n        body, html {\n            margin: 0;\n            padding: 0;\n            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n            background-color: #121212;\n            color: #f1f1f1;\n        }\n\n        h1 {\n            text-align: center;\n            font-size: 2.5rem;\n            margin-top: 40px;\n            margin-bottom: 30px;\n            color: #ffffff;\n            letter-spacing: 1px;\n        }\n\n        .container {\n            max-width: 1200px;\n            margin: auto;\n            padding: 20px;\n        }\n\n        .grid {\n            display: grid;\n            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));\n            gap: 30px;\n        }\n\n        .card {\n            background-color: #1e1e1e;\n            border-radius: 16px;\n            padding: 20px;\n            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);\n            transition: transform 0.3s ease, box-shadow 0.3s ease;\n            overflow: hidden;\n        }\n\n        .card:hover {\n            transform: translateY(-8px);\n            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);\n        }\n\n        .card h2 {\n            margin-top: 0;\n            font-size: 1.5rem;\n            color: #ff6b6b;\n            margin-bottom: 10px;\n        }\n\n        .info {\n            margin: 8px 0;\n            font-size: 0.95rem;\n            line-height: 1.5;\n            color: #ccc;\n        }\n\n        .label {\n            display: inline-block;\n            width: 90px;\n            font-weight: bold;\n            color: #aaa;\n        }\n\n        .restaurant-photo {\n            width: 100%;\n            height: 200px;\n            object-fit: cover;\n            border-radius: 12px;\n            margin-top: 15px;\n            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);\n        }\n\n        .map {\n            height: 200px;\n            margin-top: 15px;\n            border-radius: 12px;\n            overflow: hidden;\n            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);\n        }\n\n        @media (max-width: 700px) {\n            .grid {\n                grid-template-columns: 1fr;\n            }\n            .label {\n                display: block;\n                width: 100%;\n            }\n        }\n    </style>\n</head>\n<body>\n<div class=\"container\">\n    <h1>Restaurants Chinois à Antananarivo</h1>\n    <div class=\"grid\">\n`;\n\nrestaurants.forEach((restaurant, index) => {\n    const photoUrl = restaurant.image && restaurant.image !== \"Pas de photo disponible\"\n        ? restaurant.image\n        : 'https://via.placeholder.com/400x250?text=Pas+d\\'image';\n\n    htmlContent += `\n        <div class=\"card\">\n            <h2>${restaurant.nom || 'Nom inconnu'}</h2>\n            <div class=\"info\"><span class=\"label\">Adresse :</span> ${restaurant.adresse || 'Non disponible'}</div>\n            <img src=\"${photoUrl}\" alt=\"Photo de ${restaurant.nom || 'Restaurant'}\" class=\"restaurant-photo\" />\n            <div id=\"map-${index}\" class=\"map\"></div>\n        </div>\n    `;\n});\n\nhtmlContent += `\n    </div>\n</div>\n\n<!-- Leaflet -->\n<script src=\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.js\"></script>\n<script>\n    const mapData = ${JSON.stringify(\n      restaurants.map(r => ({\n        lat: parseFloat(r.latitude),\n        lng: parseFloat(r.longitude)\n      }))\n    )};\n\n    function initMaps() {\n        mapData.forEach((data, index) => {\n            if (!isNaN(data.lat) && !isNaN(data.lng)) {\n                const map = L.map('map-' + index).setView([data.lat, data.lng], 15);\n                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {\n                    attribution: '&copy; OpenStreetMap contributors'\n                }).addTo(map);\n                L.marker([data.lat, data.lng]).addTo(map);\n            } else {\n                document.getElementById('map-' + index).style.display = 'none';\n            }\n        });\n    }\n\n    window.addEventListener('load', initMaps);\n</script>\n</body>\n</html>\n`;\n\nreturn [{\n    json: { fileName: 'restaurants_gratuit_sombre.html' },\n    binary: {\n        data: {\n            data: Buffer.from(htmlContent).toString('base64'),\n            mimeType: 'text/html',\n            fileName: 'restaurants_chinois.html'\n        }\n    }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        200
+      ],
+      "id": "8e121f3f-cb29-489f-99fe-611c1987a558",
+      "name": "JSON en HTML"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Recuperation Donnee",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parcelle et Format": {
+      "main": [
+        [
+          {
+            "node": "JSON en HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recuperation Donnee": {
+      "main": [
+        [
+          {
+            "node": "Parcelle et Format",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "JSON en HTML": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b162a8c36b8365cd19653149aefe98108cdc4ae3ae1fc4929951951ce50f98b4"
+  }
+}

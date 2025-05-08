@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Liste des Restaurants Chinois</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        /* Reset & Fonts */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #f1f1f1;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-top: 40px;
+            margin-bottom: 30px;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background-color: #1e1e1e;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+
+        .info {
+            margin: 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #ccc;
+        }
+
+        .label {
+            display: inline-block;
+            width: 90px;
+            font-weight: bold;
+            color: #aaa;
+        }
+
+        .restaurant-photo {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .map {
+            height: 200px;
+            margin-top: 15px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        @media (max-width: 700px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .label {
+                display: block;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Restaurants Chinois à Antananarivo</h1>
+    <div class="grid">
+
+        <div class="card">
+            <h2>Grand Resto de Chine</h2>
+            <div class="info"><span class="label">Adresse :</span> Lalana Rasamuol Maurice, Antananarivo, Madagascar</div>
+            <img src="https://lh3.googleusercontent.com/p/AF1QipN7yiBNA30KEizkiXJxu3ZUeiYA7jnqdu52kJMZ=w163-h92-k-no" alt="Photo de Grand Resto de Chine" class="restaurant-photo" />
+            <div id="map-0" class="map"></div>
+        </div>
+    
+        <div class="card">
+            <h2>O Loft Chinois</h2>
+            <div class="info"><span class="label">Adresse :</span> 4G39+2J7, Antananarivo, Madagascar</div>
+            <img src="https://lh3.googleusercontent.com/p/AF1QipNHPeTD3gUVFTfRHfj-ncIHDw58513AyhFo_hRm=w122-h92-k-no" alt="Photo de O Loft Chinois" class="restaurant-photo" />
+            <div id="map-1" class="map"></div>
+        </div>
+    
+        <div class="card">
+            <h2>La Fleur De Sel</h2>
+            <div class="info"><span class="label">Adresse :</span> Antananarivo, Madagascar</div>
+            <img src="https://lh3.googleusercontent.com/p/AF1QipOQOGgQ0ObZ5MrCEVpNp5mKBTcQCh0GEM77h5YL=w158-h92-k-no" alt="Photo de La Fleur De Sel" class="restaurant-photo" />
+            <div id="map-2" class="map"></div>
+        </div>
+    
+        <div class="card">
+            <h2>Restaurant L'EURASIE - Ankorondrano</h2>
+            <div class="info"><span class="label">Adresse :</span> Face à l'hôtel Ibis - Ankorondrano, Antananarivo 101, Madagascar</div>
+            <img src="https://lh3.googleusercontent.com/p/AF1QipOtq5x8wMn4L97OL30vkqmmLhgHeeJskz-a6ipY=w163-h92-k-no" alt="Photo de Restaurant L'EURASIE - Ankorondrano" class="restaurant-photo" />
+            <div id="map-3" class="map"></div>
+        </div>
+    
+        <div class="card">
+            <h2>l'Orient Asian Fusion Restaurant</h2>
+            <div class="info"><span class="label">Adresse :</span> Madagascar, Antananarivo, Lalana Rainandriamampandry, 邮政编码: 101</div>
+            <img src="https://lh3.googleusercontent.com/p/AF1QipMEtu4ta7YgG-CL3VT7miGqijPe1Too2f9jrSaP=w122-h92-k-no" alt="Photo de l'Orient Asian Fusion Restaurant" class="restaurant-photo" />
+            <div id="map-4" class="map"></div>
+        </div>
+    
+        <div class="card">
+            <h2>Restaurant Fong Mei</h2>
+            <div class="info"><span class="label">Adresse :</span> 4GHM+JMX, Rue Andriantsihoarana Ratsimbazafy, Antananarivo, Madagascar</div>
+            <img src="https://lh3.googleusercontent.com/p/AF1QipMHTDjwC8dQWwY9xijz_dCP8HP5_Aut5zKHJwoz=w189-h92-k-no" alt="Photo de Restaurant Fong Mei" class="restaurant-photo" />
+            <div id="map-5" class="map"></div>
+        </div>
+    
+        <div class="card">
+            <h2>凤城 Soleil</h2>
+            <div class="info"><span class="label">Adresse :</span> Lot IVK 89 bis Anosivavaka Ambohimanarina, Antananarivo 101, Madagascar</div>
+            <img src="https://lh3.googleusercontent.com/p/AF1QipNV5IfdfmLcw6xZl_UC9xIgmSXKSFaCReLf3JDq=w415-h92-k-no" alt="Photo de 凤城 Soleil" class="restaurant-photo" />
+            <div id="map-6" class="map"></div>
+        </div>
+    
+        <div class="card">
+            <h2>Dun Huang</h2>
+            <div class="info"><span class="label">Adresse :</span> 42 Arabe Andrinampoinimerina, Antananarivo 101, Madagascar</div>
+            <img src="https://lh3.googleusercontent.com/p/AF1QipOrcLrnddjVPe8CMEGLkJqhV5o2dOq01yCnhGaf=w163-h92-k-no" alt="Photo de Dun Huang" class="restaurant-photo" />
+            <div id="map-7" class="map"></div>
+        </div>
+    
+        <div class="card">
+            <h2>Le Grand Orient</h2>
+            <div class="info"><span class="label">Adresse :</span> Rue Andriantsihoarana Ratsimbazafy, Antananarivo 101, Madagascar</div>
+            <img src="https://lh3.googleusercontent.com/p/AF1QipNfdthhKgfEkk6YKFWRam1O6ptNiH2m1M3uGwE1=w163-h92-k-no" alt="Photo de Le Grand Orient" class="restaurant-photo" />
+            <div id="map-8" class="map"></div>
+        </div>
+    
+        <div class="card">
+            <h2>Hirondelle "燕子" Chinese FOOD</h2>
+            <div class="info"><span class="label">Adresse :</span> Lalana Dama-Ntsoha Razatintsalama Jean-Baptiste, Antananarivo 101, Madagascar</div>
+            <img src="https://lh3.googleusercontent.com/p/AF1QipNHzp5v6Ex6FX618m8n7nqqLkxDRkZzRnBByTYh=w122-h92-k-no" alt="Photo de Hirondelle "燕子" Chinese FOOD" class="restaurant-photo" />
+            <div id="map-9" class="map"></div>
+        </div>
+    
+        <div class="card">
+            <h2>La Jonquille</h2>
+            <div class="info"><span class="label">Adresse :</span> Antananarivo 101, Madagascar</div>
+            <img src="https://lh3.googleusercontent.com/p/AF1QipMsJSKqkvUuNj8X2kClQStRgF9MnhWDeNbiCFA4=w189-h92-k-no" alt="Photo de La Jonquille" class="restaurant-photo" />
+            <div id="map-10" class="map"></div>
+        </div>
+    
+        <div class="card">
+            <h2>Zen Garden</h2>
+            <div class="info"><span class="label">Adresse :</span> II M 38 F Androhibe Antananarivo Antananarivo, 101, Madagascar</div>
+            <img src="https://lh3.googleusercontent.com/p/AF1QipN43283kmuuBmRt07-4IJshNImNdRb7Y6BpnpX1=w122-h92-k-no" alt="Photo de Zen Garden" class="restaurant-photo" />
+            <div id="map-11" class="map"></div>
+        </div>
+    
+        <div class="card">
+            <h2>Restaurant La Belle Ville</h2>
+            <div class="info"><span class="label">Adresse :</span> 3GQP+WJP, Rue Razafindralombo Pierre, Antananarivo, Madagascar</div>
+            <img src="https://lh3.googleusercontent.com/p/AF1QipNDWX5a1IpH3BSryRA9ZpB_u7tet_SNh7nS-Jqt=w189-h92-k-no" alt="Photo de Restaurant La Belle Ville" class="restaurant-photo" />
+            <div id="map-12" class="map"></div>
+        </div>
+    
+        <div class="card">
+            <h2>Kaizen Restaurant</h2>
+            <div class="info"><span class="label">Adresse :</span> 3GPR+F3J, Lalana Vvs, Antananarivo, Madagascar</div>
+            <img src="https://lh3.googleusercontent.com/p/AF1QipMUA53dmxBRpysz0hpem8r6_1mflTo6bSYFPF2D=w80-h106-k-no" alt="Photo de Kaizen Restaurant" class="restaurant-photo" />
+            <div id="map-13" class="map"></div>
+        </div>
+    
+        <div class="card">
+            <h2>HONG KONG Restaurant - salon de The</h2>
+            <div class="info"><span class="label">Adresse :</span> Toyota, Lalana Doktera. Joseph Raseta, Maibahoaka Ivato Antananarivo IVATO, Antananarivo 105, Madagascar</div>
+            <img src="https://lh3.googleusercontent.com/p/AF1QipMR8kLY4EHqmvIlOoaEvnzfUf8qY6f944ORYOF9=w147-h92-k-no" alt="Photo de HONG KONG Restaurant - salon de The" class="restaurant-photo" />
+            <div id="map-14" class="map"></div>
+        </div>
+    
+        <div class="card">
+            <h2>吕府私房菜（KTV）</h2>
+            <div class="info"><span class="label">Adresse :</span> Madagascar, Antananarivo, AUTOREX, Amitie Fandian</div>
+            <img src="https://lh3.googleusercontent.com/p/AF1QipM07B6izo0ribTcOx106yL2JfPX64vAli2EbcDU=w84-h92-k-no" alt="Photo de 吕府私房菜（KTV）" class="restaurant-photo" />
+            <div id="map-15" class="map"></div>
+        </div>
+    
+        <div class="card">
+            <h2>Restaurant Lai</h2>
+            <div class="info"><span class="label">Adresse :</span> 3GQ4+RWG, Antananarivo, Madagascar</div>
+            <img src="https://lh3.googleusercontent.com/p/AF1QipPbkVhxItNiTAulVQ3k_Z-J9yxxTAdKKxekfI_q=w163-h92-k-no" alt="Photo de Restaurant Lai" class="restaurant-photo" />
+            <div id="map-16" class="map"></div>
+        </div>
+    
+        <div class="card">
+            <h2>Dragon Royal Restaurant IVATO</h2>
+            <div class="info"><span class="label">Adresse :</span> 5FQF+WHH, Antananarivo, Madagascar</div>
+            <img src="https://lh3.googleusercontent.com/p/AF1QipOtJoCztcg9BWvy5KjmUpPcbjQNaYS4J2871A2s=w80-h106-k-no" alt="Photo de Dragon Royal Restaurant IVATO" class="restaurant-photo" />
+            <div id="map-17" class="map"></div>
+        </div>
+    
+        <div class="card">
+            <h2>Restaurant Le Cantilène</h2>
+            <div class="info"><span class="label">Adresse :</span> 3GQ4+RWM, Antananarivo, Madagascar</div>
+            <img src="https://via.placeholder.com/400x250?text=Pas+d'image" alt="Photo de Restaurant Le Cantilène" class="restaurant-photo" />
+            <div id="map-18" class="map"></div>
+        </div>
+    
+        <div class="card">
+            <h2>Lotus Blanc Restaurant 荷花酒店</h2>
+            <div class="info"><span class="label">Adresse :</span> LOT II W 23 B, Antananarivo 101, Madagascar</div>
+            <img src="https://lh3.googleusercontent.com/p/AF1QipM8NDE-zVjI5XzZluG0roZbgxqkJDnGuLV5Zz1j=w122-h92-k-no" alt="Photo de Lotus Blanc Restaurant 荷花酒店" class="restaurant-photo" />
+            <div id="map-19" class="map"></div>
+        </div>
+    
+    </div>
+</div>
+
+<!-- Leaflet -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    const mapData = [{"lat":-18.9141849,"lng":47.5384142},{"lat":-18.8974503,"lng":47.5190589},{"lat":-18.8715948,"lng":47.5426065},{"lat":-18.878854999999998,"lng":47.521268299999996},{"lat":-18.907249399999998,"lng":47.5280373},{"lat":-18.870893799999997,"lng":47.5342498},{"lat":-18.8729457,"lng":47.507969499999994},{"lat":-18.905614,"lng":47.524070699999996},{"lat":-18.8698272,"lng":47.5317034},{"lat":-18.9174137,"lng":47.5366284},{"lat":-18.909325799999998,"lng":47.536889599999995},{"lat":-18.865723499999998,"lng":47.5428709},{"lat":-18.9101641,"lng":47.5365779},{"lat":-18.9137837,"lng":47.5401532},{"lat":-18.830986199999998,"lng":47.465352599999996},{"lat":-18.910683199999998,"lng":47.503318},{"lat":-18.9104281,"lng":47.5073277},{"lat":-18.8101926,"lng":47.4739989},{"lat":-18.9104223,"lng":47.507293499999996},{"lat":-18.9134037,"lng":47.537774399999996}];
+
+    function initMaps() {
+        mapData.forEach((data, index) => {
+            if (!isNaN(data.lat) && !isNaN(data.lng)) {
+                const map = L.map('map-' + index).setView([data.lat, data.lng], 15);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap contributors'
+                }).addTo(map);
+                L.marker([data.lat, data.lng]).addTo(map);
+            } else {
+                document.getElementById('map-' + index).style.display = 'none';
+            }
+        });
+    }
+
+    window.addEventListener('load', initMaps);
+</script>
+</body>
+</html>
