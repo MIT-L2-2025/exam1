@@ -1,1 +1,8 @@
 //instructions
+1- ouvrir n8n sur votre serveur et vous devez télécharger un clé api via  https://serpapi.com/ en se logant parce que sans ça la requete http du workflow ne va
+pas marcher.
+Après ouvrir le workflow dans n8n , éxécuter le workflow , puis  télécharger le restaurant.html contenant les listes des restaurants chinois .
+
+2-En ouvrant le fichier restaurants.html vous aurez tout les listes des restaurants chinois au alentours de Antananarivo avec un itinéraire pour chaque restaurant.
+
+Merci beaucoup d'avoir lu mes instructions . 
