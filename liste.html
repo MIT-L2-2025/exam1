@@ -1,0 +1,566 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste des lieux</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Roboto:wght@300;400;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(145deg, #f7f9fc 0%, #e8ecef 100%);
+      min-height: 100vh;
+      padding: 50px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .place {
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+      width: 360px;
+      transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      border: 1px solid rgba(229, 231, 235, 0.5);
+    }
+
+    .place:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    }
+
+    .place img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+      border-bottom: 4px solid #d4af37;
+    }
+
+    .place:hover img {
+      transform: scale(1.08);
+    }
+
+    .place-content {
+      padding: 25px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      position: relative;
+    }
+
+    .place h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2em;
+      margin: 0 0 15px;
+      color: #1f2527;
+      line-height: 1.2;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .place p {
+      margin: 10px 0;
+      color: #4b5563;
+      font-size: 0.95em;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .place p strong {
+      color: #1f2527;
+      font-weight: 500;
+    }
+
+    .place a {
+      margin-top: auto;
+      text-decoration: none;
+      background: linear-gradient(90deg, #d4af37 0%, #b8972e 100%);
+      color: #ffffff;
+      padding: 14px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1em;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: all 0.3s ease;
+    }
+
+    .place a:hover {
+      background: linear-gradient(90deg, #b8972e 0%, #a68b27 100%);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+    }
+
+    .coord {
+      font-size: 0.9em;
+      color: #6b7280;
+      margin-top: 12px;
+      font-style: italic;
+      opacity: 0.8;
+    }
+
+    .place::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #d4af37, #ffffff);
+      z-index: 1;
+    }
+
+    @media (max-width: 768px) {
+      .place {
+        width: 100%;
+        max-width: 360px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+    <div class="place">
+      <img src="https://graph.facebook.com/100656102949738/picture?type=large" alt="Kaizen Restaurant">
+      <div class="place-content">
+        <h2>Kaizen Restaurant</h2>
+        <p><strong>Adresse :</strong> Rue VVS AntanimoraAntananarivo</p>
+        <p><strong>Description :</strong> De la bonne nourriture cuisinée à la main, fraîche et rapide. Qu'est-ce qui
+pourrait être mieux ?</p>
+        <p><strong>Téléphone :</strong> +261387410784</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9132683, 47.5434235</p>
+        <a href="https://www.google.com/maps?q=-18.9132683,47.5434235" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/110916164578468/picture?type=large" alt="Hirondelle "燕子" Chinese FOOD">
+      <div class="place-content">
+        <h2>Hirondelle "燕子" Chinese FOOD</h2>
+        <p><strong>Adresse :</strong> Restaurant HirondelleAntananarivo</p>
+        <p><strong>Description :</strong> Doté d'un "PARKING" et situé en direction d 'ANKORAHOTRA . Nous vous
+accueillerons dans un cadre familial avec des specialitées chinoises 🥢 ...
+Arthur et cécile</p>
+        <p><strong>Téléphone :</strong> +261341116678</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9174137, 47.5366284</p>
+        <a href="https://www.google.com/maps?q=-18.9174137,47.5366284" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/102088432917971/picture?type=large" alt="Le Petit Bouchon">
+      <div class="place-content">
+        <h2>Le Petit Bouchon</h2>
+        <p><strong>Adresse :</strong> 67HaAntananarivo, 101</p>
+        <p><strong>Description :</strong> Prêt à vous régaler en toutes circonstances</p>
+        <p><strong>Téléphone :</strong> +261389232902</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
+        <a href="https://www.google.com/maps?q=-18.9184607,47.5211293" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/103588078847250/picture?type=large" alt="La Fleur de Sel Restaurant">
+      <div class="place-content">
+        <h2>La Fleur de Sel Restaurant</h2>
+        <p><strong>Adresse :</strong> ANALAMAHITSYAntananarivo</p>
+        <p><strong>Description :</strong> Notre restaurant vous propose une immersion dans la gastronomie chinoise.</p>
+        <p><strong>Téléphone :</strong> +261341258222</p>
+        <p class="coord"><strong>Coordonnées :</strong> N/A, N/A</p>
+        <a href="#" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/421678137880681/picture?type=large" alt="Restaurant L'Eurasie - Tana">
+      <div class="place-content">
+        <h2>Restaurant L'Eurasie - Tana</h2>
+        <p><strong>Adresse :</strong> AnkorondranoAntananarivo, 101</p>
+        <p><strong>Description :</strong> La Soupe et cuisine chinoises comme à Tamatave L' Eurasie ANKORONDRANO</p>
+        <p><strong>Téléphone :</strong> Non communiqué</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.891573, 47.5244734</p>
+        <a href="https://www.google.com/maps?q=-18.891573,47.5244734" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/1620896638011680/picture?type=large" alt="OKAY restau">
+      <div class="place-content">
+        <h2>OKAY restau</h2>
+        <p><strong>Adresse :</strong> Route Poste ItaosyAntananarivo, 102</p>
+        <p><strong>Description :</strong> Votre satisfaction et votre Santé en saveur</p>
+        <p><strong>Téléphone :</strong> +261343935648</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
+        <a href="https://www.google.com/maps?q=-18.9184607,47.5211293" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/413657871838871/picture?type=large" alt="Sao Kuun">
+      <div class="place-content">
+        <h2>Sao Kuun</h2>
+        <p><strong>Adresse :</strong> AndranomenaAntananarivo, 103</p>
+        <p><strong>Description :</strong> plats et snacks chinois</p>
+        <p><strong>Téléphone :</strong> Non communiqué</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.853431, 47.4796907</p>
+        <a href="https://www.google.com/maps?q=-18.853431,47.4796907" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/100689696183053/picture?type=large" alt="Restaurant JO Ji">
+      <div class="place-content">
+        <h2>Restaurant JO Ji</h2>
+        <p><strong>Adresse :</strong> IvatoAntananarivo</p>
+        <p><strong>Description :</strong> Contact : 034 79 282 54</p>
+        <p><strong>Téléphone :</strong> Non communiqué</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.8240509, 47.48724319999999</p>
+        <a href="https://www.google.com/maps?q=-18.8240509,47.48724319999999" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/211404342048256/picture?type=large" alt="Dragon Rouge">
+      <div class="place-content">
+        <h2>Dragon Rouge</h2>
+        <p><strong>Adresse :</strong> BehoririkaAntananarivo</p>
+        <p><strong>Description :</strong> restaurants dragon rouge behoririka hanimpitoloha🍠🍲 sakafo tsy manampetra🍡🍗
+❌❌agogo❌❌</p>
+        <p><strong>Téléphone :</strong> +261381259415</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9004069, 47.5220186</p>
+        <a href="https://www.google.com/maps?q=-18.9004069,47.5220186" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/395594843631046/picture?type=large" alt="Au bon coin Tanà">
+      <div class="place-content">
+        <h2>Au bon coin Tanà</h2>
+        <p><strong>Adresse :</strong> AntsakaviroAntananarivo</p>
+        <p><strong>Description :</strong> Notre restaurant chinois vous invite à découvrir notre cuisine traditionnelle
+riche en saveurs ✨</p>
+        <p><strong>Téléphone :</strong> +261385454682</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9079241, 47.53183869999999</p>
+        <a href="https://www.google.com/maps?q=-18.9079241,47.53183869999999" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/409113735611267/picture?type=large" alt="AVIA MONA">
+      <div class="place-content">
+        <h2>AVIA MONA</h2>
+        <p><strong>Adresse :</strong> Ankatso PylôneAntananarivo, 101</p>
+        <p><strong>Description :</strong> AVIA MONA ihinana raha manjary �</p>
+        <p><strong>Téléphone :</strong> Non communiqué</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9118505, 47.5606957</p>
+        <a href="https://www.google.com/maps?q=-18.9118505,47.5606957" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/449868878220266/picture?type=large" alt="Lé Snou">
+      <div class="place-content">
+        <h2>Lé Snou</h2>
+        <p><strong>Adresse :</strong> Lot SIAE 11 Bis AmbodifilaoAntananarivo, 101</p>
+        <p><strong>Description :</strong> Vos plats sinoagasy préférés fraîchement préparés ou surgelés</p>
+        <p><strong>Téléphone :</strong> Non communiqué</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
+        <a href="https://www.google.com/maps?q=-18.9184607,47.5211293" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/503292452870912/picture?type=large" alt="Miso Food 67Ha">
+      <div class="place-content">
+        <h2>Miso Food 67Ha</h2>
+        <p><strong>Adresse :</strong> Arrêt GARAGE 67HAAntananarivo</p>
+        <p><strong>Description :</strong> Annexe - MISO FOOD Analakely 🍝Resto-snack SINO-MALAGASY🍝 📍ARRET BUS GARAGE
+67HA 📍 欢迎光临🙇</p>
+        <p><strong>Téléphone :</strong> +261381838109</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9215996, 47.5609678</p>
+        <a href="https://www.google.com/maps?q=-18.9215996,47.5609678" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/319854941207915/picture?type=large" alt="Soupe Dinamika">
+      <div class="place-content">
+        <h2>Soupe Dinamika</h2>
+        <p><strong>Adresse :</strong> Eo Apita Ny Gastro Pizza Dalle ItaosyAntananarivo</p>
+        <p><strong>Description :</strong> Aucune description disponible.</p>
+        <p><strong>Téléphone :</strong> Non communiqué</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9068617, 47.4539427</p>
+        <a href="https://www.google.com/maps?q=-18.9068617,47.4539427" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/1473807299511537/picture?type=large" alt="LE GRAND RESTAURANT DE CHINE">
+      <div class="place-content">
+        <h2>LE GRAND RESTAURANT DE CHINE</h2>
+        <p><strong>Adresse :</strong> Tsiadana, Sur La Route De L'Universite D'AnkatsoAntananarivo, 101</p>
+        <p><strong>Description :</strong> N'hésitez pas à nous contacter pour plus d'informations et pour des éventuelles
+réservations de table</p>
+        <p><strong>Téléphone :</strong> +261338359463</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
+        <a href="https://www.google.com/maps?q=-18.9184607,47.5211293" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/1515532858668671/picture?type=large" alt="La Dynastie">
+      <div class="place-content">
+        <h2>La Dynastie</h2>
+        <p><strong>Adresse :</strong> C. C Espace GramontAntananarivo, 101</p>
+        <p><strong>Description :</strong> La Dynastie est un restaurant familial où l'on vous sert des plats chinois et
+savoureux !</p>
+        <p><strong>Téléphone :</strong> Non communiqué</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
+        <a href="https://www.google.com/maps?q=-18.9184607,47.5211293" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/467101170059400/picture?type=large" alt="Maison de couture junior thibault">
+      <div class="place-content">
+        <h2>Maison de couture junior thibault</h2>
+        <p><strong>Adresse :</strong> Antananarivo, 102</p>
+        <p><strong>Description :</strong> bar restaurant KARAOKÉ</p>
+        <p><strong>Téléphone :</strong> Non communiqué</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
+        <a href="https://www.google.com/maps?q=-18.9184607,47.5211293" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/101672941707344/picture?type=large" alt="Le Cantonnais">
+      <div class="place-content">
+        <h2>Le Cantonnais</h2>
+        <p><strong>Adresse :</strong> ItaosyAntananarivo, 101</p>
+        <p><strong>Description :</strong> Nous nous spécialisons dans les viandes à la Chinoise, char siu, lap yuk, poulet
+laqué</p>
+        <p><strong>Téléphone :</strong> +261385686526</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
+        <a href="https://www.google.com/maps?q=-18.9184607,47.5211293" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/116348686906075/picture?type=large" alt="TSANG">
+      <div class="place-content">
+        <h2>TSANG</h2>
+        <p><strong>Adresse :</strong> Bypass ImerimanjakaAntananarivo, 102</p>
+        <p><strong>Description :</strong> Spécialisé dans la cuisine chinoise : Soupe,Van-tan et Demi lune, Tsock, Riz
+cantonnais, Mine sao</p>
+        <p><strong>Téléphone :</strong> 0340847883</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9844323, 47.5429425</p>
+        <a href="https://www.google.com/maps?q=-18.9844323,47.5429425" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/128554757721502/picture?type=large" alt="Restaurant Villa Soleil">
+      <div class="place-content">
+        <h2>Restaurant Villa Soleil</h2>
+        <p><strong>Adresse :</strong> Lot IVK 89 BIS ANOSIVAVAKA AMBOHIMANARINAAntananarivo, 101</p>
+        <p><strong>Description :</strong> Aucune description disponible.</p>
+        <p><strong>Téléphone :</strong> +261331133628</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.8711215, 47.4945198</p>
+        <a href="https://www.google.com/maps?q=-18.8711215,47.4945198" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/105286528052377/picture?type=large" alt="Hanova-ku">
+      <div class="place-content">
+        <h2>Hanova-ku</h2>
+        <p><strong>Adresse :</strong> Antananarivo, 101</p>
+        <p><strong>Description :</strong> Hanova-ku est un restaurant en ligne proposant les meilleurs canards laqué de
+Mada 😊🇲🇬</p>
+        <p><strong>Téléphone :</strong> +261342251671</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
+        <a href="https://www.google.com/maps?q=-18.9184607,47.5211293" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/131448496710388/picture?type=large" alt="Bamboo I Le Restau I">
+      <div class="place-content">
+        <h2>Bamboo I Le Restau I</h2>
+        <p><strong>Adresse :</strong> MANDROSEZAAntananarivo, 101</p>
+        <p><strong>Description :</strong> 𝐿𝑒 𝐵𝒜𝑀𝐵𝒪𝒪 𝑒𝓈𝓉 𝓊𝓃 𝓇𝑒𝓈𝓉𝒶𝓊𝓇𝒶𝓃𝓉 𝓆𝓊𝒾 𝓋𝒶𝓇𝒾𝑒
+𝓅𝓁𝒶𝒾𝓈𝒾𝓇 𝑒𝓉 𝓈𝒶𝓋𝑒𝓊𝓇. 𝐸𝓃𝓉𝓇𝑒 𝑔𝓇𝒾𝓁𝓁𝒶𝒹𝑒 𝑒𝓉 𝓅𝓁𝒶𝓉𝓈
+𝓉𝓇𝒶𝒹𝒾𝓉𝒾𝑜𝓃𝓃𝑒𝓁𝓈.</p>
+        <p><strong>Téléphone :</strong> +261383520681</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9357169, 47.5502562</p>
+        <a href="https://www.google.com/maps?q=-18.9357169,47.5502562" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/1636134896641383/picture?type=large" alt="Gasy gourmet - Chef à domicile">
+      <div class="place-content">
+        <h2>Gasy gourmet - Chef à domicile</h2>
+        <p><strong>Adresse :</strong> Antananarivo, TANA101</p>
+        <p><strong>Description :</strong> Gasy Gourmet met à votre service son chef à domicile pour vos repas de famille,
+d'amis ou toute autre fête et reçoit également vos commandes pour une experience
+extraordinaire.</p>
+        <p><strong>Téléphone :</strong> 341456496</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9093258, 47.53688959999999</p>
+        <a href="https://www.google.com/maps?q=-18.9093258,47.53688959999999" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/104953424506997/picture?type=large" alt="La Belle Ville Antsakaviro">
+      <div class="place-content">
+        <h2>La Belle Ville Antsakaviro</h2>
+        <p><strong>Adresse :</strong> Lot II W 19 M Bis A Ambodiroatra-AntsakaviroAntananarivo, 101</p>
+        <p><strong>Description :</strong> Restaurant chinois milieu de gamme, près de la BFV Antsakaviro. Appelez nous au
++261 20 22 304 83.</p>
+        <p><strong>Téléphone :</strong> +261202230483</p>
+        <p class="coord"><strong>Coordonnées :</strong> N/A, N/A</p>
+        <a href="#" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/177103073110334/picture?type=large" alt="Restaurant Baraoa">
+      <div class="place-content">
+        <h2>Restaurant Baraoa</h2>
+        <p><strong>Adresse :</strong> Lot Az 119 Ai Anosizato OuestAntananarivo, 101</p>
+        <p><strong>Description :</strong> Aucune description disponible.</p>
+        <p><strong>Téléphone :</strong> 034 23 186 16</p>
+        <p class="coord"><strong>Coordonnées :</strong> 44.8558607, 4.907913</p>
+        <a href="https://www.google.com/maps?q=44.8558607,4.907913" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/110089675167210/picture?type=large" alt="Lotus Rouge Tana">
+      <div class="place-content">
+        <h2>Lotus Rouge Tana</h2>
+        <p><strong>Adresse :</strong> Cité Mandrimena IavolohaAntananarivo, 102</p>
+        <p><strong>Description :</strong> Aucune description disponible.</p>
+        <p><strong>Téléphone :</strong> +261344462082</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
+        <a href="https://www.google.com/maps?q=-18.9184607,47.5211293" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/128947863640922/picture?type=large" alt="Capital Shí wù">
+      <div class="place-content">
+        <h2>Capital Shí wù</h2>
+        <p><strong>Adresse :</strong> Mahamasina, Près Bazar Du QuartierAntananarivo, 101</p>
+        <p><strong>Description :</strong> 🏮Restaurant chinois🏮 Mahamasina, à gauche du Bazar du quartier Ouvert du Mardi
+au Dimanche De 12h à 14h30 De 17h30 à 21h Réservation Possible</p>
+        <p><strong>Téléphone :</strong> +261340172545</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9188737, 47.5263146</p>
+        <a href="https://www.google.com/maps?q=-18.9188737,47.5263146" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/105005758918490/picture?type=large" alt="La table de chine">
+      <div class="place-content">
+        <h2>La table de chine</h2>
+        <p><strong>Adresse :</strong> Antananarivo, 101</p>
+        <p><strong>Description :</strong> Soupes chinoises et Laqués</p>
+        <p><strong>Téléphone :</strong> +261384725332</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
+        <a href="https://www.google.com/maps?q=-18.9184607,47.5211293" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/727797514254731/picture?type=large" alt="Restaurant La Saveur">
+      <div class="place-content">
+        <h2>Restaurant La Saveur</h2>
+        <p><strong>Adresse :</strong> Antananarivo, 102</p>
+        <p><strong>Description :</strong> Spécialité chinoise</p>
+        <p><strong>Téléphone :</strong> +261340381022</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
+        <a href="https://www.google.com/maps?q=-18.9184607,47.5211293" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/104177509011997/picture?type=large" alt="Le lotus blanc Restaurant 荷花酒店">
+      <div class="place-content">
+        <h2>Le lotus blanc Restaurant 荷花酒店</h2>
+        <p><strong>Adresse :</strong> Boulevarde De L'EuropeAntananarivo, TANA101</p>
+        <p><strong>Description :</strong> Espace en ville avec restauration spécialité chinoise</p>
+        <p><strong>Téléphone :</strong> Non communiqué</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
+        <a href="https://www.google.com/maps?q=-18.9184607,47.5211293" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/138017892731554/picture?type=large" alt="La cavy karaoké">
+      <div class="place-content">
+        <h2>La cavy karaoké</h2>
+        <p><strong>Adresse :</strong> AndoharanofotsyAntananarivo</p>
+        <p><strong>Description :</strong> Restaurant .bar karaoké By YOUNG RESTAURANT</p>
+        <p><strong>Téléphone :</strong> +261344437838</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9793256, 47.5422745</p>
+        <a href="https://www.google.com/maps?q=-18.9793256,47.5422745" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/895171443934530/picture?type=large" alt="Ylang Ylang Resto Café">
+      <div class="place-content">
+        <h2>Ylang Ylang Resto Café</h2>
+        <p><strong>Adresse :</strong> Ex-Village Des Jeux AnkorondranoAntananarivo, 101</p>
+        <p><strong>Description :</strong> Spécialités chinoises et européennes</p>
+        <p><strong>Téléphone :</strong> +261202231981</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
+        <a href="https://www.google.com/maps?q=-18.9184607,47.5211293" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/100602446333580/picture?type=large" alt="Tang Wei Hsien">
+      <div class="place-content">
+        <h2>Tang Wei Hsien</h2>
+        <p><strong>Adresse :</strong> Antananarivo</p>
+        <p><strong>Description :</strong> Tang Wei Hsien Propositions de variété de plats traditionnels chinois délicieux</p>
+        <p><strong>Téléphone :</strong> +261344114059</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
+        <a href="https://www.google.com/maps?q=-18.9184607,47.5211293" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="place">
+      <img src="https://graph.facebook.com/149080034944671/picture?type=large" alt="Fumé / laqué">
+      <div class="place-content">
+        <h2>Fumé / laqué</h2>
+        <p><strong>Adresse :</strong> Antananarivo</p>
+        <p><strong>Description :</strong> Aucune description disponible.</p>
+        <p><strong>Téléphone :</strong> Non communiqué</p>
+        <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
+        <a href="https://www.google.com/maps?q=-18.9184607,47.5211293" target="_blank">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+</body>
+</html>
