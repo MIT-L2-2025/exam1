@@ -1,0 +1,174 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurants Chinois à Antananarivo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Roboto', sans-serif; margin: 0; background: #f4f4f9; color: #333; min-height: 100vh; }
+        header { text-align: center; padding: 20px; background: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        header h1 { margin: 0; font-size: 2.2em; color: #d32f2f; }
+        main { max-width: 1200px; margin: 20px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .restaurant { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: transform 0.3s; cursor: pointer; }
+        .restaurant:hover { transform: translateY(-5px); }
+        .restaurant-content { padding: 15px; text-align: center; }
+        .restaurant-content h2 { margin: 0 0 10px; font-size: 1.4em; color: #d32f2f; }
+        .restaurant-content p { margin: 8px 0; font-size: 0.95em; color: #555; }
+        .map { width: 100%; height: 150px; border: none; }
+        #infoPanel { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); max-width: 400px; width: 90%; z-index: 1000; }
+        #infoPanel.show { display: block; }
+        #infoPanel h3 { color: #d32f2f; margin-top: 0; }
+        #infoPanel p { margin: 5px 0; }
+        #infoPanel .map { height: 200px; }
+        #closeInfo { background: #d32f2f; color: #fff; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; }
+        #closeInfo:hover { background: #b71c1c; }
+        @media (max-width: 600px) { header h1 { font-size: 1.8em; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Restaurants Chinois à Antananarivo</h1>
+    </header>
+    <main>
+        <article class="restaurant" data-info='{"name": "La Fleur De Sel", "address": "Analamahitsy, Antananarivo", "phone_number": "Non disponible", "website": "Non disponible", "rating": "N/A", "total_ratings": 0, "description": "Très bonne nourriture, ambiance confortable"}'>
+            <div class="restaurant-content">
+                <h2>La Fleur De Sel</h2>
+                <p>Très bonne nourriture</p>
+                <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31750.71423416806!2d47.506789!3d-18.904024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x21f251f7e6a0f5a7%3A0x0!2sAnalamahitsy%2C%20Antananarivo!5e0!3m2!1sfr!2smg!4v1715240348!5m2!1sfr!2smg" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </article>
+        <article class="restaurant" data-info='{"name": "Jasmin", "address": "Andavamamba, Antananarivo", "phone_number": "Non disponible", "website": "Non disponible", "rating": "N/A", "total_ratings": 0, "description": "Déjeuner du dimanche, ambiance paisible"}'>
+            <div class="restaurant-content">
+                <h2>Jasmin</h2>
+                <p>Ambiance paisible</p>
+                <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31750.71423416806!2d47.523789!3d-18.913024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x21f251f7e6a0f5a7%3A0x0!2sAndavamamba%2C%20Antananarivo!5e0!3m2!1sfr!2smg!4v1715240348!5m2!1sfr!2smg" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </article>
+        <article class="restaurant" data-info='{"name": "Le Grand Restaurant De Chine", "address": "Tsiadana, Antananarivo", "phone_number": "034 31 903 93", "website": "Non disponible", "rating": "3.5", "total_ratings": 2, "description": "Expérience mitigée, excellent service"}'>
+            <div class="restaurant-content">
+                <h2>Le Grand Restaurant De Chine</h2>
+                <p>Excellent service</p>
+                <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31750.71423416806!2d47.515789!3d-18.892024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x21f251f7e6a0f5a7%3A0x0!2sTsiadana%2C%20Antananarivo!5e0!3m2!1sfr!2smg!4v1715240348!5m2!1sfr!2smg" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </article>
+        <article class="restaurant" data-info='{"name": "Shangai", "address": "Antsakaviro, Antananarivo", "phone_number": "Non disponible", "website": "Non disponible", "rating": "N/A", "total_ratings": 0, "description": "Cuisine chinoise authentique"}'>
+            <div class="restaurant-content">
+                <h2>Shangai</h2>
+                <p>Cuisine authentique</p>
+                <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31750.71423416806!2d47.525789!3d-18.907024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x21f251f7e6a0f5a7%3A0x0!2sAntsakaviro%2C%20Antananarivo!5e0!3m2!1sfr!2smg!4v1715240348!5m2!1sfr!2smg" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </article>
+        <article class="restaurant" data-info='{"name": "Le Grand Orient", "address": "Ivandry, Antananarivo", "phone_number": "Non disponible", "website": "Non disponible", "rating": "N/A", "total_ratings": 0, "description": "Bon accueil, plats délicieux"}'>
+            <div class="restaurant-content">
+                <h2>Le Grand Orient</h2>
+                <p>Plats délicieux</p>
+                <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31750.71423416806!2d47.498789!3d-18.889024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x21f251f7e6a0f5a7%3A0x0!2sIvandry%2C%20Antananarivo!5e0!3m2!1sfr!2smg!4v1715240348!5m2!1sfr!2smg" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </article>
+        <article class="restaurant" data-info='{"name": "Shandong Express Teppanyaki", "address": "Androhibe, Antananarivo", "phone_number": "Non disponible", "website": "Non disponible", "rating": "N/A", "total_ratings": 0, "description": "Beignets de crevette, cuisine préparée devant vous"}'>
+            <div class="restaurant-content">
+                <h2>Shandong Express Teppanyaki</h2>
+                <p>Cuisine préparée devant vous</p>
+                <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31750.71423416806!2d47.512789!3d-18.895024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x21f251f7e6a0f5a7%3A0x0!2sAndrohibe%2C%20Antananarivo!5e0!3m2!1sfr!2smg!4v1715240348!5m2!1sfr!2smg" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </article>
+        <article class="restaurant" data-info='{"name": "La Dynastie", "address": "Andavamamba, Antananarivo", "phone_number": "Non disponible", "website": "Non disponible", "rating": "N/A", "total_ratings": 0, "description": "Plats cantonnais abordables"}'>
+            <div class="restaurant-content">
+                <h2>La Dynastie</h2>
+                <p>Plats cantonnais</p>
+                <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31750.71423416806!2d47.523789!3d-18.913024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x21f251f7e6a0f5a7%3A0x0!2sAndavamamba%2C%20Antananarivo!5e0!3m2!1sfr!2smg!4v1715240348!5m2!1sfr!2smg" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </article>
+        <article class="restaurant" data-info='{"name": "Bon Appétit", "address": "Antsakaviro, Antananarivo", "phone_number": "Non disponible", "website": "Non disponible", "rating": "N/A", "total_ratings": 0, "description": "Riz sauté aux fruits de mer, prix abordable"}'>
+            <div class="restaurant-content">
+                <h2>Bon Appétit</h2>
+                <p>Prix abordable</p>
+                <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31750.71423416806!2d47.525789!3d-18.907024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x21f251f7e6a0f5a7%3A0x0!2sAntsakaviro%2C%20Antananarivo!5e0!3m2!1sfr!2smg!4v1715240348!5m2!1sfr!2smg" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </article>
+    </main>
+    <div id="infoPanel">
+        <h3 id="infoName"></h3>
+        <p><strong>Adresse :</strong> <span id="infoAddress"></span></p>
+        <p><strong>Téléphone :</strong> <span id="infoPhone"></span></p>
+        <p><strong>Site Web :</strong> <span id="infoWebsite"></span></p>
+        <p><strong>Évaluation :</strong> <span id="infoRating"></span> (<span id="infoTotalRatings"></span> avis)</p>
+        <p><strong>Description :</strong> <span id="infoDescription"></span></p>
+        <iframe id="infoMap" class="map" src="" allowfullscreen="" loading="lazy"></iframe>
+        <button id="closeInfo">Fermer</button>
+    </div>
+    <script>
+        const restaurants = document.querySelectorAll('.restaurant');
+        const infoPanel = document.getElementById('infoPanel');
+        const closeInfo = document.getElementById('closeInfo');
+        const infoName = document.getElementById('infoName');
+        const infoAddress = document.getElementById('infoAddress');
+        const infoPhone = document.getElementById('infoPhone');
+        const infoWebsite = document.getElementById('infoWebsite');
+        const infoRating = document.getElementById('infoRating');
+        const infoTotalRatings = document.getElementById('infoTotalRatings');
+        const infoDescription = document.getElementById('infoDescription');
+        const infoMap = document.getElementById('infoMap');
+
+        restaurants.forEach(restaurant => {
+            restaurant.addEventListener('click', () => {
+                const data = JSON.parse(restaurant.getAttribute('data-info'));
+                infoName.textContent = data.name;
+                infoAddress.textContent = data.address;
+                infoPhone.textContent = data.phone_number;
+                infoWebsite.textContent = data.website;
+                infoRating.textContent = data.rating;
+                infoTotalRatings.textContent = data.total_ratings;
+                infoDescription.textContent = data.description;
+                infoMap.src = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31750.71423416806!2d${(47.5 + Math.random() * 0.1).toFixed(6)}!3d${(-18.9 - Math.random() * 0.1).toFixed(6)}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x21f251f7e6a0f5a7%3A0x0!2s${encodeURIComponent(data.address)}!5e0!3m2!1sfr!2smg!4v1715240348!5m2!1sfr!2smg`;
+                infoPanel.classList.add('show');
+            });
+        });
+
+        closeInfo.addEventListener('click', () => {
+            infoPanel.classList.remove('show');
+        });
+    </script>
+</body>
+</html>

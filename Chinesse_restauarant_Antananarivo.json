@@ -1,0 +1,260 @@
+{
+  "name": "Chinesse_restaurants_Antananarivo",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "/restaurants",
+        "responseMode": "lastNode",
+        "responseData": "allEntries",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -600,
+        420
+      ],
+      "id": "47d77fb9-271e-4ff0-a5f3-3d3d52e5d243",
+      "name": "Webhook",
+      "webhookId": "fa3d604d-8f31-4f9e-a43a-26639472e0d2"
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/textsearch/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "restaurant chinois Antananarivo"
+            },
+            {
+              "name": "key",
+              "value": "AIzaSyDRBaOeBeJHxfT8nbCiZIYCtxe2WeU0N44"
+            },
+            {
+              "name": "language",
+              "value": "fr"
+            },
+            {
+              "name": "region",
+              "value": "mg"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 10000,
+          "errorOnFail": true
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -200,
+        420
+      ],
+      "id": "f7633807-bef9-4806-886b-d6a05181592c",
+      "name": "Fetch Restaurants"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = items[0]?.json?.results || [];\nif (!results.length) throw new Error('No restaurant data received');\n\nreturn results.map(result => ({\n  json: {\n    name: result.name || 'Sans nom',\n    address: result.formatted_address || 'Adresse inconnue',\n    latitude: result.geometry?.location?.lat || 0,\n    longitude: result.geometry?.location?.lng || 0,\n    photo: result.photos?.[0]?.photo_reference \n      ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${result.photos[0].photo_reference}&key=AIzaSyDRBaOeBeJHxfT8nbCiZIYCtxe2WeU0N44` \n      : 'https://via.placeholder.com/400',\n    place_id: result.place_id || '',\n    rating: result.rating || 'N/A',\n    total_ratings: result.user_ratings_total || 0\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        420
+      ],
+      "id": "baa04cba-8b64-4198-98db-8e4741bf1a6a",
+      "name": "Process Restaurants"
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/details/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "place_id",
+              "value": "={{ $json.place_id }}"
+            },
+            {
+              "name": "fields",
+              "value": "formatted_phone_number,international_phone_number,website"
+            },
+            {
+              "name": "key",
+              "value": "AIzaSyDRBaOeBeJHxfT8nbCiZIYCtxe2WeU0N44"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 10000,
+          "errorOnFail": true
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        200,
+        420
+      ],
+      "id": "27892b34-7bde-4219-b64a-cef22aa77521",
+      "name": "Fetch Contact Details"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const contact = item.json.result || {};\n  return {\n    json: {\n      phone_number: contact.formatted_phone_number || 'Non disponible',\n      international_phone_number: contact.international_phone_number || 'Non disponible',\n      website: contact.website || 'Non disponible'\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        420
+      ],
+      "id": "2c052e75-13e1-4564-aed4-7e5edb5cea9d",
+      "name": "Process Contact"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        600,
+        420
+      ],
+      "id": "463c230f-21a8-401f-9962-02a933690d49",
+      "name": "Merge Data"
+    },
+    {
+      "parameters": {
+        "jsCode": "const restaurants = $input.all().map(item => item.json);\n\nlet htmlContent = `<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Restaurants Chinois à Antananarivo</title>\n    <link href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap\" rel=\"stylesheet\">\n    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\n    <style>\n        * { box-sizing: border-box; }\n        body { font-family: 'Roboto', sans-serif; margin: 0; background: #f4f4f9; color: #333; min-height: 100vh; display: flex; flex-direction: column; }\n        header { text-align: center; padding: 20px; background: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }\n        header h1 { margin: 0; font-size: 2.2em; color: #d32f2f; }\n        #searchBar { width: 90%; max-width: 600px; padding: 12px; margin: 20px auto; border: 1px solid #ccc; border-radius: 8px; font-size: 1em; display: block; }\n        main { flex: 1; max-width: 1200px; margin: 20px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }\n        .restaurant { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: transform 0.3s; }\n        .restaurant:hover { transform: translateY(-5px); }\n        .restaurant img { width: 100%; height: 200px; object-fit: cover; }\n        .restaurant-content { padding: 15px; }\n        .restaurant-content h2 { margin: 0 0 10px; font-size: 1.6em; color: #d32f2f; }\n        .restaurant-content p { margin: 8px 0; font-size: 0.95em; color: #555; display: flex; align-items: center; }\n        .restaurant-content p i { margin-right: 10px; color: #1976d2; }\n        .actions a, .actions button { display: inline-block; padding: 8px 16px; margin: 5px 5px 0 0; border: none; border-radius: 5px; color: #fff; text-decoration: none; cursor: pointer; }\n        .website-link { background: #1976d2; }\n        .website-link:hover { background: #1565c0; }\n        footer { text-align: center; padding: 15px; background: #ffffff; box-shadow: 0 -2px 4px rgba(0,0,0,0.1); }\n        @media (max-width: 600px) { header h1 { font-size: 1.8em; } #searchBar { width: 95%; } }\n    </style>\n</head>\n<body>\n    <header>\n        <h1>Restaurants Chinois à Antananarivo</h1>\n        <input type=\"text\" id=\"searchBar\" placeholder=\"Rechercher un restaurant...\" />\n    </header>\n    <main id=\"restaurantContainer\"></main>\n    <footer><p>© 2025 - Restaurants Chinois</p></footer>\n    <script>\n        const restaurants = ${JSON.stringify(restaurants)};\n\n        function renderRestaurants(data) {\n            const container = document.getElementById('restaurantContainer');\n            container.innerHTML = '';\n            data.forEach(r => {\n                const html = `\n                    <article class=\"restaurant\">\n                        <img src=\"${r.photo}\" alt=\"Photo de ${r.name}\">\n                        <div class=\"restaurant-content\">\n                            <h2>${r.name}</h2>\n                            <p><i class=\"fas fa-map-marker-alt\"></i>${r.address}</p>\n                            <p><i class=\"fas fa-phone\"></i>${r.international_phone_number}</p>\n                            <p><i class=\"fas fa-globe\"></i>${r.website}</p>\n                            <p><i class=\"fas fa-star\"></i>Évaluation: ${r.rating} (${r.total_ratings} avis)</p>\n                            <div class=\"actions\">\n                                ${r.website !== 'Non disponible' ? `<a href=\"${r.website}\" target=\"_blank\" class=\"website-link\">Site Web</a>` : ''}\n                            </div>\n                        </div>\n                    </article>`;\n                container.insertAdjacentHTML('beforeend', html);\n            });\n        }\n\n        document.getElementById('searchBar').addEventListener('input', e => {\n            const value = e.target.value.toLowerCase();\n            const filtered = restaurants.filter(r => r.name.toLowerCase().includes(value) || r.address.toLowerCase().includes(value));\n            renderRestaurants(filtered);\n        });\n\n        renderRestaurants(restaurants);\n    </script>\n</body>\n</html>`;\n\nreturn [{\n  json: { fileName: 'index.html' },\n  binary: { data: { data: Buffer.from(htmlContent).toString('base64'), mimeType: 'text/html', fileName: 'index.html' } }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        800,
+        420
+      ],
+      "id": "d8f832eb-0ccf-4745-bd08-3c8dc4890f90",
+      "name": "Generate HTML"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "index.html",
+        "options": {
+          "append": false
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        420
+      ],
+      "id": "a6cb2186-a642-44bd-ac6c-4fc6a5152b2a",
+      "name": "Write HTML File"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Fetch Restaurants",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Restaurants": {
+      "main": [
+        [
+          {
+            "node": "Process Restaurants",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Restaurants": {
+      "main": [
+        [
+          {
+            "phone_number": "Fetch Contact Details",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Contact Details": {
+      "main": [
+        [
+          {
+            "node": "Process Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Contact": {
+      "main": [
+        [
+          {
+            "node": "Merge Data",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Data": {
+      "main": [
+        [
+          {
+            "node": "Generate HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate HTML": {
+      "main": [
+        [
+          {
+            "node": "Write HTML File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b5b5f7b4-bab3-44f2-9e07-a99c62f79580",
+  "meta": {
+    "instanceId": "027d3b174c92d8d55054cceca6737ec607bcaf116b03b4aa37c0128caa8378b9"
+  },
+  "id": "axzQEgUaPLaIlqWt",
+  "tags": []
+}
