@@ -1,1 +1,60 @@
+Chinesse_Restauants_Antananarivo
+Ce projet est une application web simple qui présente une liste de restaurants chinois situés à Antananarivo, Madagascar. L'application affiche une grille de restaurants avec des descriptions courtes, des cartes statiques approximatives et un panneau d'informations détaillé qui s'ouvre au clic sur un restaurant.
+Fonctionnalités
+
+Grille interactive : Affiche une liste de restaurants chinois avec des noms et des descriptions brèves.
+Cartes intégrées : Inclut des cartes statiques pour chaque restaurant utilisant Google Maps Embed API, basées sur des coordonnées approximatives.
+Panneau d'informations : Au clic sur un restaurant, un panneau affiche des détails comme le nom, l'adresse, le numéro de téléphone, le site web, l'évaluation, le nombre d'avis et une description.
+Design responsif : L'interface s'adapte aux différents tailles d'écran.
+
+Prérequis
+
+Un navigateur web moderne (Chrome, Firefox, Edge, etc.).
+Une connexion Internet pour charger les cartes via Google Maps Embed API (pas de clé API requise pour les iframes statiques utilisées ici).
+
+Installation
+
+Clonez le dépôt sur votre machine locale :git clone https://github.com/votre-utilisateur/restaurants-chinois-tana.git
+
+
+Accédez au dossier du projet :cd restaurants-chinois-tana
+
+
+Ouvre le fichier index.html dans un navigateur :open index.html
+
+Ou double-cliquez simplement sur index.html dans votre explorateur de fichiers.
+
+Utilisation
+
+Parcourez la grille des restaurants.
+Cliquez sur un restaurant pour voir ses informations détaillées, y compris une carte approximative.
+Cliquez sur "Fermer" pour masquer le panneau d'informations.
+
+Structure du Projet
+
+index.html : Fichier principal contenant le code HTML, CSS et JavaScript pour l'application.
+
+Contribution
+Les contributions sont les bienvenues ! Pour contribuer :
+
+Forkez le dépôt.
+Créez une branche pour votre fonctionnalité :git checkout -b nouvelle-fonctionnalite
+
+
+Faites vos modifications et committez :git commit -m "Ajouter une nouvelle fonctionnalité"
+
+
+Poussez vers votre fork :git push origin nouvelle-fonctionnalite
+
+
+Créez une pull request.
+
+Licence
+Ce projet est sous licence MIT - voir le fichier LICENSE pour plus de détails.
+Remarques
+
+Les données des restaurants (adresses, téléphones, etc.) sont statiques et basées sur des informations approximatives. Pour des données précises, une intégration avec une API (comme Google Places) serait nécessaire.
+Les cartes utilisent des coordonnées génériques. Pour une précision accrue, une clé API Google Maps est recommandée.
+
+© 2025 - Restaurants Chinois Antananarivo
 
