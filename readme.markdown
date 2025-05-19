@@ -1,153 +1,110 @@
 # ChiTana - README du Workflow n8n
 
-## 📋 Aperçu
+## 📖 Aperçu
 
-**ChiTana** recherche les restaurants chinois dans un rayon de 10 km autour d’Antananarivo (-18.8792, 47.5079). Il traite les données, évalue si un restaurant est chinois via un modèle de score pondéré basé sur des **tests statistiques** (seuillage, moyenne pondérée), et génère une page HTML stylisée.
+**ChiTana** est un workflow n8n qui identifie les restaurants chinois dans un rayon de 10 km autour d’Antananarivo, Madagascar (-18.8792, 47.5079). Il collecte des données via une API, évalue les restaurants avec un modèle de score pondéré basé sur des tests statistiques, et génère une page HTML stylisée avec Tailwind CSS.
 
 ### 🎯 Objectif
-Rechercher tous les restaurants chinois d’Antananarivo.
+Lister les restaurants chinois à Antananarivo avec une classification précise.
 
 ---
 
-## 🛠️ Structure
+## 🏗️ Architecture
 
-Workflow en **graphe acyclique dirigé (DAG)** :
-- **Nœuds** : Tâches (ex. : extraction, formatage).
+Le workflow est un **graphe acyclique dirigé (DAG)** où :
+- **Nœuds** : Tâches (recherche, évaluation, etc.).
 - **Arêtes** : Flux de données.
 
-### Nœuds Principaux
-1. **Déclencheur** : Lance le workflow.
-2. **Recherche Initiale** : Liste les restaurants avec "chinois".
-3. **Vérif. Page Suivante** : Cherche d’autres résultats.
-4. **Attente** : Pause de 2s.
-5. **Requête Suivante** : Récupère plus de résultats.
-6. **Fusion Pages** : Combine les résultats.
-7. **Extraction** : Extrait les données.
-8. **Formatage Initial** : Structure les données.
-9. **Détails** : Ajoute infos (téléphone, photos).
-10. **Formatage Final** : Prépare images, liens, horaires.
-11. **Prompt** : Crée des prompts d’évaluation.
-12. **Évaluation** : Score les critères (AI Agent).
-13. **JSON** : Convertit en JSON.
-14. **Score Pondéré** : Calcule le score final.
-15. **Fusion Finale** : Combine données et scores.
-16. **HTML** : Génère une page avec Tailwind CSS.
-
-### Flux (DAG)
+### 🔄 Flux du Workflow
 ```
-Déclencheur → Recherche → Vérif. Page → Attente →wamy → Recherche → Vérif. Page → Attente → Requête ↺
+Déclencheur → Recherche → Vérif. Page → Attente (2s) → Requête Suivante ↺
               ↓                 ↓
            Fusion Pages ←←←←←←←
               ↓
            Extraction → Formatage → Détails → Formatage Final
                                      ↓
-                                  Prompt → Évaluation → JSON → Score
+                                  Prompt → Évaluation AI → JSON → Score
                                      ↓                        ↓
                                   Fusion -------------------→ HTML
 ```
 
+### 📑 Nœuds Clés
+1. **Déclencheur** : Lance le workflow.
+2. **Recherche** : Collecte les restaurants avec "chinois" via API.
+3. **Vérif. Page** : Vérifie les résultats supplémentaires.
+4. **Attente** : Pause de 2s pour limiter les requêtes.
+5. **Fusion Pages** : Combine les pages de résultats.
+6. **Extraction** : Extrait nom, adresse, etc.
+7. **Formatage** : Structure les données.
+8. **Détails** : Ajoute téléphone, photos, horaires.
+9. **Prompt** : Crée des prompts pour l’agent AI.
+10. **Évaluation AI** : Attribue des scores [0,1].
+11. **JSON** : Convertit en JSON.
+12. **Score** : Calcule le score final.
+13. **HTML** : Génère une page avec Tailwind CSS.
+
 ---
 
-## 📊 Modèle de Score Pondéré
+## 📈 Modèle de Score
 
-Le nœud `CHI 2 code` évalue si un restaurant est chinois via des tests statistiques.
+Le nœud `CHI 2 code` classe les restaurants comme chinois via un **score pondéré**.
 
-### Critères et Poids
-Les critères forment un **graphe pondéré** où chaque nœud (critère) a un poids influençant le score final. Les arêtes relient les critères au score global, avec des poids reflétant leur importance, établis par analyse statistique de pertinence.
+### 🔢 Critères et Poids
+- **Nom** (poids = 5) : Détecte les termes chinois (ex. : "Dragon").
+- **Horaires** (poids = 2) : Vérifie les horaires typiques.
+- **Proximité** (poids = 1) : Mesure la distance aux quartiers chinois.
+- **Adresse** (poids = 0) : Non utilisé (données insuffisantes).
 
-- **Nom (`name_score`)** : Poids = **5**. Vérifie si le nom semble chinois (ex. : pinyin, caractères).
-- **Adresse (`address_score`)** : Poids = **0**. Non utilisé (données insuffisantes).
-- **Horaires (`opening_hours_score`)** : Poids = **2**. Évalue les horaires typiques (ex. : ouvert tard).
-- **Proximité (`location_proximity_score`)** : Poids = **1**. Mesure la distance aux quartiers chinois.
-- **Évaluation (`Noters`, `Specialist`)** : Utilise un **AI Agent** pour attribuer des scores [0,1], évitant le traitement complexe de langage naturel dans n8n et compensant l’absence de base de données locale en fournissant des valeurs normalisées.
+#### 🧠 Agent AI
+L’agent AI normalise les scores [0,1], simplifiant l’analyse sémantique et compensant le manque de données locales.
 
-#### Décision des Poids
-Les poids sont choisis via une analyse statistique de pertinence :
-- **Nom (5)** : Plus discriminant (noms chinois sont distinctifs).
-- **Horaires (2)** : Moins spécifique mais indicatif (horaires typiques).
-- **Proximité (1)** : Utile mais moins fiable (données géographiques limitées).
-- **Adresse (0)** : Non utilisé faute de données sur les quartiers chinois.
-
-#### Visualisation du Graphe Pondéré
-```
-   [Nom, 5] → [Score Final]
-   [Adresse, 0] → [Score Final]
-   [Horaires, 2] → [Score Final]
-   [Proximité, 1] → [Score Final]
-```
-
-#### Pourquoi l’AI Agent ?
-- **Éviter le traitement de texte** : Simplifie l’analyse des noms/horaires en fournissant des scores [0,1], sans parsing complexe dans n8n.
-- **Compenser le manque de données** : Fournit des estimations fiables malgré l’absence de base de données locale sur les restaurants chinois.
-- **Précision** : Réduit les erreurs en normalisant les critères (ex. : détecte "Dragon" comme chinois).
-- **Efficacité** : Automatise l’évaluation sémantique, économisant des règles manuelles.
-
-### Calcul du Score
+### 🧮 Calcul
 1. **Score Total** :  
-   \[ \text{Score Total} = (5 \times \text{name_score}) + (0 \times \text{address_score}) + (2 \times \text{opening_hours_score}) + (1 \times \text{location_proximity_score}) \]
-2. **Poids Total** : 5 + 0 + 2 + 1 = 8
-3. **Score Final** :  
-   \[ \text{Score Final} = \frac{\text{Score Total}}{8} \]
-4. **Test Statistique** : Seuil à 0.7 (70 %) pour classer comme chinois.
-5. **Confiance** : `Math.round(Score Final * 100)` %.
+   \[ (5 \times \text{nom}) + (2 \times \text{horaires}) + (1 \times \text{proximité}) \]
+2. **Score Final** :  
+   \[ \frac{\text{Score Total}}{8} \]
+3. **Classification** : Chinois si score ≥ 0.7 (70 %).
+4. **Confiance** : Score × 100 %.
 
-### Exemple
-Pour un restaurant :
-- `name_score = 0.9`
-- `address_score = 0`
-- `opening_hours_score = 0.8`
-- `location_proximity_score = 0.6`
-
-\[ \text{Score Total} = (5 \times 0.9) + (0 \times 0) + (2 \times 0.8) + (1 \times 0.6) = 6.7 \]  
-\[ \text{Score Final} = \frac{6.7}{8} \approx 0.8375 \]  
-\[ \text{Confiance} = 84\% \]  
-**Résultat** : Chinois (✅).
+#### Exemple
+- Nom : 0.9, Horaires : 0.8, Proximité : 0.6
+- Score Total : \( (5 \times 0.9) + (2 \times 0.8) + (1 \times 0.6) = 6.7 \)
+- Score Final : \( 6.7 / 8 \approx 0.84 \) (84 %)
+- Résultat : Chinois (✅).
 
 ---
 
-## 🌐 Concepts de Graphe
-
-Le workflow est un **DAG** :
-- **Nœuds** : Tâches.
-- **Arêtes** : Flux de données.
-- **Acyclique** : Boucle contrôlée pour pagination.
-- **Dirigé** : Données à sens unique.
+## 🛠️ Prérequis
+- **n8n** : Version récente installée.
+- **Configuration** : Importer le fichier JSON du workflow.
 
 ---
 
-## ➗ Concepts Mathématiques
+## 🌍 Concepts Techniques
 
-### 1. Haversine (Proximité)
-Calcule la distance aux quartiers chinois :  
-\[ a = \sin^2\left(\frac{\Delta \phi}{2}\right) + \cos(\phi_1) \cdot \cos(\phi_2) \cdot \sin^2\left(\frac{\Delta \lambda}{2}\right) \]  
-\[ c = 2 \cdot \atan2\left(\sqrt{a}, \sqrt{1-a}\right) \]  
-\[ d = 6371 \cdot c \]  
-**Score** : \(\max(0, 1 - \frac{d}{1.0}) \cdot \text{poids}\).
-
-### 2. Moyenne Pondérée
-Combine les critères avec leurs poids.
-
-### 3. Seuillage
-Seuil de 0.7 pour classification binaire.
+1. **DAG** : Structure acyclique avec flux unidirectionnels.
+2. **Haversine** : Calcule la distance géographique :  
+   \[ d = 6371 \cdot 2 \cdot \atan2(\sqrt{a}, \sqrt{1-a}) \]  
+   où \( a \) dépend des latitudes/longitudes.
+3. **Score Pondéré** : Combine les critères pour une classification binaire.
 
 ---
 
 ## 📄 Sortie
 
-Fichier HTML (`restaurants_antananarivo.html`) :
+Un fichier HTML (`restaurants_antananarivo.html`) avec :
 - **Cartes** : Nom, adresse, téléphone, horaires, image, note, lien.
-- **Badge** : ✅ (chinois) ou ❌ avec confiance.
-- **Style** : Tailwind CSS.
+- **Badge** : ✅ (chinois) ou ❌ avec pourcentage de confiance.
 
 ### Exemple de Carte
 ```
 [Image]
 ✅ 84%
-Nom : Dragon d'Or
-Adresse : 123 Rue Behoririka
-Téléphone : +261 34 567 890
-Note : ★★★★☆ (120 avis)
-Horaires : Lun-Dim 11:00-22:00
+Dragon d'Or
+123 Rue Behoririka
++261 34 567 890
+★★★★☆ (120 avis)
+Lun-Dim 11:00-22:00
 [Lien]
 ```
 
@@ -155,20 +112,24 @@ Horaires : Lun-Dim 11:00-22:00
 
 ## 🚀 Utilisation
 1. Importer le JSON dans n8n.
-2. Configurer les paramètres.
-3. Exécuter "Test workflow".
-4. Vérifier l’HTML dans `Fomulate html`.
+3. Exécuter via "Test workflow".
+4. Vérifier l’HTML dans le nœud `Formulate HTML`.
 
----
-
-## ⚠️ Limites
-- Précision des données.
-- Adresse non utilisée.
-- Délais de pagination.
-
----
 
 ## 🔮 Améliorations
-- Analyse automatique de la pertinence des variables.
-- Intégrer l’adresse dans le score.
-- Optimiser la pagination.
+1. **Priorité 1** : Ajuster les poids via apprentissage statistique.
+2. **Priorité 2** : Intégrer une base de données locale pour les adresses.
+---
+
+## ✨ Conclusion
+
+**ChiTana** automatise la recherche et la classification des restaurants chinois à Antananarivo, combinant efficacité et présentation visuelle. Avec des améliorations, il pourrait s’étendre à d’autres villes ou cuisines.
+
+---
+## exemple de html
+![Screenshot_20250519_152726](https://github.com/user-attachments/assets/b72da780-6509-4066-8e0f-5e815204ce72)
+![Screenshot_20250519_152629](https://github.com/user-attachments/assets/d4a34cf2-0c97-401f-80bd-8cec0b410396)
+
+
+
+
