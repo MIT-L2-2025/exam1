@@ -1,0 +1,1279 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Restaurants à Antananarivo</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+    }
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    .card img {
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .card:hover img {
+      transform: scale(1.05);
+    }
+    .gradient-text {
+      background: linear-gradient(to right, #ff6b6b, #4ecdc4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .btn-maps {
+      background: linear-gradient(to right, #ff6b6b, #4ecdc4);
+      transition: background 0.3s ease;
+      display: inline-block;
+      color: white;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+    }
+    .btn-maps:hover {
+      background: linear-gradient(to right, #4ecdc4, #ff6b6b);
+    }
+    .calendrier {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      white-space: pre-line;
+      background: #f9fafb;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #e5e7eb;
+      margin-bottom: 1rem;
+    }
+    .rating {
+      color: #ffb400;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .hours {
+      font-size: 0.875rem;
+      line-height: 1.5;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body class="antialiased">
+  <div class="container mx-auto px-4 py-12">
+    <h1 class="text-4xl md:text-5xl font-bold text-center mb-12 gradient-text">Restaurants à Antananarivo</h1>
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNQDth3XgIyXR-9SPkz2OjaMTJNeQ2tqFMGH1-K_ackB7xlBQcfBM8AGO-xse1pPeBvfqSNQauyDbJwa6PgI0R0bPqHmrlA3oLM01jMykVHelneHnSo74Vh80txTT8Z86N4bvo2BxomtSh9qX8pXSmifgl_d0kKWrJ15Ve77Q_F1c1ThNDalOn5z7EpxkcRJGDUb3oQ70BaC0GDf1Utip73Xa1QdNkkTe4fYDucvc_QYuw1iAz23y1JkXt0cnrga2ZG6R3qOe6KvAmYr0ZM9K9MsGWWz5UqJ8Z4K1XZ7fMNc9aSvkAAXZn5U3cJJfs2fnaWDlxoJ82Vv7IBgYow8mQRAjiL6RxutQeoWyD3zx5hsNX5FE-KLkwFUbGTgCdAEIf3O4hM7smc8e6RHAGuZkO5V2eXfLdcnUrWBuEIaoKIM3wwB2QBAPfBtP0Fa_URAasMLdu9gwXq-frai2OlpxnaDNRyIr3h1xD1BJWrN1C4q34T0o-b4w-Jj-pZDPKaTBDnzJTHAEqMXA2fA5QOmJYiHhoFmVPWci2lYMuQxj8I8Msv-DscRpJW9dWqzQ5j1SW81AeJnzxezEeFWqcCDN2fO_F-7bBDedFEgxCrxSHOCDGJ7WeaJSiWAoLhDF3bACGm43Q&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Zen Garden" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 13%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Zen Garden</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> II M 38 F Androhibe Antananarivo Antananarivo, Tananarive 101, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 032 05 135 03</p>
+        <p class="rating">★★★★½ (11 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Horaires non disponibles
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.8657235,47.5428709" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNSm-t1m5-iSvzyaesDeXQ-tAoScwYOh9arUL_qmIaiCFKxWwXSCwY2PnBGrYNFD1-GSQhZIYoHSaKdsWoR5dzjF_tDSDSWIDcxalU3RfLWGnpTyVjHvw_CPuds1Zs9UOWzaD5RL3Vp9xPYa4i8Hql-EBQdjdgWamzXNf4bvlUVAYMXr727OJ31_FFBwI1O0AmYyJB9nb9_KFvSklCcIJm2qMIsu1zCg_MxcsSuxFVz2s48LfUj6sTM8DNbp5CTlon1WT2Co_C-73vyFb1Jh5HS_l7y-i-FMPt1VABKgEH74ISK0uLDuNjuGkkEQ-yIOqIrZdWVxOXUBGmo7cgyMs4i2Ck48KeGriQjGoHqfFPeR_cW969iQToUfL9dXUyiaLS-APvuRsz9oAIlbvVffJV4zKMYPgKd6Sy55r_wI8jcikhm6uzkkVaoiVJdkJvkj8AMOpZqkYy35RM4XRewkGFaOtEFlT3wKQoBZxw-WGws5BAKIOJDgg7e9QiAtl4VQUYjAFXyoBvyt52AmUBzR0fngn2iiBxWCqJ_4TVwWDP2WA5iCXlGYRKRxWlqJ-utj5btBOfl-9dHQh6NrwiHwfkWfQoGQN4b3JHJJ9uPGdHORWZcVFXiS5ogImcl-ur_FcZreeg&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant Lai" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 shadow-md">
+          ✅ 73%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Restaurant Lai</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GQ4+RWG, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 032 79 660 89</p>
+        <p class="rating">☆☆☆☆☆ (0 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 9:00 AM  -  9:00 PM<br>Tuesday: Closed<br>Wednesday: 9:00 AM  -  9:00 PM<br>Thursday: 9:00 AM  -  9:00 PM<br>Friday: 9:00 AM  -  9:00 PM<br>Saturday: 9:00 AM  -  9:00 PM<br>Sunday: 9:00 AM  -  9:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9104281,47.5073277" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNQ_PDApv7xEQd0HHe7ehSkQZ-oD6nqFWo8ItyVjaGD5eRjujm3YCBLrHyqz2b4OR6WOCXtH4pvRXaHBYvpFEO4zG0sfgSuNFjLrz2lkZp5Na4yxaqpZxR-1wYoidBuVtzGLZTJIEOim_aIvMvLCwwlf4dZo4Evz1WdOd-dIQmIRZBq1Tc2yoKcZBmwqAPrX0Bz5hbJRU1MMcW4_Dsrv6OzfMMQocbF61_8Bm2F_JjzYd31EeDtoSY4jdOkZjsIkyWenXEGr4BCgwtPlml79QIlZEPWNqoMFMT3UWi58cgLd-IpBV446uuBTO1Pnksmal-qODI8zqsQe03o1a7ssrshu8rKRKA0ezYBJZ0Mr2ea7JHisMRtgg4luJDQ9eyOLeeYGMwHe3OKjctFmsiTkI8-Dk3ehbgzuQEiL--_aPOr4BhDAjaYLtR5KfbdvlhEAc8OL4UVFLyNQ5AFtzbRjIaP2Ba2iQhiVI4EjvOWjInPGObUuOWy4DQMEzTv788dq72w56M_qrMVWcNr4Umk_dsd1VU2q-ZFyPSPftSvtWuVyR9FVpX3OQrACjjZaEWXHCC1xtf4yejynaRTM3g9CUAB3ivhwExeRrihZasKvhNoX_jjNxMhgNveO5fbF7Fapyulwlg&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Qing Qing Restaurant (青青餐館)" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 63%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Qing Qing Restaurant (青青餐館)</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 5F98+G62, Talatamaty, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 034 69 261 62</p>
+        <p class="rating">★★★★½ (2 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Horaires non disponibles
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.8312817,47.4655546" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNRgiHby3Vq9LWsewHhDRjffWT9N2pgzUhsZ8nPGA8X8Q_UeFWuHDY3eYAmyZrUNjnA0Il7qcm2A7sCOpl86fRFB-MD1GEXbqQC-dk5uVTAO4qv3NO8o353gEIuF46nlJTvt86WD37_Wt08Br3gAe8zmQEVINfxV_jG7hUHxUZYpxSEtliI_2fu1_iaGolRmAN3HmA2LbQI8A--tHzfAL2AtGX89xtPwWGTJSRY47OG5demWzIAvno6ubaoFnBwjWfLvUxvJviq-VvAw-WKiTVcFSKg0PPYF5S07sVmCMUkhKL9FP0T-E1InTX8NzcCVjBdtgRvMPDgLAV6_O0N99V5E-PVxiHY91u7HkKGmZyA35f-CLmBd33ApmX6tTyooLN-gkwsCmv3Gso2_25PzoSk-dvN7Jrj4esP6vWIr-Hdo3e1ILU8kFr4MG-YUK_ld316LCreffk9SDM2RBfJbUW0Z55xGe4enY-52g4rhTXhkY_ThcM3D7eiunfXB0cxl0CFyLv5Eqvv1qC8OIwBm7n7taIkrYQKPjgwcHbsiUKi4E9bDhLAyk7i_NGX_uXCDmGoZ3RFp4ZJfBDh609N8S0M2kYEI0JLV8YAjMeUXYPIkarjwm9Kbr4xO2b6yR3DhCQMKm9as&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Quick Delice" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 15%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Quick Delice</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GRG+2RM, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> Téléphone non fourni</p>
+        <p class="rating">★★★★☆ (10 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 9:00 AM  -  7:00 PM<br>Tuesday: 9:00 AM  -  7:00 PM<br>Wednesday: 9:00 AM  -  7:00 PM<br>Thursday: 9:00 AM  -  7:00 PM<br>Friday: 9:00 AM  -  7:00 PM<br>Saturday: 9:00 AM  -  7:00 PM<br>Sunday: Closed
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9099024,47.5270385" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNT_SfKz-G_QjzvVsZSEjBOKXd_dtLNWn7qDuxgO-e-bxLvmcMyiT_45-1SvUamOinLEeTTRhbgVOI2jh0kDrCcgmOB3Qmu7QXqUSa8jThVcjTx8lspb097dQj6TWw5Q2dk1-7fXgkdsgaxT3k_IKdMxSrWdjXgA4WdzUbso1TgCAstqpFeAa251ZzF1lqTG5_-oFwqb3ZCv1uEopUSicC9IujBtKqffCVjJSTCkrm8cwo0eaDzkAu9bfPY-kizy0j-XVqWI6mt7GTZPqzGdyJ-Y9VWENBLdNZ6oQQj8TjeAnXc3jPattPpt9QqlBH6Rc3SRJTXkD-CvKZiYFsCNnnj7OWtJA9mKwA9lnjqxLxHfJSwoEhbZQ18bfm5vQ9iFwir7aAGViJUK17GhKUX5DwEpx6l7079NgR8xb9NQIGYFBX1S8MnxrfcuBlF5WghKYZdu0zP6lB4XiZRNxHVbGUZmTNvnILBI6Lvm_Aey2T2qDt5wHx0Xc0C--svaUJ9e7wIGAVGnKD9yXU11v5MPqQTl2mdCDSAQQ_05WMx66XhTOin0Qfgfo2dOdrqIrZ_EckRuAY31oo5VrQpusau6U7bv_73kEQgd0CbO-HcqtNw9zVPFzPyi8ydfE6bxqClN4uOImNY6&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Le Grand Tsang" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 9%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Le Grand Tsang</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GVM+5JV, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> Téléphone non fourni</p>
+        <p class="rating">★★★½☆ (7 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Horaires non disponibles
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9070166,47.53404990000001" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNR2UUYXNDMtxTZpwkEgzLEnW-vfjZg1vc77cAgy7ecOOrgk6lhYWdi8eJzqbGMNtnkslGZYaig8O5LiibuS2KWV6Q4m9Uv4K48Z0YQePSj33f0jKODw645DvlWUsDPBv2n2GYQddBZs9FbwEGMME2N5qEVe3cmLYuajJtNSJUSyKwurje7jdq8ZQgde0JQNw8tVXburFslL3M50HhnNRJ5xCAsQe4j-uhrHFE4oG2PwI0IUFgFEzCBY7coIGmEo1rEeOetlUBT_QXDWpck9oFTQzo5qX79a_5wcW7nNLWeZAMUT0yiqM9w_oCBeOKSVLoyuQy6I2f3_Tgpft9XrBGPxeFPLBflqWLUgT4k5i1c5sJMUZASXwwhFClpinx7LCLCVkTfavTScq_kY2xwUx7U5rdHg7iE7FZkhDPKdTBttWU1stxA2TxbFaxDQv-uIhwEsJok-PsWFrxBDgN4X2P4OSgI8Sbyzs4OCiFXxssFH0X9w9kRDYiQm9t617HADtlbc3b2XJCus9ZMsaiFWhwWeFQO-HfOl7AYqfnJmu2wgzuJdiS4mNz3_72s9RbMQNInx-joDfOCiZSJhX0C9tGcTJZ7iKvf6Zv7uLDvC-AC_3vckZiV529QjE3BUGY-iPR8n9Z45&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Le Petit Bouchon" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 13%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Le Petit Bouchon</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> Lot IVM, 122L Rue Agosthino Neto, Tananarive 101, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 038 92 329 02</p>
+        <p class="rating">★★★★☆ (5 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 11:00 AM  -  9:00 PM<br>Tuesday: 11:00 AM  -  9:00 PM<br>Wednesday: 11:00 AM  -  9:00 PM<br>Thursday: 11:00 AM  -  9:00 PM<br>Friday: 11:00 AM  -  9:00 PM<br>Saturday: 11:00 AM  -  9:00 PM<br>Sunday: 5:00  -  10:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9118866,47.50861709999999" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://via.placeholder.com/400x200?text=Image+indisponible" alt="Le Pont Rouge" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 20%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Le Pont Rouge</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GQ8+9RC, Lalana Razafy Abraham, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 033 11 484 89</p>
+        <p class="rating">★★★½☆ (3 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 11:00 AM  -  10:00 PM<br>Tuesday: 11:00 AM  -  10:00 PM<br>Wednesday: 11:00 AM  -  10:00 PM<br>Thursday: 11:00 AM  -  10:00 PM<br>Friday: 11:00 AM  -  10:00 PM<br>Saturday: 11:00 AM  -  10:00 PM<br>Sunday: Closed
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9115644,47.5170171" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNTkMfHSuMM8FRpeXu_F1CAz9qHi-qfSXTPlKRXIREdo9sQAcHfCFg1Z-Rxnpfo5M4Q2RR2s9Bbsf5UPTCU383qFIDsS84pNcL9U289XL-us-ILojBffc2Me_biSsuwP9fWsx0cSSGbNcn8D_MjKypqxdurKXlT0pFpnIJGBGHY8-Ogy9c9wCw7WPcvxYzqcOS5HZ8U2Wut70NjHswjxsb9N74mFGldOHYqaBjjLo5cCRW132XwIQsnZe8h8NW4wjjx5NZgrlwJ_8NW7wwWffU79cj8WkIGkS4-silnXBEMNegDnNZIT59smfNWbX7m6lG3yIez73hi70govQxwGP1ykytnHDsU8lsebAFyUZjxKvlAc7iyPIUpVB3XjepDNYaejE_krLQDeeC4wBjW5sEMMiIfYjrcO5VcXce3X5KcfvESEFPp-flra2_htadL8NHI1sv29hYFmeWDfuON148xUpH1H5zu0ExcTN0S7qAponuajei6uVGMzh-eo8UuAto0MbnOxVvvSMoaJR5XI67VQDplAhv9MoAO1CUKGrbrOvWa55K2yYw0XwylhasI_rjj2v_TbG-5x0ffev6qH2tbrW_vDOIe0P0Q0Fi3oHIjfvYuitXlpS0o3WpfIO8C25plG3NTh&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="AZALEE MAMORY IVATO" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 13%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">AZALEE MAMORY IVATO</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> k7, SODIAT Agence à Ivato, Lalana Dok. Joseph Raseta, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 034 19 267 14</p>
+        <p class="rating">★★★½☆ (15 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 10:00 AM  -  9:00 PM<br>Tuesday: 10:00 AM  -  9:00 PM<br>Wednesday: 10:00 AM  -  9:00 PM<br>Thursday: 10:00 AM  -  9:00 PM<br>Friday: 10:00 AM  -  9:00 PM<br>Saturday: 10:00 AM  -  9:00 PM<br>Sunday: 10:00 AM  -  9:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.8068057,47.47463070000001" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNSOF91oEhNKmniXe99Mm_1OTxfV5S4Ae3g9VtKUlmPzmEwHZQMW6Ta2MDSeKd1fDpqdKrFol5_UW9UanBoP86LI5j2YVyaX0evkC2PhP9F3WWhga23nZrRimWAvGDNGkO3HoAkPSC5KqdGN176qSZr9wnYEicHlMk6dko3g00v4UW5tS3qYf194XJWz8pMjKPr7MlrI8L_O3bDZJAcO2p-YpDINaRHTTxv9Ly9THQfVpn1EGW1XQYTfm5AHZn5YArOl-ejM8wf0Eq1sZBhbJrkSvtINKFAAEQvnA3j4EwcycnEhzl85DBNUldhF7SGyUwvnI82sNRn-33mmJv2RNdSGRWaZppzhw3_WFPEor1kFiuohrF_IQve6NFkmeqtWgtgENwwV9P7Y4R2C0ndeSpjBmRPgMcx46lF1pO-F2SI-iRftztKhBXjvsxySIwAs_mrArgjgx34v8_7W24Nt6-BmCJo2FnQRqCdvyLi2675fTC5HiQ8o302NtoaTGBJRQoj4e3N-JEI_qjFTkBUUbShh9apHIfIyVT9ILknBercFFNfRKazeeLBnO8b3IofY-DoBVzVahnbSgOfAkNg4sPSgthomU97-5D_pQ-_fNnRYQwboM9xAMrn_DZVj2lNyE-7DIA&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Le Grand Orient" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 0%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Le Grand Orient</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> Rue Andriantsihoarana Ratsimbazafy, Antananarivo 101, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 020 22 202 88</p>
+        <p class="rating">★★★½☆ (32 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Horaires non disponibles
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.8698272,47.5317034" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNTxtyWfASXZXTwAz44U8DnoQwKJbm5ft6370YDp1ef8hO1x4wgPLSZ8TCe5VcgNpO2o6M1UtwmWlTVzdITq2OIV0kBux9pBJEE3hFQlsHPAgdsT_zu9s0YMw2cdxs6Jb8nMrEkIrIvwKkP0t6iAezS1xH-4zY0s0uRlhQJkle6CkeOsYsbz5mfYV8dE2dEkV0IWUGHLfrUkCeNkuIF40HRzNYiJA57qeX7UOyurTS96P1Qw_JiFBWcYH6yKGEF1-xaliATeRb8nKFZTmLeROrshfm4b42prsM-JaZOKYTzIcC7N9pDkzXV531Rjrz_3M4epRJ5kpX_BvBQHYQUlEG_791o_5Zrt9yRQ9D9MjFIX_QGDMvYyp6txOU1JDyDKRNgqZsSztob20NvsjtZAmIa8j-zAKRy_qz1jRwT56hvLe_NBbeQf0g_-gDRYaaL9TC0R-9UZ6krFcGcqpyZOadbVsngQNy2DRcy8PPF05YfqJ-OyEl9UZ12M63ISw-5QnKJilpgBFkYG9GxDbZP1UP8EtkQzpGn0Lytjb0ONHW-6PmkUN_avCRE_VE2Ex0cuJiF7bncRp4-6YBCCbUOKpJHj-WbwSpHqWl3GCm6FtaPqDxCR5pCEuMNXnkHTZBKvf5N_YXBS&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Sam Voky" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 1%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Sam Voky</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GP8+GGF, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 034 18 685 38</p>
+        <p class="rating">★★★★☆ (5 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Horaires non disponibles
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9136965,47.51628319999999" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://via.placeholder.com/400x200?text=Image+indisponible" alt="中国餐馆" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 shadow-md">
+          ✅ 78%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">中国餐馆</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GVM+3M8, Lalana Pastora Rabeony Hans, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> Téléphone non fourni</p>
+        <p class="rating">☆☆☆☆☆ (0 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Horaires non disponibles
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.90734,47.5342068" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNQBNr__ULRSO_eu0m60nRmRsHaIe7nq0873Zf3nIBXV6kBkSUVFvu6A80wrH9r34THTtCK8-beax9JNhSh3dGUO0ppzEQWZmBAkiJrgOI_5b_pq619sPwEI4Dj-NaowvumFv7RigobCaJuRcbzh2fK0x77zCF_-kWJGXHUnQIymh9l5Isd4-NFAdMa__4A2OPIRbi-0ThrMWaWSelNNbqJrB2RPw22qBHBK7zLrHwIux2DlpswXzJBu3SvANRoQoeSCG7jDB3Zvum50d37gu6kUgmOsQjWLPPnvkfOanlj51QJj5Mr-QYbdQum98g5d02ogxJo5BeQfvvioL4ldxPFvO12batqZuYIO3tAlnJFV95l_26oL6VXFxk7wz6HNhNSAYFlPhLSqGxGJSlV2h0yNrFTAFwQ7jeQlA4Sn9g1OD-S229Wh3TOqf3odqnZ3C41i1tsNr2prL-0xSsXgKt-SZWZkm45ytbsNBlkSczBMJXqKzAFbX9Mhey3fygVH8WL6jle5ij0ztxs6ab7Sf-JZ1wWFXyzRvBDDrguRgA4b4iACRsL3Xj_BNc71Bhoc7r4jqC0yHagvfUNknwpj-bbB0E2m63bALPpF3M-Gg4kJWhsQe4CTdiTBnujyewmPSXaZHg&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant Fuxin(福鑫酒家)" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 shadow-md">
+          ✅ 88%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Restaurant Fuxin(福鑫酒家)</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 5F98+Q42, Lalana Dok. Joseph Raseta, Talatamaty, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 038 71 277 77</p>
+        <p class="rating">★★★★★ (6 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: Closed<br>Tuesday: 9:45 AM  -  9:00 PM<br>Wednesday: 9:45 AM  -  9:00 PM<br>Thursday: 9:45 AM  -  9:00 PM<br>Friday: 9:45 AM  -  9:00 PM<br>Saturday: 9:45 AM  -  9:00 PM<br>Sunday: 7:00 AM  -  9:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.8305712,47.4653098" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://via.placeholder.com/400x200?text=Image+indisponible" alt="LA TABLE DE CHINE" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 shadow-md">
+          ✅ 94%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">LA TABLE DE CHINE</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GJV+JRJ Le Colisée, Tananarive 101, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 038 47 253 32</p>
+        <p class="rating">☆☆☆☆☆ (0 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 11:00 AM  -  8:00 PM<br>Tuesday: 11:00 AM  -  8:00 PM<br>Wednesday: 11:00 AM  -  8:00 PM<br>Thursday: 11:00 AM  -  8:00 PM<br>Friday: 11:00 AM  -  8:00 PM<br>Saturday: 11:00 AM  -  8:00 PM<br>Sunday: Closed
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9184218,47.5445059" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://via.placeholder.com/400x200?text=Image+indisponible" alt="Tianjie food (天街 中华料理)" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 shadow-md">
+          ✅ 90%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Tianjie food (天街 中华料理)</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GVM+QG6, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 034 29 283 82</p>
+        <p class="rating">☆☆☆☆☆ (0 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 8:30 AM  -  8:30 PM<br>Tuesday: 8:30 AM  -  8:30 PM<br>Wednesday: 8:30 AM  -  8:30 PM<br>Thursday: 8:30 AM  -  8:30 PM<br>Friday: 8:30 AM  -  8:30 PM<br>Saturday: 8:30 AM  -  8:30 PM<br>Sunday: Closed
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9054453,47.5337796" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNQwbaQolraITbo0azJhj3fgv-5DlxytbfbqMkcm2Z784qAqE77zVpV7boOelcTRSRRAonsvU7z1-Wp6UpoqSXflVVpS0KUGBtZOJ4r0LeA1SXt6gd8yMMoiYwYhVjiBcFDy7TWKFcRXvPzebhW1dTlzjibbTF4_HgWyB15HJ7GQnwCP_NmclFYWRnymd-TV0nJBGCIP8UaFbCuRKrwzn8-_GNgA-DPMehzoIUQVK6jIjNG6o3YZ3dhDCCtlReZK3HlqsCAkXxV8y6Yy8Fj1IZSIKVnAHNajnte6UEwOORZg6w6E-cKyuhiGNk8J7Ftlc0C96Ol1WetASSty8Vu1Bte_2CcmuScPnY-E5Rz3_NsjNUnIf5QFRJMq2v8oIPVFbnGAO7FfzOYG8Rj-nJpdK8q6U-j3h-zQZUfTxOzOgDVKARfFxwi32OddwGtZGlQz0DcgG4DPrI9TCxjLHiV_OwmyoDpWqgEKBWzN2kDBDYsdyr4amqrIOcJXjkFWvuwPlFdZbGH1gl7_zpEWs29C-JUJzqHyRc3klW0BEO9_QRnnJL7JTyJs0OLFbAwacjHSobXjLYFZHjEgpIKKPulSq2Byo797kbPte7714yYj-SuMRjDAItiMy7tWUpBQRdQ2efyG8R4d&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Grand Resto de Chine" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 shadow-md">
+          ✅ 88%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Grand Resto de Chine</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> Lalana Rasamuol Maurice, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 033 83 594 63</p>
+        <p class="rating">★★★½☆ (30 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: Closed<br>Tuesday: 10:00 AM  -  2:30 PM, 5:00  -  9:30 PM<br>Wednesday: 9:30 AM  -  2:30 PM, 5:00  -  9:30 PM<br>Thursday: 10:00 AM  -  2:30 PM, 5:00  -  9:30 PM<br>Friday: 10:00 AM  -  2:30 PM, 5:00  -  9:30 PM<br>Saturday: 10:00 AM  -  2:30 PM, 5:00  -  9:30 PM<br>Sunday: 10:00 AM  -  2:30 PM, 5:00  -  9:30 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9141849,47.5384142" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://via.placeholder.com/400x200?text=Image+indisponible" alt="吕府私房菜" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 63%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">吕府私房菜</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GQ3+P78, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> Téléphone non fourni</p>
+        <p class="rating">☆☆☆☆☆ (0 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Horaires non disponibles
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9106979,47.5033164" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://via.placeholder.com/400x200?text=Image+indisponible" alt="Dragon rouge" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 36%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Dragon rouge</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GXC+VQ8, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 034 13 058 26</p>
+        <p class="rating">★★★☆☆ (2 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Horaires non disponibles
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9003469,47.5219587" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNR-Szz8-SfGAsXIymMBjnhTGS7gXlcuTak7LHEz8Xwlx1p-ytpRA_BBQSV7FYqjsY4hRQyD2aJ-ZqByAWJrOkBpB3r-HP36-R8jzOEfnDvx_hkHhtZFK8cGC2iyRX3jjy35WVExTeZ3VMnehyWii21sAb94jEVbzOPd24JIbCadMFA__ZTf4SgCFkLQLoJlabie5BeH9em6oFmjiWGc1YpE_zv-aZEQojy4R7QBnBtsm1PoYRJdytAYB3dacaQBUY7rmUrZn0-843I_EtdOF64PHcA6mpS5gVnmd9sW5O85d933uIjBWs3Sw1L9k8QDskZaU0qwLAtWBoZokNhXK6xT5Fv6tdG-E44hozUIulNNkxmohIZ9qIcvq0TPQnuBPwjHOeJSJQgVF7owFMEeYbeGtPNXhWi5IX2AWOVYvFECeozT4vUC9DiMzs1D5CI4Lb3Xb604YjHCinSbSBt2pJtacfxsB9zRBDTkA8jV4ZcMa2LD55N3p8SqNUsgOwxa02QbXIBUoT6Pzbz_WRPrvtCdve3cljHvx-P11YwPFvyhBPlrMMO5a-YLe_YjowqrzwCfit9cDD2-OC7eezn5UyZt94EE_2FGafzZTdfLP1MLC2u9bcBvTbpHk8H4SuUHKNqTMg&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Au bon coin Tàna" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 0%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Au bon coin Tàna</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> IIM41, Tananarive 101, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 038 54 546 82</p>
+        <p class="rating">☆☆☆☆☆ (0 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: Open 24 hours<br>Tuesday: Closed<br>Wednesday: 10:00 AM  -  8:30 PM<br>Thursday: 10:00 AM  -  8:30 PM<br>Friday: 10:00 AM  -  9:00 PM<br>Saturday: 10:00 AM  -  9:30 PM<br>Sunday: 4:00  -  9:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9119475,47.5343492" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://via.placeholder.com/400x200?text=Image+indisponible" alt="MON RESTO" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 13%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">MON RESTO</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> Ambonisoa Arrêt Dokotera Itaosy, Tananarive, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 038 92 132 40</p>
+        <p class="rating">☆☆☆☆☆ (0 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 10:00 AM  -  8:00 PM<br>Tuesday: Closed<br>Wednesday: 10:00 AM  -  8:00 PM<br>Thursday: 10:00 AM  -  8:00 PM<br>Friday: 10:00 AM  -  8:00 PM<br>Saturday: 10:00 AM  -  8:00 PM<br>Sunday: 4:00  -  8:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9128773,47.4854259" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://via.placeholder.com/400x200?text=Image+indisponible" alt="Wai Man" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 33%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Wai Man</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GW6+VMX Nord-Est-Coté parking, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> Téléphone non fourni</p>
+        <p class="rating">★★★★★ (2 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Horaires non disponibles
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9027731,47.5117251" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNT34KjOdgEAtJkrxnLiMvUMv0eEYkj3z8j8Pd7GIv-KPiPdiNkcjgfTgFLXqgF4NJRl2Jh3c-QdI5dG1l25F9UsVsJu8W6xpJBUQxETYzndCWj-QzgNFPr2vBt09awgqH8fNNwrQbT1ca0Y5Atz_SnY4Epv2ZUUDxjQqvdVNUxxxEHLrvHOTukJiZhmZ0OFGwkcpRlZ9shmNBTPhQa3GKFxNncYWtXu4TbHAwpuGUSTlKy1dyUSSDc93Z8MZTcGfVzmUDtvU2krR4Wvc9G0HSFbtypm5w5TDoPRnO-c0L6oo5yvuPclmACjnI9np_jLSKTK4DNNb-SiSXJ87jo68TJPSBvTY3tFQwdU8_SSB0J5mI1io-mHTd2UY4hM-ugTA8_1aNuDgNVaE0XmncJciHvlWiLBFaRucDbPfoE-D-e6LNPfO1_t6wnoSpdOlJVQhy9u7ufe4lTo4BsUqNlJ0p53hfJWtf1Y7zxdYkEeU4iaVsmTYpY2QxEqKYTwW7cmz3xWsxoc0DSJTg4cwVJaODLZNJaivcSwNmWMzegDoaPujpkIZZIo_SD-lUmBSqjCGvxpcx2Vnzwr2ZXm3T-a7eT4N8ljAQT6eC1618wVui5LrohEPZ1rg9r8sUPbvupQ&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant Fong Mei" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 68%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Restaurant Fong Mei</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 4GHM+JMX, Rue Andriantsihoarana Ratsimbazafy, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 033 25 571 99</p>
+        <p class="rating">★★★½☆ (12 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 10:00 AM  -  9:00 PM<br>Tuesday: 10:00 AM  -  9:00 PM<br>Wednesday: 10:00 AM  -  9:00 PM<br>Thursday: 10:00 AM  -  9:00 PM<br>Friday: 10:00 AM  -  9:00 PM<br>Saturday: 10:00 AM  -  9:00 PM<br>Sunday: 11:30 AM  -  2:00 PM, 5:30  -  9:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.8708938,47.5342498" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNTrcufgsEfdpTtxo4WC481sT2w6HN0u8ZdAT3Ib0W43I8wfizHzMFes5qsBeb7SecWhwu1_-9O4-hV_53MIcKabc_7kybaIOBWuP-EOsaw-tELLYg_CwKPrBAYSdEle167SQgt3bB0mqPnIeiHgiPhJRSJVlYhVyNbbTIxsjy3sbwX8K8L7YUNzBbmC0LnZ9pkMLAuf4R0ezpMH3sgD44pLHm9xON1e_mVrYYFeYRz5w-R5ypJN0Hh6O0XkiR0JDD21oLQcVzx6SXb1SxjO8PSVPC74gEGJYUkwoDeSjGFJxjaXvtVTSdRZeC_FLd9zLfbYucBN3VC54fgFn-sv8vH7D3V5COpJ4_Walj1VOYvoBdzgpnIhZzQzIprHz3hVAZOJR5zencEV-LfWeOoZIGVzSbF_OFQDcahCe1ZX9s5ttWRR1MnWdXwYq5BcIfZn-X6VHsmtfwW9JdfYR6MZAiM41hUYczWC80OMp6wTBWQxG8O73680hMQP9p12t5QYc5a1xElaviW1cPPZ8E1ZqeNMSJVThgTNDiF7vae3y6AWHU3CskKDDSPRVRaJaXWjDEpZOHXTt_eXn923Jkriw1ITezv8bSVasKZJmC_9EDmslVpzlRkNEFOP7uDBe-ct2azWREZ6&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="点都德机场分店" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 shadow-md">
+          ✅ 88%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">点都德机场分店</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 5F56+JWW, RN4, Talatamaty, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 038 83 863 36</p>
+        <p class="rating">★★★★☆ (3 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 10:00 AM  -  10:00 PM<br>Tuesday: 10:00 AM  -  10:00 PM<br>Wednesday: 10:00 AM  -  10:00 PM<br>Thursday: 10:00 AM  -  10:00 PM<br>Friday: 10:00 AM  -  10:00 PM<br>Saturday: 10:00 AM  -  10:00 PM<br>Sunday: 9:00 AM  -  9:30 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.840781,47.462005" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNRMmURfqQ_eQihiJBmR8dgzMuLibkI2o0dviWmcQiOWV_hBuQ2fjShBxIkGH7iGm81Po-X63TtbSGcUU5sE7KxpEwXL-cu6AxoPP1sICeVQkJgqCOB4rIjxR2VOpP4YyDZl2T2n3P6Tvq8Ihk0uOMRPm_RVmAevHZoAvtLT2vxgFtj15Ex7vUwhUV7rJJxgLBUULBFNObQ4ZIsSPcvAz3JicuWKBm4eW7-6sq10VqfLZioOMrh4phIAY70IJHM369tHBzdNWEoO0LYPHdHkzosRePqnUaxRe6kZ8zAMBRwcdaqkWwBAtCd8hAaFD0pYK-30ILvh0zGtPJ-S4SrHalbm66N4WKV4Fsvy3EjOZ6-FBKbjyuueQrtkHt1yqAeiDfNkDn8ey6cFqLv4g6VGIxL1OThCfAIqJ9tn9pZTSVu1nEOrEi9sU_PRCJCS1ixoE50TcpeEXl8pu1CZOLrFIGyaawwGlVEkEZNq7IifeVNbLseC3QoadduPZ-c4LtZ-SeYLBDLdJ4732pFfWFhZKRXCIFBHrI4Lt_eEOUYKpNtwc5a6tsja9JhTlZYgjphkOtzTICfjhTnJreCJqiel50OHnQf4MRic2-0r4sI-p8oOX82cEpnd41dlXbfz7A99W61tpA&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Dun Huang" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 shadow-md">
+          ✅ 78%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Dun Huang</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 42 Arabe Andrinampoinimerina, Antananarivo 101, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> Téléphone non fourni</p>
+        <p class="rating">★★★★½ (20 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 8:45 AM  -  9:00 PM<br>Tuesday: 8:45 AM  -  9:00 PM<br>Wednesday: 8:45 AM  -  9:00 PM<br>Thursday: 8:45 AM  -  9:00 PM<br>Friday: 8:45 AM  -  9:00 PM<br>Saturday: 8:45 AM  -  9:00 PM<br>Sunday: 8:45 AM  -  9:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.905614,47.5240707" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNRnRFSpPxhiAKqgj0bQo3w-2Gu9h5An5eJH2yvrdQ9_fQu_CuzWfQvLGq8AgTXba85XUqbCLZ55jEvC-yuwg_REZvZEIDKMhbTxI5tMWR09HPizG0LTqpibFwDbj3rshB3bGl7hKjfp7KRWKYPX2gA2RZ73kWOEtR8QVgBSoW_RnUHdwxP53rMUUOrJH1QKdi9CRtcknZU8l4jbRM5VRAZOGKVcut0Iimax79QV-kxzlUb3pLCEev1xuJcVP2IQBLkz8ICVDXgooyuOanSwG7PZHz6Y4H05Hfhk7BtdR6GFOyoSTsgbVyLBqv6JfJWUId6w1jREjkxDrzUgfxsrG26UbPf94ARC6bpFImrl8nLeJ1GFRnRxxvShte2KYjRNisO_DlZ_UhcnOBKwhaaCesUuyZDgsC1Css5kmOinqsgRQMFeSNug9q2zvywEF31X5M4OB9NxXbwc-yb8QzAsT9Momm3WKhBIv_9ZNKz61dj6B8rZtkmRDG4GFh99uaPQetjDABCuEfbOzeVO9JwAFxCyKY7152GEb_GVdzzdGZocxnlxBeP7bwspI5i6NUIsgDPScrGztfppvbAHZzjmR7HWaTucxuD_aQZ3OT5WWrLMbW5mt9ow7R1axZ1uLRqQ&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant Shanghai" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 shadow-md">
+          ✅ 93%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Restaurant Shanghai</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 4 Lalana Rainitovo, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> Téléphone non fourni</p>
+        <p class="rating">★★★★☆ (3 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 10:00 AM  -  9:00 PM<br>Tuesday: 10:00 AM  -  9:00 PM<br>Wednesday: 10:00 AM  -  9:00 PM<br>Thursday: 10:00 AM  -  9:00 PM<br>Friday: 10:00 AM  -  9:00 PM<br>Saturday: 10:00 AM  -  9:00 PM<br>Sunday: 10:00 AM  -  9:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9088825,47.5238114" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNTRoa8-t07VNfo84Ma3eTUfXyl6FwodL4vUlidjIFGp5QWN-myy_-8CXJ62wzEHolCm34m9pTKjx4MXiHUmNoqalM4vilo3s4TiVJ5CIvEbXqD4vgdgE28iuHYAW_tDKn7iZi4_1p5ti9C2cWEpgzoXFLGIqb60AQjzDCraptz_RcNEzaEyW7IXZUdb9dJNMMZkB92ynl0hTRCsYZakaJkGsL5uq_AwplyZaEKdtJyvGMq7JdZyqnPzq8WAmnzeYpQpilXIA1uSSscOYyToh0qpDx1LEepemgqCuuejGYh7piBjPm6kwuD1syYw7U2ZoMNaX6r4PYI&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="吕府私房菜（KTV）" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 shadow-md">
+          ✅ 88%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">吕府私房菜（KTV）</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> Madagascar, Antananarivo, Amitie FandianAUTOREX</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 038 82 066 66</p>
+        <p class="rating">★★★★★ (1 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 11:00 AM  -  10:00 PM<br>Tuesday: 11:00 AM  -  10:00 PM<br>Wednesday: 11:00 AM  -  10:00 PM<br>Thursday: 11:00 AM  -  10:00 PM<br>Friday: 11:00 AM  -  10:00 PM<br>Saturday: 11:00 AM  -  10:00 PM<br>Sunday: 11:00 AM  -  10:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9106832,47.50331799999999" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNSOpFD35maao5V4vgOIRpSXG24jTjbaJsYCtj-AyMmIW6jvajdFOY4uZEUhC-SBhnP9tbQ5V6qkGo2z-R0F923qULaWqFbal1rRPaRekASHv-bplIA171VaA9flf5C9QUWK3t7sPOMefIg0RhHMVVqRASOIgZ5H3wKjFQL-Z4-ywCoX6GxmL60pXBOYnfi2puc8L-XqXQcnm7M4WpuRixeaZ-5DXGBK_z1lelVTJirfHLPKyaBwZrKD7n2SHWrTgIK-vaiK2yNOlnje5nQm85cW3joW5cUDh_rzlemPUejqX-3ehkNkgR3Q1cpV5BU1yfVP-gWI-ia7u-VtGH8tMRpmfswRcPbG46OkgH15M9kFHWZFt88HeNtzVilcTDvMPZ8nHQMOD57TsB8QDfz3r8_d46jsV7sywuBxi_9sXWNEMqd4g_efbYgPdRBZG0hx_hTB5mfuHHRlHdOoIaIPHE3zIFXIQItdaRFbmGjGi0oj32eAcyVtHsZAQ84PnwURwuAGROMUEOnrT-GRJjnnO4Utpo2HwrEoAvQI7ZYmD6OJrBkWaNB1UVIn8Pwmwp1F-O_E_cIidg0tqbTbmcVjcejQ3EBEtPqdfGo6ZnhUATOBLRYaJmFhTqe3nxm-WP4ZyhnNfQ&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="O Loft Chinois" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 shadow-md">
+          ✅ 84%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">O Loft Chinois</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 4G39+2J7, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> Téléphone non fourni</p>
+        <p class="rating">★★★★☆ (26 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 9:00 AM  -  7:00 PM<br>Tuesday: 9:00 AM  -  7:00 PM<br>Wednesday: 9:00 AM  -  7:00 PM<br>Thursday: 9:00 AM  -  7:00 PM<br>Friday: 9:00 AM  -  7:00 PM<br>Saturday: 9:00 AM  -  7:00 PM<br>Sunday: Closed
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.8974503,47.5190589" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNTXuY88aWvVMegQhNPGpDqNEfE2GmGF2TUkulCG3a24kzM6BDpLLo6c9vAVdXEHpErjSYpJdhMcqr_x7a6aztIhLmB_U6wGpffPdtIVa4UHokljsQgUS-czFIh_NLaca8fTU2PjgrDMuQ9vfsoWaq-FZrLf3PwWVuE5BSw-MhOztWB-vTMp7ERtsYM24bI_r-UMDPPm9zrWsuwOwU7T0J4DuVNDvHdcaRyYuH64gH0mLlgnQvy1wxDl1Mvf3ffo4Np1ARxFtE_lG3tE1bro12lAVmXDu3gIQSvDWzt5UqrfyIR2UrM_9IExVq2n7vFrqucxwsIo5bM&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant L'EURASIE - Ankorondrano" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 5%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Restaurant L'EURASIE - Ankorondrano</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> Face à l'hôtel Ibis - Ankorondrano, Antananarivo 101, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 038 51 944 37</p>
+        <p class="rating">★★★★☆ (14 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 10:00 AM  -  8:00 PM<br>Tuesday: 10:00 AM  -  8:00 PM<br>Wednesday: 10:00 AM  -  8:00 PM<br>Thursday: 10:00 AM  -  8:00 PM<br>Friday: 10:00 AM  -  8:00 PM<br>Saturday: 10:00 AM  -  8:00 PM<br>Sunday: Closed
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.878855,47.5212683" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNTmrtCutqsq3tAIWXMn0gFwYjNSIXABkzlC2ylJglsP37i-6dh7ne8l7SynnRLX_AG4dy54ITj6PPyv4cVTelSjQBlS9ZYfItnO5_n9kipYx-62ieD1XaqMzjWPiCtEUF8OLIs1NDWPa6jXQSmKN4iGtyoqtcN5PDzq6GA5XJZFwpMI8A9qz1QSPCgPtcDh5HBqtHtQU46ROD7dV7TpJAuggxp_QP2jaDHXoUuC-6zZg6L6EgrBcKoQGo4NoTrxjmT1dwwAUysMVaGeKeMxCEX6lPmpkIiLTbivE-5-A9vxrjBtbHVYx45XMsJqX4VoWL5actAjj6M&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="HONG KONG Restaurant - salon de The" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 shadow-md">
+          ✅ 83%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">HONG KONG Restaurant - salon de The</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> Toyota, Lalana Doktera. Joseph Raseta, Maibahoaka Ivato Antananarivo IVATO, Tananarive 105, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 038 68 509 77</p>
+        <p class="rating">★★★★½ (3 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 9:00 AM  -  5:00 PM<br>Tuesday: 9:00 AM  -  10:00 PM<br>Wednesday: 9:00 AM  -  10:00 PM<br>Thursday: 9:00 AM  -  10:00 PM<br>Friday: 9:00 AM  -  10:00 PM<br>Saturday: 9:00 AM  -  10:00 PM<br>Sunday: 9:00 AM  -  5:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.8309862,47.4653526" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNTd11LH5dkPysf1iDsl4Qq9AxlN0Gr3nR9IvitjtlCh5nNZ2c8N-L_r4fjNZxFWcjWkNFqgHCofj-MrI_-yeqlvhIZmwZlyvGSCg5afwrHtqZl0ygPP3CGdQLduKuyGOkFwUnz4nLTz-PCZt9KhxPRz1xGeiT8OmMQ9aMT0jyOeYlGbzLsPWcNezB6Cl0BvzUPuap3eQ6zw0H1IbjOF0YP4a5724LNDUmnA8EgPYYIjtym8VBlpWzK-7QROYOj7mb4I8Y_-Z8hjvoD77Uz7ovGdV8WcfoOMruH7-cdB0sfBmAc42Svu3YN8Nmr3wiv5XeV2T4Z8Xdfrs5WVwQBFtmI8yUSR-Ut8HbV1qILZuL_Hd80GVUnRdlIc8Q3TCPGfT2d6kTj2GEYF2dqASQIfAsURco6tSx-zkayyow5Evo_VGMO5hJtthRfESOL42GDezrd4xlzneDz3waQvAGTuKJt8W9_-uJi0KwTYi57pjDBkBUOsPqlJs11f1wUbAQT5E9vYi0EWcgD2HtyQ5KeUPP6rQjO2wtABg6C9oanZ0mp2gS_7eQj8K16cfPSzly4zsdvMu4VNjUEoHTmqKc9E4g6yj9MZfkkyHWlcqEY7YgmF6-39T3mkjWE1IvfiEzSTjVgD4g&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Lakoziako" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 19%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Lakoziako</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GWF+4FP, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 034 79 061 61</p>
+        <p class="rating">★★★★☆ (4 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 8:00 AM  -  4:30 PM<br>Tuesday: Closed<br>Wednesday: 8:00 AM  -  4:30 PM<br>Thursday: 8:00 AM  -  4:30 PM<br>Friday: 8:00 AM  -  4:30 PM<br>Saturday: 8:00 AM  -  9:30 PM<br>Sunday: 8:00 AM  -  9:30 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.90465829999999,47.5236933" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNTSaLmW9-Je5dJa9E3MJ-7erG83aPv7EHDxwMUWM74lKmFSmxLEbrpp87YET0tbYkUayG1y_li_RDt2lHx4dKyh9DI1OogTky06-i_2V_ZLhrd06JiKUzwYBvGLsdW5V2bKWwdBJqArB6Nq0vt4i23jupPC08FUGhP64aMOI1y8gQDftyNUNuv2n8tkWe1-wBtWEJEp7qwYJ7RFjZxeL1ghhmNf0Kaoi0E_F-9O7NSkX3BxYTRU3DE5I-Cq_FovU2iLiy77xMYbZWfM2nWHNlVteH_bx8s4HduGgUz4VTEk2tna-KzFLZxiGUtLEJtR73KbGOkhzvKhZRtG5LyZaSrUJLJ-pJ8H2a-AH7HeSHdm-Itlz0QbOWKTV44dNlgwA9Epkrz131zXwi9yCts1XTJ68bsxKEzAgZwlHkSKupLikLsC_cX9pCgKEfBxDWyJ0wXUXl1J1wKcPAfuQpSto7-p9ToNpTDQg4NGELvdGspimL79LAwKC-8IVrqcQEvT4__ySfiQQjGpVYdUV8vY_xvKz6g2IhxMK8ihcDVZT3VFOVARDZyfQr7mK2qk73EoQml8cwrgQIQHld2YIEug39anyR-mOClkUOy3pkkflgxvjdx53iIpUfrs2ZWjZKTX&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Dragon Royal Restaurant IVATO" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 63%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Dragon Royal Restaurant IVATO</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 5FQF+WHH, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 038 12 579 79</p>
+        <p class="rating">★★★★½ (31 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Horaires non disponibles
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.8101926,47.4739989" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNRmxoFYxer0hbKzJ-oCJfHL7__K8wvk6gEER24F9Z7UWuzPRpYofC7puaUPTsbwV8e8pN-e-x_lUHpb3U_f53Nf1dpK12wQ1-XcmqkWF53W2bchxXU_6x8WkL21wzMCfKgfvlndouP_f9On6-x458GNDNwzDHvMlcdIQigQPk54iO8p0G3BH8S-bJDw8IgxqK_HBnqXAMb8Wp0uYEJN_5KA55wb7camHJYbcmKgx0nuIks2DCL3HZoru2em3FZ_OxhvIkf6yv4ZyxmzqBc0xacgXB8Wi397dpUgPA5wRWg1rXK2Qz-ZNqmEdSzGZut-afvj1mn00eEOyqq-dlN1TXCGbwrf4RaFtpv1gLchvdUB3ORpcYe24zsvpNu5pakA2BH7JTCOs7hDyHx3pvWqPeTHE-k8Rlr6zcInsS1ufe_JgJe08t05akcBQ5LFXHpkhvb8zttkuBzcb9hgzn7qHe2Uj3yVOdM7-XZPLGnM7pnHWI_kkWweGWO0GuA3tqz9ELynC-sIhysLXCIAKTONaczbHmIXnlnCt1riTauFf80B3xvnZ5ZpW_o7JSz5mRpfBJXYOmAqV1a2JE5hs9nt-2g3Y6eY2y9ru5N0HcUsbD3D1AFYmjlaW05as-sH7iKina1Iag&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="佬湘好" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 shadow-md">
+          ✅ 88%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">佬湘好</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> MG Antananarivo, Lot 135 B 3Antanetib 105, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 038 52 066 66</p>
+        <p class="rating">★★★★★ (2 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 9:00 AM  -  9:00 PM<br>Tuesday: 9:00 AM  -  9:00 PM<br>Wednesday: 9:00 AM  -  9:00 PM<br>Thursday: 9:00 AM  -  9:00 PM<br>Friday: 9:00 AM  -  9:00 PM<br>Saturday: 9:00 AM  -  9:00 PM<br>Sunday: 9:00 AM  -  9:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.8352457,47.4647325" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://via.placeholder.com/400x200?text=Image+indisponible" alt="Restaurant Le Cantilène" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 21%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Restaurant Le Cantilène</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GQ4+RWM, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 034 86 576 67</p>
+        <p class="rating">★★★★★ (2 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 10:00 AM  -  9:00 PM<br>Tuesday: 10:00 AM  -  9:00 PM<br>Wednesday: 10:00 AM  -  9:00 PM<br>Thursday: 10:00 AM  -  9:00 PM<br>Friday: 10:00 AM  -  9:00 PM<br>Saturday: 10:00 AM  -  9:00 PM<br>Sunday: 10:00 AM  -  9:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9104223,47.50729349999999" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNTMkN1pmcu6iZ0BJL0fI5XO0YiWU-z_sBAy5FGvgyRbn0iq9SEUoI22nrgzlHsNEefAXwdiE1G7UT6DEpXFter1twXTIfxlp8RLin_S3AzSuY8T6WWN8wI4ZbIXLPdztZJhdF0WRVAj-6ThWg4buHaKz9YlfMGUtRfQmk4NBBpce9dk4X-xM3GeK1t50vWgo0GZjqdm7xVpO9NUoNYx4jd01flH9cYnhrTeChA2SMsmz6VhL8UYqQZZbbCMRV-_AW-PuQwIJYncRMXqlrGpVdQhtmRROZYC_RQPaFsOcb8y6MOlMx6CgoLn9z4UP2UzbeTVWuGPXROhOofBXgs8aUABgUprpcIWbCqNakC7CXLNGqE0PnGg1pVsDybia5rlT2mFQlKP2AxEP3V50rZEj_GZVZfNAp-9Fd-E5EZeP4S6tAk3Xml-n69v0sISIFohT5QZqxobJzsNzrXdyfmpq3w1_zdmqosES7OiteHsxC3h8WmTrO7sVr4iBUlzhnONQvthqEht9aiHf-9mHrrJSVbcToOZr6-F8jezcZ5d_VNKbcg24W1g16UC4XE27fzT3PWA4NFeOo-RLkvcI0BaTECLD7InzXdaZY0a5sMCQAXV6iN7uR5vtLtb7thysMIABkgrFq00&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Phô Resto Ivato" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 13%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Phô Resto Ivato</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 5FC8+54W Ivato (en face Raseta, Talatamaty, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 034 99 999 88</p>
+        <p class="rating">★★★★☆ (28 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 10:00 AM  -  10:00 PM<br>Tuesday: 10:00 AM  -  10:00 PM<br>Wednesday: 10:00 AM  -  10:00 PM<br>Thursday: Open 24 hours<br>Friday: Open 24 hours<br>Saturday: Open 24 hours<br>Sunday: 10:00 AM  -  10:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.8295603,47.4653504" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNQu4kdRvee45iYF3AlAQvvy4dkwKtBe_orRjjoPulU9uFYWR4LXS8xHxQZOqWSrG5jgAoLAxoz4_3BXfmJAS_0nHhjqf-3dWfCO6dWPucBOKrOk0TUuTG1vlPXVSppfG7-zK65y26G27bTgYtr8fhIg3_rb_eMNRVmYrt3IHWsqhXvbsajeEC7_hRWovn6lcMbBqhsBNoz5JDN3bSv6cSi9jwS9wsx7EfR5VuvVf1xzDb4-7nYTconYqrwAlPv17YTnwzHzA10C_WAgaXkZu0_zZ2I8YXgFzu2nUgYSlCA5bqkd7YH4uRa8dgIEh8zm4SP8LVNvnEYguJyXM9luaROlYUsdkSbSzyFwv2JuWei53SLghL35YW8RXXb3MS8o8luExpyoE6LMV3fwNzEK4YPPnincC9RHqJoK8KNFOcDLLmcvH0mNnNRIU2TtjK7dd14xqte7qlaL2aXeUwwGdvqXfWRefDLn2I-bGMiCuNhSAobX4aIIkkThaXM6NnVEmTXvqabs6iL1niAtE-R4eMfve6a3amzOyHsvNvWyue2031_yscgY6VzWC9ilam4AlbvSwa80ljcqpZK0SC4rz0WHtJdX8Il22pKcyxoAIwceYsfUrqXz1zKewy4090L_l7VQOAS2&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="La Jonquille" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 0%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">La Jonquille</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> Antananarivo 101, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 020 22 206 37</p>
+        <p class="rating">★★★★☆ (22 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 9:00 AM  -  4:30 PM<br>Tuesday: 9:00 AM  -  4:30 PM<br>Wednesday: 9:00 AM  -  4:30 PM<br>Thursday: 9:00 AM  -  4:30 PM<br>Friday: 9:00 AM  -  4:30 PM<br>Saturday: 9:00 AM  -  4:30 PM<br>Sunday: 9:00 AM  -  4:30 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9093258,47.53688959999999" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNQqRqMgEhaBtJLjpeZrKRjRZj3BCnS0xkRU-Zsr5FWM3nn5e6q2dZIViP8UVXwAw6Wr3Jb0rJay_NB5WV-GHp5Dt8oNLWUKvZyW0pKVGNSrxnvPri0Ck94UUtamWTEXCciVwLfZPoh8t33lRihtXs52gK-9_elWtNryrza84pafKxl_XpDlMJ8u1yhdVJB-m_B6kIcu0GBPCwwEppKzPUHDl8wXfRbqVeNjsbqNCJE2JniwlkWqjkyHsnjwegU0o4oeaw02PDIoRS-Tq1gTxNf_vGULFtLwD1rrLHRsN7WOZqg6-wY5PaIH3BCh8RdGlifWBzn63JIVCv6sAsxsCfC_SWupGYY8v9py0XPEmLg0vSN4eV4aYOlMv7c61BjXWze5_oHFSHvDgw3A_I8Y5OovcUYB7LWA98bQ9rn7lLPXMRuKm_PCE9-Zg8sdQawQa5FCbcRkA3QLnQrPe4kcqXNMFtIlXsBw6w4RO_c5lHUTXpF61oxRMbymplrLGrQVkkFGoT0NwTolQcEsMgWC2e-OVjaK1BvWzGZD_1bIVOT5V53x51YEp0smE2rZlDNgjLIqMNC9LnkOlspR_FF2XNLywSdeA2nHTWyM7B7LN2-vzcLBCbi4d7h89dspn-ehJH36sZW_&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Hirondelle "燕子" Chinese FOOD" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 shadow-md">
+          ✅ 88%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Hirondelle "燕子" Chinese FOOD</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> Lalana Dama-Ntsoha Razatintsalama Jean-Baptiste, Antananarivo 101, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 034 11 166 78</p>
+        <p class="rating">★★★★½ (28 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 11:00 AM  -  9:00 PM<br>Tuesday: 11:00 AM  -  9:00 PM<br>Wednesday: 11:00 AM  -  9:00 PM<br>Thursday: 11:00 AM  -  9:00 PM<br>Friday: 11:00 AM  -  9:00 PM<br>Saturday: 11:00 AM  -  9:00 PM<br>Sunday: Closed
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9174137,47.5366284" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNQg3VdOIZawFU1krQ_Wi8hZS2tG4qnevj5Z2aDEVO_A7VBWVfcROL6HrT_w7Ua1mSC1d5WtblsdSoU37GGP86RUIiNYz7aXALAFsSft6QVik4jbbv8zHjxcz-T3Q1OEi89wZnQ8_sju5cbVV39byaj7W4zA9alRft9Yr4kXu3xiJ4350zVahrcaf1ZgbqEHvmoKbx0WqaELUbP0Ygfm8nCbQNi52vUqTZNN-_akVdAhzZaizDnTZcLNiPJ6Ph6OYajsaA8PV4YyT0zt1CYO_ag-_jZ5L600PHNeXgbZruvFtK7lcOQPDlpGL4r1ER3Rkzo4kPzVy4yf28vt6quusotog-xXKk2GxpQmsGKaesMdncmck2WAsOfoQ-jq_Vb1AVwSZsfrEEw7NLrYWNtQADyrpa5bd5BYQWq9hoSqOUqGfkT4ifSoDrTESzmmaxbSn1MBc47IoUQhOQ8gcNrTsbNuMm-Rx2_wrmb1eEfBwaD3W3A3ESX7Pav38VnFO9yFPMlWWb_gNXemlLPT3kwqIM5aHqhFde6NMHnkY6uqqA1AHgq-pT9Zn2V7Gx6gRMxFU4vH5aHwYxQ9cDApWzkxaNfEHvWVhmkQAnozdTDvb7QGz-EUMSEIKjWiHJcNPfqU9-FGaw&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="逸香酒樓 Yixiang Restaurant" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 shadow-md">
+          ✅ 88%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">逸香酒樓 Yixiang Restaurant</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> IVT 10, 4G48+V2P, Rue Docteur Joseph Raseta, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 034 57 088 88</p>
+        <p class="rating">★★★☆☆ (5 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 9:00 AM  -  9:00 PM<br>Tuesday: 9:00 AM  -  9:00 PM<br>Wednesday: 9:00 AM  -  9:00 PM<br>Thursday: 9:00 AM  -  9:00 PM<br>Friday: 9:00 AM  -  9:00 PM<br>Saturday: 9:00 AM  -  9:00 PM<br>Sunday: 9:00 AM  -  9:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.8928125,47.5150625" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNR194BRmqPoL4waPLPpIoaNeFmxCZhHVC66Ia3MNIZKR9TM2N58q8V0OgAo5UfwZGgssVLCLkzSG00ChUZ45oSxtNgdt6yoZX1eHwQb-BQIRjqVKM1YpwO-83tsNEZlyrT2-uScVXniQ4aczHdxuvaJBWxhE8cqotBe_XIpEkbo068qIofAsIo_o4cW9PzyupgIM68yW_dW8xT2hK5_2MyQkYgdRBCeTEtDbEpAvaKjofVeJxlgZSo2zQE_TgvnDtR_TDQP1Ntq8YmyVfJaYYBOvmQRAdM2L7DZXcVhVuZEuD-iTZZHENe0-jk-mRM03LqdQbe5vNOt59SCFF435hce6_Vb-Cwpn2PR4a7AamdOKgArRTjIV5soYhTXX9RP9Cp4N4HvxCkGx8QM4G4ZXJBVQf4IkH8QO47LBscd18IrgGxvJjuVbWXbjEBg-BYrKuA1qviXZZethZh_D8xz2fbZyRGLNgOBP96-QKuyflHZ7dlPBq2G8bawE0kCL09K4pmJ08ZdFvz6Toj3udtdoJldbS7x5g_vrY7q0b1Yy8edlPwDCrFo18_kAg_Sr7QQVSRAN3m43QdBmN9y4TTZIJG3_1XIi6P7jKWX4ygHl4enoKFZg84lwbfF2XAYKE8vjX4fdEZR&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Hotel New Century" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 44%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Hotel New Century</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GWF+J7P, Antananarivo 101, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 033 29 661 68</p>
+        <p class="rating">★★★½☆ (11 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 7:00 AM  -  9:00 PM<br>Tuesday: 7:00 AM  -  9:00 PM<br>Wednesday: 7:00 AM  -  9:00 PM<br>Thursday: 7:00 AM  -  9:00 PM<br>Friday: 7:00 AM  -  9:00 PM<br>Saturday: 7:00 AM  -  9:00 PM<br>Sunday: 7:00 AM  -  9:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9034125,47.5232031" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNSEJ3hkm9FHYRvymGdaEHfLr6DAn1lE7coPqUE6sDa-1mIb9khidKwWvj_d0Lj3omocyycov_d-Bsb4L_-W-7CC1c1aGjaatAcrmnB4oOCQ2tO8_GsNODnPCJV3lBnhKll_2fQX7CpzaieZyLTk1L-1Caj4KI4yx1rRQ50Mw9n3pas1RogfL_zEVPqPM_QEgQ7dnBx1iuSFwaQ-SnT6EUDgnwaKMZhKSPR_npNbYCqqFVQ2-hxS1zrBKvp_Ju5fiA39fUKSsFd_orfCSQyavHeiUGRXVsxRCWQkAptzeEJl0GbOi4yGjHr_tamNP7HC5kmg4RQPsFbNekkNff5yBJ24Njej0X9Eq230ZwK1Ogy56wA0hvB5BbNsxG4wYlsPhxKhb29hkIdX9KoWGRsTqs9RAjKC7AiwbUxhvAQV3ipOxgm772yACa3Ec7xBeQI2l_HA03tRyJHk1AJFIW8Sz723kox0jb9WszSJ1RnZBXQSTPGBp6MS36oRxQB6YG-9uOKT_J6uol-6RfNNmRr4SdhdzV9y5KJGQaSzbltk9Ewsbu0hUSvT0FAdKhbL4f1eZvUwlryIs0C--FZKa82gAbFK4kNFQsx17wH_Yr6pvhkmzPkfNION6Fbh8ZRBaORjznRgj4mS&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Fortuna Tana" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 23%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Fortuna Tana</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GJ9+JC3, IMM, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 038 63 366 66</p>
+        <p class="rating">★★★½☆ (6 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 9:30 AM  -  9:30 PM<br>Tuesday: 9:30 AM  -  9:30 PM<br>Wednesday: 9:30 AM  -  9:30 PM<br>Thursday: 9:30 AM  -  9:30 PM<br>Friday: 9:30 AM  -  9:30 PM<br>Saturday: 10:30 AM  -  10:00 PM<br>Sunday: 11:00 AM  -  10:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.8987591,47.5210699" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNRNjowv6t9vYPONUQUzcCCUhSVk2-__MW-ixy3hLsTdpimgmlScwW0wBAJN3aH_t4nO2mTPPHbHWsvaxpiB6c7K0Pdb4Q8EtQ3Jv-Jfz3snEwfJ2HfEEIgeal1ciAP0VyaPoY4_xN-RS4STJloYMBliYZFG1nQ4KZYd31u5stjyIz_ta1Jt8n2dhqUOSdKKZntSsezd75R5lPsjXkwC4RAYcKXxGuuekolzUwJ-ZPlWrUTOkNCe8obAh1UrVrhsVoPO-Ys1pQ6FnUXWB3LBJGwreWo-6txEnhaHLrjmcVLccEuAXswRJkcuWxzF98Cq57AViVn2cIg&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="La Fleur De Sel" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 13%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">La Fleur De Sel</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 034 12 582 22</p>
+        <p class="rating">★★★½☆ (31 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 10:00 AM  -  10:00 PM<br>Tuesday: 10:00 AM  -  10:00 PM<br>Wednesday: 10:00 AM  -  10:00 PM<br>Thursday: 10:00 AM  -  10:00 PM<br>Friday: 10:00 AM  -  10:00 PM<br>Saturday: 10:00 AM  -  10:00 PM<br>Sunday: 10:00 AM  -  10:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.8715948,47.54260650000001" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNTYoOCnLklydfIFLxSw95qZ9JImGY1aYALtA5AR3MndHr24d1vLePJQVXi7F9AQaKL5XZsHXF_f9-eE2mDiMTaC_YXJemwztt-or0pVtty5Tx5ryUCAc-LbvSCmplQbhrsdbXrcW5LLoP3qBsVSfnpKA9v6RjugBGkJcn6F5S-Duu8z6PgivrfuyQju31hY4h0neM7OQn2yltZ1XjAZ--d0JHMcXLXuoJA-yrHSSAw68rzUVsRHNssmgh1DRyv-jzBvnafjZoHJuAlmwZjNA_pA0NKHRuQDS2Gs_CEpb58--gSEst6X0rWPBjveM50C3sNzYolqCmQ1wTLY9m8rW0ALBkQRH4wuRUnnLSX2jwGcY9ETf6SbTsOhrCLB3WDI-xnu8ZOlgcsfHCatCJfOgejK0r9fXstr0PhHqKEKOFI4j3_dW7KSWW-mvuitONku9cRZBMseSIpL06suxY-CYblfv0x7Dty7SPtkAi6budhECvpVWqhISobQDq0-tDDS85t5wN5wqZeaqDvjk0Iyy7cIy9UIatKHdOEE-QY3NjxFHFT9lFN-7TQX_iOIGYsn0gmiLbpSVeQSBzjvNdI62o5ZdMbNwMRDDh4rpwX3tj-xz46bpbpiqdCMRwM0S773T6gL4w&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant Soleil d'Orient" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 0%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Restaurant Soleil d'Orient</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GPH+FF8, Antananarivo 101, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> Téléphone non fourni</p>
+        <p class="rating">★★★★☆ (7 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Horaires non disponibles
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9138507,47.5288341" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNTELq-FbkgP58oyf2-ZjlbweOM-UxuZ-ygzFu7u8i2GedRXUsCVHqW97elbjj5mHH5ZNeDdHcASonbrcNPAni5F5KRBqNXNR8J8Qkv999zl-9NA7UhtYksQS2R_WCgwllBtJtwLl_vyaf87AY_Oj0fTSYT9s2rmcpIMB47y7wFmQ7RYctn48i06JaMMmvkpSXptliZu_t3STANBHT5yfdcyiksM8sGIdvL8ijk9QKjSZo_U-2Gtr43tdrBPg9Z3V6MMnScYKAAkbyLq5EA_wKt7zu4JN0835adjeswG5uu4VKDIDQ2ptCdBwVJFszpf4lFDaEBTAVfzVYZYAN6cybGM3-fUt6uduVp6hdsyTjo-dJxa7n6GsIE7sP6bzorwCJe2-cBNKwtczfCou6z3G1UhmPvdCOOpdPE3dn_FP1_e--yi4ObKxHTJwoKAM2zOHXavobSpVlKp5bb-BTaBFaqdRynXUHu2QXIUbenSiHb_Y5QfmNKFFBsW8LPjsYNEqD8S0wkczKWK0pqqqOXDaRVCl9t0x0zqyakQs6uIEUQGoC1JO6jlUS-RDSESWjHFCgDuaBM93GECP2gOOtfM9egnJw4cK_1bglFjPaVzIqEEhviNtjvkIJRVWGvsZDbb6BxX1g&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="TSANG-KAU" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 54%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">TSANG-KAU</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GQC+R2Q, Arabe Victoire Rasoamanarivo, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> Téléphone non fourni</p>
+        <p class="rating">★★★★☆ (1 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Horaires non disponibles
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9104137,47.5201174" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNSl4XbKZJ5PQ2H854ed4QIsspJN8H8P4tj_GJUiVnbb_yzYdPBi5ROkl31PirLPADDftPdKXcwXaqeq5AGmF52BfA4MBU0X47DSl1CA2o3bopsTKGsVqoTowSvSaq5Wh1P0m2keBC2WKBKv_2B7ao8IJi9vq4BuZoOLGp95ID76G83mpkKJC9DWFT61Teg2tyXT3NJRodqdZBn1cvMxNVR22TC8XZ4NwlKBJuC_hJM-nkG3EqmqxWGL1Wj7dn2SRc_DbZbqkCUT9YKlnrJeGQKVhBdpwrFKub-en72NHCJSLr6wLsbR2I6m_Oh9IxZ7UtOusmJe&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="凤城 Soleil" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 shadow-md">
+          ✅ 73%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">凤城 Soleil</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> Lot IVK 89 bis Anosivavaka Ambohimanarina, Antananarivo 101, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 033 11 336 28</p>
+        <p class="rating">★★★☆☆ (31 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 11:30 AM  -  2:30 PM, 5:30  -  9:30 PM<br>Tuesday: 11:30 AM  -  2:30 PM, 5:30  -  9:30 PM<br>Wednesday: 11:30 AM  -  2:30 PM, 5:30  -  9:30 PM<br>Thursday: 11:30 AM  -  2:30 PM, 5:30  -  9:30 PM<br>Friday: 11:30 AM  -  2:30 PM, 5:30  -  9:30 PM<br>Saturday: 11:30 AM  -  2:30 PM, 5:30  -  9:30 PM<br>Sunday: 11:30 AM  -  2:30 PM, 5:30  -  9:30 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.8729457,47.50796949999999" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNRiGd3mCNPTgOhrLX1sjbawLmaUQn1T0QdRR7ZHW_cdX0k1iEFra76P-9h9rrfrPDlAWmqAd0N_tpC-zg22Fw_OXgyeQvqxH2G1SEo5UR_Vw5LyqMVChF0bqNZJbfjMcpF5SmhZN9Nm0pWNBJj_ie4pY6qkB7Ylb17CpvPJbS9QbrQ7B-40JAu98WRIjJEbl0cxYpzK1clEgYQ56exhk9AtcxxKyBGVbjoluGM8hFzYMWTKWoq6bOO_4V_NFi_5ykjNvhHGsgYt5Qsm4p_EDk9WYkCgHKFzS0kYBPI_TGr_uU-iRB7xVGQLUquV6PhII3tVL7fWcFYBnhIKeRu0Gawd0o_pZ_dN1Hex4bq5CB3vJcRkCmkKyx-GvUzS9-5TVcrLpxtwpCsdjBFQPYZeejXfzxIUOjN53FRa99kCv82KBoMU-_7U3OrP0_IRQN45wefL6aay1cLXTYDWhMtmecz3hCbpGdIXszXcAHNSZtrM5uRIgGhdkbgxsie6vcaPMIu3s6AFlmZVk2_TvSaeU3Gzd2ojYalJTD1VCfjnIFRDPiO8PK9jrAT4C2n_H-RkK1mmR3f9Mh78S5XuRwPPdgYwdBQpFKfiG9uI5D19QiBRP4D2beropN6boaQ2a2CsJqGVHyAF&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Lotus Blanc Restaurant 荷花酒店" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 63%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Lotus Blanc Restaurant 荷花酒店</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> LOT II W 23 B, Antananarivo 101, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> Téléphone non fourni</p>
+        <p class="rating">★★★★½ (3 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Horaires non disponibles
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9134037,47.5377744" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNTq5CPBTXT3KiVdJdRR1KRvRj8iOccSmxtqy6HE0BbgM_PYjyZdhlPvK8r8r5La7b_9o-sqBZDNKoeZKRLLyXa6KI_TG8M03Q69wGDqOZuV0b8GY2CxTRXuGji8q7iia3V25PUMIxE3RLPEKUUbfuq4RylWCvU5oV8bqgBVraw5K1bRffPti3r6CT83u0nTSrmhMVcBtL7MAVql00IUsHUy_mePnFeCpq3uEW-XBAG0ltFe19o2G_lix2M0SI3Rss3ij4qheTRo8BnZTqMYy11glh8lUUgnUaze5ri0iiXS2gRg6gIm4iJZPX2475kRJUQuQtZ3pWaRk713u2ARzaMGfxfPt4m-wnGogAq-va6eGN86q6mUdefJE4augf2jNwRgaSePu4TWIf1HhatnyyWcbWd_tGVL9C7nUEw3Mppt7uW1VnnbEReXcfEt3OUlDRH_iJQUlQ76c1p3h3a2NP3sLkjqdj_rl-F19GX0FnontBjHRVAzag_lNbdgrdFrWKcjPSCr86ciifWiPBZNpQZHoRgU74htGs9buRU9_F3oVui9NAlp-LsDXbLxOj5Ujl_H8N8ZTsVEI96oJN9w3S6bp7e6TYC_G4E8IkmHoAMWZpK1afG4tl-rQ9rrkYPriaFifnQf&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant Azalée" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 13%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Restaurant Azalée</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 034 93 601 90</p>
+        <p class="rating">★★★½☆ (22 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 10:00 AM  -  9:00 PM<br>Tuesday: 10:00 AM  -  9:00 PM<br>Wednesday: 10:00 AM  -  9:00 PM<br>Thursday: 10:00 AM  -  9:00 PM<br>Friday: 10:00 AM  -  9:00 PM<br>Saturday: 10:00 AM  -  9:00 PM<br>Sunday: 10:00 AM  -  9:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9104347,47.5076592" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://via.placeholder.com/400x200?text=Image+indisponible" alt="Restaurant Lo&Ma" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 33%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Restaurant Lo&Ma</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> III D 12, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 034 18 892 74</p>
+        <p class="rating">☆☆☆☆☆ (0 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 9:30 AM  -  7:30 PM<br>Tuesday: 9:30 AM  -  7:30 PM<br>Wednesday: 9:30 AM  -  7:30 PM<br>Thursday: 9:30 AM  -  7:30 PM<br>Friday: 9:30 AM  -  7:30 PM<br>Saturday: 9:30 AM  -  8:00 PM<br>Sunday: Closed
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.8791902,47.5079055" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://via.placeholder.com/400x200?text=Image+indisponible" alt="點都德" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 63%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">點都德</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GJC+JF6, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> Téléphone non fourni</p>
+        <p class="rating">☆☆☆☆☆ (0 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Horaires non disponibles
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9184607,47.52112930000001" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://via.placeholder.com/400x200?text=Image+indisponible" alt="National Center" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 3%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">National Center</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GWF+WWR, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> Téléphone non fourni</p>
+        <p class="rating">★★★★☆ (5 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 8:30 AM  -  5:00 PM<br>Tuesday: 8:30 AM  -  5:00 PM<br>Wednesday: 8:30 AM  -  5:00 PM<br>Thursday: 8:30 AM  -  5:00 PM<br>Friday: 8:30 AM  -  5:00 PM<br>Saturday: 8:30 AM  -  5:00 PM<br>Sunday: Closed
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.902637,47.52475459999999" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNQ0O7nBk2FxVYvDaDcAeIbium021KStHT2PXalXXT4tLVCNgiM-A-eCGMiWci2Gc75_QxM9TPTXzQ_SBUvHpYRQaaLS5ztNq0dBSHSl6IwR-ar9IG5f7DzRYEvMqvAIFHUbkofdfA6eJwGhgCrJp9MOQmbMZrP0g7zlCuqH7Lchs4hjjEd-OezRONZN7coJpHcZztW3qm1RFW6Mt3vhO41aD7d6pE0wtaXbyIm8I-gcPCuMdfpN0mte3SPy7ahGiC1rVQ3B3mQdEzloSZCJLf4HhORnLP_GtWbiPDh5wq7W3OhgaOwmppqEIzTIR_RqPrbmLvuhAiJN7HUVpSiNgoHUKBbZqiTmsZK0QC9T_HuN-OsqZbrf4r8zNug3D8sbJTwziVVDVJxl_YprMZIoYYR3MmUdJ_GNOiqAoatZHXfhyyfQNT93a6efPkROYE1D95KrV73b-e3CK6SCa_N-_jBbnfrxEvuqeLGoF1cdJnOfXTOuy6ph3aalkkdLYb4RfFuNvuueQ-gkIzTfG17iGzAB-XGH0F_Z-D_soxcR1j3NG98rWJClJhVQJ4AoHx8Y2yJC4snnpSkwzqmnzMQeyJsjx_VjpY4nJBMp0oOetNpFYtZWMS6YMXASLzK3AFJp9W7_yw&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="l'Orient Asian Fusion Restaurant" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 39%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">l'Orient Asian Fusion Restaurant</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> Madagascar, Antananarivo, Lalana Rainandriamampandry, Lot Siah邮政编码: 101</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 034 36 788 88</p>
+        <p class="rating">★★★★★ (60 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 12:00  -  2:30 PM, 6:00  -  9:00 PM<br>Tuesday: 12:00  -  2:30 PM, 6:00  -  9:00 PM<br>Wednesday: 12:00  -  2:30 PM, 6:00  -  9:00 PM<br>Thursday: 12:00  -  2:30 PM, 6:00  -  9:00 PM<br>Friday: 12:00  -  2:30 PM, 6:00  -  9:00 PM<br>Saturday: 12:00  -  2:30 PM, 6:00  -  9:00 PM<br>Sunday: Closed
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9072494,47.52803729999999" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://via.placeholder.com/400x200?text=Image+indisponible" alt="ÔCG Ô Chinois Gourmand" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 59%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">ÔCG Ô Chinois Gourmand</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GQ8+CC2 Bloc commercial #7, Antananarivo 101, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 034 36 105 80</p>
+        <p class="rating">★★★☆☆ (2 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Horaires non disponibles
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.91147909999999,47.5160096" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNRazePZN2LcYznIfw8yln6zHVliNb1FhZLM3h6aulM9v7lg_JBlGrZb_VUmpSI5quUu2M001tbDBid79-fZne8MUSGNA4UIqtqgqaciIyE5wrmU6NJs7bBbhpvDm3NS2pJEP1gIiv-Rb-wldQtP_fIXCd8HuU-OZ_5QKQilRkWglKB16iS0_oK8YK9JSYE_N8o_F0w093U4fTL8gl_XcK6DTqMwSTlqfySDKZGpx0Kq0GY0TRuqKjKiZ1r22v1ZGKxuEpAu3LIPu1bWqYjvYhx51oHoImdGJq9Yk8YGy22usvfpXV7rslckObQuwYi06Yo5up3LCLVDmmnZ8qmhPh2cdinaiILTnzemnjUXFx0VXTHx0Ywp_EEdNw_95L6Rsa_IMYeaKgPh3OvG75X3I9X8OXp6vb48r6YGh1v3Qtq9ivv3gY___8Zc3L3gLJ3HvAZpJu6ZNFZx554YxUOULu5KSLzr0FQ5DDNVV01vBtZ1DlJfGRzOq6Sqyaf9u91tkgBoX_IKaDlmpFXMTKC1ZeOLKuX1vpvXprUlvI8EWMKWY0dNpyQkLJ2gosm7wrqWXabCVDjVw2FT7inGYwf_4-BaYeuO6H9EZsLe1OhCmd5myz24wweD4Zt0GS9TVUqvu-mNlg&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Kaizen Restaurant" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 20%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Kaizen Restaurant</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GPR+F3J, Lalana Vvs, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> Téléphone non fourni</p>
+        <p class="rating">★★★★½ (7 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: Closed<br>Tuesday: 11:00 AM  -  9:00 PM<br>Wednesday: 11:00 AM  -  9:00 PM<br>Thursday: 11:00 AM  -  9:00 PM<br>Friday: 11:00 AM  -  9:00 PM<br>Saturday: 11:00 AM  -  9:00 PM<br>Sunday: 11:00 AM  -  9:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9137837,47.5401532" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNSU_xz2FdG3juVd3rzfRzMRkP_RcS0DnxTsTaxuVPv1Hbs-r_gqhIV7SZFtgFwk4jOjoN1TMlu0nMVJej33xtdtJjPVVcNbtLJG95Yc4rCHMfIRqax1rS12DBff5ULH_nIUNE60cw9dWZxdX230tETnz7Qq1WWZY7CP4-J7uqStg9-2fhBFtSE-bOVbccvTzSYT2HbobwH7VMrg-vFBV6qYNPPOXWDVz7sCvO7xzX7BZj8lgFFRWyv-uYYcsHTnxEedW0noSDKprOPqnvIWOGIfgQc4IG1lqq3i36hMEIS73sMgMBE1zu18LaxsY6BTX5jr2-R8Y44SaYNnZ18MAOP53ywbZBTZxKoXL87QHks-0dPt0RnKGqIc-_VJ2UK7NcAT-uAEoiyK3Ks7R29iX5AmIwrQk-ZR-aSg7qEBH4fpcoEn208gLZdIk-z5REWB37gXQDabTgjO2YnMLtFP5JY28VDsdk5621k_9ZNyU6eaodH9ztIux3UGOxWEAiEg-L9PcYtvcs8nV9Gf6-YRc_2_iO3DHE1U7WP9EKflwtriPiw9cZ8S1kA3ZEWnI5z_oEkh08LaxlQog3OlQq8leITwp9SH_Mf6WYGv6j3_pXQd_4jb5aHjyhQzoEMRo-TGu5DaVQ&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant La Belle Ville" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 25%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Restaurant La Belle Ville</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GQP+WJP, Rue Razafindralombo Pierre, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 034 03 244 36</p>
+        <p class="rating">★★★★☆ (13 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 10:00 AM  -  2:00 PM, 5:00  -  10:00 PM<br>Tuesday: 10:00 AM  -  2:00 PM, 5:00  -  10:00 PM<br>Wednesday: 10:00 AM  -  2:00 PM, 5:00  -  10:00 PM<br>Thursday: 10:00 AM  -  2:00 PM, 5:00  -  10:00 PM<br>Friday: 10:00 AM  -  2:00 PM, 5:00  -  10:00 PM<br>Saturday: 10:00 AM  -  2:00 PM, 5:00  -  10:00 PM<br>Sunday: 10:00 AM  -  2:00 PM, 5:00  -  10:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9101641,47.53657789999999" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://via.placeholder.com/400x200?text=Image+indisponible" alt="La voie du Rossignol" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 0%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">La voie du Rossignol</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3GXH+QVR, Antananarivo 101, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> Téléphone non fourni</p>
+        <p class="rating">★★★★★ (1 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Horaires non disponibles
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9005125,47.5296406" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNTY4zBNneTlHF4WeaQw_hfgmu0UmM7Cu9FXkJm9Lup2Dws0wgeRw6IktPA7Ix_4-WH1Ht-tHukUUCerGCyvY0yt7KPhiqKD3I_lY8zU9FMi-fJZtX1BmFr-txXW53JsuYnGEAk0fbD56kyOiV2IT5cew60HkFsvSqLj2WOt6oMZhNiR0XQ8GqyP1wRBRRWpOC75-9OGVbLhGixwxutEBZPAb7Pdjc6Y6X5s6m2DBioY2OEF6e1Q5GRNBmOX_cJZOtqPvfTR1baqeTPcvKwbzlFdhPHZTkkCf3aJpUwbvj0pdG947bZVYiLwBG2PWMHE2m1AAF4DH2xTWEsDAyoyZFDWjbgnFO3Lf7ft9eHNXci9u-COuIpA23b7qNjBPAyecm08rqnguTCSuRU_du9cl8WA4K_B3wYlqL9Ozqk3HBpajKrQi52SJhcENUccr2ZuozEf2txpYjLCZoq-WyXV60XmshWgSTnsGXKcJCusKvOZOP83KzpXytEtxdyatPWo6tcPJGdk3U2Jx5NHae1s-kxmehwWMqAwn1rKROtgraD8LmFGfzLN5rVaJ1vQMmAhOTEzutCrtLf9RuzIvfdcy25d-cCJaeHV5F5MlmONN3ltTUGuN5jDbIY4ag0OQKJphbH9dQ&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="O'Gourmet" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 0%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">O'Gourmet</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 3H8H+2C9, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> Téléphone non fourni</p>
+        <p class="rating">★★★★½ (2 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Horaires non disponibles
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9349626,47.5786224" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNTuaPwt7yRaVzx8SZ5IAXvhgtO8Q5UKqDFEr-ZUdzA_MuWlMlU4wO5PRUNOBJV7erVB3VGzytT-VTlaTx0yDk93DF9Gu38JyGe6WRvQbpr0RVrSZ-SXBZ4rj0KMS0ig8jQLURD0vibwrzEMboHG64NQLKB43cbk9N1Xn-wegYKErkm2_dhzV6-n2L-Ov82MhP5O6VkFy34IitlERa39XnA5j692PFa8AA18qLdY8mUscLdeL9h_OmDaj72mEScws2ijUoa_q7AHG_9-KY79gnr_jp1BLeO4H26ZfvmeL0l5eW_IGARzMbHdts8L1jsT4ZYbYxxo0RIW1dfb_nldZhOX_rwb6LCn9kOE4V9_o0agZamUWNgzq5yBqaz7qwOIgyjgmi2uD74g0o7kOEL3F-LXMVh-CHa1faQuyTkvi5k33wqQFkj7x0jO7WRv9pX35HIHq2Yt7KutnUeKNoE5YGI4yI2W7h7Bw5AqCa_7y3lu21yaGxjebc5JHGlz3wFZkN4l1PURQ3wGyY6jKrilUWxBWdlUH3mbBSWNc3vOIYae2dhnh5ZO_BERQXsBFw9pmSZILsU1iCNCJKgAC7Xy8kPDL8X8ljx8fbcZb3oxP8AO3qxJilkq_PgMYOmJPLze&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Les Petits Plats De Maman" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 4%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Les Petits Plats De Maman</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> Immeuble Art&jardin Antaninarenina, En face bio 33, Tananarive 101, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 034 03 777 71</p>
+        <p class="rating">★★★★☆ (12 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 9:00 AM  -  6:00 PM<br>Tuesday: 9:00 AM  -  6:00 PM<br>Wednesday: 9:00 AM  -  6:00 PM<br>Thursday: 9:00 AM  -  6:00 PM<br>Friday: 9:00 AM  -  8:00 PM<br>Saturday: 9:00 AM  -  8:00 PM<br>Sunday: Closed
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9107144,47.5223128" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNRlNm6-Vf4t5QyZhrkAqk12G91UkT5ELNMoGtaDxNJQBJvoJnjnrAW5Bgc98el7NCocMWd8bt8onK_gwmvSDYe66IFDQ7EUwpZScUTQyPQ-ahBkOeULVQ75dwmIucZe3mqe_EJnBxvTyFQTHsyR3d9CsmMsTGOxxJuLLd6qFbckbCT8Humw4XKojmu63UjMA4ljpqcpwIW2cpHHtHmtwwJ9Q5g1isuSblPBMmlKeF9W6OMfygzing7gaVrKWvmpkaYhXv2pFTUDEPir_B_W0QrOWWUQ3l7Eb5r8wx8pz7oHaMMIUti5Wv_d0DBut3Y-yewY9zz578sKoYBz8t_yMT03cySICHwskn8LkTMLjxVUfDP1ksIJ4H7HhH0-rr3YzGYnsI-JtPULPcReCzRyXS1K9ZUgr2ZZSWI_ohySwrwiBaM8lhJdAQY010V16UqQP0MM8_tHSRTVrwv8jYGjc2qgyGxXq1kDmeU9zOT_E1krw8LRGO31nyJU92VTcQY97X2NHQEUikH6UKr326F23lZvfVHritOsea-2CkAMMXcHk-Xu_FZsF88GgkP729_euX7KeGfaFGN9XQAYU2_6THJ3ux2WEY4w7Hsnb_aqyNggaI2VwONk9g1OaDQaJzh8L4ITow&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="JiGongBao(雞宮煲)" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 shadow-md">
+          ✅ 75%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">JiGongBao(雞宮煲)</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 5FPM+WRQ, Ambohijanahary-Ivato, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 038 53 887 04</p>
+        <p class="rating">★★★★★ (1 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 9:00 AM  -  6:00 PM<br>Tuesday: 9:00 AM  -  6:00 PM<br>Wednesday: 9:00 AM  -  6:00 PM<br>Thursday: 9:00 AM  -  6:00 PM<br>Friday: 9:00 AM  -  6:00 PM<br>Saturday: 9:00 AM  -  6:00 PM<br>Sunday: Closed
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.8135221,47.4848558" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNTz1RYRV8fQQ84ctX2M64fPEOM1yocnuMWXKJQ0V_eqJ0TeTjHn3xJ8ISWqxjUyqekIfsr5mak4wlmWMfg9228r9DzRB4C6ps4t7eVLhnDoPAHcWRklRUZonF3BckDoApla4Pm6etAzg1ZDvbVZJ40p4H1OPD4m1hbPz89rD1GjM8eLFx2DTNcwYJbYbuX_xPnN43WKdPnTTPg9cx222qQFA2dpR4cN16A2OBvbUHoul-P1Pwz8Lq7MpgDmc61AMpfCUEddO4aF77PW-PzKBOTllTC9wJH236uYsbiz2eLfdQiMr9AJTR50Nw3KV4INnmpVhQ2e0AM&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Restaurant Le JASMIN" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 5%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Restaurant Le JASMIN</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 8 Rue Paul Dussac analamakelydohan Analakley, Tananarive, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 034 62 413 75</p>
+        <p class="rating">★★★★☆ (21 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: Closed<br>Tuesday: 11:00 AM  -  9:00 PM<br>Wednesday: 11:00 AM  -  9:00 PM<br>Thursday: 11:00 AM  -  9:00 PM<br>Friday: 11:00 AM  -  9:00 PM<br>Saturday: 11:00 AM  -  9:00 PM<br>Sunday: 11:00 AM  -  2:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9103791,47.52670089999999" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://via.placeholder.com/400x200?text=Image+indisponible" alt="Café de NanShan 南山咖啡西餐厅" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 shadow-md">
+          ✅ 91%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Café de NanShan 南山咖啡西餐厅</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 101, Tananarive 101, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 038 83 744 18</p>
+        <p class="rating">☆☆☆☆☆ (0 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 8:00 AM  -  8:00 PM<br>Tuesday: 8:00 AM  -  8:00 PM<br>Wednesday: 8:00 AM  -  8:00 PM<br>Thursday: 8:00 AM  -  8:00 PM<br>Friday: 8:00 AM  -  8:00 PM<br>Saturday: 8:00 AM  -  8:00 PM<br>Sunday: 8:00 AM  -  8:00 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.901389,47.5255873" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNQCiiF3tgC2cWmBSmG8_SIT3pXgmf22I5uFmCR44w9mR6Elaj-GeGQBZDsy4AHjIDiw_T2Kkmez_Sbg3FRc3PRJmlEKnk118xS_jd7X4-QvKd7njZWpMMchCDs9s1QVg_nUtLy55YjjMxiJc8WelS1xhPHfWJeuHXPhjtidYnTnwq0lcKQ7_vguCuwhy8PVZwahJsbevt4CBKZyUoPjdsYIQ3Ra8evMJLHVzwBzlBV8Ptr8J7Kux36jvA3VK2W-5PFtfxhRFVlTAbrk76TipvCFgqf8FEIGTfpR8kL43b-Fyfp0NnH7v9N_Mj1oLlt_sTdwsUD0&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="SOHO Restaurant" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 32%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">SOHO Restaurant</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 1st floor, Lalana S. Rahamefy, Antananarivo 101, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> 020 22 694 05</p>
+        <p class="rating">★★★½☆ (12 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Monday: 6:30 AM  -  10:30 PM<br>Tuesday: 6:30 AM  -  10:30 PM<br>Wednesday: 6:30 AM  -  10:30 PM<br>Thursday: 6:30 AM  -  10:30 PM<br>Friday: 6:30 AM  -  10:30 PM<br>Saturday: 6:30 AM  -  10:30 PM<br>Sunday: 6:30 AM  -  10:30 PM
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.9122328,47.52818139999999" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=AXQCQNSuF_0dmk7nwXLa1gehcNYc-JGue6UFiCXD9aDpXWu5JnlN6cR2oe9GF6Fk_dmv9e_d8gAFGhrgGqHjCE_8wwoyuVYMluLI1Ux_tFh0e8kBlXNDOnVYxJyGHxceY0NmEeEq1-v_U6QHBprVkAO3FHY4vICX3-qFAnWJ7Lwk1q2AEsg6V9mbXR62ive4prm9U_PM27-_ARyVrRBF--alm4_PLFB-tDIpPDRnx8fSoV270vhbvmFoIJVFAJbrGot7ruIAoYH5_71luNk5qYGwILK5FJ439jl4CzPsT_3wEkGWgU4vAMLTu-Jtjb5eBiRgFS_5vStEyc2_WhMkikbEREYaStqct3E_ki-6ecMae9C7eg2Eucz-gtkOph9e1JNF4P3GgApd0FGunkzm1KQhCkISFDt8a3rO-JvMLWXz01yCJ-nTfkZADbutOv7UiyRdzMi0KGDfrD2AwBCadlE91uIP_oJ7N2WIafnsk83MJpx7YrCeqRGJJcD85Q1YCgNrJgFRzx4cltOCCM94KDtqpLoUeghFqOIpMc4NtgRS7TbOeyK2OMzMWI0zuBX30yQGAQlRJBUvLB2K6_mutv-2BMRIhz2DmVloDQNA6M_sQIcHMoXIJALilf48yi6e2vws&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM" alt="Gargotte Pangalane" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 0%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Gargotte Pangalane</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> IIR9, Rue Foloalindahy Malagasy, Tananarive 101, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> Téléphone non fourni</p>
+        <p class="rating">★★★½☆ (3 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Horaires non disponibles
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.90156379999999,47.537504" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    <div class="card bg-white rounded-2xl shadow-lg overflow-hidden relative">
+      <div class="relative">
+        <img src="https://via.placeholder.com/400x200?text=Image+indisponible" alt="Restaurant Lo & Ma" class="w-full h-48 object-cover rounded-t-2xl" />
+        <div class="absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800 shadow-md">
+          ❌ 16%
+        </div>
+      </div>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Restaurant Lo & Ma</h2>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Adresse :</span> 4G38+MRH, Rue Ampanjaka Toera, Antananarivo, Madagascar</p>
+        <p class="text-gray-600 mb-2"><span class="font-medium">Téléphone :</span> Téléphone non fourni</p>
+        <p class="rating">☆☆☆☆☆ (0 avis)</p>
+        <div class="calendrier text-gray-600">
+          <span class="font-medium">Horaires :</span><br>
+          Horaires non disponibles
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=-18.8958056,47.51710689999999" target="_blank" rel="noopener noreferrer" class="btn-maps">Voir sur Google Maps</a>
+      </div>
+    </div>
+  
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,595 @@
+{
+  "name": "Restarant Chinois",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        760
+      ],
+      "id": "49d3ea8a-b20b-4c0c-8b88-2b4ac6b4d094",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/nearbysearch/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "location",
+              "value": "-18.8792,47.5079"
+            },
+            {
+              "name": "radius",
+              "value": "10000"
+            },
+            {
+              "name": "type",
+              "value": "restaurant"
+            },
+            {
+              "name": "keyword",
+              "value": "chinois"
+            },
+            {
+              "name": "key",
+              "value": "AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6916d9d2-497f-465f-bfe6-b67445641a08",
+      "name": "Initial Nearby Search",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -380,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().flatMap(item => item.json.results || []);"
+      },
+      "id": "79603e30-afff-4c5b-95b2-b7c4add10549",
+      "name": "Extract Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        540,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "30abe24b-3185-4a63-8ac4-5584c121c86b",
+              "leftValue": "={{ $json.next_page_token }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "3d5d3794-2430-40e8-ac26-a396a54c752f",
+      "name": "Has Next Page?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -240,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "unit": "seconds"
+      },
+      "id": "31719a00-2ba6-406a-bd33-c2d793286d1b",
+      "name": "Wait 2s",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        0,
+        520
+      ],
+      "webhookId": "68eb87f4-e737-47e2-891a-0477192fe2d2"
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/nearbysearch/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "pagetoken",
+              "value": "={{$json['next_page_token']}}"
+            },
+            {
+              "name": "key",
+              "value": "AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fdf1c11f-6688-491c-910d-26896154a3e6",
+      "name": "Next Page Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => {\n  const place = item.json;\n  return {\n    place_id: place.place_id,\n    name: place.name,\n    lat: place.geometry.location.lat,\n    lng: place.geometry.location.lng,\n    address: place.vicinity,\n    rating: place.rating || 'N/A',\n    user_rating: place.user_ratings_total || 'N/A'\n  };\n});"
+      },
+      "id": "2a864b91-1325-44e5-8f26-297bfa9ff4ba",
+      "name": "Format Initial Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/details/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "place_id",
+              "value": "={{ $json.place_id }}"
+            },
+            {
+              "name": "fields",
+              "value": "name,formatted_phone_number,photos,formatted_address,website,opening_hours,rating,geometry,user_ratings_total,website"
+            },
+            {
+              "name": "key",
+              "value": "AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e13aedbd-8790-400b-8585-aa56a69b89e6",
+      "name": "Get Place Details",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        900,
+        740
+      ],
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => {\n  const result = item.json.result || {};\n  const photoRef = result.photos && result.photos[0]?.photo_reference;\n\n  return {\n    name: result.name || 'N/A',\n    phone_number: result.formatted_phone_number || 'N/A',\n\n    // 🖼️ Image URL construite à partir du photo_reference\n    image_url: photoRef \n      ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM`\n      : 'N/A',\n\n    // 🔗 Lien Google Maps direct vers le lieu\n    maps_link: `https://www.google.com/maps/place/?q=place_id:${item.json.result?.place_id || item.json.place_id || ''}`,\n\n    email_or_website: result.website || 'N/A',\n\n    // 🏠 Adresse\n    address: result.formatted_address || 'N/A',\n\n    // 🌍 Coordonnées GPS\n    longitude: result.geometry?.location?.lng || 'N/A',\n    latitude: result.geometry?.location?.lat || 'N/A',\n\n    // ⭐ Note moyenne\n    rating: result.rating || 'N/A',\n    user_ratings_total: result.user_ratings_total || 'N/A',\n    // ⏰ Horaires d'ouverture formatés en texte\n    opening_hours: result.opening_hours?.weekday_text?.join('; ') || 'N/A'\n  };\n});\n"
+      },
+      "id": "140d0a8f-e4cc-4c83-b3a2-2541a3ea4006",
+      "name": "Format Final Output",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const weights = {\n  name_score: 5,\n  address_score: 0,\n  opening_hours_score: 2,\n  location_proximity_score: 1\n};\n\nconst threshold = 0.7;\n\nreturn items.map(item => {\n  const data = item.json;\n\n  const name_score = parseFloat(data.name_score) || 0;\n  const address_score = parseFloat(data.address_score) || 0;\n  const opening_hours_score = parseFloat(data.opening_hours_score) || 0;\n  const location_proximity_score = parseFloat(data.location_proximity_score) || 0;\n\n  const totalWeightedScore =\n    name_score * weights.name_score +\n    address_score * weights.address_score +\n    opening_hours_score * weights.opening_hours_score +\n    location_proximity_score * weights.location_proximity_score;\n\n  const totalWeight =\n    weights.name_score +\n    weights.address_score +\n    weights.opening_hours_score +\n    weights.location_proximity_score;\n\n  const finalScore = totalWeightedScore / totalWeight;\n\n  return {\n    json: {\n      weighted_score: parseFloat(finalScore.toFixed(3)),\n      is_probably_chinese: finalScore >= threshold,\n      confidence_level: `${Math.round(finalScore * 100)}%`\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1820,
+        920
+      ],
+      "id": "3a542674-9e67-4a23-b0df-d52cc9490827",
+      "name": "CHI 2 code"
+    },
+    {
+      "parameters": {
+        "jsCode": "const prompts = [];\n\nconst chineseZones = [\n  { name: \"Behoririka\", lat: -18.9050, lon: 47.5190, weight: 1.0 },\n  { name: \"Analakely\", lat: -18.9065, lon: 47.5269, weight: 0.7 },\n  { name: \"Tsaralalàna\", lat: -18.9074, lon: 47.5211, weight: 0.5 },\n  { name: \"Antanimena\", lat: -18.8960, lon: 47.5190, weight: 0.3 },\n];\n\nfunction haversine(lat1, lon1, lat2, lon2) {\n  const R = 6371; // Earth radius in km\n  const dLat = (lat2 - lat1) * Math.PI / 180;\n  const dLon = (lon2 - lon1) * Math.PI / 180;\n  const a =\n    Math.sin(dLat / 2) ** 2 +\n    Math.cos(lat1 * Math.PI / 180) *\n    Math.cos(lat2 * Math.PI / 180) *\n    Math.sin(dLon / 2) ** 2;\n  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));\n  return R * c;\n}\n\nfunction getLocationScore(lat, lon) {\n  if (lat == null || lon == null) return 0;\n\n  return chineseZones.reduce((maxScore, zone) => {\n    const distance = haversine(lat, lon, zone.lat, zone.lon);\n    const proximityScore = Math.max(0, 1 - distance / 1.0); // Full score within 1 km\n    return Math.max(maxScore, proximityScore * zone.weight);\n  }, 0);\n}\n\nfunction getPrompt(restaurant) {\n  const lat = restaurant.latitude;\n  const lon = restaurant.longitude;\n  const locationScore = getLocationScore(lat, lon);\n  const name = restaurant.name || \"Not available\";\n  const address = restaurant.address || restaurant.vicinity || \"Not available\";\n  const openingHours = restaurant.opening_hours || \"Not available\";\n\n  return {\n    json: {\n      prompt: `\nYou are an intelligent agent specialized in identifying whether a restaurant is Chinese.\n\nHere is the information about a restaurant:\n\n- Name: ${name}\n- Address: ${address}\n- Opening Hours: ${openingHours}\n- Location Coordinates: (${lat ?? \"N/A\"}, ${lon ?? \"N/A\"})\n\nEvaluate and assign a score between 0 and 1 for each of the following criteria:\n1. Name: Does the name appear to be typically Chinese (e.g., uses Chinese characters, common pinyin, or culturally relevant names)?\n2. Address: Does the location suggest it is in a Chinese area or commonly associated with Chinese communities?\n3. Opening Hours: Do the business hours resemble the typical schedule of a Chinese restaurant (e.g., open for lunch and dinner, often closed late)?\n4. Location Proximity: Based on GPS coordinates, is this restaurant located near a known Chinese neighborhood in Antananarivo?\n\nThen, based on your judgment, calculate a final score (between 0 and 1) that reflects your overall confidence that this is a Chinese restaurant.\n\n🛑 IMPORTANT:\nRespond **only** with a valid JSON object in the format below. Do **not** include any explanation, commentary, markdown formatting, or any other text.\n\nReturn exactly this JSON format:\n\n{\n  \"name_score\": number (0 to 1),\n  \"address_score\": number (0 to 1),\n  \"opening_hours_score\": number (0 to 1),\n  \"location_proximity_score\": ${locationScore.toFixed(2)},\n  \"final_score\": number (0 to 1),\n  \"decision\": \"chinese\" or \"not chinese\"\n}\n      `.trim(),\n      restaurant_id: restaurant.name || \"unknown\",\n    },\n  };\n}\n\nfor (const item of items) {\n  const restaurant = item.json;\n  prompts.push(getPrompt(restaurant));\n}\n\nreturn prompts;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1240,
+        920
+      ],
+      "id": "75495604-eed5-4495-99e9-70b34b4f96d7",
+      "name": "Generate prompt"
+    },
+    {
+      "parameters": {
+        "jsCode": "const restaurants = items;\n\nfunction ratingToStars(rating) {\n  const fullStars = Math.floor(rating);\n  const halfStar = rating - fullStars >= 0.5;\n  let stars = '★'.repeat(fullStars);\n  if (halfStar) stars += '½';\n  stars = stars.padEnd(5, '☆');\n  return stars;\n}\n\nfunction formatOpeningHours(hoursStr) {\n  if (!hoursStr || hoursStr === 'N/A') return 'Horaires non disponibles';\n  const days = hoursStr.split(';').map(day => day.trim());\n  return days\n    .map(day =>\n      day\n        .replace(/[–—]/g, ' - ') // tirets longs remplacés par tiret simple espacé\n        .replace(/\\u202F/g, ' ') // espace insécable fine\n        .replace(/\\u2009/g, ' ') // espace fine\n    )\n    .join('<br>');\n}\n\nlet html = `\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  <title>Restaurants à Antananarivo</title>\n  <link href=\"https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css\" rel=\"stylesheet\" />\n  <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap\" rel=\"stylesheet\" />\n  <style>\n    body {\n      font-family: 'Poppins', sans-serif;\n      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);\n      min-height: 100vh;\n    }\n    .card {\n      transition: transform 0.3s ease, box-shadow 0.3s ease;\n    }\n    .card:hover {\n      transform: translateY(-5px);\n      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);\n    }\n    .card img {\n      object-fit: cover;\n      transition: transform 0.3s ease;\n    }\n    .card:hover img {\n      transform: scale(1.05);\n    }\n    .gradient-text {\n      background: linear-gradient(to right, #ff6b6b, #4ecdc4);\n      -webkit-background-clip: text;\n      background-clip: text;\n      color: transparent;\n    }\n    .btn-maps {\n      background: linear-gradient(to right, #ff6b6b, #4ecdc4);\n      transition: background 0.3s ease;\n      display: inline-block;\n      color: white;\n      font-weight: 500;\n      padding: 0.5rem 1rem;\n      border-radius: 0.5rem;\n      text-decoration: none;\n    }\n    .btn-maps:hover {\n      background: linear-gradient(to right, #4ecdc4, #ff6b6b);\n    }\n    .calendrier {\n      font-size: 0.9rem;\n      line-height: 1.5;\n      white-space: pre-line;\n      background: #f9fafb;\n      padding: 0.5rem 1rem;\n      border-radius: 0.5rem;\n      border: 1px solid #e5e7eb;\n      margin-bottom: 1rem;\n    }\n    .rating {\n      color: #ffb400;\n      font-weight: 600;\n      margin-bottom: 0.5rem;\n    }\n    .hours {\n      font-size: 0.875rem;\n      line-height: 1.5;\n      white-space: pre-line;\n    }\n  </style>\n</head>\n<body class=\"antialiased\">\n  <div class=\"container mx-auto px-4 py-12\">\n    <h1 class=\"text-4xl md:text-5xl font-bold text-center mb-12 gradient-text\">Restaurants à Antananarivo</h1>\n    <div class=\"grid gap-8 md:grid-cols-2 lg:grid-cols-3\">\n`;\n\nrestaurants.forEach(item => {\n  const resto = item.json;\n\n  const name = resto.name && resto.name !== 'N/A' ? resto.name : 'Nom inconnu';\n  const phone = resto.phone_number && resto.phone_number !== 'N/A' ? resto.phone_number : 'Téléphone non fourni';\n  const address = resto.address && resto.address !== 'N/A' ? resto.address : 'Adresse non disponible';\n  const hours = formatOpeningHours(resto.opening_hours);\n  const image = resto.image_url && resto.image_url !== 'N/A' ? resto.image_url : 'https://via.placeholder.com/400x200?text=Image+indisponible';\n\n  let mapLink = '#';\n  if (resto.latitude && resto.longitude && resto.latitude !== 'N/A' && resto.longitude !== 'N/A') {\n    mapLink = `https://www.google.com/maps/search/?api=1&query=${resto.latitude},${resto.longitude}`;\n  } else if (resto.maps_link && resto.maps_link !== 'N/A') {\n    mapLink = resto.maps_link;\n  }\n\n  const rating = resto.rating && resto.rating !== 'N/A' ? parseFloat(resto.rating) : 0;\n  const userRatingsTotal = resto.user_ratings_total && resto.user_ratings_total !== 'N/A' ? resto.user_ratings_total : 0;\n  const stars = ratingToStars(rating);\n\n  const isChinese = resto.is_probably_chinese === true;\n  const confidence = resto.confidence_level || '';\n  const badgeColor = isChinese ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';\n  const badgeIcon = isChinese ? '✅' : '❌';\n\n  html += `\n    <div class=\"card bg-white rounded-2xl shadow-lg overflow-hidden relative\">\n      <div class=\"relative\">\n        <img src=\"${image}\" alt=\"${name}\" class=\"w-full h-48 object-cover rounded-t-2xl\" />\n        <div class=\"absolute top-3 right-3 px-3 py-1 text-sm font-semibold rounded-full ${badgeColor} shadow-md\">\n          ${badgeIcon} ${confidence}\n        </div>\n      </div>\n      <div class=\"p-6\">\n        <h2 class=\"text-2xl font-semibold text-gray-800 mb-2\">${name}</h2>\n        <p class=\"text-gray-600 mb-2\"><span class=\"font-medium\">Adresse :</span> ${address}</p>\n        <p class=\"text-gray-600 mb-2\"><span class=\"font-medium\">Téléphone :</span> ${phone}</p>\n        <p class=\"rating\">${stars} (${userRatingsTotal} avis)</p>\n        <div class=\"calendrier text-gray-600\">\n          <span class=\"font-medium\">Horaires :</span><br>\n          ${hours}\n        </div>\n        ${mapLink !== '#' ? `<a href=\"${mapLink}\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"btn-maps\">Voir sur Google Maps</a>` : ''}\n      </div>\n    </div>\n  `;\n});\n\nhtml += `\n    </div>\n  </div>\n</body>\n</html>\n`;\n\n// Génération du Base64 pour l'export\nconst buffer = Buffer.from(html, 'utf8');\nconst base64data = buffer.toString('base64');\n\nreturn [\n  {\n    binary: {\n      data: {\n        data: base64data,\n        mimeType: 'text/html',\n        fileName: 'restaurants_antananarivo.html'\n      }\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2220,
+        760
+      ],
+      "id": "dd378584-979d-413d-9da4-ddc859d10695",
+      "name": "Fomulate html"
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        340,
+        740
+      ],
+      "id": "b962b89f-95fb-46d4-b5c1-d87e1e2b5962",
+      "name": "Merge All Page"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        2060,
+        760
+      ],
+      "id": "3fe74a85-15e5-439e-a326-7653827b60a9",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        1060
+      ],
+      "id": "de5dc852-187f-4fab-9cac-5e69c627c5ac",
+      "name": "Specialist",
+      "credentials": {
+        "openRouterApi": {
+          "id": "303wMYS6IE7HsdWj",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Prend les autre page \n",
+        "height": 260,
+        "width": 700
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -300,
+        460
+      ],
+      "typeVersion": 1,
+      "id": "f7aaaa72-61e6-4319-a626-877c1443ffeb",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Verification avec model pondere",
+        "height": 340,
+        "width": 720,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1220,
+        840
+      ],
+      "typeVersion": 1,
+      "id": "6f79e774-c0b1-4a2c-94c9-6e0561941c8e",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Mise en place de la formatage de donne et ajout des details",
+        "height": 200,
+        "width": 900,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        320,
+        680
+      ],
+      "typeVersion": 1,
+      "id": "aa9fe638-00bc-42c7-ae0c-d23810f9a593",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.prompt }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        1380,
+        920
+      ],
+      "id": "401723d1-bc08-4224-a1b1-45acc2a48e82",
+      "name": "Noters"
+    },
+    {
+      "parameters": {
+        "content": "## Formatage de donnne et creation de fichier html",
+        "height": 280,
+        "width": 500,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1940,
+        660
+      ],
+      "typeVersion": 1,
+      "id": "f55d86c7-14d6-418c-9bfc-117ff9f74395",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const raw = item.json.output;\n\n  // Nettoyer le contenu JSON\n  const cleaned = raw\n    .replace(/```json\\n?/g, '')\n    .replace(/```/g, '')\n    .trim();\n\n  // Convertir en objet JSON\n  const parsed = JSON.parse(cleaned);\n\n  // Retourner dans un nouvel item\n  return {\n    json: parsed\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        920
+      ],
+      "id": "00d8dbab-2102-4894-8158-68e38c532f44",
+      "name": "Transform to Json"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Initial Nearby Search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Initial Nearby Search": {
+      "main": [
+        [
+          {
+            "node": "Has Next Page?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge All Page",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Extract Results": {
+      "main": [
+        [
+          {
+            "node": "Format Initial Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Next Page?": {
+      "main": [
+        [
+          {
+            "node": "Wait 2s",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge All Page",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Wait 2s": {
+      "main": [
+        [
+          {
+            "node": "Next Page Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Next Page Request": {
+      "main": [
+        [
+          {
+            "node": "Merge All Page",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Has Next Page?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Initial Data": {
+      "main": [
+        [
+          {
+            "node": "Get Place Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Place Details": {
+      "main": [
+        [
+          {
+            "node": "Format Final Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Final Output": {
+      "main": [
+        [
+          {
+            "node": "Generate prompt",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate prompt": {
+      "main": [
+        [
+          {
+            "node": "Noters",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge All Page": {
+      "main": [
+        [
+          {
+            "node": "Extract Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fomulate html": {
+      "main": [
+        []
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Fomulate html",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CHI 2 code": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Specialist": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Noters",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Noters": {
+      "main": [
+        [
+          {
+            "node": "Transform to Json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transform to Json": {
+      "main": [
+        [
+          {
+            "node": "CHI 2 code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "bf702d39-fa58-46db-b74a-c0ca5c576f67",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "94f992d9ba5a8c8ac512b3ec3764f8c8fa991b670708b220f6f99639fec2179c"
+  },
+  "id": "CqjOSXHMTj1i4Knd",
+  "tags": []
+}
