@@ -1,0 +1,430 @@
+{
+  "name": "My workflow veritable copy 2",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1820,
+        640
+      ],
+      "id": "9b15c254-988f-4dcd-b0e3-39b61fa4d882",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/textsearch/json",
+        "options": {},
+        "queryParametersUi": {
+          "parameter": [
+            {
+              "name": "query",
+              "value": "restaurant chinois Antananarivo"
+            },
+            {
+              "name": "location",
+              "value": "-18.8792,47.5079"
+            },
+            {
+              "name": "radius",
+              "value": "5000"
+            },
+            {
+              "name": "key",
+              "value": "AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM"
+            }
+          ]
+        }
+      },
+      "name": "Request Page 1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        -1320,
+        640
+      ],
+      "id": "f0ccb48e-70fd-4db2-a3c3-9a18c1146ad7"
+    },
+    {
+      "parameters": {
+        "functionCode": "const nextPageToken = $json[\"next_page_token\"] || null;\nreturn [{ json: { nextPageToken } }];"
+      },
+      "name": "Extract Token 1",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        -1800,
+        860
+      ],
+      "id": "2812f4fe-a1eb-4547-8cd3-73a730b1c879"
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "seconds"
+      },
+      "name": "Wait 2s",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        -1560,
+        860
+      ],
+      "id": "128535d7-5222-4c61-8077-f19a8f3a3c69",
+      "webhookId": "61a92cb4-b512-40a9-85b7-06c5ccb60294",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/textsearch/json",
+        "options": {},
+        "queryParametersUi": {
+          "parameter": [
+            {
+              "name": "pagetoken",
+              "value": "={{$json[\"nextPageToken\"]}}"
+            },
+            {
+              "name": "key",
+              "value": "AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM"
+            }
+          ]
+        }
+      },
+      "name": "Request Page 2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        -1320,
+        860
+      ],
+      "id": "325f54fa-bfae-4ade-967f-8ed246952249"
+    },
+    {
+      "parameters": {
+        "functionCode": "const nextPageToken = $json[\"next_page_token\"] || null;\nreturn [{ json: { nextPageToken } }];"
+      },
+      "name": "Extract Token 2",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        -1800,
+        1100
+      ],
+      "id": "6d7473ad-64b2-4460-bf84-44393d4aec71"
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "seconds"
+      },
+      "name": "Wait 2s - 2",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        -1560,
+        1100
+      ],
+      "id": "a0100f83-164d-4430-a7d2-a88a9684024a",
+      "webhookId": "c4fa2634-fddc-46a4-b53f-e21afed74691",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/textsearch/json",
+        "options": {},
+        "queryParametersUi": {
+          "parameter": [
+            {
+              "name": "pagetoken",
+              "value": "={{$json[\"nextPageToken\"]}}"
+            },
+            {
+              "name": "key",
+              "value": "AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM"
+            }
+          ]
+        }
+      },
+      "name": "Request Page 3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        -1320,
+        1100
+      ],
+      "id": "38a2d5b1-fda2-4a7e-a005-e7952c113c23"
+    },
+    {
+      "parameters": {
+        "functionCode": "return items.map(item => item.json.results).flat().map(place => ({ json: place }));"
+      },
+      "name": "Flatten Results",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        -680,
+        860
+      ],
+      "id": "002fb92a-4b30-401b-b252-83076b33d583"
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        -940,
+        860
+      ],
+      "id": "d1735cf7-5d26-4466-b66b-4eb6ad1bbe93",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "let html = `<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <title>Restaurants à Antananarivo</title>\n  <style>\n    body {\n      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n      margin: 0; padding: 40px 20px;\n      background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);\n      color: #222;\n      min-height: 100vh;\n    }\n    .container {\n      max-width: 960px;\n      margin: auto;\n      background: #fff;\n      border-radius: 12px;\n      box-shadow: 0 12px 28px rgba(0,0,0,0.12);\n      padding: 30px 40px;\n    }\n    h1 {\n      text-align: center;\n      font-weight: 700;\n      font-size: 2.8rem;\n      margin-bottom: 40px;\n      color: #ff6a00;\n      letter-spacing: 1.2px;\n      text-shadow: 0 1px 3px rgba(0,0,0,0.2);\n    }\n    .restaurant {\n      display: flex;\n      gap: 30px;\n      padding: 25px;\n      border-radius: 12px;\n      background: #fdf6f0;\n      box-shadow: 0 4px 10px rgba(255, 106, 0, 0.2);\n      margin-bottom: 30px;\n      transition: transform 0.3s ease, box-shadow 0.3s ease;\n      cursor: pointer;\n    }\n    .restaurant:hover {\n      transform: translateY(-6px);\n      box-shadow: 0 10px 20px rgba(255, 106, 0, 0.4);\n    }\n    .restaurant img {\n      width: 140px;\n      height: 140px;\n      border-radius: 16px;\n      object-fit: cover;\n      box-shadow: 0 4px 12px rgba(0,0,0,0.1);\n      flex-shrink: 0;\n      border: 2px solid #ff6a00;\n    }\n    .details {\n      flex: 1;\n      display: flex;\n      flex-direction: column;\n      justify-content: space-between;\n    }\n    .details h3 {\n      margin: 0 0 12px 0;\n      font-size: 1.8rem;\n      color: #0072ff;\n      font-weight: 700;\n      display: flex;\n      align-items: center;\n      gap: 12px;\n    }\n    .details h3 a {\n      color: inherit;\n      text-decoration: none;\n      transition: color 0.25s ease;\n    }\n    .details h3 a:hover {\n      color: #ff6a00;\n    }\n    .badge {\n      background: #ff6a00;\n      color: #fff;\n      font-size: 0.85rem;\n      font-weight: 600;\n      padding: 4px 12px;\n      border-radius: 20px;\n      white-space: nowrap;\n      box-shadow: 0 2px 8px rgba(255, 106, 0, 0.6);\n    }\n    .info-list {\n      display: grid;\n      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));\n      gap: 12px 24px;\n      margin-top: 10px;\n      font-size: 1rem;\n      color: #444;\n    }\n    .info-list p {\n      margin: 0;\n      line-height: 1.4;\n    }\n    .info-list strong {\n      color: #222;\n    }\n    .btn-map {\n      margin-top: 20px;\n      align-self: start;\n      background-color: #ff6a00;\n      color: white;\n      border: none;\n      padding: 12px 28px;\n      border-radius: 30px;\n      font-weight: 700;\n      font-size: 1rem;\n      cursor: pointer;\n      box-shadow: 0 6px 18px rgba(255, 106, 0, 0.4);\n      transition: background-color 0.3s ease, box-shadow 0.3s ease;\n      text-decoration: none;\n      display: inline-block;\n      user-select: none;\n    }\n    .btn-map:hover {\n      background-color: #e64a19;\n      box-shadow: 0 8px 22px rgba(230, 74, 25, 0.6);\n    }\n    @media (max-width: 600px) {\n      .restaurant {\n        flex-direction: column;\n        align-items: center;\n        text-align: center;\n      }\n      .details h3 {\n        justify-content: center;\n      }\n      .info-list {\n        grid-template-columns: 1fr;\n      }\n      .btn-map {\n        width: 100%;\n        padding: 14px 0;\n      }\n    }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <h1>Restaurants à Antananarivo</h1>\n`;\n\nitems.forEach(item => {\n  const resto = item.json;\n  const googleImage = resto.image || '';\n  const image = googleImage || 'https://via.placeholder.com/140?text=No+Image';\n\n  const rating = resto.rating ? `${resto.rating} / 5 (${resto.user_ratings_total || 0} avis)` : 'Non noté';\n  const isChinese = resto.is_chinese_restaurant ? 'Oui' : 'Non';\n  const chineseProb = resto.chinese_probability !== undefined ? `${resto.chinese_probability.toFixed(1)}%` : 'N/A';\n\n  html += `\n    <div class=\"restaurant\" tabindex=\"0\" role=\"article\" aria-label=\"Restaurant ${resto.nom}\">\n      <img src=\"${image}\" alt=\"Photo du restaurant ${resto.nom}\" loading=\"lazy\" />\n      <div class=\"details\">\n        <h3>\n          <a href=\"${resto.website || '#'}\" target=\"_blank\" rel=\"noopener noreferrer\">${resto.nom}</a>\n          <span class=\"badge\">${isChinese === 'Oui' ? '🇨🇳 Restaurant Chinois' : 'Restaurant'}</span>\n        </h3>\n        <div class=\"info-list\">\n          <p><strong>Adresse :</strong><br/>${resto.adresse ? resto.adresse.replace(/\\n/g, '<br>') : 'N/A'}</p>\n          <p><strong>Téléphone :</strong> ${resto.telephone || 'N/A'}</p>\n          <p><strong>Note :</strong> ${rating}</p>\n          <p><strong>Probabilité restaurant chinois :</strong> ${chineseProb}</p>\n          <p><strong>Coordonnées :</strong><br/>${resto.latitude || 'N/A'}, ${resto.longitude || 'N/A'}</p>\n        </div>\n        <a href=\"https://www.google.com/maps?q=${resto.latitude || ''},${resto.longitude || ''}\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"btn-map\" aria-label=\"Voir ${resto.nom} sur Google Maps\">Voir sur Google Maps</a>\n      </div>\n    </div>\n  `;\n});\n\nhtml += `\n  </div>\n</body>\n</html>`;\n\nconst buffer = Buffer.from(html, 'utf8');\n\nreturn [{\n  binary: {\n    data: {\n      data: buffer.toString('base64'),\n      mimeType: 'text/html',\n      fileName: 'restaurants_antananarivo.html'\n    }\n  }\n}];\n"
+      },
+      "id": "eff6038d-2ec1-4b32-a7e1-311e864bf5b6",
+      "name": "Generate HTML Output",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -840,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const apiKey = 'AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM';\nconst maxWidth = 120;\nconst maxHeight = 120;\n\nreturn items.map(item => {\n  const photoUrls = (item.json.photo_references || []).map(reference => {\n    return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${maxWidth}&maxheight=${maxHeight}&photoreference=${reference}&key=${apiKey}`;\n  });\n  return {\n    json: {\n      ...item.json,\n      image: photoUrls[0] || ''\n    }\n  };\n});"
+      },
+      "id": "e5731b24-2de8-4fc1-a2e1-f586ec82988d",
+      "name": "Fetch Google Images",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        120,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const result = item.json.result || item.json; // selon la structure de la réponse\n  const photos = result.photos ? result.photos.map(photo => photo.photo_reference) : [];\n  const reviews = result.reviews ? result.reviews.map(review => ({\n    author_name: review.author_name || '',\n    rating: review.rating || '',\n    text: review.text || '',\n    time: review.time || '',\n    relative_time_description: review.relative_time_description || ''\n  })) : [];\n  const openingHours = result.opening_hours ? {\n    open_now: result.opening_hours.open_now || false,\n    weekday_text: result.opening_hours.weekday_text || []\n  } : null;\n  \n  return {\n    json: {\n      place_id: result.place_id || '',\n      nom: result.name || '',\n      adresse: result.formatted_address || '',\n      telephone: result.formatted_phone_number || '',\n      latitude: result.geometry && result.geometry.location ? result.geometry.location.lat : null,\n      longitude: result.geometry && result.geometry.location ? result.geometry.location.lng : null,\n      website: result.website || '',\n      rating: result.rating || '',\n      user_ratings_total: result.user_ratings_total || 0,\n      price_level: result.price_level || null,\n      types: result.types || [],\n      photo_references: photos,\n      description: result.editorial_summary ? (result.editorial_summary.overview || '') : '', // description si disponible\n      reviews: reviews,\n      opening_hours: openingHours,\n      utc_offset_minutes: result.utc_offset_minutes || null,\n      vicinity: result.vicinity || '',\n      plus_code: result.plus_code ? result.plus_code.compound_code : '',\n      // Ajoutez d'autres champs si besoin\n    }\n  };\n});\n"
+      },
+      "id": "82036c51-2602-44f1-95da-080ffd6b1e85",
+      "name": "Extract Place Details",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -120,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://maps.googleapis.com/maps/api/place/details/json?place_id={{$json[\"place_id\"]}}&key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM",
+        "options": {}
+      },
+      "id": "318c59e4-a914-4a77-8ce2-3c80c60b5076",
+      "name": "Fetch Place Details",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -380,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Liste étendue de mots-clés chinois en alphabet latin (français et anglais), sans caractères chinois\nconst chineseKeywords = [\n  // Termes généraux et culinaires\n  'chinese', 'china', 'chine', 'chinois', 'dragon', 'lotus', 'dim sum', 'hotpot', 'dumpling', 'noodle', 'tea house',\n  'pork bun', 'mapo tofu', 'peking duck', 'dragon phoenix', 'lotus flower', 'wok', 'soja', 'tofu', 'riz cantonais',\n  'canard laqué', 'nouilles sautées', 'soupe wonton', 'baozi', 'jiaozi', 'sichuan', 'cantonais', 'mandarin', 'hong kong style',\n  'té', 'thé vert', 'thé oolong', 'thé noir', 'bamboo', 'bambou',\n\n  // Noms de villes chinoises (français et anglais)\n  'beijing', 'pékin',\n  'shanghai',\n  'guangzhou', 'canton',\n  'shenzhen',\n  'hong kong',\n  'chongqing',\n  'tianjin',\n  'chengdu',\n  'wuhan',\n  'nanjing',\n  'hangzhou',\n  'xian', 'xi’an',\n  'suzhou',\n  'qingdao',\n  'dalian',\n  'changsha',\n  'kunming',\n  'harbin',\n  'shenyang',\n  'zhengzhou',\n  'fuzhou',\n  'nanning',\n  'taiyuan',\n  'haikou',\n  'lanzhou',\n  'xiamen',\n  'changchun',\n  'nantong',\n  'taizhou',\n  'shaoxing',\n  'shaoguan',\n  'shantou',\n  'shuangyashan',\n  'sanya',\n  'shijiazhuang',\n  'taipei',\n  'hongkong',\n  'xianggang',\n  'macau', 'macao'\n];\n\n// Fonction pour détecter la présence de caractères chinois (unicode CJK Unified Ideographs)\nfunction containsChineseChars(text) {\n  return /[\\u4e00-\\u9fff]/.test(text);\n}\n\n// Fonction pour compter combien de mots-clés chinois sont présents dans un texte\nfunction countChineseKeywords(text) {\n  if (!text) return 0;\n  const lowerText = text.toLowerCase();\n  return chineseKeywords.reduce((count, keyword) => count + (lowerText.includes(keyword) ? 1 : 0), 0);\n}\n\nreturn items.map(item => {\n  const result = item.json;\n  const nom = result.nom || '';\n  const reviews = result.reviews || [];\n\n  // Score dans le nom : nombre de mots-clés + présence de caractères chinois (bonus)\n  let nameKeywordCount = countChineseKeywords(nom);\n  const hasChineseChar = containsChineseChars(nom);\n  if (hasChineseChar) {\n    nameKeywordCount += 4; // bonus pour caractères chinois\n  }\n\n  // Normalisation des scores\n  const maxNameScore = 3 + 4; // max mots clés + bonus chars chinois\n  let nameScore = Math.min(nameKeywordCount / maxNameScore, 1);\n\n  // Score dans les reviews : moyenne du nombre de mots-clés par review\n  let totalKeywordCountInReviews = 0;\n  reviews.forEach(review => {\n    totalKeywordCountInReviews += countChineseKeywords(review.text);\n  });\n  const avgKeywordPerReview = reviews.length > 0 ? totalKeywordCountInReviews / reviews.length : 0;\n\n  const maxReviewScore = 1; // seuil réduit\n  let reviewScore = Math.min(avgKeywordPerReview / maxReviewScore, 1);\n\n  // Score minimal pour éviter 0\n  const baseScore = 0.2;\n\n  // Pondération : 80% nom, 20% reviews\n  const combinedScore = baseScore + (nameScore * 0.8) + (reviewScore * 0.2);\n\n  // Limiter à 1\n  const finalScore = combinedScore > 1 ? 1 : combinedScore;\n\n  const chineseProbabilityPercent = Math.round(finalScore * 100);\n  const isChineseRestaurant = chineseProbabilityPercent >= 50;\n\n  return {\n    json: {\n      ...result,\n      chinese_probability: chineseProbabilityPercent,\n      is_chinese_restaurant: isChineseRestaurant,\n      name_score: Math.round(nameScore * 100),\n      review_score: Math.round(reviewScore * 100)\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        340,
+        860
+      ],
+      "id": "8607dd96-c6fa-4a72-9649-3501d0c7fea7",
+      "name": "Code"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Request Page 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request Page 1": {
+      "main": [
+        [
+          {
+            "node": "Extract Token 1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Token 1": {
+      "main": [
+        [
+          {
+            "node": "Wait 2s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 2s": {
+      "main": [
+        [
+          {
+            "node": "Request Page 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request Page 2": {
+      "main": [
+        [
+          {
+            "node": "Extract Token 2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Extract Token 2": {
+      "main": [
+        [
+          {
+            "node": "Wait 2s - 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 2s - 2": {
+      "main": [
+        [
+          {
+            "node": "Request Page 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request Page 3": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Flatten Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Google Images": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Place Details": {
+      "main": [
+        [
+          {
+            "node": "Fetch Google Images",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Place Details": {
+      "main": [
+        [
+          {
+            "node": "Extract Place Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Flatten Results": {
+      "main": [
+        [
+          {
+            "node": "Fetch Place Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Generate HTML Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1164f383-337d-400a-a8d9-45519f0a0471",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "275938a69ef89f82656e1084deb8be4e1207e93753e7360b731ce8eae5b3f466"
+  },
+  "id": "Ud9IEtCYCfoM6NQG",
+  "tags": []
+}
