@@ -217,7 +217,7 @@ plt.show()
 ```
 
 On obtien une visualisation graphique (matplotlib) comme suit lorsqu'on execute le programme
- ![[bipartite_graph.png]]
+ ![Image de mon projet](./webPageImages/bipartite_graph.png)
 
 ### 2. Réalisation d'un test de Chi²  et prise de décision pour la classification
 
