@@ -29,6 +29,7 @@ Donc G n'est pas forcement un graphe complet, sinon chaque restaurants auront un
 Voici un code en python pour visualiser ce graphe (ex : 5  restaurants)
 Les informations sur les 5 restaurants sont stockées dans un fichier .json (restaurant.json)
  __ Veuillez assurer que vous avez matplotlib et networkx pour exécuter ce programme de visualisation du graphe
+ 
  __ Veuillez mettre le fichier restaurant_extrait.json dans la même repertoire que ce code
 #### Graph construction : voir le fichier graph.py pour avoir le code
 
@@ -138,14 +139,14 @@ def shorten_name(name, max_length=15):
 
 # Charger les données depuis data.json
 try:
-    with open('restaurant.json', 'r', encoding='utf-8') as f:
+    with open('restaurant_extrait.json', 'r', encoding='utf-8') as f:
         data = json.load(f)
     restaurants = data[0]['restaurants']
 except FileNotFoundError:
-    print("Erreur : Le fichier restaurant.json n'a pas été trouvé.")
+    print("Erreur : Le fichier restaurant_extrait.json n'a pas été trouvé.")
     exit(1)
 except json.JSONDecodeError:
-    print("Erreur : Le fichier restaurant.json est mal formaté.")
+    print("Erreur : Le fichier restaurant_extrait.json est mal formaté.")
     exit(1)
 except KeyError:
     print("Erreur : La structure du JSON ne contient pas 'restaurants'.")
