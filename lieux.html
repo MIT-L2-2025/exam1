@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Restaurant chinois à Antananarivo</title>
+  <meta charset="UTF-8" />
+  <title>Analyse des Restaurants Chinois à Antananarivo</title>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -13,13 +13,24 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      min-height: 100vh;
     }
     .title {
-      font-size: 2.5em;
+      font-size: 2.8em;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 30px;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.35);
+      text-align: center;
+    }
+    .description {
+      font-size: 1.2em;
+      color: #fff;
+      margin-bottom: 40px;
+      max-width: 700px;
+      text-align: center;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.25);
+      line-height: 1.4;
     }
     .container {
       display: flex;
@@ -27,16 +38,28 @@
       justify-content: center;
       gap: 30px;
       max-width: 1200px;
+      width: 100%;
     }
     .place {
-      background: rgba(255, 255, 255, 0.9);
       border-radius: 20px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.2);
       width: 300px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease, border 0.3s ease;
+      background: rgba(255, 255, 255, 0.9);
+      position: relative;
+      border: 4px solid transparent; /* default, will be overwritten */
+    }
+    .place.refused {
+      opacity: 0.7;
+      border-color: #e53935;
+      border-style: dashed;
+    }
+    .place.accepted {
+      border-color: #43a047;
+      border-style: solid;
     }
     .place:hover {
       transform: translateY(-10px);
@@ -46,6 +69,27 @@
       width: 100%;
       height: 200px;
       object-fit: cover;
+    }
+    .probability-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      padding: 8px 14px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 1em;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      user-select: none;
+    }
+    .probability-badge.accepted {
+      background-color: #43a047; /* vert */
+    }
+    .probability-badge.refused {
+      background-color: #e53935; /* rouge */
     }
     .place-content {
       padding: 20px;
@@ -78,6 +122,7 @@
       margin-top: 10px;
       font-weight: 600;
       transition: background 0.3s ease;
+      cursor: pointer;
     }
     .button:hover {
       background: #e85745;
@@ -101,14 +146,23 @@
       font-size: 0.9em;
       color: #fff;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+      user-select: none;
     }
   </style>
 </head>
 <body>
-  <div class="title">Restaurant chinois à Antananarivo</div>
+  <div class="title">Analyse des Restaurants Chinois à Antananarivo</div>
+  <div class="description">
+    Ce site présente une liste de restaurants avec une estimation de la probabilité qu'ils soient des restaurants chinois.  
+    Cette probabilité est calculée à partir de plusieurs critères et affichée clairement sur chaque carte.  
+    Les restaurants avec une probabilité inférieure à 60% sont signalés comme non-chinois.
+  </div>
   <div class="container">
 
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 20.00%
+      </div>
       <img src="https://graph.facebook.com/100656102949738/picture?type=large" alt="Kaizen Restaurant">
       <div class="place-content">
         <h2>Kaizen Restaurant</h2>
@@ -118,13 +172,16 @@ pourrait être mieux ?</p>
         <p><strong>Téléphone :</strong> 261387410784</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9137837, 47.5401532</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Kaizen%20Restaurant" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Kaizen%20Restaurant" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/100656102949738/Kaizen-Restaurant" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/100656102949738/Kaizen-Restaurant" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place accepted">
+      <div class="probability-badge accepted">
+        ✅ 76.67%
+      </div>
       <img src="https://graph.facebook.com/110916164578468/picture?type=large" alt="Hirondelle "燕子" Chinese FOOD">
       <div class="place-content">
         <h2>Hirondelle "燕子" Chinese FOOD</h2>
@@ -135,13 +192,16 @@ Arthur et cécile</p>
         <p><strong>Téléphone :</strong> 261341116678</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9174137, 47.5366284</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Hirondelle%20%20Chinese%20FOOD" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Hirondelle%20%20Chinese%20FOOD" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/110916164578468/Hirondelle--%22%E7%87%95%E5%AD%90%22-Chinese-FOOD" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/110916164578468/Hirondelle--%22%E7%87%95%E5%AD%90%22-Chinese-FOOD" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 11.67%
+      </div>
       <img src="https://graph.facebook.com/102088432917971/picture?type=large" alt="Le Petit Bouchon">
       <div class="place-content">
         <h2>Le Petit Bouchon</h2>
@@ -150,13 +210,16 @@ Arthur et cécile</p>
         <p><strong>Téléphone :</strong> 261389232902</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9118866, 47.5086171</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Le%20Petit%20Bouchon" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Le%20Petit%20Bouchon" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/102088432917971/Le-Petit-Bouchon" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/102088432917971/Le-Petit-Bouchon" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 45.00%
+      </div>
       <img src="https://graph.facebook.com/103588078847250/picture?type=large" alt="La Fleur de Sel Restaurant">
       <div class="place-content">
         <h2>La Fleur de Sel Restaurant</h2>
@@ -165,28 +228,34 @@ Arthur et cécile</p>
         <p><strong>Téléphone :</strong> 261341258222</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.8715948, 47.54260650000001</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=La%20Fleur%20de%20Sel%20Restaurant" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=La%20Fleur%20de%20Sel%20Restaurant" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/103588078847250/La-Fleur-de-Sel-Restaurant" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/103588078847250/La-Fleur-de-Sel-Restaurant" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place accepted">
+      <div class="probability-badge accepted">
+        ✅ 73.33%
+      </div>
       <img src="https://graph.facebook.com/421678137880681/picture?type=large" alt="Restaurant L'Eurasie - Tana">
       <div class="place-content">
         <h2>Restaurant L'Eurasie - Tana</h2>
         <p><strong>Adresse :</strong> Face à l'hôtel Ibis - Ankorondrano, Antananarivo 101, Madagascar</p>
         <p><strong>Description :</strong> La Soupe et cuisine chinoises comme à Tamatave L' Eurasie ANKORONDRANO</p>
-        <p><strong>Téléphone :</strong> </p>
+        <p><strong>Téléphone :</strong> Non disponible</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.878855, 47.5212683</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Restaurant%20LEurasie%20%20Tana" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Restaurant%20LEurasie%20%20Tana" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/421678137880681/Restaurant-L%27Eurasie---Tana" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/421678137880681/Restaurant-L%27Eurasie---Tana" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 21.67%
+      </div>
       <img src="https://graph.facebook.com/1620896638011680/picture?type=large" alt="OKAY restau">
       <div class="place-content">
         <h2>OKAY restau</h2>
@@ -195,43 +264,52 @@ Arthur et cécile</p>
         <p><strong>Téléphone :</strong> 261343935648</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9132497, 47.473925</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=OKAY%20restau" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=OKAY%20restau" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/1620896638011680/OKAY-restau" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/1620896638011680/OKAY-restau" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place accepted">
+      <div class="probability-badge accepted">
+        ✅ 65.00%
+      </div>
       <img src="https://graph.facebook.com/413657871838871/picture?type=large" alt="Sao Kuun">
       <div class="place-content">
         <h2>Sao Kuun</h2>
         <p><strong>Adresse :</strong> 4FWH+CX7, Antananarivo, Madagascar</p>
         <p><strong>Description :</strong> plats et snacks chinois</p>
-        <p><strong>Téléphone :</strong> </p>
+        <p><strong>Téléphone :</strong> Non disponible</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.8539721, 47.4799192</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Sao%20Kuun" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Sao%20Kuun" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/413657871838871/Sao-Kuun" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/413657871838871/Sao-Kuun" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 43.33%
+      </div>
       <img src="https://graph.facebook.com/100689696183053/picture?type=large" alt="Restaurant JO Ji">
       <div class="place-content">
         <h2>Restaurant JO Ji</h2>
         <p><strong>Adresse :</strong> Antananarivo, Madagascar</p>
         <p><strong>Description :</strong> Contact : 034 79 282 54</p>
-        <p><strong>Téléphone :</strong> </p>
+        <p><strong>Téléphone :</strong> Non disponible</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Restaurant%20JO%20Ji" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Restaurant%20JO%20Ji" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/100689696183053/Restaurant-JO-Ji" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/100689696183053/Restaurant-JO-Ji" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place accepted">
+      <div class="probability-badge accepted">
+        ✅ 63.33%
+      </div>
       <img src="https://graph.facebook.com/211404342048256/picture?type=large" alt="Dragon Rouge">
       <div class="place-content">
         <h2>Dragon Rouge</h2>
@@ -241,13 +319,16 @@ Arthur et cécile</p>
         <p><strong>Téléphone :</strong> 261381259415</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9003469, 47.5219587</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Dragon%20Rouge" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Dragon%20Rouge" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/211404342048256/Dragon-Rouge" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/211404342048256/Dragon-Rouge" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 51.67%
+      </div>
       <img src="https://graph.facebook.com/395594843631046/picture?type=large" alt="Au bon coin Tanà">
       <div class="place-content">
         <h2>Au bon coin Tanà</h2>
@@ -257,43 +338,52 @@ riche en saveurs ✨</p>
         <p><strong>Téléphone :</strong> 261385454682</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9119475, 47.5343492</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Au%20bon%20coin%20Tan%C3%A0" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Au%20bon%20coin%20Tan%C3%A0" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/395594843631046/Au-bon-coin-Tan%C3%A0" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/395594843631046/Au-bon-coin-Tan%C3%A0" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 15.00%
+      </div>
       <img src="https://graph.facebook.com/409113735611267/picture?type=large" alt="AVIA MONA">
       <div class="place-content">
         <h2>AVIA MONA</h2>
         <p><strong>Adresse :</strong> Unnamed Road, 3GR4+M74, Tananarive, Madagascar</p>
         <p><strong>Description :</strong> AVIA MONA ihinana raha manjary �</p>
-        <p><strong>Téléphone :</strong> </p>
+        <p><strong>Téléphone :</strong> Non disponible</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9083606, 47.5057106</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=AVIA%20MONA" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=AVIA%20MONA" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/409113735611267/AVIA-MONA" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/409113735611267/AVIA-MONA" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 41.67%
+      </div>
       <img src="https://graph.facebook.com/449868878220266/picture?type=large" alt="Lé Snou">
       <div class="place-content">
         <h2>Lé Snou</h2>
         <p><strong>Adresse :</strong> Antananarivo, Madagascar</p>
         <p><strong>Description :</strong> Vos plats sinoagasy préférés fraîchement préparés ou surgelés</p>
-        <p><strong>Téléphone :</strong> </p>
+        <p><strong>Téléphone :</strong> Non disponible</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=L%C3%A9%20Snou" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=L%C3%A9%20Snou" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/449868878220266/L%C3%A9-Snou" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/449868878220266/L%C3%A9-Snou" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place accepted">
+      <div class="probability-badge accepted">
+        ✅ 66.67%
+      </div>
       <img src="https://graph.facebook.com/503292452870912/picture?type=large" alt="Miso Food 67Ha">
       <div class="place-content">
         <h2>Miso Food 67Ha</h2>
@@ -303,28 +393,34 @@ riche en saveurs ✨</p>
         <p><strong>Téléphone :</strong> 261381838109</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9058491, 47.5240274</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Miso%20Food%20Ha" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Miso%20Food%20Ha" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/503292452870912/Miso-Food-67Ha" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/503292452870912/Miso-Food-67Ha" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 17.50%
+      </div>
       <img src="https://graph.facebook.com/319854941207915/picture?type=large" alt="Soupe Dinamika">
       <div class="place-content">
         <h2>Soupe Dinamika</h2>
         <p><strong>Adresse :</strong> Antananarivo, Madagascar</p>
-        <p><strong>Description :</strong> </p>
-        <p><strong>Téléphone :</strong> </p>
+        <p><strong>Description :</strong> Aucune description disponible.</p>
+        <p><strong>Téléphone :</strong> Non disponible</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Soupe%20Dinamika" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Soupe%20Dinamika" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/319854941207915/Soupe-Dinamika" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/319854941207915/Soupe-Dinamika" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 55.00%
+      </div>
       <img src="https://graph.facebook.com/1473807299511537/picture?type=large" alt="LE GRAND RESTAURANT DE CHINE">
       <div class="place-content">
         <h2>LE GRAND RESTAURANT DE CHINE</h2>
@@ -334,44 +430,53 @@ réservations de table</p>
         <p><strong>Téléphone :</strong> 261338359463</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9113542, 47.5355081</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=LE%20GRAND%20RESTAURANT%20DE%20CHINE" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=LE%20GRAND%20RESTAURANT%20DE%20CHINE" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/1473807299511537/LE-GRAND-RESTAURANT-DE-CHINE" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/1473807299511537/LE-GRAND-RESTAURANT-DE-CHINE" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place accepted">
+      <div class="probability-badge accepted">
+        ✅ 73.33%
+      </div>
       <img src="https://graph.facebook.com/1515532858668671/picture?type=large" alt="La Dynastie">
       <div class="place-content">
         <h2>La Dynastie</h2>
         <p><strong>Adresse :</strong> 3GP5+FHP Arrêt FOKONTANY, Rue Seimad, Tananarive, Madagascar</p>
         <p><strong>Description :</strong> La Dynastie est un restaurant familial où l'on vous sert des plats chinois et
 savoureux !</p>
-        <p><strong>Téléphone :</strong> </p>
+        <p><strong>Téléphone :</strong> Non disponible</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9137797, 47.5089395</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=La%20Dynastie" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=La%20Dynastie" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/1515532858668671/La-Dynastie" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/1515532858668671/La-Dynastie" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 11.67%
+      </div>
       <img src="https://graph.facebook.com/467101170059400/picture?type=large" alt="Maison de couture junior thibault">
       <div class="place-content">
         <h2>Maison de couture junior thibault</h2>
         <p><strong>Adresse :</strong> Antananarivo, Madagascar</p>
         <p><strong>Description :</strong> bar restaurant KARAOKÉ</p>
-        <p><strong>Téléphone :</strong> </p>
+        <p><strong>Téléphone :</strong> Non disponible</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Maison%20de%20couture%20junior%20thibault" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Maison%20de%20couture%20junior%20thibault" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/467101170059400/Maison-de-couture-junior-thibault" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/467101170059400/Maison-de-couture-junior-thibault" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place accepted">
+      <div class="probability-badge accepted">
+        ✅ 70.00%
+      </div>
       <img src="https://graph.facebook.com/101672941707344/picture?type=large" alt="Le Cantonnais">
       <div class="place-content">
         <h2>Le Cantonnais</h2>
@@ -381,13 +486,16 @@ laqué</p>
         <p><strong>Téléphone :</strong> 261385686526</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Le%20Cantonnais" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Le%20Cantonnais" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/101672941707344/Le-Cantonnais" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/101672941707344/Le-Cantonnais" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place accepted">
+      <div class="probability-badge accepted">
+        ✅ 76.67%
+      </div>
       <img src="https://graph.facebook.com/116348686906075/picture?type=large" alt="TSANG">
       <div class="place-content">
         <h2>TSANG</h2>
@@ -397,28 +505,34 @@ cantonnais, Mine sao</p>
         <p><strong>Téléphone :</strong> 340847883</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=TSANG" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=TSANG" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/116348686906075/TSANG" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/116348686906075/TSANG" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 7.50%
+      </div>
       <img src="https://graph.facebook.com/128554757721502/picture?type=large" alt="Restaurant Villa Soleil">
       <div class="place-content">
         <h2>Restaurant Villa Soleil</h2>
         <p><strong>Adresse :</strong> Lot IVK 89 bis Anosivavaka Ambohimanarina, Antananarivo 101, Madagascar</p>
-        <p><strong>Description :</strong> </p>
+        <p><strong>Description :</strong> Aucune description disponible.</p>
         <p><strong>Téléphone :</strong> 261331133628</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.8729457, 47.50796949999999</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Restaurant%20Villa%20Soleil" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Restaurant%20Villa%20Soleil" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/128554757721502/Restaurant-Villa-Soleil" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/128554757721502/Restaurant-Villa-Soleil" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 53.33%
+      </div>
       <img src="https://graph.facebook.com/105286528052377/picture?type=large" alt="Hanova-ku">
       <div class="place-content">
         <h2>Hanova-ku</h2>
@@ -428,13 +542,16 @@ Mada 😊🇲🇬</p>
         <p><strong>Téléphone :</strong> 261342251671</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Hanovaku" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Hanovaku" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/105286528052377/Hanova-ku" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/105286528052377/Hanova-ku" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 46.67%
+      </div>
       <img src="https://graph.facebook.com/131448496710388/picture?type=large" alt="Bamboo I Le Restau I">
       <div class="place-content">
         <h2>Bamboo I Le Restau I</h2>
@@ -445,13 +562,16 @@ Mada 😊🇲🇬</p>
         <p><strong>Téléphone :</strong> 261383520681</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Bamboo%20I%20Le%20Restau%20I" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Bamboo%20I%20Le%20Restau%20I" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/131448496710388/Bamboo-I-Le-Restau-I" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/131448496710388/Bamboo-I-Le-Restau-I" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 10.00%
+      </div>
       <img src="https://graph.facebook.com/1636134896641383/picture?type=large" alt="Gasy gourmet - Chef à domicile">
       <div class="place-content">
         <h2>Gasy gourmet - Chef à domicile</h2>
@@ -462,13 +582,16 @@ extraordinaire.</p>
         <p><strong>Téléphone :</strong> 341456496</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Gasy%20gourmet%20%20Chef%20%C3%A0%20domicile" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Gasy%20gourmet%20%20Chef%20%C3%A0%20domicile" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/1636134896641383/Gasy-gourmet---Chef-%C3%A0-domicile" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/1636134896641383/Gasy-gourmet---Chef-%C3%A0-domicile" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 36.67%
+      </div>
       <img src="https://graph.facebook.com/104953424506997/picture?type=large" alt="La Belle Ville Antsakaviro">
       <div class="place-content">
         <h2>La Belle Ville Antsakaviro</h2>
@@ -478,43 +601,52 @@ extraordinaire.</p>
         <p><strong>Téléphone :</strong> 261202230483</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9079241, 47.53183869999999</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=La%20Belle%20Ville%20Antsakaviro" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=La%20Belle%20Ville%20Antsakaviro" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/104953424506997/La-Belle-Ville-Antsakaviro" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/104953424506997/La-Belle-Ville-Antsakaviro" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 15.00%
+      </div>
       <img src="https://graph.facebook.com/177103073110334/picture?type=large" alt="Restaurant Baraoa">
       <div class="place-content">
         <h2>Restaurant Baraoa</h2>
         <p><strong>Adresse :</strong> 3F6V+H79, RN1, Antananarivo, Madagascar</p>
-        <p><strong>Description :</strong> </p>
+        <p><strong>Description :</strong> Aucune description disponible.</p>
         <p><strong>Téléphone :</strong> 342318616</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9385842, 47.4932494</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Restaurant%20Baraoa" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Restaurant%20Baraoa" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/177103073110334/Restaurant-Baraoa" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/177103073110334/Restaurant-Baraoa" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 55.00%
+      </div>
       <img src="https://graph.facebook.com/110089675167210/picture?type=large" alt="Lotus Rouge Tana">
       <div class="place-content">
         <h2>Lotus Rouge Tana</h2>
         <p><strong>Adresse :</strong> 2G4J+8XQ, RN7, Antananarivo, Madagascar</p>
-        <p><strong>Description :</strong> </p>
+        <p><strong>Description :</strong> Aucune description disponible.</p>
         <p><strong>Téléphone :</strong> 261344462082</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9948473, 47.5323775</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Lotus%20Rouge%20Tana" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Lotus%20Rouge%20Tana" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/110089675167210/Lotus-Rouge-Tana" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/110089675167210/Lotus-Rouge-Tana" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place accepted">
+      <div class="probability-badge accepted">
+        ✅ 81.67%
+      </div>
       <img src="https://graph.facebook.com/128947863640922/picture?type=large" alt="Capital Shí wù">
       <div class="place-content">
         <h2>Capital Shí wù</h2>
@@ -524,13 +656,16 @@ au Dimanche De 12h à 14h30 De 17h30 à 21h Réservation Possible</p>
         <p><strong>Téléphone :</strong> 261340172545</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Capital%20Sh%C3%AD%20w%C3%B9" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Capital%20Sh%C3%AD%20w%C3%B9" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/128947863640922/Capital-Sh%C3%AD-w%C3%B9" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/128947863640922/Capital-Sh%C3%AD-w%C3%B9" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place accepted">
+      <div class="probability-badge accepted">
+        ✅ 61.67%
+      </div>
       <img src="https://graph.facebook.com/105005758918490/picture?type=large" alt="La table de chine">
       <div class="place-content">
         <h2>La table de chine</h2>
@@ -539,13 +674,16 @@ au Dimanche De 12h à 14h30 De 17h30 à 21h Réservation Possible</p>
         <p><strong>Téléphone :</strong> 261384725332</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9184218, 47.5445059</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=La%20table%20de%20chine" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=La%20table%20de%20chine" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/105005758918490/La-table-de-chine" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/105005758918490/La-table-de-chine" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 40.00%
+      </div>
       <img src="https://graph.facebook.com/727797514254731/picture?type=large" alt="Restaurant La Saveur">
       <div class="place-content">
         <h2>Restaurant La Saveur</h2>
@@ -554,28 +692,34 @@ au Dimanche De 12h à 14h30 De 17h30 à 21h Réservation Possible</p>
         <p><strong>Téléphone :</strong> 261340381022</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9360875, 47.5699411</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Restaurant%20La%20Saveur" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Restaurant%20La%20Saveur" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/727797514254731/Restaurant-La-Saveur" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/727797514254731/Restaurant-La-Saveur" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place accepted">
+      <div class="probability-badge accepted">
+        ✅ 76.67%
+      </div>
       <img src="https://graph.facebook.com/104177509011997/picture?type=large" alt="Le lotus blanc Restaurant 荷花酒店">
       <div class="place-content">
         <h2>Le lotus blanc Restaurant 荷花酒店</h2>
         <p><strong>Adresse :</strong> LOT II W 23 B, Antananarivo 101, Madagascar</p>
         <p><strong>Description :</strong> Espace en ville avec restauration spécialité chinoise</p>
-        <p><strong>Téléphone :</strong> </p>
+        <p><strong>Téléphone :</strong> Non disponible</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9134037, 47.5377744</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Le%20lotus%20blanc%20Restaurant%20" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Le%20lotus%20blanc%20Restaurant%20" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/104177509011997/Le-lotus-blanc-Restaurant--%E8%8D%B7%E8%8A%B1%E9%85%92%E5%BA%97" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/104177509011997/Le-lotus-blanc-Restaurant--%E8%8D%B7%E8%8A%B1%E9%85%92%E5%BA%97" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 5.00%
+      </div>
       <img src="https://graph.facebook.com/138017892731554/picture?type=large" alt="La cavy karaoké">
       <div class="place-content">
         <h2>La cavy karaoké</h2>
@@ -584,13 +728,16 @@ au Dimanche De 12h à 14h30 De 17h30 à 21h Réservation Possible</p>
         <p><strong>Téléphone :</strong> 261344437838</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=La%20cavy%20karaok%C3%A9" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=La%20cavy%20karaok%C3%A9" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/138017892731554/La-cavy-karaok%C3%A9" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/138017892731554/La-cavy-karaok%C3%A9" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 36.67%
+      </div>
       <img src="https://graph.facebook.com/895171443934530/picture?type=large" alt="Ylang Ylang Resto Café">
       <div class="place-content">
         <h2>Ylang Ylang Resto Café</h2>
@@ -599,13 +746,16 @@ au Dimanche De 12h à 14h30 De 17h30 à 21h Réservation Possible</p>
         <p><strong>Téléphone :</strong> 261202231981</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Ylang%20Ylang%20Resto%20Caf%C3%A9" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Ylang%20Ylang%20Resto%20Caf%C3%A9" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/895171443934530/Ylang-Ylang-Resto-Caf%C3%A9" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/895171443934530/Ylang-Ylang-Resto-Caf%C3%A9" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place accepted">
+      <div class="probability-badge accepted">
+        ✅ 65.00%
+      </div>
       <img src="https://graph.facebook.com/100602446333580/picture?type=large" alt="Tang Wei Hsien">
       <div class="place-content">
         <h2>Tang Wei Hsien</h2>
@@ -614,24 +764,27 @@ au Dimanche De 12h à 14h30 De 17h30 à 21h Réservation Possible</p>
         <p><strong>Téléphone :</strong> 261344114059</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Tang%20Wei%20Hsien" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Tang%20Wei%20Hsien" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/100602446333580/Tang-Wei-Hsien" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/100602446333580/Tang-Wei-Hsien" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
-    <div class="place">
+    <div class="place refused">
+      <div class="probability-badge refused">
+        ❌ 55.00%
+      </div>
       <img src="https://graph.facebook.com/149080034944671/picture?type=large" alt="Fumé / laqué">
       <div class="place-content">
         <h2>Fumé / laqué</h2>
         <p><strong>Adresse :</strong> Antananarivo, Madagascar</p>
-        <p><strong>Description :</strong> </p>
-        <p><strong>Téléphone :</strong> </p>
+        <p><strong>Description :</strong> Aucune description disponible.</p>
+        <p><strong>Téléphone :</strong> Non disponible</p>
         <p class="coord"><strong>Coordonnées :</strong> -18.9184607, 47.5211293</p>
         <div class="map-link">
-          <a href="https://www.google.com/maps/search/?api=1&query=Fum%C3%A9%20%20laqu%C3%A9" target="_blank">Voir sur Google Maps</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Fum%C3%A9%20%20laqu%C3%A9" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
         </div>
-        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/149080034944671/Fum%C3%A9---laqu%C3%A9" target="_blank">Plus d'infos</a>
+        <a class="button" href="https://www.findglocal.com/MG/Antananarivo/149080034944671/Fum%C3%A9---laqu%C3%A9" target="_blank" rel="noopener noreferrer">Plus d'infos</a>
       </div>
     </div>
   
