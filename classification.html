@@ -1,0 +1,830 @@
+
+  <!DOCTYPE html>
+  <html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classification des Restaurants Chinois</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM&libraries=places"></script>
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <div class="container mx-auto p-4">
+      <h1 class="text-3xl font-bold text-center mb-6">Classification des Restaurants Chinois</h1>
+
+      <!-- Barre de recherche -->
+      <div class="mb-6">
+        <input type="text" id="searchInput" placeholder="Rechercher un restaurant..." class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"/>
+        <ul id="searchResults" class="mt-2 bg-white border rounded-lg shadow-lg hidden"></ul>
+      </div>
+
+      <!-- Modale -->
+      <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 transition-opacity duration-300">
+        <div class="bg-white p-6 rounded-xl shadow-2xl max-w-lg w-full transform transition-transform duration-300 scale-95 modal-open:scale-100">
+          <h3 id="modalTitle" class="text-2xl font-bold mb-4 text-gray-800"></h3>
+          <p class="mb-2"><strong class="text-gray-700">Authenticité :</strong> <span id="modalAuthenticity" class="text-gray-600"></span></p>
+          <p class="mb-2"><strong class="text-gray-700">Adresse :</strong> <span id="modalAddress" class="text-gray-600"></span></p>
+          <div id="map" class="w-full h-64 mb-4 rounded-lg overflow-hidden"></div>
+          <div class="mb-4">
+            <label for="startAddress" class="block text-gray-700 mb-1">Adresse de départ :</label>
+            <input type="text" id="startAddress" placeholder="Entrez votre adresse" class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"/>
+            <button id="showRoute" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Afficher l'itinéraire</button>
+          </div>
+          <p class="mb-4"><strong class="text-gray-700">Google Maps :</strong> <a id="modalMapLink" href="#" target="_blank" class="text-blue-600 underline">Voir sur Google Maps</a></p>
+          <button id="closeModal" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Fermer</button>
+        </div>
+      </div>
+
+      <!-- Tableau -->
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow-md rounded-lg">
+          <thead>
+            <tr class="bg-blue-600 text-white">
+              <th class="py-3 px-4 text-left">Nom</th>
+              <th class="py-3 px-4 text-left">Classification</th>
+              <th class="py-3 px-4 text-left">Score Global</th>
+              <th class="py-3 px-4 text-left">Score Nom</th>
+              <th class="py-3 px-4 text-left">Score Emplacement</th>
+              <th class="py-3 px-4 text-left">Score Commentaires</th>
+              <th class="py-3 px-4 text-left">Score Auteurs</th>
+              <th class="py-3 px-4 text-left">Score Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(0)">
+    <td class="py-2 px-4">National Center</td>
+    <td class="py-2 px-4">Pas chinois</td>
+    <td class="py-2 px-4">0.16</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.80</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(1)">
+    <td class="py-2 px-4">Le Grand Orient</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.67</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.50</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.96</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(2)">
+    <td class="py-2 px-4">Le Pont Rouge</td>
+    <td class="py-2 px-4">Moyennement chinois</td>
+    <td class="py-2 px-4">0.40</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.73</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(3)">
+    <td class="py-2 px-4">TSANG BY-PASS</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.59</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.10</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.96</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(4)">
+    <td class="py-2 px-4">吕府私房菜</td>
+    <td class="py-2 px-4">Moyennement chinois</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.70</td>
+    <td class="py-2 px-4">0.10</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(5)">
+    <td class="py-2 px-4">Qing Qing Restaurant (青青餐館)</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.87</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.10</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.90</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(6)">
+    <td class="py-2 px-4">LA TABLE DE CHINE</td>
+    <td class="py-2 px-4">Moyennement chinois</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.70</td>
+    <td class="py-2 px-4">0.10</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(7)">
+    <td class="py-2 px-4">Fortuna Ivato</td>
+    <td class="py-2 px-4">Moyennement chinois</td>
+    <td class="py-2 px-4">0.46</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.10</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.80</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(8)">
+    <td class="py-2 px-4">Dragon rouge</td>
+    <td class="py-2 px-4">Moyennement chinois</td>
+    <td class="py-2 px-4">0.31</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">0.10</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.60</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(9)">
+    <td class="py-2 px-4">Restaurant Fuxin(福鑫酒家)</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.63</td>
+    <td class="py-2 px-4">0.70</td>
+    <td class="py-2 px-4">0.10</td>
+    <td class="py-2 px-4">0.70</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">1.00</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(10)">
+    <td class="py-2 px-4">TSANG-KAU</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.68</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.80</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(11)">
+    <td class="py-2 px-4">Pan Asia</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.56</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.80</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(12)">
+    <td class="py-2 px-4">Restaurant Lai</td>
+    <td class="py-2 px-4">Pas chinois</td>
+    <td class="py-2 px-4">0.12</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(13)">
+    <td class="py-2 px-4">皇宫美食 ROSIKAL RESTAURANT</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.85</td>
+    <td class="py-2 px-4">0.70</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.95</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(14)">
+    <td class="py-2 px-4">Au Coeur De Jade</td>
+    <td class="py-2 px-4">Moyennement chinois</td>
+    <td class="py-2 px-4">0.65</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.50</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.52</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(15)">
+    <td class="py-2 px-4">Restaurant Shi Fu</td>
+    <td class="py-2 px-4">Moyennement chinois</td>
+    <td class="py-2 px-4">0.56</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.10</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.48</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(16)">
+    <td class="py-2 px-4">Les Petits Plats De Maman</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.57</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.92</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(17)">
+    <td class="py-2 px-4">Café de NanShan 南山咖啡西餐厅</td>
+    <td class="py-2 px-4">Moyennement chinois</td>
+    <td class="py-2 px-4">0.40</td>
+    <td class="py-2 px-4">0.70</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(18)">
+    <td class="py-2 px-4">點都德</td>
+    <td class="py-2 px-4">Moyennement chinois</td>
+    <td class="py-2 px-4">0.38</td>
+    <td class="py-2 px-4">0.70</td>
+    <td class="py-2 px-4">0.50</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(19)">
+    <td class="py-2 px-4">L' Arrivage</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.57</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">1.00</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(20)">
+    <td class="py-2 px-4">Restaurant L'EURASIE - Ankorondrano</td>
+    <td class="py-2 px-4">Moyennement chinois</td>
+    <td class="py-2 px-4">0.50</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.80</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(21)">
+    <td class="py-2 px-4">TORA TO RYU</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.57</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.92</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(22)">
+    <td class="py-2 px-4">Tianjie food (天街 中华料理)</td>
+    <td class="py-2 px-4">Moyennement chinois</td>
+    <td class="py-2 px-4">0.40</td>
+    <td class="py-2 px-4">0.70</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(23)">
+    <td class="py-2 px-4">Laï tsock</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.55</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.50</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">1.00</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(24)">
+    <td class="py-2 px-4">中国餐馆</td>
+    <td class="py-2 px-4">Moyennement chinois</td>
+    <td class="py-2 px-4">0.40</td>
+    <td class="py-2 px-4">0.70</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(25)">
+    <td class="py-2 px-4">Le Petit Bouchon</td>
+    <td class="py-2 px-4">Moyennement chinois</td>
+    <td class="py-2 px-4">0.32</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">0.40</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.84</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(26)">
+    <td class="py-2 px-4">La voie du Rossignol</td>
+    <td class="py-2 px-4">Pas chinois</td>
+    <td class="py-2 px-4">0.17</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">1.00</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(27)">
+    <td class="py-2 px-4">DIMA Hirondelle "燕子" chinese food</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.75</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">1.00</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(28)">
+    <td class="py-2 px-4">Restaurant Le JASMIN</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.68</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.88</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(29)">
+    <td class="py-2 px-4">Hotel New Century</td>
+    <td class="py-2 px-4">Moyennement chinois</td>
+    <td class="py-2 px-4">0.51</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">0.90</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.64</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(30)">
+    <td class="py-2 px-4">Au bon coin Tàna</td>
+    <td class="py-2 px-4">Pas chinois</td>
+    <td class="py-2 px-4">0.10</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.50</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(31)">
+    <td class="py-2 px-4">Sam Voky</td>
+    <td class="py-2 px-4">Moyennement chinois</td>
+    <td class="py-2 px-4">0.44</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">0.70</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.88</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(32)">
+    <td class="py-2 px-4">Fortuna Tana</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.55</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.68</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(33)">
+    <td class="py-2 px-4">DRAGON ROYAL Restaurant</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.68</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.80</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(34)">
+    <td class="py-2 px-4">Bon Appetit</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.57</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.90</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(35)">
+    <td class="py-2 px-4">Gangnam Restaurant & lounge bar</td>
+    <td class="py-2 px-4">Pas chinois</td>
+    <td class="py-2 px-4">0.29</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.10</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.67</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(36)">
+    <td class="py-2 px-4">HONG KONG Restaurant - salon de The</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.69</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.93</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(37)">
+    <td class="py-2 px-4">Huo Cuisine</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.67</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.50</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.96</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(38)">
+    <td class="py-2 px-4">Wai Man</td>
+    <td class="py-2 px-4">Pas chinois</td>
+    <td class="py-2 px-4">0.17</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">1.00</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(39)">
+    <td class="py-2 px-4">Gargotte Pangalane</td>
+    <td class="py-2 px-4">Pas chinois</td>
+    <td class="py-2 px-4">0.28</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.73</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(40)">
+    <td class="py-2 px-4">Hirondelle "燕子" Chinese FOOD</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.95</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.50</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.92</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(41)">
+    <td class="py-2 px-4">La Jonquille</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.55</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.50</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.92</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(42)">
+    <td class="py-2 px-4">Grand Resto de Chine</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.67</td>
+    <td class="py-2 px-4">0.70</td>
+    <td class="py-2 px-4">0.50</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.96</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(43)">
+    <td class="py-2 px-4">Restaurant Shanghai</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.56</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.80</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(44)">
+    <td class="py-2 px-4">Restaurant Fong Mei</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.54</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.50</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.84</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(45)">
+    <td class="py-2 px-4">Restaurant La Belle Ville</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.54</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.50</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.84</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(46)">
+    <td class="py-2 px-4">Zen Garden</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.67</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.50</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.92</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(47)">
+    <td class="py-2 px-4">Kaizen Restaurant</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.67</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.50</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.92</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(48)">
+    <td class="py-2 px-4">吕府私房菜（KTV）</td>
+    <td class="py-2 px-4">Moyennement chinois</td>
+    <td class="py-2 px-4">0.35</td>
+    <td class="py-2 px-4">0.70</td>
+    <td class="py-2 px-4">0.10</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">1.00</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(49)">
+    <td class="py-2 px-4">逸香酒樓 Yixiang Restaurant</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.67</td>
+    <td class="py-2 px-4">0.70</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.64</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(50)">
+    <td class="py-2 px-4">Lotus Blanc Restaurant 荷花酒店</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.67</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.50</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.93</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(51)">
+    <td class="py-2 px-4">Restaurant Le Cantilène</td>
+    <td class="py-2 px-4">Pas chinois</td>
+    <td class="py-2 px-4">0.29</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">1.00</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(52)">
+    <td class="py-2 px-4">Dun Huang</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.69</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.96</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(53)">
+    <td class="py-2 px-4">Lakoziako</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.56</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.85</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(54)">
+    <td class="py-2 px-4">佬湘好</td>
+    <td class="py-2 px-4">Moyennement chinois</td>
+    <td class="py-2 px-4">0.35</td>
+    <td class="py-2 px-4">0.70</td>
+    <td class="py-2 px-4">0.10</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">1.00</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(55)">
+    <td class="py-2 px-4">Le Grand Tsang</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.67</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.64</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(56)">
+    <td class="py-2 px-4">l'Orient Asian Fusion Restaurant</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.69</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.96</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(57)">
+    <td class="py-2 px-4">La Fleur De Sel</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.65</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">0.50</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.68</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(58)">
+    <td class="py-2 px-4">Quick Delice</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.56</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.60</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.72</td>
+  </tr>
+
+  <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="openModal(59)">
+    <td class="py-2 px-4">凤城 Soleil</td>
+    <td class="py-2 px-4">Vraiment chinois</td>
+    <td class="py-2 px-4">0.77</td>
+    <td class="py-2 px-4">0.70</td>
+    <td class="py-2 px-4">0.30</td>
+    <td class="py-2 px-4">1.00</td>
+    <td class="py-2 px-4">0.00</td>
+    <td class="py-2 px-4">0.64</td>
+  </tr>
+</tbody>
+        </table>
+      </div>
+
+      <!-- Diagramme -->
+      <div class="mt-8">
+        <h2 class="text-2xl font-semibold text-center mb-4">Répartition des Classifications</h2>
+        <canvas id="classificationChart" width="400" height="200"></canvas>
+        <script>
+          // Diagramme
+          new Chart(document.getElementById('classificationChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+              labels: ['Vraiment chinois', 'Moyennement chinois', 'Pas chinois', 'Indéterminé'],
+              datasets: [{
+                label: 'Nombre de restaurants',
+                data: [35, 17, 8, 0],
+                backgroundColor: ['rgba(34, 197, 94, 0.6)', 'rgba(59, 130, 246, 0.6)', 'rgba(239, 68, 68, 0.6)', 'rgba(156, 163, 175, 0.6)'],
+                borderColor: ['rgba(34, 197, 94, 1)', 'rgba(59, 130, 246, 1)', 'rgba(239, 68, 68, 1)', 'rgba(156, 163, 175, 1)'],
+                borderWidth: 1
+              }]
+            },
+            options: { scales: { y: { beginAtZero: true, title: { display: true, text: 'Nombre de restaurants' } }, x: { title: { display: true, text: 'Classification' } } }, plugins: { legend: { display: false } } }
+          });
+
+          // Gestion de la recherche et modale
+          const data = [{"name":"National Center","classification":"Pas chinois","latitude":-18.9026174,"longitude":47.5247076,"vicinity":"3GWF+WWR, Antananarivo, Madagascar"},{"name":"Le Grand Orient","classification":"Vraiment chinois","latitude":-18.8698339,"longitude":47.5316987,"vicinity":"Rue Andriantsihoarana Ratsimbazafy, Antananarivo 101, Madagascar"},{"name":"Le Pont Rouge","classification":"Moyennement chinois","latitude":-18.9115717,"longitude":47.5170288,"vicinity":"3GQ8+9RC, Lalana Razafy Abraham, Antananarivo, Madagascar"},{"name":"TSANG BY-PASS","classification":"Vraiment chinois","latitude":-18.9811901,"longitude":47.5441176,"vicinity":"2G9V+GJH, Antananarivo, Madagascar"},{"name":"吕府私房菜","classification":"Moyennement chinois","latitude":-18.9106979,"longitude":47.5033172,"vicinity":"3GQ3+P78, Antananarivo, Madagascar"},{"name":"Qing Qing Restaurant (青青餐館)","classification":"Vraiment chinois","latitude":-18.8312897,"longitude":47.4655162,"vicinity":"5F98+G62, Talatamaty, Madagascar"},{"name":"LA TABLE DE CHINE","classification":"Moyennement chinois","latitude":-18.9184218,"longitude":47.5445059,"vicinity":"3GJV+JRJ Le Colisée, Antananarivo 101, Madagascar"},{"name":"Fortuna Ivato","classification":"Moyennement chinois","latitude":-18.840781,"longitude":47.462005,"vicinity":"5F56+JWW, RN4, Talatamaty, Madagascar"},{"name":"Dragon rouge","classification":"Moyennement chinois","latitude":-18.9003478,"longitude":47.5219522,"vicinity":"3GXC+VQ8, Antananarivo, Madagascar"},{"name":"Restaurant Fuxin(福鑫酒家)","classification":"Vraiment chinois","latitude":-18.8305712,"longitude":47.4653098,"vicinity":"5F98+Q42, Lalana Dok. Joseph Raseta, Talatamaty, Madagascar"},{"name":"TSANG-KAU","classification":"Vraiment chinois","latitude":-18.9104325,"longitude":47.520109,"vicinity":"3GQC+R2Q, Arabe Victoire Rasoamanarivo, Antananarivo, Madagascar"},{"name":"Pan Asia","classification":"Vraiment chinois","latitude":-18.9029967,"longitude":47.5238971,"vicinity":"3GWF+QHR, 2, Antananarivo, Madagascar"},{"name":"Restaurant Lai","classification":"Pas chinois","latitude":-18.9104334,"longitude":47.5073272,"vicinity":"3GQ4+RWG, Antananarivo, Madagascar"},{"name":"皇宫美食 ROSIKAL RESTAURANT","classification":"Vraiment chinois","latitude":-18.9046961,"longitude":47.5236635,"vicinity":"3GWF+5C4, Antananarivo, Madagascar"},{"name":"Au Coeur De Jade","classification":"Moyennement chinois","latitude":-18.9170781,"longitude":47.5272572,"vicinity":"Lalana Dok Razafindratandra, Antananarivo 101, Madagascar"},{"name":"Restaurant Shi Fu","classification":"Moyennement chinois","latitude":-18.9895339,"longitude":47.53929120000001,"vicinity":"2G9W+VQ, Antananarivo, Madagascar"},{"name":"Les Petits Plats De Maman","classification":"Vraiment chinois","latitude":-18.9107144,"longitude":47.5223128,"vicinity":"Immeuble Art&jardin Antaninarenina, En face bio 33, Antananarivo 101, Madagascar"},{"name":"Café de NanShan 南山咖啡西餐厅","classification":"Moyennement chinois","latitude":-18.901389,"longitude":47.5255873,"vicinity":"101, Antananarivo 101, Madagascar"},{"name":"點都德","classification":"Moyennement chinois","latitude":-18.9184607,"longitude":47.5211293,"vicinity":"3GJC+JF6, Antananarivo, Madagascar"},{"name":"L' Arrivage","classification":"Vraiment chinois","latitude":-18.9069104,"longitude":47.5280101,"vicinity":"4 chemins, Antananarivo, Madagascar"},{"name":"Restaurant L'EURASIE - Ankorondrano","classification":"Moyennement chinois","latitude":-18.878855,"longitude":47.5212683,"vicinity":"Face à l'hôtel Ibis - Ankorondrano, Antananarivo 101, Madagascar"},{"name":"TORA TO RYU","classification":"Vraiment chinois","latitude":-18.9013102,"longitude":47.5221831,"vicinity":"President Hotel - à côté de Eden Textile, Immeuble Big Bang Behoririka, Antananarivo 101, Madagascar"},{"name":"Tianjie food (天街 中华料理)","classification":"Moyennement chinois","latitude":-18.9054455,"longitude":47.5338073,"vicinity":"3GVM+QG6, Antananarivo, Madagascar"},{"name":"Laï tsock","classification":"Vraiment chinois","latitude":-18.9121809,"longitude":47.5365698,"vicinity":"3GQP+4JW, Rue Razafindralombo Pierre, Antananarivo, Madagascar"},{"name":"中国餐馆","classification":"Moyennement chinois","latitude":-18.90734,"longitude":47.5342068,"vicinity":"3GVM+3M8, Lalana Pastora Rabeony Hans, Antananarivo, Madagascar"},{"name":"Le Petit Bouchon","classification":"Moyennement chinois","latitude":-18.9118864,"longitude":47.5086153,"vicinity":"Lot IVM, 122L Rue Agosthino Neto, Antananarivo 101, Madagascar"},{"name":"La voie du Rossignol","classification":"Pas chinois","latitude":-18.9005116,"longitude":47.5296278,"vicinity":"3GXH+QVR, Antananarivo 101, Madagascar"},{"name":"DIMA Hirondelle \"燕子\" chinese food","classification":"Vraiment chinois","latitude":-18.8922222,"longitude":47.4919444,"vicinity":"4F5R+4P7, Andohatapenaka, Antananarivo, Madagascar"},{"name":"Restaurant Le JASMIN","classification":"Vraiment chinois","latitude":-18.9103791,"longitude":47.52670089999999,"vicinity":"8 Rue Paul Dussac analamakelydohan Analakley, Madagascar"},{"name":"Hotel New Century","classification":"Moyennement chinois","latitude":-18.9034858,"longitude":47.52320539999999,"vicinity":"3GWF+J7P, Antananarivo 101, Madagascar"},{"name":"Au bon coin Tàna","classification":"Pas chinois","latitude":-18.911899,"longitude":47.5342947,"vicinity":"IIM41, 101, Madagascar"},{"name":"Sam Voky","classification":"Moyennement chinois","latitude":-18.9137107,"longitude":47.516296,"vicinity":"3GP8+GGF, Antananarivo, Madagascar"},{"name":"Fortuna Tana","classification":"Vraiment chinois","latitude":-18.8987591,"longitude":47.5210699,"vicinity":"3GJ9+JC3, IMM, Antananarivo, Madagascar"},{"name":"DRAGON ROYAL Restaurant","classification":"Vraiment chinois","latitude":-18.8945563,"longitude":47.5283909,"vicinity":"Rue Me Albertini, Antananarivo, Madagascar"},{"name":"Bon Appetit","classification":"Vraiment chinois","latitude":-18.9081663,"longitude":47.5355565,"vicinity":"3GRP+P6M, Lalana Pastora Rabeony Hans, Antananarivo, Madagascar"},{"name":"Gangnam Restaurant & lounge bar","classification":"Pas chinois","latitude":-18.840973,"longitude":47.4703287,"vicinity":"Madagascar, MG Ambohibao https://maps.app.goo.gl/UyAt3ULRXNn8MTVK7"},{"name":"HONG KONG Restaurant - salon de The","classification":"Vraiment chinois","latitude":-18.8309862,"longitude":47.4653526,"vicinity":"Toyota, Lalana Doktera. Joseph Raseta, Maibahoaka Ivato Antananarivo IVATO, Antananarivo 105, Madagascar"},{"name":"Huo Cuisine","classification":"Vraiment chinois","latitude":-18.8722175,"longitude":47.53477549999999,"vicinity":"4GH9+2PR, Antananarivo, Madagascar"},{"name":"Wai Man","classification":"Pas chinois","latitude":-18.9027416,"longitude":47.5117281,"vicinity":"3GW6+VMX Nord-Est-Coté parking, Antananarivo, Madagascar"},{"name":"Gargotte Pangalane","classification":"Pas chinois","latitude":-18.9015495,"longitude":47.5375062,"vicinity":"IIR9, Rue Foloalindahy Malagasy, Antananarivo 101, Madagascar"},{"name":"Hirondelle \"燕子\" Chinese FOOD","classification":"Vraiment chinois","latitude":-18.9174137,"longitude":47.5366284,"vicinity":"Lalana Dama-Ntsoha Razatintsalama Jean-Baptiste, Antananarivo 101, Madagascar"},{"name":"La Jonquille","classification":"Vraiment chinois","latitude":-18.9093195,"longitude":47.5369177,"vicinity":"Antananarivo 101, Madagascar"},{"name":"Grand Resto de Chine","classification":"Vraiment chinois","latitude":-18.9141664,"longitude":47.5386078,"vicinity":"Lalana Rasamuol Maurice, Antananarivo, Madagascar"},{"name":"Restaurant Shanghai","classification":"Vraiment chinois","latitude":-18.9088796,"longitude":47.5238203,"vicinity":"4 Lalana Rainitovo, Antananarivo, Madagascar"},{"name":"Restaurant Fong Mei","classification":"Vraiment chinois","latitude":-18.8709271,"longitude":47.5342318,"vicinity":"4GHM+JMX, Rue Andriantsihoarana Ratsimbazafy, Antananarivo, Madagascar"},{"name":"Restaurant La Belle Ville","classification":"Vraiment chinois","latitude":-18.9101638,"longitude":47.536552,"vicinity":"3GQP+WJP, Rue Razafindralombo Pierre, Antananarivo, Madagascar"},{"name":"Zen Garden","classification":"Vraiment chinois","latitude":-18.8657389,"longitude":47.5428293,"vicinity":"II M 38 F Androhibe Antananarivo Antananarivo, 101, Madagascar"},{"name":"Kaizen Restaurant","classification":"Vraiment chinois","latitude":-18.9137555,"longitude":47.5401585,"vicinity":"3GPR+F3J, Lalana Vvs, Antananarivo, Madagascar"},{"name":"吕府私房菜（KTV）","classification":"Moyennement chinois","latitude":-18.9106832,"longitude":47.503318,"vicinity":"Madagascar, Antananarivo, AUTOREXAmitie Fandian"},{"name":"逸香酒樓 Yixiang Restaurant","classification":"Vraiment chinois","latitude":-18.8928125,"longitude":47.5150625,"vicinity":"IVT 10, 4G48+V2P, Rue Docteur Joseph Raseta, Antananarivo, Madagascar"},{"name":"Lotus Blanc Restaurant 荷花酒店","classification":"Vraiment chinois","latitude":-18.913438,"longitude":47.537768,"vicinity":"LOT II W 23 B, Antananarivo 101, Madagascar"},{"name":"Restaurant Le Cantilène","classification":"Pas chinois","latitude":-18.9104301,"longitude":47.5072927,"vicinity":"3GQ4+RWM, Antananarivo, Madagascar"},{"name":"Dun Huang","classification":"Vraiment chinois","latitude":-18.905614,"longitude":47.5240707,"vicinity":"42 Arabe Andrinampoinimerina, Antananarivo 101, Madagascar"},{"name":"Lakoziako","classification":"Vraiment chinois","latitude":-18.9046663,"longitude":47.5237008,"vicinity":"3GWF+4FP, Antananarivo, Madagascar"},{"name":"佬湘好","classification":"Moyennement chinois","latitude":-18.8352457,"longitude":47.4647325,"vicinity":"MG Antananarivo, Lot 135 B 3Antanetib 105, Madagascar"},{"name":"Le Grand Tsang","classification":"Vraiment chinois","latitude":-18.9070473,"longitude":47.53401969999999,"vicinity":"3GVM+5JV, Antananarivo, Madagascar"},{"name":"l'Orient Asian Fusion Restaurant","classification":"Vraiment chinois","latitude":-18.9072463,"longitude":47.5280583,"vicinity":"Madagascar, Antananarivo, Lalana Rainandriamampandry, 邮政编码: 101"},{"name":"La Fleur De Sel","classification":"Vraiment chinois","latitude":-18.8715921,"longitude":47.5426066,"vicinity":"Antananarivo, Madagascar"},{"name":"Quick Delice","classification":"Vraiment chinois","latitude":-18.9098948,"longitude":47.5270477,"vicinity":"3GRG+2RM, Antananarivo, Madagascar"},{"name":"凤城 Soleil","classification":"Vraiment chinois","latitude":-18.8729937,"longitude":47.5080215,"vicinity":"Lot IVK 89 bis Anosivavaka Ambohimanarina, Antananarivo 101, Madagascar"}];
+          const modal = document.getElementById('modal');
+          const modalTitle = document.getElementById('modalTitle');
+          const modalAuthenticity = document.getElementById('modalAuthenticity');
+          const modalAddress = document.getElementById('modalAddress');
+          const modalMapLink = document.getElementById('modalMapLink');
+          const mapDiv = document.getElementById('map');
+          const startAddress = document.getElementById('startAddress');
+          let map, marker, directionsService, directionsRenderer;
+
+          function initMap(lat, lng) {
+            map = new google.maps.Map(mapDiv, { center: { lat, lng }, zoom: 15, mapTypeId: 'roadmap' });
+            marker = new google.maps.Marker({ position: { lat, lng }, map, title: modalTitle.textContent });
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer({ map });
+          }
+
+          function openModal(index) {
+            const r = data[index];
+            modalTitle.textContent = r.name;
+            modalAuthenticity.textContent = r.classification;
+            modalAddress.textContent = r.vicinity && r.vicinity.trim() ? r.vicinity : (r.latitude && r.longitude ? `Lat: ${r.latitude}, Lon: ${r.longitude}` : 'Adresse non disponible');
+            modalMapLink.href = r.latitude && r.longitude ? `https://www.google.com/maps?q=${r.latitude},${r.longitude}` : '#';
+            modal.classList.remove('hidden');
+            modal.classList.add('modal-open');
+            mapDiv.innerHTML = '';
+            startAddress.value = '';
+            if (r.latitude && r.longitude && !isNaN(r.latitude) && !isNaN(r.longitude)) {
+              initMap(r.latitude, r.longitude);
+            } else {
+              mapDiv.innerHTML = '<p class="text-gray-500">Carte non disponible</p>';
+            }
+          }
+
+          document.getElementById('searchInput').addEventListener('input', () => {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            const results = document.getElementById('searchResults');
+            results.innerHTML = '';
+            results.classList.add('hidden');
+            if (query) {
+              const filtered = data.filter((r, i) => r.name.toLowerCase().includes(query));
+              if (filtered.length) {
+                results.classList.remove('hidden');
+                filtered.forEach((r, i) => {
+                  const li = document.createElement('li');
+                  li.className = 'p-2 hover:bg-gray-100 cursor-pointer';
+                  li.textContent = r.name;
+                  li.onclick = () => { openModal(data.indexOf(r)); results.classList.add('hidden'); document.getElementById('searchInput').value = ''; };
+                  results.appendChild(li);
+                });
+              }
+            }
+          });
+
+          document.getElementById('showRoute').addEventListener('click', () => {
+            const start = startAddress.value.trim();
+            if (!start) return alert('Veuillez entrer une adresse de départ.');
+            if (!map || !directionsService || !directionsRenderer) return alert('Carte non initialisée.');
+            const r = data.find(r => r.name === modalTitle.textContent);
+            if (!r || !r.latitude || !r.longitude) return alert('Coordonnées non disponibles.');
+            directionsRenderer.setMap(null);
+            directionsRenderer = new google.maps.DirectionsRenderer({ map });
+            directionsService.route(
+              { origin: start, destination: { lat: r.latitude, lng: r.longitude }, travelMode: google.maps.TravelMode.DRIVING },
+              (result, status) => {
+                if (status === google.maps.DirectionsStatus.OK) directionsRenderer.setDirections(result);
+                else alert('Impossible de calculer l\'itinéraire : ' + status);
+              }
+            );
+          });
+
+          document.getElementById('closeModal').onclick = () => {
+            modal.classList.add('hidden');
+            modal.classList.remove('modal-open');
+            startAddress.value = '';
+            mapDiv.innerHTML = '';
+          };
+
+          modal.onclick = (e) => {
+            if (e.target === modal) {
+              modal.classList.add('hidden');
+              modal.classList.remove('modal-open');
+              startAddress.value = '';
+              mapDiv.innerHTML = '';
+            }
+          };
+        </script>
+      </div>
+    </div>
+  </body>
+  </html>
