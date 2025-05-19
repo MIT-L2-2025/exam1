@@ -1,0 +1,72 @@
+[
+  {
+    "restaurants": [
+	  {
+	    "name": "Qing Qing Restaurant (青青餐館)",
+	    "latitude": -18.8312897,
+	    "longitude": 47.4655162,
+	    "vicinity": "5F98+G62, Talatamaty, Madagascar",
+	    "photo": "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AXQCQNQtNS4edAl4cLRbEDiXcT9tUuSqdGOk4_ZmirxanSEp5p0WPSYyzVdSbaAg6xCC9WrgmlLjEAqId-jXoB9au5vyOpP-tGuT0-4obIJpnXjpPqXxpyB3hmNfZJlHI01sBfYGrQ7Ekiqfj1I7m0c1_Ui1UR4jmRak5Qe_5YqNn3KH01aZJ8grGFOgg5s83ecPoln2jWsk2RIsw0cArqcBLC8iD15TdPEjeolsuEHrjY-PRPHq9zXebDO4Bysl0E5E-BQggpESbRFWm9KN9oaGGAPdMk3uRsLui4igLXOCQCVk-Ao7JUZXcs00twDB-g_EQZzU4-XtK_FEPdcBBua8luBV5wx1Jj3WEfXhmxM_cc938CGYfnlrQeA8J5TVCLnu_4c9wdl0nxnPP8P-815k6qrHlr1Zd3597-gz9Clts99mH_k9WxI1nj49KcGIJsVm6rXCurUt5Y-AL8UDSJYotELKuLkfMZWE9IncjCw59jgzIXvyE_0sceq00e5imbbtnsrn8JkjXqHYEUsCxQ9Dy_Heb5PuKMq-AX6eR0CiLzOhOf1lbn3oYpyzdwpA0sR4obRbYGfn&key=VOTRE_CLE_API",
+	    "place_id": "ChIJlSctMACB8CERl0rJXKZFbPM",
+	    "formated_phone_number": "034 69 261 62",
+	    "international_phone_number": "+261 34 69 261 62",
+	    "all_authors": "Nazarite KUO, Roberto Garcia",
+	    "all_text": "The portions are generous, the price is transparent, and the taste is right. You can call to order food, and if it's nearby, it can be delivered. Takeaway boxes are extra and are written on the menu. The lady boss said that the rice is specially ordered from the north of Madagascar and it tastes really good. Friends who like soup can order soup, which is not on the menu. Usually there are tofu soup (green vegetables can be added), seaweed and egg drop soup, and chicken soup. If you want to make soup, you need to call in advance to make a reservation. Currently, I know that you can make whole chicken.. Authentic Chinese food. Very good.",
+	    "all_rating": "5. 4"
+	  },
+	  {
+	    "name": "HONG KONG Restaurant - salon de The",
+	    "latitude": -18.8309862,
+	    "longitude": 47.4653526,
+	    "vicinity": "Toyota, Lalana Doktera. Joseph Raseta, Maibahoaka Ivato Antananarivo IVATO, Antananarivo 105, Madagascar",
+	    "photo": "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AXQCQNRADl1e7htMmkvj_0C2igsWu9GxVp548wvQ9ovf_Faxp6wOemx65m1jMhGEXKyN4FKYtE-h1OpvHoiDujVVwYp-kKsHNvB40zW6g_6pAaLsWAp-R-S6nu2QnRQPp7cmNyZvM3J9scRthXWAs4bF2RmIodMbh9Cbzyr2k-0yBuL-sINOdcRAct6o4Z3IcfcVOyUp2Dltplt0IRS6feocEq0sO0gk1wyyYOVJCUkL9WOyjtosnMtT-CoPmniDb2FNg1C41P7cNuon9sUei0ZgRDAfqsnXZDPsJlwhHfuQPw0LNaNawxs&key=VOTRE_CLE_API",
+	    "place_id": "ChIJfT3ycNuB8CERlXThZnabvdg",
+	    "formated_phone_number": "038 68 509 77",
+	    "international_phone_number": "+261 38 68 509 77",
+	    "all_authors": "Frédérick B., ying li, Randriananjanirina Eva",
+	    "all_text": "We came on a Sunday morning for \"yum cha 飲茶\". The restaurant just opened a few weeks ago, the service is a little long despite the fact that there are a lot of employees. The food is good, but there were several items not available on the menu. Affordable prices. To try again next time, if you are in Ivato.\n\n4/5 visited in January 2025",
+	    "all_rating": "4. 5. 5"
+	  },
+	  {
+	    "name": "Gargotte Pangalane",
+	    "latitude": -18.9015495,
+	    "longitude": 47.5375062,
+	    "vicinity": "IIR9, Rue Foloalindahy Malagasy, Antananarivo 101, Madagascar",
+	    "photo": "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AXQCQNTCbLh26XGlUv-VxXo-HXJQR6GhCFUfYdTg1FD-bdH2rDFisso506vh1KrjJ6_SKkyFUHeptUkr--vWCrxcsqiB9SDFULS1ujFRziqmk3zDL2yRwkguNLTijIczdh_HXoawIp5q_7i79wUTiilSu4C0uVHoCXKiEdkk_7_cHvDLMQs15TQvEkFLF3x2_-Jc1G5Oo8l0Hr85ZhlIAPBqHLt1y3l9w2pyH57j-qrU53BQ9fLBC9URKs9SeMrB05YwVNXkI1G4GWvcfsZwzDikCHQ61dir9R4JzlewPPPqywye4kA2KjnpfGR-omTxsPyXVUcnPv6F9TCFOVxfR5Edr_a7tjF-cBvn08lz6D447nuf4643_RWJM3_NUDnVipGlefKdzXxHwgb3G8eciP81LaJbsBeRyOj89DV2IEcews6kSIB-jrc1cTX1x0Qg10TxDZ7FDymwZ1CQjQcfJkQeBj5h1OwMSHd46AANGyLJmOUDJ0Bh1KdKfxuHE05LN1fVYBTg8qYq0OmY0DFThdLLw-iV9zu-UhRfWDZ49puw7wJX7cS9QvwzXGzJwskTYNqOlv-vGJK-eXSnlg&key=VOTRE_CLE_API",
+	    "place_id": "ChIJ2YOXRs-H8CERxiHWAQku4fQ",
+	    "formated_phone_number": "Non disponible",
+	    "international_phone_number": "Non disponible",
+	    "all_authors": "Dany Dandois, layone tony, Tojoniaina RATOTOFENO",
+	    "all_text": "I ordered horse, it really wasn't that or the meat was unchanged lol",
+	    "all_rating": "3. 4. 4"
+	  },
+	  {
+	    "name": "National Center",
+	    "latitude": -18.9026174,
+	    "longitude": 47.5247076,
+	    "vicinity": "3GWF+WWR, Antananarivo, Madagascar",
+	    "photo": "Pas de photo disponible",
+	    "place_id": "ChIJKdq8S3iB8CERj76wOUkMrXk",
+	    "formated_phone_number": "Non disponible",
+	    "international_phone_number": "Non disponible",
+	    "all_authors": "MOLO MOLO, ANDRIANANTENAINA BRUNEL RAZAFINDRAZAKA, Blaise Ramanamahefa, Germain Rouzaud, mahery andrianina",
+	    "all_text": "",
+	    "all_rating": "2. 5. 5. 4. 4"
+	  },
+	  {
+	    "name": "Restaurant Shi Fu",
+	    "latitude": -18.9895339,
+	    "longitude": 47.53929120000001,
+	    "vicinity": "2G9W+VQ, Antananarivo, Madagascar",
+	    "photo": "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AXQCQNSN1VGuMmtG3Kc2yswUa4zk7Xe2HTHXVLNbHUWiPvfsN5VnWgarTy3XuPhKh3wxC-FhcPvde8sD5hASQwn8zQgEqz9qtmJ8bRgjGSfAu9waScPvxMZeOcY2zyo13lpBFAjgI68nhIW6baaUpego4NX3WtHYJawMgZ3uopEHbKCEFNZBaZ7mOPiNy_Ly-UzeVzYMnHXJb9z7S6ot4jtx0xANo8ZDRHww_3P7V9m5FvRhTyfv08Sa3EqAkMsvBtfrf1zxYgI5ln1BYTchKDnmFwpjZLdY_jXbm7MlUMN2xOU7E_T1q0DG82voXApMAiAvn1RS_qlseKe2ZNFV8vTRAKFNPvkGc7Hh-QGdZ57N5k5nqWYMxQtTfTGOfuOj6Gdfc624XF9j8w2D1tKF954ZuCmeWpq0kSxkd3fdrBoS9GFbNZv6NqG-VaiLVBqi6g3ua9PcGQVaXx5zFbMHbZnIHavEu9-7Xam2cvV43ito76-vTrvn6lTVVTijkFJf-op6v97ll9sK7YKEZyeu1FU0v9lIun8vwbgEvTfufrRT9mlbLobQHhtUAnXAClopw7NS0oJytueS&key=VOTRE_CLE_API",
+	    "place_id": "ChIJG5Q0msp98CERwxZzYfoVrEk",
+	    "formated_phone_number": "034 51 483 56",
+	    "international_phone_number": "+261 34 51 483 56",
+	    "all_authors": "FARAHERY Bongrie Michel, bernard lacour, Tiana Andriamanana, Niba mosoby, Aina Herimami Rakotondratsimba",
+	    "all_text": "Nice and affordable chinese food.\nLocated in a quiet place.\nHelpful staff.. No, no bread, no living water neither PM nor GM\nVery long, the dish requested oops, no.\nPay you oopsss no change,\nThe waitress leaves on foot on by pass returns more than thirty minutes later...\nWeird restaurant. Good Chinese cuisine at very reasonable prices. On the other hand, it is better to be patient.. Delicious food at reasonable prices.",
+	    "all_rating": "4. 1. 3. 3. 1"
+	  }
+	]
+      }
+]
+ 
