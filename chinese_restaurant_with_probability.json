@@ -1,0 +1,666 @@
+{
+  "name": "To send",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -2900,
+        500
+      ],
+      "id": "4cba6158-9dab-4371-af47-b3101abb7656",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -1600,
+        900
+      ],
+      "id": "bbfb61a4-04b3-49f8-925d-61317dde0b41",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1320,
+        920
+      ],
+      "id": "3231e7da-b06c-4337-80dd-1c8965af6b70",
+      "name": "Wait",
+      "webhookId": "60f69716-cbd5-4ac8-b601-772debbecdd8"
+    },
+    {
+      "parameters": {
+        "url": "https://www.findglocal.com/MG/Antananarivo/153643-7/genre/174483852595760/Chinese+Restaurant#google_vignette",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "n8n-workflow-bot"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -2500,
+        500
+      ],
+      "id": "df274ab0-dba1-4195-8508-5992e45f1991",
+      "name": "Scrap a site"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "name",
+              "cssSelector": ".inneritembox a:nth-of-type(2)",
+              "returnArray": true
+            },
+            {
+              "key": "adresse",
+              "cssSelector": ".inneritembox",
+              "skipSelectors": "a,span,p",
+              "returnArray": true
+            },
+            {
+              "key": "link",
+              "cssSelector": ".inneritembox a:nth-of-type(2)",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            },
+            {
+              "key": "specialites",
+              "cssSelector": ".inneritembox p",
+              "returnArray": true
+            },
+            {
+              "key": "picture",
+              "cssSelector": ".inneritembox a:nth-of-type(1) img",
+              "returnValue": "attribute",
+              "attribute": "src",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        -2180,
+        500
+      ],
+      "id": "1d4766b6-8a14-4a35-a75f-a7b2900e3f96",
+      "name": "Extract List"
+    },
+    {
+      "parameters": {
+        "jsCode": "const names = $json[\"name\"];\n\nconst adresses = $json[\"adresse\"];\n\nconst links = $json[\"link\"];\n\nconst speciality = $json[\"specialites\"];\n\nconst pic = $json[\"picture\"]; \n\nconst restaurants = names.map((nom, i) => ({\n  nom: names[i],\n  adresse: (adresses[i] || \"Adresse non spécifiée\").replace(/\\n/g, '').trim(),\n  specialite: speciality[i],\n  lien: 'https://www.findglocal.com'+links[i],\n  picture: pic[i]\n}));\nreturn restaurants;\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1840,
+        500
+      ],
+      "id": "300a0c71-f993-4c28-b369-45e5746394f9",
+      "name": "Combine into JSON"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.lien }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "n8n-webscrapping-bot"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1040,
+        920
+      ],
+      "id": "c5ac8604-5d13-4801-af25-3bdbc683331c",
+      "name": "Fetch numero"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "numero",
+              "cssSelector": ".bio span a"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        -780,
+        920
+      ],
+      "id": "58b20993-1b97-4285-b8ba-3b06867d51d0",
+      "name": "Extract numero"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 3,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        -940,
+        520
+      ],
+      "id": "2b613fff-9c61-48de-bc81-33d8c5f6aa81",
+      "name": "Combine into JSON1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -1580,
+        180
+      ],
+      "id": "ad3f9e6d-1d92-466b-b58a-348dbc839b0b",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "amount": 0.25
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1300,
+        200
+      ],
+      "id": "4ce56ff6-080f-4ef8-88f7-ccf3832064c3",
+      "name": "Wait1",
+      "webhookId": "60f69716-cbd5-4ac8-b601-772debbecdd8"
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD26SBDx0y_zVHM30FGrC0BiQm6RrJwpmM",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "=address",
+              "value": "={{ $json.adresse }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1020,
+        200
+      ],
+      "id": "5d027371-96c5-41d3-86d0-b278ebc34dbe",
+      "name": "Fetch numero1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = $json.results;\nif (results && results.length > 0 && results[0].geometry && results[0].geometry.location) {\n  const lat = results[0].geometry.location.lat;\n  const lng = results[0].geometry.location.lng;\n  \n  return [\n    {\n      json: {\n        lat: lat,\n        lng: lng,\n        link: `https://www.google.com/maps?q=${lat},${lng}`\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        error: \"Impossible de lire les coordonnées (lat/lng).\"\n      }\n    }\n  ];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -740,
+        200
+      ],
+      "id": "a8a9b155-e489-44ce-bc1d-84cc2c1f44a2",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const nom = item.json.nom || \"\";\n  const adresse = item.json.adresse || \"\";\n  const specialites = item.json.specialites || \"\";\n\n  const prompt = `Tu es un expert en détection de restaurants chinois à partir de données textuelles.\n\nToutes les adresses sont situées à Antananarivo, Madagascar. Voici les informations d’un restaurant :\n\nNom : ${nom}\nAdresse (complément) : ${adresse}\nSpécialités : ${specialites}\n\nÉvalue séparément, en pourcentage (0 à 100), la probabilité que chaque champ indique qu’il s’agit d’un restaurant chinois.\n\nRéponds uniquement au format JSON suivant :\n{\n  \"proba_nom\": [probabilité basée sur le nom],\n  \"proba_address\": [probabilité basée sur l’adresse],\n  \"proba_specialite\": [probabilité basée sur les spécialités],\n  \"justification\": \"[courte explication générale de ton raisonnement]\"\n}`;\n\n  item.json.prompt = prompt;\n  return item;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1380,
+        500
+      ],
+      "id": "face76ff-5d79-4f0f-85af-1fe4cf6d3cc0",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.prompt }}",
+        "options": {
+          "systemMessage": "You are a helpful assistant"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        0,
+        540
+      ],
+      "id": "b6b36ce3-c8e8-4ab3-8859-39c7029717fb",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "dffe0647-d114-43b3-86cc-e8c03f191d5f",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "LkZmymYSGg41z9QL",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  let contenu = item.json.output;\n\n  // Nettoyer si la réponse contient ```json ou autres balises parasites\n  contenu = contenu.replace(/```json|```/g, '').trim();\n\n  try {\n    const parsed = JSON.parse(contenu);\n\n    item.json.proba_nom = parsed.proba_nom ?? null;\n    item.json.proba_specialite = parsed.proba_specialite ?? null;\n  } catch (err) {\n    item.json.proba_nom = null;\n    item.json.proba_specialite = null;\n    item.json.erreur = \"Impossible de parser le JSON : \" + contenu;\n  }\n\n  return item;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        540
+      ],
+      "id": "426e4069-7c03-443e-a2b9-a211d8ce078e",
+      "name": "Code7"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        20,
+        1140
+      ],
+      "id": "daf61c1f-719a-43cc-a5a9-226ce8e0d30b",
+      "name": "Combine into JSON3"
+    },
+    {
+      "parameters": {
+        "jsCode": "const buffer = Buffer.from(items[0].json.html, 'utf8');\n\nreturn [{\n  binary: {\n    data: {\n      data: buffer.toString('base64'),\n      mimeType: 'text/html',\n      fileName: 'lieux.html',\n    }\n  },\n  json: {},\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1060,
+        1140
+      ],
+      "id": "2ce3742d-2194-44f1-87c5-c8732bc9f160",
+      "name": "Code10"
+    },
+    {
+      "parameters": {
+        "jsCode": "let html = `\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Liste des lieux</title>\n  <style>\n    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Roboto:wght@300;400;700&display=swap');\n\n    * {\n      margin: 0;\n      padding: 0;\n      box-sizing: border-box;\n    }\n\n    body {\n      font-family: 'Roboto', sans-serif;\n      background: linear-gradient(145deg, #f7f9fc 0%, #e8ecef 100%);\n      min-height: 100vh;\n      padding: 50px 20px;\n      display: flex;\n      flex-wrap: wrap;\n      justify-content: center;\n      gap: 40px;\n    }\n\n    .place {\n      background: #ffffff;\n      border-radius: 20px;\n      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);\n      width: 360px;\n      transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);\n      overflow: hidden;\n      display: flex;\n      flex-direction: column;\n      position: relative;\n      border: 1px solid rgba(229, 231, 235, 0.5);\n    }\n\n    .place:hover {\n      transform: translateY(-10px) scale(1.03);\n      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);\n    }\n\n    .place img {\n      width: 100%;\n      height: 240px;\n      object-fit: cover;\n      transition: transform 0.4s ease;\n      border-bottom: 4px solid #d4af37;\n    }\n\n    .place:hover img {\n      transform: scale(1.08);\n    }\n\n    .place-content {\n      padding: 25px;\n      flex: 1;\n      display: flex;\n      flex-direction: column;\n      background: #fff;\n      position: relative;\n    }\n\n    .place h2 {\n      font-family: 'Cormorant Garamond', serif;\n      font-size: 2em;\n      margin: 0 0 15px;\n      color: #1f2527;\n      line-height: 1.2;\n      font-weight: 600;\n      letter-spacing: 0.02em;\n    }\n\n    .place p {\n      margin: 10px 0;\n      color: #4b5563;\n      font-size: 0.95em;\n      line-height: 1.7;\n      font-weight: 300;\n    }\n\n    .place p strong {\n      color: #1f2527;\n      font-weight: 500;\n    }\n\n    .place a {\n      margin-top: auto;\n      text-decoration: none;\n      background: linear-gradient(90deg, #d4af37 0%, #b8972e 100%);\n      color: #ffffff;\n      padding: 14px;\n      border-radius: 10px;\n      text-align: center;\n      font-weight: 700;\n      font-size: 1em;\n      text-transform: uppercase;\n      letter-spacing: 0.05em;\n      transition: all 0.3s ease;\n    }\n\n    .place a:hover {\n      background: linear-gradient(90deg, #b8972e 0%, #a68b27 100%);\n      transform: translateY(-3px);\n      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);\n    }\n\n    .coord {\n      font-size: 0.9em;\n      color: #6b7280;\n      margin-top: 12px;\n      font-style: italic;\n      opacity: 0.8;\n    }\n\n    .place::before {\n      content: '';\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 6px;\n      background: linear-gradient(90deg, #d4af37, #ffffff);\n      z-index: 1;\n    }\n\n    @media (max-width: 768px) {\n      .place {\n        width: 100%;\n        max-width: 360px;\n      }\n    }\n  </style>\n</head>\n<body>\n`;\n\nitems.forEach(item => {\n  const data = item.json;\n\n  html += `\n    <div class=\"place\">\n      <img src=\"${data.picture || 'https://via.placeholder.com/360x240'}\" alt=\"${data.nom || 'Lieu'}\">\n      <div class=\"place-content\">\n        <h2>${data.nom || 'Sans nom'}</h2>\n        <p><strong>Adresse :</strong> ${data.adresse || 'Non précisée'}</p>\n        <p><strong>Description :</strong> ${data.specialite || 'Aucune description disponible.'}</p>\n        <p><strong>Téléphone :</strong> ${data.numero || 'Non communiqué'}</p>\n        <p><strong>Probabilité que ce soit chinois :</strong> ${data.prob_chinois !== undefined ? data.prob_chinois + '%' : 'Inconnue'}</p>\n        <p class=\"coord\"><strong>Coordonnées :</strong> ${data.lat || 'N/A'}, ${data.lng || 'N/A'}</p>\n        <a href=\"${data.link || '#'}\" target=\"_blank\">Voir sur Google Maps</a>\n      </div>\n    </div>\n  `;\n});\n\nhtml += `\n</body>\n</html>\n`;\n\nreturn [{\n  json: {\n    html: html\n  },\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        540,
+        1140
+      ],
+      "id": "48b2bd1f-0ff3-4683-b605-e4ebaeb9d073",
+      "name": "Code11"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const nom = item.json.nom || \"Nom inconnu\";\n  const specialite = item.json.specialite || \"Non précisée\";\n  const adresse = item.json.adresse || \"Adresse inconnue\";\n  const numero = item.json.numero || \"Numéro inconnu\";\n\n  const prompt = `\nTu es un assistant spécialisé dans l'analyse des restaurants.\n\nVoici les informations d’un restaurant :\n- Nom : ${nom}\n- Adresse : ${adresse}\n- Téléphone : ${numero}\n- Spécialité : ${specialite}\n\n1. Quelle est la **probabilité en pourcentage** que le **nom** évoque un restaurant chinois ? (proba_nom)\n2. Quelle est la **probabilité en pourcentage** que les **spécialités** correspondent à de la cuisine chinoise ? (proba_specialite)\n\nRéponds uniquement avec ce format JSON :\n\n{\n  \"proba_nom\": [valeur entre 0 et 100],\n  \"proba_specialite\": [valeur entre 0 et 100]\n}\n`.trim();\n\n  item.json.prompt = prompt;\n  return item;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -420,
+        540
+      ],
+      "id": "e5f5f424-3ac8-4a61-84e7-e9481da581e8",
+      "name": "Code4"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const p_nom = parseFloat(item.json.proba_nom);\n  const p_spec = parseFloat(item.json.proba_specialite);\n\n  if (isNaN(p_nom) || isNaN(p_spec)) {\n    item.json.khi2_prob_chinois = null;\n    return item;\n  }\n\n  // Ecart par rapport à un score neutre (50), seulement si les proba sont valides (> 0)\n  const e_nom = p_nom !== 0 ? p_nom - 50 : 0;\n  const e_spec = p_spec !== 0 ? p_spec - 50 : 0;\n\n  // Statistique chi² modifiée (pas canonique)\n  const chi2 = ((p_nom !== 0 ? e_nom ** 2 : 0) + (p_spec !== 0 ? e_spec ** 2 : 0)) / 50;\n\n  // Calcul du score pondéré seulement avec les proba non nulles\n  let poids_total = 0;\n  let score = 0;\n\n  if (p_nom !== 0) {\n    score += p_nom * 0.4;\n    poids_total += 0.4;\n  }\n\n  if (p_spec !== 0) {\n    score += p_spec * 0.6;\n    poids_total += 0.6;\n  }\n\n  let prob_chinois = poids_total > 0\n    ? Math.min(100, Math.max(0, (score / poids_total) - (chi2 * 0.3)))\n    : 0;\n\n  item.json.khi2 = Math.round(chi2 * 100) / 100;\n  item.json.prob_chinois = Math.round(prob_chinois * 100) / 100;\n\n  return item;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        540
+      ],
+      "id": "484c9a67-2ba9-4d01-a7f0-abf57917fc67",
+      "name": "Code5"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Scrap a site",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Combine into JSON1",
+            "type": "main",
+            "index": 2
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Fetch numero",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scrap a site": {
+      "main": [
+        [
+          {
+            "node": "Extract List",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract List": {
+      "main": [
+        [
+          {
+            "node": "Combine into JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine into JSON": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch numero": {
+      "main": [
+        [
+          {
+            "node": "Extract numero",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract numero": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine into JSON1": {
+      "main": [
+        [
+          {
+            "node": "Code4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Combine into JSON3",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Combine into JSON1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Fetch numero1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch numero1": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Combine into JSON1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code7": {
+      "main": [
+        [
+          {
+            "node": "Code5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine into JSON3": {
+      "main": [
+        [
+          {
+            "node": "Code11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code11": {
+      "main": [
+        [
+          {
+            "node": "Code10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code4": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code5": {
+      "main": [
+        [
+          {
+            "node": "Combine into JSON3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c7e87c0f-4e21-4e61-99ca-07cfd337217a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8411afeb480175e8dacdb502ddea9c0ae05ede61d7731944a8bc6860d54abe6e"
+  },
+  "id": "c9V7FxPVxbYOpzWY",
+  "tags": []
+}
