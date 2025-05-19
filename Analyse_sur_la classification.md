@@ -1,3 +1,4 @@
+# Classification des restaurants chinois
 ## Objectif: classer les restaurants en 3 catégories
 - Vraiment chinois
 - Moyennement chinois
