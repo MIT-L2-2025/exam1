@@ -29,7 +29,9 @@ Donc G n'est pas forcement un graphe complet, sinon chaque restaurants auront un
 Voici un code en python pour visualiser ce graphe (ex : 5  restaurants)
 Les informations sur les 5 restaurants sont stockées dans un fichier .json (restaurant.json)
  __ Veuillez assurer que vous avez matplotlib et networkx pour exécuter ce programme de visualisation du graphe
-#### Graph construction
+ __ Veuillez mettre le fichier restaurant_extrait.json dans la même repertoire que ce code
+#### Graph construction : voir le fichier graph.py pour avoir le code
+
 ```python
 import json
 import networkx as nx
