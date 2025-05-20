@@ -1,0 +1,895 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Restaurants Chinois - Interface Interactive</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      background-color: #f5f5f7;
+      margin: 0; padding: 40px 20px;
+      color: #1d1d1f;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5em;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+
+    #search {
+      display: block;
+      margin: 0 auto 30px auto;
+      width: 300px; padding: 12px 16px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      transition: all 0.2s ease-in-out;
+    }
+
+    #search:focus {
+      outline: none;
+      border-color: #007aff;
+      box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
+    }
+
+    table {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    thead {
+      background-color: #e5e5ea;
+    }
+
+    th, td {
+      padding: 16px;
+      text-align: left;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #f0f0f0;
+      transition: background 0.25s ease, transform 0.15s ease;
+    }
+
+    tbody tr:hover {
+      background-color: #f9f9f9;
+      transform: scale(1.002);
+    }
+
+    .badge {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 14px;
+      display: inline-block;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .chinois .badge {
+      background-color: #d1f7c4;
+      color: #27ae60;
+    }
+
+    .non-chinois .badge {
+      background-color: #fdecea;
+      color: #c0392b;
+    }
+
+    @media (max-width: 640px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      thead tr {
+        display: none;
+      }
+      tbody tr {
+        margin-bottom: 15px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        padding: 15px;
+      }
+      td {
+        padding: 10px 0;
+        position: relative;
+      }
+      td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        color: #999;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h1>🍜 Restaurants Chinois</h1>
+
+<input type="text" id="search" placeholder="🔍 Rechercher un restaurant..." />
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nom</th>
+      <th>Adresse</th>
+      <th>Chinois</th>
+    </tr>
+  </thead>
+  <tbody id="table-body">
+    
+      <tr class="chinois">
+        <td data-label="ID">54</td>
+        <td data-label="Nom">Au bon coin Tàna</td>
+        <td data-label="Adresse">IIM41, 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">30</td>
+        <td data-label="Nom">Bamboo | Le Restau |</td>
+        <td data-label="Adresse">3H72+4P3, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">56</td>
+        <td data-label="Nom">Bazar du Quartier</td>
+        <td data-label="Adresse">Arabe Mahatma Ghandi, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">60</td>
+        <td data-label="Nom">Bonjuk&Bibimbap Cafe Ankorondrano</td>
+        <td data-label="Adresse">Lot LVP13, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">70</td>
+        <td data-label="Nom">Café de NanShan 南山咖啡西餐厅</td>
+        <td data-label="Adresse">101, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">27</td>
+        <td data-label="Nom">CASTELLO MOTEL Madagascar</td>
+        <td data-label="Adresse">Lot IVW 3D Anosizato Antananarivo, 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">52</td>
+        <td data-label="Nom">CHEZ CHAN</td>
+        <td data-label="Adresse">4GC3+F7M, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">48</td>
+        <td data-label="Nom">Chez Maxime</td>
+        <td data-label="Adresse">4GH9+V9C, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">65</td>
+        <td data-label="Nom">Dragon rouge</td>
+        <td data-label="Adresse">3GXC+VQ8, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">62</td>
+        <td data-label="Nom">DRAGON ROYAL Restaurant</td>
+        <td data-label="Adresse">Rue Me Albertini, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">9</td>
+        <td data-label="Nom">Dun Huang</td>
+        <td data-label="Adresse">42 Arabe Andrinampoinimerina, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">71</td>
+        <td data-label="Nom">Fleuve Rouge</td>
+        <td data-label="Adresse">Rue Lietna Andriamaromanana Albert, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">63</td>
+        <td data-label="Nom">Fortuna Tana</td>
+        <td data-label="Adresse">3GJ9+JC3, IMM, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">66</td>
+        <td data-label="Nom">Gargotte Pangalane</td>
+        <td data-label="Adresse">IIR9, Rue Foloalindahy Malagasy, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">20</td>
+        <td data-label="Nom">Grand Resto de Chine</td>
+        <td data-label="Adresse">Lalana Rasamuol Maurice, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">69</td>
+        <td data-label="Nom">Hotel New Century</td>
+        <td data-label="Adresse">3GWF+J7P, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">21</td>
+        <td data-label="Nom">Hotel Seoul & Restaurant</td>
+        <td data-label="Adresse">Rue Rakoto Frah, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">42</td>
+        <td data-label="Nom">Huo Cuisine</td>
+        <td data-label="Adresse">4GH9+2PR, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">16</td>
+        <td data-label="Nom">Kaizen Restaurant</td>
+        <td data-label="Adresse">3GPR+F3J, Lalana Vvs, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">44</td>
+        <td data-label="Nom">Kims Restaurant</td>
+        <td data-label="Adresse">Lot ll J 172 N IVANDRY, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">47</td>
+        <td data-label="Nom">La Compagnie des Voyageurs - Restaurant</td>
+        <td data-label="Adresse">Lot II Ivandry JF Bis antananarivo, 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">67</td>
+        <td data-label="Nom">La DYNASTIE</td>
+        <td data-label="Adresse">3GP5+FHP Arrêt FOKONTANY, Rue Seimad, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">15</td>
+        <td data-label="Nom">La Fleur De Sel</td>
+        <td data-label="Adresse">Tananarive, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">33</td>
+        <td data-label="Nom">Laï tsock</td>
+        <td data-label="Adresse">3GQP+4JW, Rue Razafindralombo Pierre, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">38</td>
+        <td data-label="Nom">La Jonquille</td>
+        <td data-label="Adresse">Tananarive 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">68</td>
+        <td data-label="Nom">Lakoziako</td>
+        <td data-label="Adresse">3GWF+4FP, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">50</td>
+        <td data-label="Nom">La Plantation</td>
+        <td data-label="Adresse">Tananarive, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">46</td>
+        <td data-label="Nom">La Rhumerie Madagascar</td>
+        <td data-label="Adresse">4GHH+C3W, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">80</td>
+        <td data-label="Nom">L' Arrivage</td>
+        <td data-label="Adresse">4 chemins, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">35</td>
+        <td data-label="Nom">LA TABLE DE CHINE</td>
+        <td data-label="Adresse">3GJV+JRJ Le Colisée, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">37</td>
+        <td data-label="Nom">La voie du Rossignol</td>
+        <td data-label="Adresse">3GXH+QVR, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">77</td>
+        <td data-label="Nom">Le Foyer du Légionnaire à Nanisana, près du Ministère.</td>
+        <td data-label="Adresse">Près du Ministère Nanisana Nanisana, Tananarive, 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">41</td>
+        <td data-label="Nom">Le Grand Orient</td>
+        <td data-label="Adresse">Rue Andriantsihoarana Ratsimbazafy, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">39</td>
+        <td data-label="Nom">Le Grand Tsang</td>
+        <td data-label="Adresse">3GVM+5JV, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">8</td>
+        <td data-label="Nom">Le Petit Bouchon</td>
+        <td data-label="Adresse">Lot IVM, 122L Rue Agosthino Neto, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">18</td>
+        <td data-label="Nom">Le Pont Rouge</td>
+        <td data-label="Adresse">3GQ8+9RC, Lalana Razafy Abraham, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">25</td>
+        <td data-label="Nom">Les Petits Plats De Maman</td>
+        <td data-label="Adresse">Immeuble Art&jardin Antaninarenina, En face bio 33, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">45</td>
+        <td data-label="Nom">L'Oriental Ivandry</td>
+        <td data-label="Adresse">Ivandry Ambodivoanjo lot II I 161, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">11</td>
+        <td data-label="Nom">l'Orient Asian Fusion Restaurant</td>
+        <td data-label="Adresse">Madagascar, Antananarivo, Lalana Rainandriamampandry, 邮政编码: 101</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">28</td>
+        <td data-label="Nom">Lotus Blanc Restaurant 荷花酒店</td>
+        <td data-label="Adresse">LOT II W 23 B, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">81</td>
+        <td data-label="Nom">Mareka Annexe</td>
+        <td data-label="Adresse">4G38+XQ4, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">4</td>
+        <td data-label="Nom">MON RESTO</td>
+        <td data-label="Adresse">Ambonisoa Arrêt Dokotera Itaosy, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">74</td>
+        <td data-label="Nom">National Center</td>
+        <td data-label="Adresse">3GWF+WWR, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">57</td>
+        <td data-label="Nom">ÔCG Ô Chinois Gourmand</td>
+        <td data-label="Adresse">3GQ8+CC2 Bloc commercial #7, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">6</td>
+        <td data-label="Nom">O Loft Chinois</td>
+        <td data-label="Adresse">4G39+2J7, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">82</td>
+        <td data-label="Nom">Panasia Restaurant</td>
+        <td data-label="Adresse">3GWF+QHR, 2, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">34</td>
+        <td data-label="Nom">Panda Wock</td>
+        <td data-label="Adresse">3GGW+J87, Rue Tsimanindry, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">61</td>
+        <td data-label="Nom">Phô Resto Ankorondrano</td>
+        <td data-label="Adresse">en face Kitonotono, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">40</td>
+        <td data-label="Nom">Quick Delice</td>
+        <td data-label="Adresse">3GRG+2RM, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">43</td>
+        <td data-label="Nom">Restaurant Arirang</td>
+        <td data-label="Adresse">84 Villa les Hêtres, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">14</td>
+        <td data-label="Nom">Restaurant Azalée</td>
+        <td data-label="Adresse">Tananarive, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">36</td>
+        <td data-label="Nom">Restaurant Fong Mei</td>
+        <td data-label="Adresse">4GHM+JMX, Rue Andriantsihoarana Ratsimbazafy, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">10</td>
+        <td data-label="Nom">RESTAURANT HIRONDELLE "燕子" Chinese FOOD - Akoor Digue</td>
+        <td data-label="Adresse">4F5R+4P7, Andohatapenaka, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">13</td>
+        <td data-label="Nom">RESTAURANT HIRONDELLE "燕子" Chinese FOOD - Ankorahotra</td>
+        <td data-label="Adresse">Lalana Dama-Ntsoha Razatintsalama Jean-Baptiste, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">24</td>
+        <td data-label="Nom">Restaurant La Belle Ville</td>
+        <td data-label="Adresse">3GQP+WJP, Rue Razafindralombo Pierre, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">23</td>
+        <td data-label="Nom">Restaurant Lai</td>
+        <td data-label="Adresse">3GQ4+RWG, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">3</td>
+        <td data-label="Nom">Restaurant Le Cantilène</td>
+        <td data-label="Adresse">3GQ4+RWM, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">19</td>
+        <td data-label="Nom">Restaurant Le JASMIN</td>
+        <td data-label="Adresse">8 Rue Paul Dussac analamakelydohan Analakley, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">7</td>
+        <td data-label="Nom">Restaurant L'EURASIE - Ankorondrano</td>
+        <td data-label="Adresse">Face à l'hôtel Ibis - Ankorondrano, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">59</td>
+        <td data-label="Nom">Restaurant Lo & Ma</td>
+        <td data-label="Adresse">4G38+MRH, Rue Ampanjaka Toera, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">51</td>
+        <td data-label="Nom">Restaurant Lo&Ma</td>
+        <td data-label="Adresse">III D 12, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">78</td>
+        <td data-label="Nom">Restaurant Maka'ai</td>
+        <td data-label="Adresse">4G6X+3H3, Rte Nanisana, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">26</td>
+        <td data-label="Nom">Restaurant Shanghai</td>
+        <td data-label="Adresse">4 Lalana Rainitovo, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">29</td>
+        <td data-label="Nom">Restaurant Soleil d'Orient</td>
+        <td data-label="Adresse">3GPH+FF8, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">49</td>
+        <td data-label="Nom">Restaurant Villa Soleil 鳳城酒家</td>
+        <td data-label="Adresse">Lot IVK 89 bis Anosivavaka Ambohimanarina, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">17</td>
+        <td data-label="Nom">Sam Voky</td>
+        <td data-label="Adresse">3GP8+GGF, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">31</td>
+        <td data-label="Nom">Snack Ankadindratombo Chez dod1</td>
+        <td data-label="Adresse">3H64+H2X, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">32</td>
+        <td data-label="Nom">Snack d'Ankadindratombo</td>
+        <td data-label="Adresse">3H77+F88, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">72</td>
+        <td data-label="Nom">SOHO Restaurant</td>
+        <td data-label="Adresse">1st floor, Lalana S. Rahamefy, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">2</td>
+        <td data-label="Nom">Sweet Talk by Coq d'Or (Boutique)</td>
+        <td data-label="Adresse">4F5R+2V3, Andohatapenaka, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">64</td>
+        <td data-label="Nom">Tamboho Restaurant</td>
+        <td data-label="Adresse">Zone Tana Waterfront, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">79</td>
+        <td data-label="Nom">Tianfu fondu chinoise（天府火锅）</td>
+        <td data-label="Adresse">5 Lalana Andriantsilavo, Antananarivo 101, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">73</td>
+        <td data-label="Nom">Tianjie food (天街 中华料理)</td>
+        <td data-label="Adresse">3GVM+QG6, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">55</td>
+        <td data-label="Nom">TSANG-KAU</td>
+        <td data-label="Adresse">3GQC+R2Q, Arabe Victoire Rasoamanarivo, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">76</td>
+        <td data-label="Nom">TSUNAMI</td>
+        <td data-label="Adresse">Rue Ravoninahitriniarivo - B.P. 1414, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">12</td>
+        <td data-label="Nom">Wai Man</td>
+        <td data-label="Adresse">3GW6+VMX Nord-Est-Coté parking, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="non-chinois">
+        <td data-label="ID">53</td>
+        <td data-label="Nom">Zen</td>
+        <td data-label="Adresse">4GF9+VG5, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">❌ Non</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">75</td>
+        <td data-label="Nom">中国餐馆</td>
+        <td data-label="Adresse">3GVM+3M8, Lalana Pastora Rabeony Hans, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">5</td>
+        <td data-label="Nom">吕府私房菜</td>
+        <td data-label="Adresse">3GQ3+P78, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">1</td>
+        <td data-label="Nom">吕府私房菜（KTV）</td>
+        <td data-label="Adresse">Madagascar, Antananarivo, AUTOREXAmitie Fandian</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">58</td>
+        <td data-label="Nom">逸香酒樓 Yixiang Restaurant</td>
+        <td data-label="Adresse">IVT 10, 4G48+V2P, Rue Docteur Joseph Raseta, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+      <tr class="chinois">
+        <td data-label="ID">22</td>
+        <td data-label="Nom">點都德</td>
+        <td data-label="Adresse">3GJC+JF6, Antananarivo, Madagascar</td>
+        <td data-label="Chinois">
+          <span class="badge">✅ Oui (Chinois)</span>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+<script>
+  const searchInput = document.getElementById('search');
+  const tableBody = document.getElementById('table-body');
+
+  searchInput.addEventListener('input', function () {
+    const filter = this.value.toLowerCase();
+    const rows = tableBody.querySelectorAll('tr');
+    rows.forEach(row => {
+      const nom = row.cells[1].textContent.toLowerCase();
+      const adresse = row.cells[2].textContent.toLowerCase();
+      if (nom.includes(filter) || adresse.includes(filter)) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
